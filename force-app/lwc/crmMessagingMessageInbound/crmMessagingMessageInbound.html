@@ -1,0 +1,35 @@
+<template>
+    <li class="slds-chat-listitem slds-chat-listitem_inbound">
+        <div class="slds-chat-message">
+            <div class="slds-col slds-size_12-of-12">
+                <div class="slds-chat-message__body">
+                    <div class="slds-chat-message__text slds-chat-message__text_inbound">
+                        <span>{message.CRM_Message_Text__c}</span>
+                    </div>
+                </div>
+                <div class="slds-chat-message__meta">
+                    <template if:true={message.CRM_External_Message__c}>
+                        <lightning-icon
+                            icon-name="utility:user"
+                            alternative-text="Sluttbruker"
+                            title="Sluttbruker"
+                            variant="error"
+                            size="x-small"
+                        ></lightning-icon>
+                        &nbsp;
+                    </template>
+                    {message.CRM_From__r.FirstName} • &nbsp;
+                    <lightning-formatted-date-time
+                        value={message.CreatedDate}
+                        month="numeric"
+                        day="numeric"
+                        hour="2-digit"
+                        minute="2-digit"
+                    >
+                    </lightning-formatted-date-time>
+                    &nbsp;
+                </div>
+            </div>
+        </div>
+    </li>
+</template>

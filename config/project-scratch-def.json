@@ -3,10 +3,26 @@
     "edition": "Enterprise",
     "release": "Current",
     "adminEmail": "fakeemail@nav.no.scratchorg",
-    "features": ["ProcessBuilder", "API", "LiveAgent", "PersonAccounts", "ContactsToMultipleAccounts"],
+    "features": [
+        "ProcessBuilder",
+        "API",
+        "LiveAgent",
+        "PersonAccounts",
+        "FIELDSERVICE:1",
+        "Sites",
+        "ForceComPlatform",
+        "Communities",
+        "CustomerCommunity",
+        "CustomerCommunityPlus",
+        "ServiceCloud",
+        "LightningServiceConsole"
+    ],
     "country": "NO",
     "language": "en_US",
     "settings": {
+        "communitiesSettings": {
+            "enableNetworksEnabled": true
+        },
         "lightningExperienceSettings": {
             "enableS1DesktopEnabled": true
         },
@@ -14,7 +30,7 @@
             "enableTranslationWorkbench": true
         },
         "accountSettings": {
-            "enableAccountTeams": true
+            "enableRelateContactToMultipleAccounts": true
         },
         "liveAgentSettings": {
             "enableLiveAgent": true

@@ -1,0 +1,22 @@
+<template>
+    <li class="slds-chat-listitem slds-chat-listitem_outbound">
+        <div class="slds-chat-message">
+            <div class="slds-chat-message__body">
+                <div class="slds-chat-message__text slds-chat-message__text_outbound">
+                    <span>{message.CRM_Message_Text__c} </span>
+                </div>
+                <div class="slds-chat-message__meta">
+                    {message.CRM_From__r.CRM_FirstName} &nbsp;
+                    <lightning-formatted-date-time
+                        value={message.CreatedDate}
+                        month="numeric"
+                        day="numeric"
+                        hour="2-digit"
+                        minute="2-digit"
+                    >
+                    </lightning-formatted-date-time>
+                </div>
+            </div>
+        </div>
+    </li>
+</template>

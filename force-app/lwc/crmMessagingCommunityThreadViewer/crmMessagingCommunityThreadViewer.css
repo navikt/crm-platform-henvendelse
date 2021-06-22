@@ -1,0 +1,10 @@
+.decorator-wrapper {
+    max-width: 80%;
+    margin: auto;
+}
+.submitbtn {
+    float: right;
+}
+.messagearea {
+    margin-bottom: 1em;
+}

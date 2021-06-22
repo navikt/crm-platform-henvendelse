@@ -1,0 +1,36 @@
+<template>
+    <!-- Messages Start-->
+    <template for:each={messages} for:item="message">
+        <c-crm-messaging-Message-Container message={message} key={message.Id}></c-crm-messaging-Message-Container>
+    </template>
+    <!-- Messages End-->
+    <!-- Reply Box Start-->
+    <lightning-record-edit-form object-api-name="Message__c" onsuccess={handlesuccess} onsubmit={handlesubmit}>
+        <lightning-layout class="slds-border_top slds-m-top_x-small slds-p-top_small" multiple-rows="true">
+            <lightning-layout-item padding="horizontalSmall" size="12">
+                <lightning-input-field
+                    class="msgText"
+                    variant="label-hidden"
+                    field-name="CRM_Message_Text__c"
+                ></lightning-input-field>
+            </lightning-layout-item>
+            <br />
+
+            <lightning-layout-item size="12" padding="horizontalSmall">
+                <lightning-button
+                    type="submit"
+                    name="submit"
+                    label="Send"
+                    variant="brand"
+                    style="min-height: 3rem"
+                    class="slds-float_right"
+                >
+                </lightning-button>
+            </lightning-layout-item>
+        </lightning-layout>
+        <!--</div> -->
+        <lightning-input-field field-name="CRM_Recipient__c" class="slds-hide"></lightning-input-field>
+        <lightning-input-field field-name="CRM_From__c" value={userid} class="slds-hide"></lightning-input-field>
+    </lightning-record-edit-form>
+    <!-- Reply Box End-->
+</template>
