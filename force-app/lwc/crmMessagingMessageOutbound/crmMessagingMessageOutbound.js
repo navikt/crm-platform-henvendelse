@@ -1,4 +1,4 @@
-import { LightningElement, api } from '../crmMessagingCommunityMessageContainer/node_modules/lwc';
+import { LightningElement, api } from 'lwc';
 
 export default class MessagingMessageOutbound extends LightningElement {
     @api message;

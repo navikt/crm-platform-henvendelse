@@ -1,4 +1,4 @@
-import { LightningElement, api, wire, track } from '../crmMessagingCommunityMessageContainer/node_modules/lwc';
+import { LightningElement, api, wire, track } from 'lwc';
 import getThreads from '@salesforce/apex/CRM_MessageHelper.getThreadsCollection';
 import createThread from '@salesforce/apex/CRM_MessageHelper.createThread';
 import { refreshApex } from '@salesforce/apex';

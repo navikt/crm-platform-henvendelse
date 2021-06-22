@@ -1,4 +1,4 @@
-import { LightningElement, api, wire } from '../crmMessagingCommunityMessageContainer/node_modules/lwc';
+import { LightningElement, api, wire } from 'lwc';
 import logos from '@salesforce/resourceUrl/stoLogos';
 import getlicenses from '@salesforce/apex/CRM_MessageHelper.getUserLisenceType';
 

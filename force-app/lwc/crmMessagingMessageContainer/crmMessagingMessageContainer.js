@@ -1,5 +1,5 @@
-import { LightningElement, api, track } from '../crmMessagingCommunityMessageContainer/node_modules/lwc';
-import Id from '../crmMessagingCommunityMessageContainer/node_modules/@salesforce/user/Id';
+import { LightningElement, api, track } from 'lwc';
+import Id from '@salesforce/user/Id';
 
 export default class messagingMessageContainer extends LightningElement {
     showpopover = false;

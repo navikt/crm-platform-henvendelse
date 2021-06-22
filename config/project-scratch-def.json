@@ -8,14 +8,14 @@
         "API",
         "LiveAgent",
         "PersonAccounts",
-        "FIELDSERVICE:1",
         "Sites",
         "ForceComPlatform",
         "Communities",
         "CustomerCommunity",
         "CustomerCommunityPlus",
         "ServiceCloud",
-        "LightningServiceConsole"
+        "LightningServiceConsole",
+        "FIELDSERVICE:1"
     ],
     "country": "NO",
     "language": "en_US",
@@ -40,6 +40,15 @@
         },
         "nameSettings": {
             "enableMiddleName": true
+        },
+        "fieldServiceSettings": {
+            "fieldServiceOrgPref": true,
+            "doesShareSaParentWoWithAr": false,
+            "doesShareSaWithAr": false,
+            "enableWorkOrders": true,
+            "isGeoCodeSyncEnabled": false,
+            "isLocationHistoryEnabled": false,
+            "fieldServiceNotificationsOrgPref": true
         }
     }
 }

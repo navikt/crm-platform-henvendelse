@@ -1,8 +1,8 @@
-import { LightningElement, wire, api, track } from '../crmMessagingCommunityMessageContainer/node_modules/lwc';
+import { LightningElement, wire, api, track } from 'lwc';
 import getmessages from '@salesforce/apex/CRM_MessageHelper.getMessagesFromThread';
 import markasread from '@salesforce/apex/CRM_MessageHelper.markAsRead';
 import { refreshApex } from '@salesforce/apex';
-import userId from '../crmMessagingCommunityMessageContainer/node_modules/@salesforce/user/Id';
+import userId from '@salesforce/user/Id';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 
