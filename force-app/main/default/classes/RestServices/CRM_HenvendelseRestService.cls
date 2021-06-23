@@ -1,4 +1,4 @@
-@RestResource(urlmapping='/henvendelse/*')
+@RestResource(urlmapping='/henvendelseinfo/henvendelseliste')
 global without sharing class CRM_HenvendelseRestService extends ApexRestService {
     private enum HENVENDELSE_TYPES {
         SAMTALEREFERAT,
@@ -26,31 +26,30 @@ global without sharing class CRM_HenvendelseRestService extends ApexRestService 
     }
 
     @HttpGet
-    global static void getHenvendelseByReference() {
+    global static void getHenvendelseList() {
         // Instantiate the RestResponse
         RestResponse response = RestContext.response;
-        Id referenceId;
+        String actorId = getRequestParam('aktorid');
+
+        if (String.isBlank(actorId)) {
+            setResponse(400, 'Missing required query input: aktorid');
+            return;
+        }
 
         try {
-            referenceId = (Id) getLastPathParameter();
-            String objName = referenceId.getSObjectType().getDescribe().getName();
+            List<CRM_Henvendelse> returnList = new List<CRM_Henvendelse>();
+            List<Conversation_Note__c> convList = new CRM_ConversationNoteSelector()
+                .selectByActorId(new Set<String>{ actorId });
+            returnList.addAll(convertToHenvendelseList(convList));
 
-            switch on objName {
-                when 'Message__c' {
-                    //Do message query
-                }
-                when 'Conversation_Note__c' {
-                    //Do Conversation Note Query
-                    List<Conversation_Note__c> convNotes = new CRM_ConversationNoteSelector()
-                        .selectById(new Set<Id>{ referenceId });
-                    setResponse(200, 'WRAPPER');
-                }
-                when else {
-                    setResponse(400, 'Invalid reference');
-                }
-            }
-        } catch (StringException stringEx) {
-            setResponse(400, 'Invalid reference: ' + stringEx.getMessage());
+            List<Thread__c> threadList = new CRM_ThreadSelector().selectByActorId(new Set<String>{ actorId });
+            returnList.addAll(convertToHenvendelseList(threadList));
+
+            setResponse(200, JSON.serialize(returnList));
+        } catch (QueryException queryEx) {
+            setResponse(500, 'Query exception: ' + queryEx.getMessage());
+        } catch (Exception ex) {
+            setResponse(500, 'Exception: ' + ex.getMessage());
         }
     }
 
@@ -65,6 +64,24 @@ global without sharing class CRM_HenvendelseRestService extends ApexRestService 
         }
 
         return false;
+    }
+
+    private static List<CRM_Henvendelse> convertToHenvendelseList(List<Conversation_Note__c> convList) {
+        List<CRM_Henvendelse> retList = new List<CRM_Henvendelse>();
+        for (Conversation_Note__c convNote : convList) {
+            retList.add(new CRM_Henvendelse(convNote, convNote.Journal_Entries__r));
+        }
+
+        return retList;
+    }
+
+    private static List<CRM_Henvendelse> convertToHenvendelseList(List<Thread__c> threadList) {
+        List<CRM_Henvendelse> retList = new List<CRM_Henvendelse>();
+        for (Thread__c thread : threadList) {
+            retList.add(new CRM_Henvendelse(thread, thread.Messages__r, thread.Journal_Entries__r));
+        }
+
+        return retList;
     }
 
     global class HenvendelseRequest {

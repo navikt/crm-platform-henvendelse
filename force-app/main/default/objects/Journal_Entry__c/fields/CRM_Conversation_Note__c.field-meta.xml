@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CRM_Conversation_Note__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Lookup to a conversation note if the journal entry is related to this.</description>
+    <externalId>false</externalId>
+    <label>Conversation Note</label>
+    <referenceTo>Conversation_Note__c</referenceTo>
+    <relationshipLabel>Journal Entries</relationshipLabel>
+    <relationshipName>Journal_Entries</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

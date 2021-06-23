@@ -20,6 +20,8 @@ public inherited sharing class CRM_ConversationNoteSelector extends CRM_ApiSelec
     public List<Conversation_Note__c> selectByActorId(Set<String> actorIds) {
         fflib_QueryFactory query = newQueryFactory();
         query.selectFields(QUERY_FIELDS).setCondition('CRM_Account__r.CRM_Person__r.INT_ActorId__c in :idSet');
+        //Adds the Journal entry selector query as a relationship query to the Conversation Note query
+        new CRM_JournalEntrySelector().addQueryFactorySubselect(query, 'Journal_Entries__r');
         return (List<Conversation_Note__c>) Database.query(query.toSOQL());
     }
 }

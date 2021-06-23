@@ -1,6 +1,18 @@
 public inherited sharing class CRM_MessageSelector extends CRM_ApiSelector {
+    public CRM_MessageSelector() {
+        super(false);
+    }
+
+    public CRM_MessageSelector(Boolean includeFieldSetFields) {
+        super(includeFieldSetFields);
+    }
+
     public List<Schema.SObjectField> getSObjectFieldList() {
-        return new List<Schema.SObjectField>{ Message__c.Id };
+        return new List<Schema.SObjectField>{};
+    }
+
+    public override List<Schema.FieldSet> getSObjectFieldSetList() {
+        return new List<Schema.FieldSet>{ SObjectType.Message__c.FieldSets.CRM_API_Field_Set };
     }
 
     public Schema.SObjectType getSObjectType() {
