@@ -1,0 +1,32 @@
+[
+    {
+        "sobject": "Common_Code__c",
+        "saveRefs": true,
+        "resolveRefs": true,
+        "files": ["theme_groups.json", "themes.json", "subthemes.json"]
+    },
+    {
+        "sobject": "Person__c",
+        "saveRefs": true,
+        "resolveRefs": false,
+        "files": ["persons.json"]
+    },
+    {
+        "sobject": "Account",
+        "saveRefs": true,
+        "resolveRefs": true,
+        "files": ["accounts.json"]
+    },
+    {
+        "sobject": "Conversation_Note__c",
+        "saveRefs": true,
+        "resolveRefs": true,
+        "files": ["conversation_notes.json"]
+    },
+    {
+        "sobject": "Journal_Entry__c",
+        "saveRefs": false,
+        "resolveRefs": true,
+        "files": ["journal_entries.json"]
+    }
+]

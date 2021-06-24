@@ -1,0 +1,13 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "Account",
+                "referenceId": "AccountRef1"
+            },
+            "FirstName": "Harry",
+            "LastName": "Potter",
+            "CRM_Person__c": "@PersonRef1"
+        }
+    ]
+}

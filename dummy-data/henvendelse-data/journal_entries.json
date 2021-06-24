@@ -1,0 +1,14 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "Journal_Entry__c",
+                "referenceId": "JournalRef1"
+            },
+            "Theme__c": "@AAPRef",
+            "NAV_Case_Reference__c": "123REF",
+            "Journal_Entry_Status__c": "Completed",
+            "CRM_Conversation_Note__c": "@ConvNoteRef1"
+        }
+    ]
+}
