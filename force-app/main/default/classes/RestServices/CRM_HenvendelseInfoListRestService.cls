@@ -20,7 +20,7 @@ global without sharing class CRM_HenvendelseInfoListRestService extends ApexRest
             List<Thread__c> threadList = new CRM_ThreadSelector().selectByActorId(new Set<String>{ actorId });
             returnList.addAll(convertToHenvendelseList(threadList));
 
-            setResponse(200, JSON.serialize(returnList));
+            setResponse(200, JSON.serializePretty(returnList));
         } catch (QueryException queryEx) {
             setResponse(500, 'Query exception: ' + queryEx.getMessage());
         } catch (Exception ex) {
