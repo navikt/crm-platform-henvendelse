@@ -122,6 +122,7 @@ public with sharing class CRM_MessageHelper {
         List<Message__c> msgList = [SELECT Id FROM Message__c WHERE CRM_Read__c = FALSE AND CRM_Thread__c = :threadId];
         for (Message__c msg : msgList) {
             msg.CRM_Read__c = true;
+            msg.CRM_Read_Datetime__c = DateTime.now();
         }
         update msgList;
     }

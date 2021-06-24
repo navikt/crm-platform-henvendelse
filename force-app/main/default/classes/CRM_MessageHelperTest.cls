@@ -30,13 +30,17 @@ public with sharing class CRM_MessageHelperTest {
     @isTest
     static void getObjectTypeFromidTest() {
         List<Account> accList = [SELECT Id FROM Account];
+        Test.startTest();
         String objectType = CRM_MessageHelper.getRecordObjectType(acclist.get(0).Id);
+        Test.stopTest();
         System.assertEquals('Account', objectType, 'Object type is not recoginzed as expected');
     }
     @isTest
     static void getThreadsCollectionSingleTest() {
         List<Account> accList = [SELECT Id FROM Account];
+        Test.startTest();
         List<Thread__c> resList = CRM_MessageHelper.getThreadsCollection(accList.get(0).Id, true);
+        Test.stopTest();
         System.assertEquals(1, resList.size());
     }
     /**
@@ -45,14 +49,18 @@ public with sharing class CRM_MessageHelperTest {
     @isTest
     static void getThreadsCollectionMultiTest() {
         List<Account> accList = [SELECT Id FROM Account];
+        Test.startTest();
         List<Thread__c> resList = CRM_MessageHelper.getThreadsCollection(accList.get(0).Id, false);
+        Test.stopTest();
         System.assertEquals(1, resList.size());
     }
 
     @isTest
     static void getSingleThreadTest() {
         List<Account> accList = [SELECT Id FROM Account];
+        Test.startTest();
         Thread__c t = CRM_MessageHelper.getSingleThread(accList.get(0).Id);
+        Test.stopTest();
         System.assertNotEquals(null, t);
     }
     @isTest
