@@ -1,29 +1,29 @@
-public class CRM_Henvendelse {
-    public String fnr;
-    public String aktorId;
-    public String avsluttetDato;
-    public String behandlingsId;
-    public String behandlingskjedeId;
-    public String behandlingstema;
-    public String brukersEnhet;
-    public Boolean erTilknyttetAnsatt;
-    public Boolean ferdigstiltUtenSvar;
-    public String gjeldendeTemagruppe;
-    public String henvendelseType;
-    public CRM_JournalfortInformasjon journalfortInformasjon;
-    public String kontorsperreEnhet;
-    public String lestDato;
-    public CRM_Markeringer markeringer;
-    public CRM_HenvendelseMetadataListe metadataListe;
-    public String markertSomFeilsendtAv;
-    public String oppgaveIdGsak;
-    public String opprettetDato;
-    public String tema;
-    public String tilknyttetEnhet;
+global class CRM_Henvendelse {
+    global String fnr;
+    global String aktorId;
+    global String avsluttetDato;
+    global String behandlingsId;
+    global String behandlingskjedeId;
+    global String behandlingstema;
+    global String brukersEnhet;
+    global Boolean erTilknyttetAnsatt;
+    global Boolean ferdigstiltUtenSvar;
+    global String gjeldendeTemagruppe;
+    global String henvendelseType;
+    global CRM_JournalfortInformasjon journalfortInformasjon;
+    global String kontorsperreEnhet;
+    global String lestDato;
+    global CRM_Markeringer markeringer;
+    global CRM_HenvendelseMetadataListe metadataListe;
+    global String markertSomFeilsendtAv;
+    global String oppgaveIdGsak;
+    global String opprettetDato;
+    global String tema;
+    global String tilknyttetEnhet;
 
-    public CRM_Henvendelse(Conversation_Note__c convNote, List<Journal_Entry__c> jeList) {
+    global CRM_Henvendelse(Conversation_Note__c convNote, List<Journal_Entry__c> jeList) {
     }
 
-    public CRM_Henvendelse(Thread__c thread, List<Message__c> messages, List<Journal_Entry__c> jeList) {
+    global CRM_Henvendelse(Thread__c thread, List<Message__c> messages, List<Journal_Entry__c> jeList) {
     }
 }

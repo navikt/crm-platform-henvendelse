@@ -1,4 +1,4 @@
-@RestResource(urlmapping='/henvendelseinfo/henvendelseliste')
+@RestResource(urlmapping='/henvendelse/behandling/*')
 global without sharing class CRM_HenvendelseRestService extends ApexRestService {
     private enum HENVENDELSE_TYPES {
         SAMTALEREFERAT,
@@ -7,49 +7,52 @@ global without sharing class CRM_HenvendelseRestService extends ApexRestService 
     }
 
     @HttpPost
-    global static void createHenvendelse(HenvendelseRequest req) {
-        // Instantiate the RestResponse
-        RestResponse response = RestContext.response;
+    global static void createHenvendelse(CRM_Henvendelse req) {
         RestRequest request = RestContext.request;
-
-        String threadId = request.requestURI.substringAfterLast('/');
-        //New message on existing thread
-        if (String.isNotBlank(threadId)) {
-            try {
-                Thread__c thread = [SELECT Id FROM Thread__c WHERE Id = :threadId LIMIT 1];
-            } catch (QueryException qEx) {
-                response.statusCode = 404;
-            }
-        } else {
-            //New henvendelse of input type
-        }
     }
 
-    @HttpGet
-    global static void getHenvendelseList() {
-        // Instantiate the RestResponse
-        RestResponse response = RestContext.response;
-        String actorId = getRequestParam('aktorid');
-
-        if (String.isBlank(actorId)) {
-            setResponse(400, 'Missing required query input: aktorid');
-            return;
-        }
+    @HttpPatch
+    global static void updateHenvendelse(CRM_Henvendelse req) {
+        RestRequest request = RestContext.request;
 
         try {
-            List<CRM_Henvendelse> returnList = new List<CRM_Henvendelse>();
-            List<Conversation_Note__c> convList = new CRM_ConversationNoteSelector()
-                .selectByActorId(new Set<String>{ actorId });
-            returnList.addAll(convertToHenvendelseList(convList));
+            Id henvId = (Id) request.requestURI.substringAfterLast('/').removeEndIgnoreCase('/');
 
-            List<Thread__c> threadList = new CRM_ThreadSelector().selectByActorId(new Set<String>{ actorId });
-            returnList.addAll(convertToHenvendelseList(threadList));
+            String objectName = henvId.getSobjectType().getDescribe().getName();
 
-            setResponse(200, JSON.serialize(returnList));
-        } catch (QueryException queryEx) {
-            setResponse(500, 'Query exception: ' + queryEx.getMessage());
+            switch on objectName {
+                when 'Thread__c' {
+                    Thread__c thread = convertToThread(req);
+                    SObjectAccessDecision decision = Security.stripInaccessible(
+                        AccessType.UPDATABLE,
+                        new List<Thread__c>{ thread },
+                        true
+                    ); //Removes the fields that the calling part do not have access to update
+
+                    update decision.getRecords();
+                }
+                when 'Conversation_Note__c' {
+                    Conversation_Note__c convNote = convertToConvNote(req);
+                    SObjectAccessDecision decision = Security.stripInaccessible(
+                        AccessType.UPDATABLE,
+                        new List<Conversation_Note__c>{ convNote },
+                        true
+                    ); //Removes the fields that the calling part do not have access to update
+
+                    update decision.getRecords();
+                }
+                when else {
+                    setResponse(400, 'Invalid reference value for henv/thread ID: ' + henvId);
+                }
+            }
+        } catch (DmlException dmlEx) {
+            if (StatusCode.FIELD_INTEGRITY_EXCEPTION == dmlEx.getDmlType(0)) {
+                setResponse(400, dmlEx.getMessage());
+            } else {
+                setResponse(500, dmlEx.getMessage());
+            }
         } catch (Exception ex) {
-            setResponse(500, 'Exception: ' + ex.getMessage());
+            setResponse(500, 'Failed to update: ' + ex.getMessage());
         }
     }
 
@@ -57,7 +60,7 @@ global without sharing class CRM_HenvendelseRestService extends ApexRestService 
     //###############     HELPER METHODS       ##################//
     //###########################################################//
 
-    private Boolean validateInput(HenvendelseRequest req) {
+    private static Boolean validateInput(CRM_Henvendelse req) {
         // Instantiate the RestResponse
         RestResponse response = RestContext.response;
         if (HENVENDELSE_TYPES.valueOf(req.henvendelseType) == null) {
@@ -66,28 +69,13 @@ global without sharing class CRM_HenvendelseRestService extends ApexRestService 
         return false;
     }
 
-    private static List<CRM_Henvendelse> convertToHenvendelseList(List<Conversation_Note__c> convList) {
-        List<CRM_Henvendelse> retList = new List<CRM_Henvendelse>();
-        for (Conversation_Note__c convNote : convList) {
-            retList.add(new CRM_Henvendelse(convNote, convNote.Journal_Entries__r));
-        }
-
-        return retList;
+    private static Thread__c convertToThread(CRM_Henvendelse req) {
+        Thread__c thread = new Thread__c();
+        return thread;
     }
 
-    private static List<CRM_Henvendelse> convertToHenvendelseList(List<Thread__c> threadList) {
-        List<CRM_Henvendelse> retList = new List<CRM_Henvendelse>();
-        for (Thread__c thread : threadList) {
-            retList.add(new CRM_Henvendelse(thread, thread.Messages__r, thread.Journal_Entries__r));
-        }
-
-        return retList;
-    }
-
-    global class HenvendelseRequest {
-        String henvendelseId;
-        String kjedeId;
-        String aktorId;
-        String henvendelseType;
+    private static Conversation_Note__c convertToConvNote(CRM_Henvendelse req) {
+        Conversation_Note__c convNote = new Conversation_Note__c();
+        return convNote;
     }
 }

@@ -7,7 +7,13 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
         return Thread__c.sObjectType;
     }
 
-    public List<Thread__c> selectById(Set<Id> idSet) {
+    public Thread__c selectById(Id id) {
+        fflib_QueryFactory query = newQueryFactory();
+        query.setCondition('Id =: id').setLimit(1);
+        return (Thread__c) Database.query(query.toSOQL());
+    }
+
+    public List<Thread__c> selectByIds(Set<Id> idSet) {
         fflib_QueryFactory query = newQueryFactory();
         query.setCondition('Id in :idSet');
         return (List<Thread__c>) Database.query(query.toSOQL());
