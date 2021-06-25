@@ -1,0 +1,15 @@
+.message-from {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
+.message-text {
+    font-size: 16px;
+}
+.snakkeboble {
+    display: block;
+    max-width: 80%;
+}
+.ikon {
+    margin-top: 1em;
+}

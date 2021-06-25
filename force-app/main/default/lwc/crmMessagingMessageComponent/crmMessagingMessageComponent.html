@@ -1,0 +1,25 @@
+<template>
+    <lightning-card class="slds--sds-c-card-shadow" variant="Narrow" title="Samtaler" icon-name="standard:CRM_user">
+        <div style="width: 95%; margin-left: auto; margin-right: auto">
+            <!-- Singlethread true - WIll only ever be one thread in the iteration-->
+            <template if:true={shownewbutton}>
+                <lightning-button
+                    label="Klikk for å starte samtale"
+                    icon-name="utility:anywhere_chat"
+                    variant="border-filled"
+                    slot="actions"
+                    class="slds-align_absolute-center"
+                    onclick={handlenewpressed}
+                ></lightning-button>
+            </template>
+            <template for:each={threads} for:item="thread">
+                <c-crm-messaging-thread-Viewer
+                    key={thread.Id}
+                    thread={thread}
+                    style="margin-left: 1em; margin-right: 1em"
+                ></c-crm-messaging-thread-Viewer>
+            </template>
+        </div>
+        <!-- Modal Stop-->
+    </lightning-card>
+</template>

@@ -1,0 +1,16 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "Conversation_Note__c",
+                "referenceId": "ConvNoteRef1"
+            },
+            "CRM_Account__c": "@AccountRef1",
+            "CRM_Created_By__c": "Z999999",
+            "CRM_Is_Read__c": true,
+            "CRM_Theme_Group__c": "@ArbeidRef",
+            "CRM_Theme__c": "@AAPRef",
+            "CRM_Conversation_Note__c": "Hei! Du tok kontakt om arbeidsavklaringspenger og har bedt om å bli kontaktet av din saksbehandler."
+        }
+    ]
+}
