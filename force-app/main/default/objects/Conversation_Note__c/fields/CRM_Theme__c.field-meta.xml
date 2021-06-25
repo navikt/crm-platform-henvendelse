@@ -16,7 +16,7 @@
     </lookupFilter>
     <referenceTo>Common_Code__c</referenceTo>
     <relationshipLabel>Conversation Notes</relationshipLabel>
-    <relationshipName>Conversation_Notes_Theme</relationshipName>
+    <relationshipName>CRM_Conversation_Notes_Theme</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
