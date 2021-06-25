@@ -1,5 +1,11 @@
 public inherited sharing class CRM_ConversationNoteSelector extends CRM_ApiSelector {
-    private final List<String> QUERY_FIELDS = new List<String>{ 'Id', 'CRM_Account__r.CRM_Person__r.INT_ActorId__c' };
+    private final List<String> QUERY_FIELDS = new List<String>{
+        'Id',
+        'Name',
+        'CRM_Account__r.CRM_Person__r.INT_ActorId__c',
+        'CRM_Account__r.CRM_Person__r.Name',
+        'CRM_Theme_Group_Code__c'
+    };
 
     //TODO: Formula fields to easier define the returned fields? Can be included in field sets but still need to be wrapped in generic model
 

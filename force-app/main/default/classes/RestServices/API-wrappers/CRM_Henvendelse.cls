@@ -10,20 +10,33 @@ global class CRM_Henvendelse {
     global Boolean ferdigstiltUtenSvar;
     global String gjeldendeTemagruppe;
     global String henvendelseType;
-    global CRM_JournalfortInformasjon journalfortInformasjon;
+    global List<CRM_JournalfortInformasjon> journalposter;
     global String kontorsperreEnhet;
     global String lestDato;
     global CRM_Markeringer markeringer;
-    global CRM_HenvendelseMetadataListe metadataListe;
-    global String markertSomFeilsendtAv;
-    global String oppgaveIdGsak;
-    global String opprettetDato;
-    global String tema;
     global String tilknyttetEnhet;
 
     global CRM_Henvendelse(Conversation_Note__c convNote, List<Journal_Entry__c> jeList) {
+        this.fnr = convNote.CRM_Account__r.CRM_Person__r.Name;
+        this.aktorId = convNote.CRM_Account__r.CRM_Person__r.INT_ActorId__c;
+        this.gjeldendeTemagruppe = convNote.CRM_Theme_Group_Code__c;
+
+        if (jeList != null && jeList.size() > 0) {
+            List<CRM_JournalfortInformasjon> journalPosts = new List<CRM_JournalfortInformasjon>();
+            for (Journal_Entry__c jEntry : jeList) {
+                journalPosts.add(new CRM_JournalfortInformasjon(jEntry));
+            }
+            this.journalposter = journalPosts;
+        }
     }
 
     global CRM_Henvendelse(Thread__c thread, List<Message__c> messages, List<Journal_Entry__c> jeList) {
+        if (jeList != null && jeList.size() > 0) {
+            List<CRM_JournalfortInformasjon> journalPosts = new List<CRM_JournalfortInformasjon>();
+            for (Journal_Entry__c jEntry : jeList) {
+                journalPosts.add(new CRM_JournalfortInformasjon(jEntry));
+            }
+            this.journalposter = journalPosts;
+        }
     }
 }
