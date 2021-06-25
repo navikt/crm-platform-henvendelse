@@ -24,7 +24,7 @@ global without sharing class CRM_HenvendelseInfoListRestService extends ApexRest
         } catch (QueryException queryEx) {
             setResponse(500, 'Query exception: ' + queryEx.getMessage());
         } catch (Exception ex) {
-            setResponse(500, 'Exception: ' + ex.getMessage());
+            setResponse(500, 'Exception: ' + ex.getMessage() + ex.getStackTraceString());
         }
     }
 
