@@ -2,6 +2,7 @@ global class CRM_Henvendelse {
     global String fnr;
     global String aktorId;
     global String avsluttetDato;
+    global String opprettetDato;
     global String behandlingsId;
     global String behandlingskjedeId;
     global String behandlingstema;
@@ -20,6 +21,7 @@ global class CRM_Henvendelse {
         this.fnr = convNote.CRM_Account__r.CRM_Person__r.Name;
         this.aktorId = convNote.CRM_Account__r.CRM_Person__r.INT_ActorId__c;
         this.gjeldendeTemagruppe = convNote.CRM_Theme_Group_Code__c;
+        this.opprettetDato = convNote.CreatedDate.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss.SSSZ');
 
         if (jeList != null && jeList.size() > 0) {
             List<CRM_JournalfortInformasjon> journalPosts = new List<CRM_JournalfortInformasjon>();
