@@ -3,8 +3,8 @@ global class CRM_Henvendelse {
     global String aktorId;
     global String avsluttetDato;
     global String opprettetDato;
-    global String behandlingsId;
-    global String behandlingskjedeId;
+    global String henvendelseId;
+    global String kjedeId;
     global String behandlingstema;
     global String brukersEnhet;
     global Boolean erTilknyttetAnsatt;
@@ -21,7 +21,10 @@ global class CRM_Henvendelse {
         this.fnr = convNote.CRM_Account__r.CRM_Person__r.Name;
         this.aktorId = convNote.CRM_Account__r.CRM_Person__r.INT_ActorId__c;
         this.gjeldendeTemagruppe = convNote.CRM_Theme_Group_Code__c;
-        this.opprettetDato = convNote.CreatedDate.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss.SSSZ');
+        this.opprettetDato = gtmFormatDateTime(convNote.CreatedDate);
+        this.kjedeId = null;
+        this.henvendelseId = convNote.Id;
+        this.lestDato = gtmFormatDateTime(convNote.CRM_Read_Date__c);
 
         if (jeList != null && jeList.size() > 0) {
             List<CRM_JournalfortInformasjon> journalPosts = new List<CRM_JournalfortInformasjon>();
@@ -33,6 +36,9 @@ global class CRM_Henvendelse {
     }
 
     global CRM_Henvendelse(Thread__c thread, List<Message__c> messages, List<Journal_Entry__c> jeList) {
+        this.kjedeId = thread.Id;
+        this.henvendelseId = thread.Id;
+
         if (jeList != null && jeList.size() > 0) {
             List<CRM_JournalfortInformasjon> journalPosts = new List<CRM_JournalfortInformasjon>();
             for (Journal_Entry__c jEntry : jeList) {
@@ -40,5 +46,9 @@ global class CRM_Henvendelse {
             }
             this.journalposter = journalPosts;
         }
+    }
+
+    private String gtmFormatDateTime(DateTime datetime) {
+        return datetime != null ? datetime.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss.SSSZ') : null;
     }
 }
