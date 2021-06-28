@@ -1,22 +1,11 @@
 @RestResource(urlmapping='/henvendelse/behandling/*')
-global without sharing class CRM_HenvendelseRestService extends ApexRestService {
-    private enum HENVENDELSE_TYPES {
-        SAMTALEREFERAT,
-        CHAT,
-        ASYNC_CHAT
-    }
-
-    @HttpPost
-    global static void createHenvendelse(CRM_Henvendelse req) {
-        RestRequest request = RestContext.request;
-    }
-
+global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_HenvendelseApiUtils {
     @HttpPatch
     global static void updateHenvendelse(CRM_Henvendelse req) {
         RestRequest request = RestContext.request;
 
         try {
-            Id henvId = (Id) request.requestURI.substringAfterLast('/').removeEndIgnoreCase('/');
+            Id henvId = (Id) getLastPathParameter();
 
             String objectName = henvId.getSobjectType().getDescribe().getName();
 
@@ -54,28 +43,5 @@ global without sharing class CRM_HenvendelseRestService extends ApexRestService 
         } catch (Exception ex) {
             setResponse(500, 'Failed to update: ' + ex.getMessage());
         }
-    }
-
-    //###########################################################//
-    //###############     HELPER METHODS       ##################//
-    //###########################################################//
-
-    private static Boolean validateInput(CRM_Henvendelse req) {
-        // Instantiate the RestResponse
-        RestResponse response = RestContext.response;
-        if (HENVENDELSE_TYPES.valueOf(req.henvendelseType) == null) {
-        }
-
-        return false;
-    }
-
-    private static Thread__c convertToThread(CRM_Henvendelse req) {
-        Thread__c thread = new Thread__c();
-        return thread;
-    }
-
-    private static Conversation_Note__c convertToConvNote(CRM_Henvendelse req) {
-        Conversation_Note__c convNote = new Conversation_Note__c();
-        return convNote;
     }
 }

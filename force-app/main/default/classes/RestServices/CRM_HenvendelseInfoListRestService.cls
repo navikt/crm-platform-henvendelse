@@ -17,7 +17,7 @@ global without sharing class CRM_HenvendelseInfoListRestService extends ApexRest
                 .selectByActorId(new Set<String>{ actorId });
             returnList.addAll(convertToHenvendelseList(convList));
 
-            List<Thread__c> threadList = new CRM_ThreadSelector().selectByActorId(new Set<String>{ actorId });
+            List<Thread__c> threadList = new CRM_ThreadSelector(true).selectByActorId(new Set<String>{ actorId });
             returnList.addAll(convertToHenvendelseList(threadList));
 
             setResponse(200, JSON.serializePretty(returnList));
