@@ -21,7 +21,8 @@
     "language": "en_US",
     "settings": {
         "communitiesSettings": {
-            "enableNetworksEnabled": true
+            "enableNetworksEnabled": true,
+            "enableOotbProfExtUserOpsEnable": true
         },
         "lightningExperienceSettings": {
             "enableS1DesktopEnabled": true
@@ -49,6 +50,9 @@
             "isGeoCodeSyncEnabled": false,
             "isLocationHistoryEnabled": false,
             "fieldServiceNotificationsOrgPref": true
+        },
+        "userManagementSettings": {
+            "enableNewProfileUI": true
         }
     }
 }

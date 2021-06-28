@@ -1,6 +1,18 @@
 public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
+    public CRM_ThreadSelector() {
+        super(false);
+    }
+
+    public CRM_ThreadSelector(Boolean includeFieldSetFields) {
+        super(includeFieldSetFields);
+    }
+
     public List<Schema.SObjectField> getSObjectFieldList() {
-        return new List<Schema.SObjectField>{ Thread__c.Id };
+        return new List<Schema.SObjectField>{};
+    }
+
+    public override List<Schema.FieldSet> getSObjectFieldSetList() {
+        return new List<Schema.FieldSet>{ SObjectType.Thread__c.FieldSets.CRM_API_Field_Set };
     }
 
     public Schema.SObjectType getSObjectType() {

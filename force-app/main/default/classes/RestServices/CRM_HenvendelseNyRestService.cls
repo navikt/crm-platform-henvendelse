@@ -1,5 +1,5 @@
 @RestResource(urlmapping='/henvendelse/ny/*')
-global without sharing class CRM_HenvendelseRestService extends CRM_HenvendelseApiUtils {
+global without sharing class CRM_HenvendelseNyRestService extends CRM_HenvendelseApiUtils {
     @HttpPost
     global static void createHenvendelse(CRM_Henvendelse req) {
         RestRequest request = RestContext.request;

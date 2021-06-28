@@ -8,7 +8,9 @@
             "Theme__c": "@AAPRef",
             "NAV_Case_Reference__c": "123REF",
             "Journal_Entry_Status__c": "Completed",
-            "CRM_Conversation_Note__c": "@ConvNoteRef1"
+            "CRM_Conversation_Note__c": "@ConvNoteRef1",
+            "CRM_Journal_Date__c": "2021-06-27T12:00:00.000Z",
+            "CRM_Created_By_Ident__c": "Z999999"
         }
     ]
 }
