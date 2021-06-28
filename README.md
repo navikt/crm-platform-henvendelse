@@ -1,16 +1,17 @@
-Repository conatined data model and functionality connected to dialogues between NAV and their end-users.
-
-# crm-shared-template
+# crm-platform-henvendelse
 
 [![Build](https://github.com/navikt/XXXXXXXXXXXXX/workflows/%5BPUSH%5D%20Create%20Package/badge.svg)](https://github.com/navikt/XXXXXXXXXXXXX/actions?query=workflow%3Acreate)
 [![GitHub version](https://badgen.net/github/release/navikt/XXXXXXXXXXXXX/stable)](https://github.com/navikt/XXXXXXXXXXXXX)
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/navikt/XXXXXXXXXXXXX/blob/master/LICENSE)
+
+Repository containing data model and functionality connected to dialogues between NAV and their end-users. This package exposes a custom rest API for consumers to submit and retrieve inquiry(henvendels) information to and from Salesforce.
 
 ## Dependencies
 
 This package is dependant on the following packages
 
 -   [crm-platform-base](https://github.com/navikt/crm-platform-base)
+-   [crm-journal-utilities](https://github.com/navikt/crm-journal-utilities)
 
 ## Installation
 
@@ -47,6 +48,11 @@ sfdx sfpowerkit:package:dependencies:install -u scratch_org -r -a -w 60 -k ${key
 sfdx force:source:push
 sfdx force:org:open
 ```
+
+## Scratch post steps
+
+Due to the need of creating a dummy community user for dummy data creation it is recommended to run this terminal line after scratch org creation to get a full set of dummy data:
+`sfdx force:apex:execute -f ~/dummy-data/GenerateData.apex`
 
 ## Other
 
