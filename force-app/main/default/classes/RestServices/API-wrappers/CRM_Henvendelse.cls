@@ -48,7 +48,7 @@ global class CRM_Henvendelse {
         }
     }
 
-    private String gtmFormatDateTime(DateTime datetime) {
-        return datetime != null ? datetime.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss.SSSZ') : null;
+    private String gtmFormatDateTime(DateTime timestamp) {
+        return timestamp != null ? timestamp.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss.SSSZ') : null;
     }
 }

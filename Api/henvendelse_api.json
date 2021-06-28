@@ -1,0 +1,124 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "Salesforce Henvendelse API",
+        "version": "1.0"
+    },
+    "servers": [{ "url": "https://test.salesforce.com/services/apexrest" }],
+    "paths": {
+        "/henvendelse/behandling/{henvId}": {
+            "patch": {
+                "tags": ["Henvendelse Behandling"],
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "henvId",
+                        "in": "path",
+                        "required": true,
+                        "description": "Unik id til samtalereferat eller tråd som man ønsker å behandle"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/henvendelse/ny/{type}": {
+            "post": {
+                "tags": ["Henvendelse Behandling"],
+                "description": "Opprett ny henvendelse relatert til en aktør",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": ["samtalereferat", "melding"]
+                        },
+                        "description": "Type henvendelse du ønsker å opprette"
+                    },
+                    {
+                        "name": "kjedeId",
+                        "in": "query",
+                        "required": false,
+                        "description": "Kjedeid hvis ny melding skal opprettes på en eksisterende tråd. Hvis denne er blank opprettes meldingen på en ny tråd."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/henvendelseinfo/henvendelseliste": {
+            "get": {
+                "tags": ["Henvendelse Info"],
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "aktorid",
+                        "in": "query",
+                        "required": true,
+                        "description": "Aktørid til person for uthentelse av henvenselseliste"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#components/schemas/henvendelseliste"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "security": [{ "Salesforce_auth": [] }],
+    "components": {
+        "schemas": {
+            "henvendelseliste": {
+                "type": "array",
+                "items": {
+                    "$ref": "#components/schemas/henvendelse"
+                }
+            },
+            "henvendelse": {
+                "type": "object",
+                "properties": {
+                    "fnr": {
+                        "type": "string",
+                        "example": "12345678910"
+                    },
+                    "aktorId": {
+                        "type": "string"
+                    },
+                    "opprettetDato": {
+                        "type": "string",
+                        "description": "Datetime string",
+                        "example": "2021-06-27T12:00:00.000Z"
+                    },
+                    "henvendelseId": {
+                        "type": "string"
+                    },
+                    "kjedeId": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "Salesforce_auth": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    }
+}

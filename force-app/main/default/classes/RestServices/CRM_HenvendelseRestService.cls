@@ -1,58 +1,27 @@
-@RestResource(urlmapping='/henvendelse/behandling/*')
-global without sharing class CRM_HenvendelseRestService extends ApexRestService {
-    private enum HENVENDELSE_TYPES {
-        SAMTALEREFERAT,
-        CHAT,
-        ASYNC_CHAT
-    }
-
+@RestResource(urlmapping='/henvendelse/ny/*')
+global without sharing class CRM_HenvendelseRestService extends CRM_HenvendelseApiUtils {
     @HttpPost
     global static void createHenvendelse(CRM_Henvendelse req) {
         RestRequest request = RestContext.request;
-    }
-
-    @HttpPatch
-    global static void updateHenvendelse(CRM_Henvendelse req) {
-        RestRequest request = RestContext.request;
 
         try {
-            Id henvId = (Id) request.requestURI.substringAfterLast('/').removeEndIgnoreCase('/');
+            String henvType = getLastPathParameter();
+            String threadId = getRequestParam('kjedeId');
 
-            String objectName = henvId.getSobjectType().getDescribe().getName();
-
-            switch on objectName {
-                when 'Thread__c' {
-                    Thread__c thread = convertToThread(req);
-                    SObjectAccessDecision decision = Security.stripInaccessible(
-                        AccessType.UPDATABLE,
-                        new List<Thread__c>{ thread },
-                        true
-                    ); //Removes the fields that the calling part do not have access to update
-
-                    update decision.getRecords();
-                }
-                when 'Conversation_Note__c' {
-                    Conversation_Note__c convNote = convertToConvNote(req);
-                    SObjectAccessDecision decision = Security.stripInaccessible(
-                        AccessType.UPDATABLE,
-                        new List<Conversation_Note__c>{ convNote },
-                        true
-                    ); //Removes the fields that the calling part do not have access to update
-
-                    update decision.getRecords();
-                }
-                when else {
-                    setResponse(400, 'Invalid reference value for henv/thread ID: ' + henvId);
-                }
-            }
-        } catch (DmlException dmlEx) {
-            if (StatusCode.FIELD_INTEGRITY_EXCEPTION == dmlEx.getDmlType(0)) {
-                setResponse(400, dmlEx.getMessage());
-            } else {
-                setResponse(500, dmlEx.getMessage());
+            if (String.isBlank(henvType)) {
+                setResponse(400, 'Henvendelse type cannot be blank or null');
+                return;
+            } else if (HENVENDELSE_TYPES.valueOf(henvType.toUpperCase()) == null) {
+                setResponse(
+                    400,
+                    'Invalid henvendelse type: ' +
+                    henvType +
+                    '\n Approved types are: ' +
+                    JSON.serializePretty(HENVENDELSE_TYPES.values())
+                );
+                return;
             }
         } catch (Exception ex) {
-            setResponse(500, 'Failed to update: ' + ex.getMessage());
         }
     }
 
@@ -67,15 +36,5 @@ global without sharing class CRM_HenvendelseRestService extends ApexRestService 
         }
 
         return false;
-    }
-
-    private static Thread__c convertToThread(CRM_Henvendelse req) {
-        Thread__c thread = new Thread__c();
-        return thread;
-    }
-
-    private static Conversation_Note__c convertToConvNote(CRM_Henvendelse req) {
-        Conversation_Note__c convNote = new Conversation_Note__c();
-        return convNote;
     }
 }
