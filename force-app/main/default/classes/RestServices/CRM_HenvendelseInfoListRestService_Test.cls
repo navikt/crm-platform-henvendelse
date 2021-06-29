@@ -12,12 +12,7 @@ public class CRM_HenvendelseInfoListRestService_Test {
             WHERE CRM_Person__c = :dummyPerson.Id
             LIMIT 1
         ];
-        Profile portalProfile = [
-            SELECT Id, Name
-            FROM Profile
-            WHERE UserType = 'PowerCustomerSuccess' AND Name = 'Customer Community Plus User'
-            LIMIT 1
-        ];
+        Profile portalProfile = [SELECT Id, Name FROM Profile WHERE UserType = 'CspLitePortal' LIMIT 1];
         User portalUser = (User) CRM_HENV_TestDataFactory.createRecord(
             new User(
                 FirstName = personAcc.FirstName,
