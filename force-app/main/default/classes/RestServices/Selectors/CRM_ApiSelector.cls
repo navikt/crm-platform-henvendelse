@@ -7,8 +7,8 @@ public inherited sharing abstract class CRM_ApiSelector extends fflib_SObjectSel
     }
 
     public CRM_ApiSelector(Boolean includeFieldSetFields) {
-        // Disable the base class read security checking in preference to explicit checking elsewhere
-        this(includeFieldSetFields, false, false);
+        // Enabling base class enforcing FLS for ApiSelectors. All API consumers should be granted permission sets granting necessary access
+        this(includeFieldSetFields, false, true);
     }
 
     public CRM_ApiSelector(Boolean includeFieldSetFields, Boolean enforceCRUD, Boolean enforceFLS) {

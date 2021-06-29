@@ -117,6 +117,7 @@
                 "properties": {
                     "identType": {
                         "type": "string",
+                        "enum": ["NAVIDENT", "AKTORID"],
                         "description": "Type ident for relatert avsender",
                         "example": "NAVIDENT"
                     },

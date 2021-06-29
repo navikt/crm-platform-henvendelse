@@ -2,8 +2,6 @@
 global without sharing class CRM_HenvendelseInfoListRestService extends ApexRestService {
     @HttpGet
     global static void getHenvendelseList() {
-        // Instantiate the RestResponse
-        RestResponse response = RestContext.response;
         String actorId = getRequestParam('aktorid');
 
         if (String.isBlank(actorId)) {
@@ -17,9 +15,8 @@ global without sharing class CRM_HenvendelseInfoListRestService extends ApexRest
                 .selectByActorId(new Set<String>{ actorId });
             returnList.addAll(convertToHenvendelseList(convList));
 
-            List<Thread__c> threadList = new CRM_ThreadSelector(true).selectByActorId(new Set<String>{ actorId });
+            List<Thread__c> threadList = new CRM_ThreadSelector().selectByActorId(new Set<String>{ actorId });
             returnList.addAll(convertToHenvendelseList(threadList));
-
             setResponse(200, JSON.serializePretty(returnList));
         } catch (QueryException queryEx) {
             setResponse(500, 'Query exception: ' + queryEx.getMessage());

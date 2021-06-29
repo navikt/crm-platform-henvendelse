@@ -3,16 +3,18 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
         super(false);
     }
 
-    public CRM_ThreadSelector(Boolean includeFieldSetFields) {
-        super(includeFieldSetFields);
-    }
-
     public List<Schema.SObjectField> getSObjectFieldList() {
-        return new List<Schema.SObjectField>{};
-    }
-
-    public override List<Schema.FieldSet> getSObjectFieldSetList() {
-        return new List<Schema.FieldSet>{ SObjectType.Thread__c.FieldSets.CRM_API_Field_Set };
+        return new List<Schema.SObjectField>{
+            Thread__c.CRM_From__c,
+            Thread__c.CRM_isActive__c,
+            Thread__c.CreatedDate,
+            Thread__c.CRM_Office_Restriction__c,
+            Thread__c.Id,
+            Thread__c.Name,
+            Thread__c.CRM_Related_Object__c,
+            Thread__c.OwnerId,
+            Thread__c.CRM_Recipient__c
+        };
     }
 
     public Schema.SObjectType getSObjectType() {
@@ -39,7 +41,7 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
         //Adds the Journal entry selector query as a relationship query to the Thread query
         new CRM_JournalEntrySelector().addQueryFactorySubselect(query, 'Journal_Entries__r');
         //Adds the Journal entry selector query as a relationship query to the Thread query
-        new CRM_MessageSelector(true).addQueryFactorySubselect(query, 'Messages__r');
+        new CRM_MessageSelector().addQueryFactorySubselect(query, 'Messages__r');
         return (List<Thread__c>) Database.query(query.toSOQL());
     }
 }

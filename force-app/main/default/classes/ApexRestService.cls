@@ -1,13 +1,24 @@
 global virtual class ApexRestService {
+    private static Exception simulatedException;
+    private static Boolean simulatedExceptionThrown = false;
     /**
      * @description: sets the response code for the RestContext
      * @author Stian Ruud Schikora | 06-22-2021
      * @param responseCode
      **/
     global static void setResponse(Integer responseCode) {
+        if (simulatedException != null && simulatedExceptionThrown == false) {
+            simulatedExceptionThrown = true;
+            throw simulatedException;
+        }
         // Instantiate the RestResponse
         RestResponse response = RestContext.response;
         response.statusCode = responseCode;
+    }
+
+    @testVisible
+    private static void simulateException(Exception ex) {
+        simulatedException = ex;
     }
 
     /**
@@ -17,6 +28,10 @@ global virtual class ApexRestService {
      * @param payload
      **/
     global static void setResponse(Integer responseCode, String payload) {
+        if (simulatedException != null && simulatedExceptionThrown == false) {
+            simulatedExceptionThrown = true;
+            throw simulatedException;
+        }
         // Instantiate the RestResponse
         RestResponse response = RestContext.response;
         response.statusCode = responseCode;
