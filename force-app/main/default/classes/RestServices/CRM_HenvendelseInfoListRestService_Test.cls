@@ -6,12 +6,22 @@ public class CRM_HenvendelseInfoListRestService_Test {
             new Person__c(Name = '12345678910', INT_ActorId__c = '123456789101213')
         );
 
+        User accountOwner = [
+            SELECT Id
+            FROM User
+            WHERE UserRoleId != NULL AND isActive = TRUE AND IsPortalEnabled = FALSE
+            LIMIT 1
+        ];
+
         Account personAcc = [
             SELECT Id, FirstName, LastName, PersonContactId
             FROM Account
             WHERE CRM_Person__c = :dummyPerson.Id
             LIMIT 1
         ];
+        personAcc.OwnerId = accountOwner.Id;
+        update personAcc;
+
         Profile portalProfile = [SELECT Id, Name FROM Profile WHERE UserType = 'CspLitePortal' LIMIT 1];
         User portalUser = (User) CRM_HENV_TestDataFactory.createRecord(
             new User(
@@ -22,6 +32,7 @@ public class CRM_HenvendelseInfoListRestService_Test {
                 Username = personAcc.FirstName + '.' + personAcc.LastName + '@testing.com'
             )
         );
+
         Conversation_Note__c convNote = (Conversation_Note__c) CRM_HENV_TestDataFactory.createRecord(
             new Conversation_Note__c(CRM_Account__c = personAcc.Id)
         );
@@ -43,6 +54,10 @@ public class CRM_HenvendelseInfoListRestService_Test {
         RestRequest req = new RestRequest();
         RestResponse resp = new RestResponse();
 
+        User runningUser = [SELECT Id FROM User WHERE isActive = TRUE LIMIT 1];
+        PermissionSet permSet = [SELECT Id FROM PermissionSet WHERE Name = 'Henvendelse_API_Permission' LIMIT 1];
+        insert new PermissionSetAssignment(AssigneeId = runningUser.Id, PermissionSetId = permSet.Id);
+
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste';
         req.httpMethod = 'GET';
@@ -51,7 +66,9 @@ public class CRM_HenvendelseInfoListRestService_Test {
         RestContext.response = resp;
 
         Test.startTest();
-        CRM_HenvendelseInfoListRestService.getHenvendelseList();
+        System.runAs(runningUser) {
+            CRM_HenvendelseInfoListRestService.getHenvendelseList();
+        }
         Test.stopTest();
 
         System.assertEquals(200, RestContext.response.statusCode);
