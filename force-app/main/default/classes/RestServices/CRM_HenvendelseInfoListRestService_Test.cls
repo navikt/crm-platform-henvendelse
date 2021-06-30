@@ -54,10 +54,6 @@ public class CRM_HenvendelseInfoListRestService_Test {
         RestRequest req = new RestRequest();
         RestResponse resp = new RestResponse();
 
-        User runningUser = [SELECT Id FROM User WHERE isActive = TRUE LIMIT 1];
-        PermissionSet permSet = [SELECT Id FROM PermissionSet WHERE Name = 'Henvendelse_API_Permission' LIMIT 1];
-        insert new PermissionSetAssignment(AssigneeId = runningUser.Id, PermissionSetId = permSet.Id);
-
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste';
         req.httpMethod = 'GET';
@@ -66,9 +62,7 @@ public class CRM_HenvendelseInfoListRestService_Test {
         RestContext.response = resp;
 
         Test.startTest();
-        System.runAs(runningUser) {
-            CRM_HenvendelseInfoListRestService.getHenvendelseList();
-        }
+        CRM_HenvendelseInfoListRestService.getHenvendelseList();
         Test.stopTest();
 
         System.assertEquals(200, RestContext.response.statusCode);

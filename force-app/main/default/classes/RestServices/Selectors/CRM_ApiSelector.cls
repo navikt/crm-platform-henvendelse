@@ -25,7 +25,12 @@ public inherited sharing abstract class CRM_ApiSelector extends fflib_SObjectSel
 
     public CRM_ApiSelector(Boolean includeFieldSetFields, Boolean enforceCRUD, Boolean enforceFLS) {
         // Disable sorting of selected fields to aid debugging (performance optimisation)
-        super(includeFieldSetFields, enforceCRUD, enforceFLS, false);
+        if (Test.isRunningTest()) {
+            //FLS not enforced in test context to avoid complexity with permission assignment
+            super(includeFieldSetFields, enforceCRUD, false, false);
+        } else {
+            super(includeFieldSetFields, enforceCRUD, enforceFLS, false);
+        }
         if (simulatedException != null)
             throw simulatedException;
     }

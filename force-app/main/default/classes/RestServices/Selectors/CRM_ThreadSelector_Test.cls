@@ -6,12 +6,22 @@ public class CRM_ThreadSelector_Test {
             new Person__c(Name = '12345678910', INT_ActorId__c = '123456789101213')
         );
 
+        User accountOwner = [
+            SELECT Id
+            FROM User
+            WHERE UserRoleId != NULL AND isActive = TRUE AND IsPortalEnabled = FALSE
+            LIMIT 1
+        ];
+
         Account personAcc = [
             SELECT Id, FirstName, LastName, PersonContactId
             FROM Account
             WHERE CRM_Person__c = :dummyPerson.Id
             LIMIT 1
         ];
+        personAcc.OwnerId = accountOwner.Id;
+        update personAcc;
+
         Profile portalProfile = [SELECT Id, Name FROM Profile WHERE UserType = 'CspLitePortal' LIMIT 1];
         User portalUser = (User) CRM_HENV_TestDataFactory.createRecord(
             new User(
