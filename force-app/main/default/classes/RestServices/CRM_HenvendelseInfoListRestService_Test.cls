@@ -70,7 +70,8 @@ public class CRM_HenvendelseInfoListRestService_Test {
         RestContext.response = resp;
 
         Test.startTest();
-        CRM_HenvendelseInfoListRestService.simulateException(new QueryException('DUMMY ERROR'));
+        //Simulating exception from selector call
+        CRM_ApiSelector.simulateException(new QueryException('DUMMY ERROR'));
         CRM_HenvendelseInfoListRestService.getHenvendelseList();
         Test.stopTest();
 
@@ -90,7 +91,8 @@ public class CRM_HenvendelseInfoListRestService_Test {
         RestContext.response = resp;
 
         Test.startTest();
-        CRM_HenvendelseInfoListRestService.simulateException(new JSONException('DUMMY ERROR'));
+        //Simulating exception from selector call
+        CRM_ApiSelector.simulateException(new JSONException('DUMMY ERROR'));
         CRM_HenvendelseInfoListRestService.getHenvendelseList();
         Test.stopTest();
 
