@@ -241,6 +241,7 @@ public class CRM_HENV_TestDataFactory {
         }
         public Map<String, Object> getFieldDefaults(Boolean bulkify) {
             return new Map<String, Object>{
+                'UserName' => generateRandomString(10) + '@test.com',
                 'FirstName' => 'Test',
                 'LastName' => 'Testesen' + generateRandomString(6),
                 'LanguageLocaleKey' => 'no',
@@ -516,10 +517,14 @@ public class CRM_HENV_TestDataFactory {
             return getFieldDefaults(false);
         }
         public Map<String, Object> getFieldDefaults(Boolean bulkify) {
-            return new Map<String, Object>{};
+            return new Map<String, Object>{
+                'CRM_From__c' => bulkify ? 'User' : createRecord('User', null),
+                'CRM_isActive__c' => true,
+                'CRM_Recipient__c' => bulkify ? 'User' : createRecord('User', null)
+            };
         }
         public Map<String, String> getDmlFields() {
-            return new Map<String, String>{};
+            return new Map<String, String>{ 'CRM_From__c' => 'User', 'CRM_Recipient__c' => 'User' };
         }
     }
 
@@ -528,10 +533,15 @@ public class CRM_HENV_TestDataFactory {
             return getFieldDefaults(false);
         }
         public Map<String, Object> getFieldDefaults(Boolean bulkify) {
-            return new Map<String, Object>{};
+            return new Map<String, Object>{
+                'CRM_Sent_date__c' => Datetime.now(),
+                'CRM_Message_Text__c' => 'DUMMY TEXT',
+                'CRM_Thread__c' => bulkify ? 'Thread__c' : createRecord('Thread__c', null),
+                'CRM_From__c' => bulkify ? 'User' : createRecord('User', null)
+            };
         }
         public Map<String, String> getDmlFields() {
-            return new Map<String, String>{};
+            return new Map<String, String>{ 'CRM_Thread__c' => 'Thread__c', 'CRM_From__c' => 'User' };
         }
     }
 

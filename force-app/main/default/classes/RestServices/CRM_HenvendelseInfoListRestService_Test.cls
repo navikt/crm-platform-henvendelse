@@ -22,13 +22,20 @@ public class CRM_HenvendelseInfoListRestService_Test {
                 Username = personAcc.FirstName + '.' + personAcc.LastName + '@testing.com'
             )
         );
-        CRM_HENV_TestDataFactory.createRecord(new Conversation_Note__c(CRM_Account__c = personAcc.Id));
+        Conversation_Note__c convNote = (Conversation_Note__c) CRM_HENV_TestDataFactory.createRecord(
+            new Conversation_Note__c(CRM_Account__c = personAcc.Id)
+        );
         Thread__c thread = (Thread__c) CRM_HENV_TestDataFactory.createRecord(
             new Thread__c(CRM_From__c = portalUser.Id)
         );
         CRM_HENV_TestDataFactory.createRecord(
             new Message__c(CRM_Thread__c = thread.Id, CRM_Message_Text__c = 'DUMMY TEXT')
         );
+
+        List<Journal_Entry__c> jeList = new List<Journal_Entry__c>();
+        jeList.add(new Journal_Entry__c(CRM_Conversation_Note__c = convNote.Id));
+        jeList.add(new Journal_Entry__c(CRM_Thread__c = thread.Id));
+        CRM_HENV_TestDataFactory.createRecordList(jeList);
     }
 
     @isTest
@@ -88,5 +95,23 @@ public class CRM_HenvendelseInfoListRestService_Test {
         Test.stopTest();
 
         System.assertEquals(500, RestContext.response.statusCode);
+    }
+
+    @isTest
+    static void testMissingActorIdInput() {
+        RestRequest req = new RestRequest();
+        RestResponse resp = new RestResponse();
+
+        req.requestURI =
+            Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste';
+        req.httpMethod = 'GET';
+        RestContext.request = req;
+        RestContext.response = resp;
+
+        Test.startTest();
+        CRM_HenvendelseInfoListRestService.getHenvendelseList();
+        Test.stopTest();
+
+        System.assertEquals(400, RestContext.response.statusCode);
     }
 }
