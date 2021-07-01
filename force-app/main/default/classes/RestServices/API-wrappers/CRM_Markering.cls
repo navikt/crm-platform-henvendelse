@@ -1,4 +1,10 @@
-public class CRM_Markering {
-    public String aktor;
-    public String dato;
+global class CRM_Markering {
+    global enum MARKING_TYPES {
+        FEILSENDT,
+        KONTORSPERRE
+    }
+
+    global String markeringsType;
+    global String markertAv; //NAV Ident of the user activating the marking
+    global String dato;
 }

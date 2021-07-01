@@ -165,6 +165,10 @@
                         "type": "string",
                         "example": "2786793959304"
                     },
+                    "opprinneligGT": {
+                        "type": "string",
+                        "example": "2786793959304"
+                    },
                     "opprettetDato": {
                         "type": "string",
                         "description": "Datetime string",
