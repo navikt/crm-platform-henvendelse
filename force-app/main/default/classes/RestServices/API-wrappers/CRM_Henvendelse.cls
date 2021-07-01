@@ -5,16 +5,14 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils {
     global String opprettetDato;
     global String henvendelseId;
     global String kjedeId;
-    global String behandlingstema;
-    global String brukersEnhet;
+    global String opprinneligGT;
     global Boolean erTilknyttetAnsatt;
-    global Boolean ferdigstiltUtenSvar;
     global String gjeldendeTemagruppe;
     global String gjeldendeTema;
     global String henvendelseType;
     global List<CRM_JournalfortInformasjon> journalposter;
     global List<CRM_Melding> meldinger;
-    global CRM_Markeringer markeringer;
+    global List<CRM_Markering> markeringer;
     global String tilknyttetEnhet;
 
     global CRM_Henvendelse(Conversation_Note__c convNote, List<Journal_Entry__c> jeList) {
@@ -62,10 +60,10 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils {
     }
 
     global CRM_Henvendelse(Message__c message) {
-        this.kjedeId = message.CRM_Thread__c;
+        /*this.kjedeId = message.CRM_Thread__c;
         this.henvendelseId = message.Id;
         this.henvendelseType = HENVENDELSE_TYPES.MELDING.name();
         this.meldinger = new List<CRM_Melding>();
-        this.meldinger.add(new CRM_Melding(message));
+        this.meldinger.add(new CRM_Melding(message));*/
     }
 }
