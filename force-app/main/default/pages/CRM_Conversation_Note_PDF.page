@@ -1,0 +1,15 @@
+<apex:page standardController="Conversation_Note__c" renderAs="PDF">
+    <html>
+        <head>
+            <h1>
+                Samtale med NAV
+                <apex:outputText value=" - {0, date, dd/MM/yyy}">
+                    <apex:param value="{!conversation_note__c.CRM_Date_Time_Registered__c}" />
+                </apex:outputText>
+            </h1>
+        </head>
+        <body>
+            {!conversation_note__c.CRM_Conversation_Note__c}
+        </body>
+    </html>
+</apex:page>
