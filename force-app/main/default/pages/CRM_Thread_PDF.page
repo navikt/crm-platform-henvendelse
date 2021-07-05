@@ -1,0 +1,34 @@
+<apex:page standardController="Thread__c" applyBodyTag="false" standardStylesheets="false" renderAs="PDF">
+    <apex:stylesheet value="{!$Resource.Journal_PDF_Style}" />
+
+    <div class="header">
+        <!-- HEADER CONTENT-->
+        <div>Something here</div>
+    </div>
+    <div class="footer">
+        <!-- FOOTER CONTENT -->
+        <div>Page <span class="pagenumber" /> of <span class="pagecount" /></div>
+    </div>
+    <div class="content">
+        <h1>
+            Samtale med NAV
+            <apex:outputText value=" - {0, date, dd/MM/yyy}">
+                <apex:param value="{!thread__c.CRM_Date_Time_Registered__c}" />
+            </apex:outputText>
+        </h1>
+
+        <div>
+            <apex:repeat value="{!Thread__c.Messages__r}" var="message">
+                <div style="padding-bottom: 1em; padding-top: 1em">
+                    <b>
+                        {!message.CRM_From_Label__c}
+                        <apex:outputText value=" - {0, date, dd/MM/yyy ', ' HH:mm:ss}">
+                            <apex:param value="{!thread__c.CRM_Date_Time_Registered__c}" />
+                        </apex:outputText>
+                    </b>
+                    <p style="margin-top: 0.5em">{!message.CRM_Message_Text__c}</p>
+                </div>
+            </apex:repeat>
+        </div>
+    </div>
+</apex:page>

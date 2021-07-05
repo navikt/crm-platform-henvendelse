@@ -6,16 +6,44 @@
     },
     "servers": [{ "url": "https://test.salesforce.com/services/apexrest" }],
     "paths": {
+        "/henvendelse/journal": {
+            "post": {
+                "tags": ["Journal"],
+                "description": "Endepunkt for igangsettelse av journalføring mot JOARK",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/X-Correlation-ID"
+                    },
+                    {
+                        "name": "JournalRequest",
+                        "in": "body",
+                        "required": true,
+                        "description": "JSON request med metadata for journalpost",
+                        "schema": {
+                            "$ref": "#/components/schemas/JournalRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
         "/henvendelse/behandling/{henvId}": {
             "patch": {
                 "tags": ["Henvendelse Behandling"],
-                "description": "",
+                "description": "Behandling/oppdatering av eksisterende henvendelser",
                 "parameters": [
                     {
                         "name": "henvId",
                         "in": "path",
                         "required": true,
                         "description": "Unik id til samtalereferat eller tråd som man ønsker å behandle"
+                    },
+                    {
+                        "$ref": "#/components/parameters/X-Correlation-ID"
                     }
                 ],
                 "responses": {
@@ -45,6 +73,9 @@
                         "in": "query",
                         "required": false,
                         "description": "Kjedeid hvis ny melding skal opprettes på en eksisterende tråd. Hvis denne er blank opprettes meldingen på en ny tråd."
+                    },
+                    {
+                        "$ref": "#/components/parameters/X-Correlation-ID"
                     }
                 ],
                 "responses": {
@@ -64,6 +95,9 @@
                         "in": "query",
                         "required": true,
                         "description": "Aktørid til person for uthentelse av henvendelseliste"
+                    },
+                    {
+                        "$ref": "#/components/parameters/X-Correlation-ID"
                     }
                 ],
                 "responses": {
@@ -87,6 +121,31 @@
     "security": [{ "Salesforce_auth": [] }],
     "components": {
         "schemas": {
+            "JournalRequest": {
+                "type": "object",
+                "properties": {
+                    "journalforendeEnhet": {
+                        "type": "string",
+                        "description": "NAV-enhet til veilder/saksbehandler som opprettet journalposten",
+                        "example": "4100"
+                    },
+                    "saksId": {
+                        "type": "string",
+                        "description": "Referanse til fagsak i overenstemmelse med påkrevd input til [Dokarkiv API](https://dokarkiv-q2.nais.preprod.local/swagger-ui.html#/arkiver-og-journalfoer-rest-controller/opprettJournalpostUsingPOST)",
+                        "example": "2021-06-27T12:00:00.000Z"
+                    },
+                    "temakode": {
+                        "type": "string",
+                        "description": "Temakode for journalpost som skal opprettes",
+                        "example": "DAG"
+                    },
+                    "henvendelseId": {
+                        "type": "string",
+                        "description": "Unik ID til henvendelsen som skal journalføres",
+                        "example": "a0J3N000004dUBJUA2"
+                    }
+                }
+            },
             "Journalpost": {
                 "type": "object",
                 "properties": {
@@ -206,6 +265,14 @@
                         }
                     }
                 }
+            }
+        },
+        "parameters": {
+            "X-Correlation-ID": {
+                "name": "X-Correlation-ID",
+                "in": "header",
+                "required": true,
+                "description": "Unik UUID for inkommende request"
             }
         },
         "securitySchemes": {
