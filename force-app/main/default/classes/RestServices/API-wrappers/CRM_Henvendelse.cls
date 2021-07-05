@@ -7,7 +7,6 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils {
     global String henvendelseId;
     global String kjedeId;
     global String opprinneligGT;
-    global Boolean erTilknyttetAnsatt;
     global String gjeldendeTemagruppe;
     global String gjeldendeTema;
     global String henvendelseType;

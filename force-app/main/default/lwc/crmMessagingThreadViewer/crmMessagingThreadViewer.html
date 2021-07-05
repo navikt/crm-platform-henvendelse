@@ -7,6 +7,10 @@
     <!-- Reply Box Start-->
     <lightning-record-edit-form object-api-name="Message__c" onsuccess={handlesuccess} onsubmit={handlesubmit}>
         <lightning-layout class="slds-border_top slds-m-top_x-small slds-p-top_small" multiple-rows="true">
+            <lightning-layout-item size="12" padding="horizontalSmall">
+                <slot name="toolbar"></slot>
+                <!--Slot that can be used when implementing a message component with custom toolbar-->
+            </lightning-layout-item>
             <lightning-layout-item padding="horizontalSmall" size="12">
                 <lightning-input-field
                     class="msgText"
@@ -15,7 +19,6 @@
                 ></lightning-input-field>
             </lightning-layout-item>
             <br />
-
             <lightning-layout-item size="12" padding="horizontalSmall">
                 <lightning-button
                     type="submit"
