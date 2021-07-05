@@ -94,7 +94,7 @@
             <assignToReference>Journal_Entry_SF.CRM_Created_By_Ident__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Journal_Entry_Unit</elementReference>
+                <elementReference>Journal_Entry_NAV_Ident</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -520,6 +520,14 @@
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>NAV ident of the user initiating the journal entry flow</description>
+        <name>Journal_Entry_NAV_Ident</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
