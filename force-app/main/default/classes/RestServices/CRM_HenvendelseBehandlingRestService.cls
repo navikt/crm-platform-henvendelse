@@ -2,7 +2,7 @@
 global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_HenvendelseApiUtils {
     @HttpPatch
     global static void updateHenvendelse(CRM_Henvendelse req) {
-        /*RestRequest request = RestContext.request;
+        RestRequest request = RestContext.request;
 
         try {
             Id henvId = (Id) getLastPathParameter();
@@ -40,9 +40,10 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
             } else {
                 setResponse(500, dmlEx.getMessage());
             }
+        } catch (StringException stringEx) {
+            setResponse(400, 'Invalid ID: ' + stringEx.getMessage());
         } catch (Exception ex) {
             setResponse(500, 'Failed to update: ' + ex.getMessage());
         }
-        */
     }
 }

@@ -1,4 +1,15 @@
 global virtual class ApexRestService {
+    private static final Map<Integer, String> DEFAULT_RESPONSE_MAP = new Map<Integer, String>{
+        200 => 'OK',
+        201 => 'CREATED',
+        202 => 'ACCEPTED',
+        400 => 'BAD_REQUEST',
+        401 => 'UNAUTHORIZED',
+        403 => 'FORBIDDEN',
+        404 => 'NOT_FOUND',
+        500 => 'INTERNAL_SERVER_ERROR'
+    };
+
     /**
      * @description: sets the response code for the RestContext
      * @author Stian Ruud Schikora | 06-22-2021
@@ -8,6 +19,8 @@ global virtual class ApexRestService {
         // Instantiate the RestResponse
         RestResponse response = RestContext.response;
         response.statusCode = responseCode;
+        if (DEFAULT_RESPONSE_MAP.containsKey(responseCode))
+            response.responseBody = Blob.valueOf(DEFAULT_RESPONSE_MAP.get(responseCode));
     }
 
     /**
@@ -31,7 +44,6 @@ global virtual class ApexRestService {
      * @return String
      **/
     global static String getRequestParam(String paramName) {
-        // Instantiate the RestResponse
         RestRequest request = RestContext.request;
         return request.params.containsKey(paramName) ? request.params.get(paramName) : null;
     }
@@ -42,7 +54,6 @@ global virtual class ApexRestService {
      * @return String
      **/
     global static String getLastPathParameter() {
-        // Instantiate the RestResponse
         RestRequest request = RestContext.request;
         return request.requestURI.substringAfterLast('/').remove('/');
     }
@@ -56,8 +67,22 @@ global virtual class ApexRestService {
      * @return String
      **/
     global static String getPathStringBetween(String firstMatch, String secondMatch) {
-        // Instantiate the RestResponse
         RestRequest request = RestContext.request;
         return request.requestURI.substringBetween(firstMatch + '/', '/' + secondMatch);
+    }
+
+    /**
+     * @description: Generic validation for all rest services extending this super class
+     * @author Stian Ruud Schikora | 07-05-2021
+     * @return Boolean
+     **/
+    global static Boolean validate() {
+        //All endpoints must have a unique correlation ID used for troubleshooting in the callout chain
+        RestRequest request = RestContext.request;
+        Boolean valid = request.headers.containsKey('X-Correlation-ID');
+        if (!valid) {
+            setResponse(400, 'Missing required parameter: X-Correlation-ID');
+        }
+        return valid;
     }
 }

@@ -1,12 +1,12 @@
 global class CRM_Henvendelse extends CRM_HenvendelseApiUtils {
     global String fnr;
     global String aktorId;
+    global String kasseringsDato;
     global String avsluttetDato;
     global String opprettetDato;
     global String henvendelseId;
     global String kjedeId;
     global String opprinneligGT;
-    global Boolean erTilknyttetAnsatt;
     global String gjeldendeTemagruppe;
     global String gjeldendeTema;
     global String henvendelseType;
@@ -41,6 +41,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils {
     global CRM_Henvendelse(Thread__c thread, List<Message__c> messages, List<Journal_Entry__c> jeList) {
         this.kjedeId = thread.Id;
         this.henvendelseId = thread.Id;
+        this.kasseringsDato = gmtFormatDateTime(thread.CRM_Disposal_Datetime__c);
         this.opprettetDato = gmtFormatDateTime(thread.CreatedDate);
         this.avsluttetDato = null; //TODO: Define when thread is closed
         this.meldinger = new List<CRM_Melding>();
