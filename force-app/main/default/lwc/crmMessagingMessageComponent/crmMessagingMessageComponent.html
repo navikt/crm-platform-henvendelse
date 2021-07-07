@@ -17,7 +17,14 @@
                     key={thread.Id}
                     thread={thread}
                     style="margin-left: 1em; margin-right: 1em"
-                ></c-crm-messaging-thread-Viewer>
+                >
+                    <!--Ability to pass toolbar buttons thorugh slots to the toolbar-->
+                    <lightning-button-group slot="toolbar">
+                        <slot name="toolbar"></slot>
+                        <lightning-button-icon-stateful icon-name="utility:quick_text" alternative-text="Hurtigtekst">
+                        </lightning-button-icon-stateful>
+                    </lightning-button-group>
+                </c-crm-messaging-thread-Viewer>
             </template>
         </div>
         <!-- Modal Stop-->

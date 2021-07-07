@@ -3,6 +3,9 @@ import getmessages from '@salesforce/apex/CRM_MessageHelper.getMessagesFromThrea
 
 import getusertype from '@salesforce/apex/CRM_MessageHelper.getUserLisenceType';
 import userId from '@salesforce/user/Id';
+import { updateRecord, getRecord, getFieldValue } from 'lightning/uiRecordApi';
+import ACTIVE_FIELD from '@salesforce/schema/Thread__c.CRM_isActive__c';
+import THREAD_ID_FIELD from '@salesforce/schema/Thread__c.Id';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
 
@@ -25,6 +28,9 @@ export default class messagingThreadViewer extends LightningElement {
     wiretype(result) {
         this.usertype = result.data;
     }
+
+    @wire(getRecord, { recordId: '$threadid', fields: [ACTIVE_FIELD] })
+    wiredThread;
 
     @wire(getmessages, { threadId: '$threadid' }) //Calls apex and extracts messages related to this record
     wiremessages(result) {
@@ -58,6 +64,20 @@ export default class messagingThreadViewer extends LightningElement {
         }
     }
 
+    closeThread() {
+        const fields = {};
+        fields[THREAD_ID_FIELD.fieldApiName] = this.threadid;
+        fields[ACTIVE_FIELD.fieldApiName] = false;
+
+        const threadInput = { fields };
+
+        updateRecord(threadInput)
+            .then(() => {})
+            .catch((error) => {
+                console.log(JSON.stringify(error, null, 2));
+            });
+    }
+
     handlesuccess(event) {
         console.log('Success start');
         this.recordId = event.detail;
@@ -69,6 +89,10 @@ export default class messagingThreadViewer extends LightningElement {
             });
         }
         return refreshApex(this._mySendForSplitting);
+    }
+
+    get closedThread() {
+        return !getFieldValue(this.wiredThread.data, ACTIVE_FIELD);
     }
 
     setheader() {}

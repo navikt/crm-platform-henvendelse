@@ -37,7 +37,8 @@ public with sharing class CRM_MessageHelper {
                     CRM_Recipient__r.LastName,
                     CRM_isPublic__c,
                     CRM_Number_of_External_Messages__c,
-                    CRM_Related_Object__c
+                    CRM_Related_Object__c,
+                    CRM_isActive__c
                 FROM Thread__c
                 WHERE
                     CRM_Related_Object__c = :recordId
@@ -61,7 +62,8 @@ public with sharing class CRM_MessageHelper {
                     CRM_Recipient__r.LastName,
                     CRM_isPublic__c,
                     CRM_Number_of_External_Messages__c,
-                    CRM_Related_Object__c
+                    CRM_Related_Object__c,
+                    CRM_isActive__c
                 FROM Thread__c
                 WHERE CRM_isPublic__c = TRUE AND CRM_Related_Object__c = :recordId
                 LIMIT 1
