@@ -24,6 +24,6 @@ global class CRM_Melding extends CRM_HenvendelseApiUtils {
         this.fra = new CRM_MessageFrom();
         //Conversation notes are always created by NAV employees
         this.fra.identType = CRM_MessageFrom.IDENT_TYPES.NAVIDENT.name();
-        this.fra.ident = convNote.CRM_Created_By__c;
+        this.fra.ident = convNote.CRM_Created_By_Ident__c;
     }
 }

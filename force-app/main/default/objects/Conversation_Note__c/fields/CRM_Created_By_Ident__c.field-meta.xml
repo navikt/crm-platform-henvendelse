@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>CRM_Created_By__c</fullName>
+    <fullName>CRM_Created_By_Ident__c</fullName>
     <description>NAV ident of the user creating the conversation note.</description>
     <externalId>true</externalId>
     <label>Created By</label>

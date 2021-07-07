@@ -76,7 +76,8 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
         return new Conversation_Note__c(
             CRM_Account__c = accountId,
             CRM_Conversation_Note__c = convRequest.fritekst,
-            CRM_Created_By__c = actingNavIdent
+            CRM_Created_By_Ident__c = actingNavIdent,
+            CRM_Created_By_NAV_Unit__c = convRequest.enhet
         );
     }
 
@@ -92,11 +93,15 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
 
     global class NewMessageRequest {
         global String aktorId;
+        global String temagruppe;
+        global String enhet;
         global String fritekst;
     }
 
     global class NewConversationNoteRequest {
         global String aktorId;
+        global String temagruppe;
+        global String enhet;
         global String fritekst;
         global String kanal; //Separate between phone and physical meet?
     }
