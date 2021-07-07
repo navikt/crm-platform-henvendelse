@@ -18,4 +18,8 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
     public String gmtFormatDateTime(DateTime timestamp) {
         return timestamp != null ? timestamp.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss.SSSZ') : null;
     }
+
+    public static String getActingNavIdent() {
+        return getRequestHeader('X-ACTING-NAV-IDENT');
+    }
 }

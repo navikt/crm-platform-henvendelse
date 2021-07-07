@@ -49,6 +49,17 @@ global virtual class ApexRestService {
     }
 
     /**
+     * @description: Returns the header from the request, null if not existing.
+     * @author Stian Ruud Schikora | 06-22-2021
+     * @param paramName
+     * @return String
+     **/
+    global static String getRequestHeader(String headerName) {
+        RestRequest request = RestContext.request;
+        return request.headers.containsKey(headerName) ? request.headers.get(headerName) : null;
+    }
+
+    /**
      * @description: Returns the last path parameter in the request URI. If the URI ends with '/' this is removed
      * @author Stian Ruud Schikora | 06-22-2021
      * @return String
