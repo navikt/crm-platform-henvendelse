@@ -30,14 +30,14 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
                     return;
                 }
                 when else {
-                    setResponse(400, 'No journal flow defined for ID: ' + henvId);
+                    errorResponse(400, 'No journal flow defined for ID: ' + henvId);
                     return;
                 }
             }
         } catch (StringException stringEx) {
-            setResponse(400, 'Invalid ID: ' + stringEx.getMessage());
+            errorResponse(400, 'Invalid ID: ' + stringEx.getMessage());
         } catch (Exception ex) {
-            setResponse(500);
+            errorResponse(500, ex.getMessage());
         }
     }
 

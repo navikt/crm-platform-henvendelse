@@ -24,7 +24,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils {
         this.avsluttetDato = this.opprettetDato;
         this.kjedeId = null;
         this.henvendelseId = convNote.Id;
-        this.henvendelseType = HENVENDELSE_TYPES.SAMTALEREFERAT.name();
+        this.henvendelseType = HENVENDELSE_TYPE.SAMTALEREFERAT.name();
 
         this.meldinger = new List<CRM_Melding>();
         this.meldinger.add(new CRM_Melding(convNote));
@@ -45,7 +45,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils {
         this.opprettetDato = gmtFormatDateTime(thread.CreatedDate);
         this.avsluttetDato = null; //TODO: Define when thread is closed
         this.meldinger = new List<CRM_Melding>();
-        this.henvendelseType = HENVENDELSE_TYPES.MELDINGSKJEDE.name();
+        this.henvendelseType = HENVENDELSE_TYPE.MELDINGSKJEDE.name();
 
         for (Message__c message : messages) {
             this.meldinger.add(new CRM_Melding(message));
@@ -63,7 +63,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils {
     global CRM_Henvendelse(Message__c message) {
         /*this.kjedeId = message.CRM_Thread__c;
         this.henvendelseId = message.Id;
-        this.henvendelseType = HENVENDELSE_TYPES.MELDING.name();
+        this.henvendelseType = HENVENDELSE_TYPE.MELDING.name();
         this.meldinger = new List<CRM_Melding>();
         this.meldinger.add(new CRM_Melding(message));*/
     }

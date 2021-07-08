@@ -5,7 +5,7 @@ global without sharing class CRM_HenvendelseInfoListRestService extends ApexRest
         String actorId = getRequestParam('aktorid');
 
         if (String.isBlank(actorId)) {
-            setResponse(400, 'Missing required query input: aktorid');
+            errorResponse(400, 'Missing required query input: aktorid');
             return;
         }
 
@@ -19,9 +19,9 @@ global without sharing class CRM_HenvendelseInfoListRestService extends ApexRest
             returnList.addAll(convertToHenvendelseList(threadList));
             setResponse(200, JSON.serializePretty(returnList));
         } catch (QueryException queryEx) {
-            setResponse(500, 'Query exception: ' + queryEx.getMessage());
+            errorResponse(500, 'Query exception: ' + queryEx.getMessage());
         } catch (Exception ex) {
-            setResponse(500, 'Exception: ' + ex.getMessage());
+            errorResponse(500, 'Exception: ' + ex.getMessage());
         }
     }
 

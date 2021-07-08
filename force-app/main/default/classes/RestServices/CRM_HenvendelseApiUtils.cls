@@ -1,8 +1,24 @@
 public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestService {
-    public enum HENVENDELSE_TYPES {
+    public enum HENVENDELSE_TYPE {
         SAMTALEREFERAT,
         MELDINGSKJEDE,
         MELDING
+    }
+
+    /**
+     * @description: Helper method to return the correct HENVENDELSE_TYPE
+     * @author Stian Ruud Schikora | 07-08-2021
+     * @param typeName
+     * @return HENVENDELSE_TYPE
+     **/
+    public static HENVENDELSE_TYPE getHenvendelseType(String typeName) {
+        HENVENDELSE_TYPE returnType;
+        for (HENVENDELSE_TYPE henvType : HENVENDELSE_TYPE.values()) {
+            if (henvType.name().equalsIgnoreCase(typeName)) {
+                returnType = henvType;
+            }
+        }
+        return returnType;
     }
 
     public static Thread__c convertToThread(CRM_Henvendelse henv) {

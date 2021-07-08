@@ -22,6 +22,8 @@ global virtual class ApexRestService {
      * @param responseCode
      **/
     global static void setResponse(Integer responseCode) {
+        if (simulatedException != null)
+            throw simulatedException;
         // Instantiate the RestResponse
         RestResponse response = RestContext.response;
         response.statusCode = responseCode;
@@ -36,6 +38,8 @@ global virtual class ApexRestService {
      * @param payload
      **/
     global static void setResponse(Integer responseCode, String payload) {
+        if (simulatedException != null)
+            throw simulatedException;
         // Instantiate the RestResponse
         RestResponse response = RestContext.response;
         response.statusCode = responseCode;
