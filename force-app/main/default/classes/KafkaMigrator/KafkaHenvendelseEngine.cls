@@ -16,9 +16,21 @@ public without sharing class KafkaHenvendelseEngine implements Database.Batchabl
         initCommonCodeMap();
         doTransform((List<KafkaMessage__c>) scope);
 
-        List<Database.UpsertResult> convUpsRes = Database.upsert(convNotes.values());
-        List<Database.UpsertResult> threadsUpsRes = Database.upsert(threads.values());
-        List<Database.UpsertResult> messageUpsRes = Database.upsert(messages.values());
+        List<Database.UpsertResult> convUpsRes = Database.upsert(
+            convNotes.values(),
+            Conversation_Note__c.CRM_Henvendelse_BehandlingsId__c,
+            false
+        );
+        List<Database.UpsertResult> threadsUpsRes = Database.upsert(
+            threads.values(),
+            Thread__c.CRM_Henvendelse_BehandlingsId__c,
+            false
+        );
+        List<Database.UpsertResult> messageUpsRes = Database.upsert(
+            messages.values(),
+            Message__c.CRM_Henvendelse_BehandlingsId__c,
+            false
+        );
         List<Database.UpsertResult> jEntryUpsRes = Database.upsert(
             journalEntries,
             Journal_Entry__c.Journal_Entry_ID__c,
