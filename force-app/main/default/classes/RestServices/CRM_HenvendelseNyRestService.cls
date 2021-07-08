@@ -56,6 +56,16 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
     }
 
     private static void handleNewMessage(String req, String threadId) {
+        Message__c newMessage = validateNewMessage(req, threadId);
+        if (newMessage == null)
+            return; //Failed validation
+
+        try {
+            insert newMessage;
+            setResponse(200, newMessage.CRM_Thread__c); //Returns the ID of the thread
+        } catch (DmlException dmlEx) {
+            errorResponse(500, 'Insertion failed: ' + dmlEx.getMessage());
+        }
     }
 
     //###########################################################//
@@ -90,7 +100,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
         NewMessageRequest messageRequest;
         Message__c newMessage = new Message__c();
         try {
-            messageRequest = (NewMessageRequest) JSON.deserializeStrict(req, NewConversationNoteRequest.class);
+            messageRequest = (NewMessageRequest) JSON.deserializeStrict(req, NewMessageRequest.class);
         } catch (JSONException jsonEx) {
             errorResponse(400, 'Invalid request body: ' + jsonEx.getMessage());
             return null;
@@ -123,6 +133,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
 
         newMessage.CRM_Message_Text__c = messageRequest.fritekst;
         newMessage.CRM_From_NAV_Unit__c = messageRequest.enhet;
+        newMessage.CRM_From_Ident__c = getActingNavIdent();
 
         return newMessage;
     }

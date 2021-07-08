@@ -139,6 +139,10 @@
                     "400": {
                         "$ref": "#/components/responses/BadRequest"
                     },
+                    "403": {
+                        "description": "Cannot insert new message on closed thread",
+                        "$ref": "#/components/responses/NoNewMessageOnClosedThread"
+                    },
                     "404": {
                         "$ref": "#/components/responses/NotFound"
                     },
@@ -425,6 +429,26 @@
                     "application/json": {
                         "schema": {
                             "$ref": "#/components/schemas/Error"
+                        }
+                    }
+                }
+            },
+            "NoNewMessageOnClosedThread": {
+                "description": "Cannot insert new message on closed thread",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "statusCode": {
+                                    "type": "integer",
+                                    "example": 403
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Cannot insert new message on closed thread"
+                                }
+                            }
                         }
                     }
                 }

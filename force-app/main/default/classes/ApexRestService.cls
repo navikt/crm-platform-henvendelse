@@ -96,7 +96,7 @@ global virtual class ApexRestService {
      **/
     global static String getLastPathParameter() {
         RestRequest request = RestContext.request;
-        return request.requestURI.substringAfterLast('/').remove('/');
+        return request.requestURI.substringAfterLast('/').substringBefore('?'); //Handle if there are any query parameters
     }
 
     /**
