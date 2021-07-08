@@ -51,10 +51,6 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
         }
     }
 
-    private static String getAccountId(String actorId) {
-        return [SELECT CRM_Account__c FROM Person__c WHERE INT_ActorId__c = :actorId]?.CRM_Account__c;
-    }
-
     private static void handleNewMessage(String req, String threadId) {
         Message__c newMessage = validateNewMessage(req, threadId);
         if (newMessage == null)
@@ -72,6 +68,23 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
     //###############     HELPER METHODS       ##################//
     //###########################################################//
 
+    /**
+     * @description: Gets the CRM_Account__c from the Person record with the matching actorId, null if not found
+     * @author Stian Ruud Schikora | 07-08-2021
+     * @param actorId
+     * @return String
+     **/
+    private static String getAccountId(String actorId) {
+        return [SELECT CRM_Account__c FROM Person__c WHERE INT_ActorId__c = :actorId]?.CRM_Account__c;
+    }
+
+    /**
+     * @description: Validates an incoming request for insertion of a new conversation note. If the request validates
+     * a valid Conversation_Note__c record is returned, else null
+     * @author Stian Ruud Schikora | 07-08-2021
+     * @param req
+     * @return Conversation_Note__c
+     **/
     private static Conversation_Note__c validateNewConversationNote(String req) {
         NewConversationNoteRequest convRequest;
         try {
@@ -96,6 +109,14 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
         );
     }
 
+    /**
+     * @description: Validates an incoming request for insertion of a new message. If the request validates
+     * a valid Message__c record is returned, else null
+     * @author Stian Ruud Schikora | 07-08-2021
+     * @param req
+     * @param threadId
+     * @return Message__c
+     **/
     private static Message__c validateNewMessage(String req, String threadId) {
         NewMessageRequest messageRequest;
         Message__c newMessage = new Message__c();
