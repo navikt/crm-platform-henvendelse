@@ -177,6 +177,34 @@ public class CRM_HenvendelseNyRestService_Test {
     }
 
     @isTest
+    static void testNewMessageNoThread() {
+        RestRequest req = new RestRequest();
+        RestResponse resp = new RestResponse();
+
+        Thread__c thread = [SELECT Id FROM Thread__c LIMIT 1];
+
+        CRM_HenvendelseNyRestService.NewMessageRequest messageReq = new CRM_HenvendelseNyRestService.NewMessageRequest();
+        messageReq.aktorId = '123456789101112';
+        messageReq.enhet = '4100';
+        messageReq.fritekst = 'MELDING';
+        messageReq.temagruppe = 'ARBD';
+
+        req.requestURI = Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/melding';
+        req.httpMethod = 'POST';
+        req.headers.put('X-Correlation-ID', '123RANDOM');
+        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        RestContext.request = req;
+        RestContext.response = resp;
+
+        Test.startTest();
+        CRM_HenvendelseNyRestService.createHenvendelse(JSON.serialize(messageReq));
+        Test.stopTest();
+
+        System.assertEquals(200, RestContext.response.statusCode);
+        System.assertEquals('Z999999', [SELECT Id, CRM_From_Ident__c FROM Message__c LIMIT 1]?.CRM_From_Ident__c);
+    }
+
+    @isTest
     static void testNewMessageOnClosedThread() {
         RestRequest req = new RestRequest();
         RestResponse resp = new RestResponse();

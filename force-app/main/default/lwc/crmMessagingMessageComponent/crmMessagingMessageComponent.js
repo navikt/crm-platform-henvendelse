@@ -36,6 +36,7 @@ export default class LightningExampleAccordionBasic extends LightningElement {
     handlenewpressed() {
         createThread({ recordId: this.recordId })
             .then((result) => {
+                this.shownewbutton = false;
                 return refreshApex(this._threadsforRefresh);
             })
             .catch((error) => {});
