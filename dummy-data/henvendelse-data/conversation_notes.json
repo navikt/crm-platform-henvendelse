@@ -6,7 +6,7 @@
                 "referenceId": "ConvNoteRef1"
             },
             "CRM_Account__c": "@AccountRef1",
-            "CRM_Created_By__c": "Z999999",
+            "CRM_Created_By_Ident__c": "Z999999",
             "CRM_Date_Time_Registered__c": "2021-06-27T12:00:00.000Z",
             "CRM_Is_Read__c": true,
             "CRM_Theme_Group__c": "@ArbeidRef",

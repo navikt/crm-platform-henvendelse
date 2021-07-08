@@ -5,6 +5,13 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
         MELDING
     }
 
+    public static Thread__c convertToThread(CRM_Henvendelse henv) {
+        return new Thread__c();
+    }
+    public static Conversation_Note__c convertToConvNote(CRM_Henvendelse henv) {
+        return new Conversation_Note__c();
+    }
+
     public String gmtFormatDateTime(DateTime timestamp) {
         return timestamp != null ? timestamp.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss.SSSZ') : null;
     }
