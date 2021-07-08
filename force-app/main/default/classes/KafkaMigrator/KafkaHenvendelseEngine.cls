@@ -3,6 +3,7 @@ public without sharing class KafkaHenvendelseEngine implements Database.Batchabl
     private Map<String, Thread__c> threads = new Map<String, Thread__c>();
     private Map<String, Message__c> messages = new Map<String, Message__c>();
     private List<Journal_Entry__c> journalEntries = new List<Journal_Entry__c>();
+    private Map<String, KafkaMessage__c> kafkaMessageMap = new Map<String, KafkaMessage__c>();
 
     Set<String> actorIds = new Set<String>();
     Map<String, Id> actorAccMap = new Map<String, Id>();
@@ -70,6 +71,7 @@ public without sharing class KafkaHenvendelseEngine implements Database.Batchabl
         List<Kafka_Henvendelse> kfHenvList = new List<Kafka_Henvendelse>();
         for (KafkaMessage__c kafkaMessage : kafkaMessages) {
             Kafka_Henvendelse kfHenv = convertToKafkaHenvendelse(kafkaMessage);
+            kafkaMessageMap.put(kafkaMessage.CRM_Key__c, kafkaMessage); //Assume key is the behandlingsId
             actorIds.add(kfHenv.aktorId);
             kfHenvList.add(kfHenv);
         }
@@ -78,6 +80,7 @@ public without sharing class KafkaHenvendelseEngine implements Database.Batchabl
 
         for (Kafka_Henvendelse kfHenv : kfHenvList) {
             switch on kfHenv.henvendelseType {
+                //TODO: TYPE DEFINITION
                 when 'SAMTALEREFERAT TYPES' {
                     //Convert to conversation note
                     convertToConversationNote(kfHenv);
@@ -94,6 +97,7 @@ public without sharing class KafkaHenvendelseEngine implements Database.Batchabl
         }
     }
 
+    //TODO: FULL METADATA MAPPING
     private void convertToConversationNote(Kafka_Henvendelse kfHenv) {
         Conversation_Note__c convNote = new Conversation_Note__c();
         if (!actorAccMap.containsKey(kfHenv.aktorId)) {
@@ -137,6 +141,8 @@ public without sharing class KafkaHenvendelseEngine implements Database.Batchabl
         }
     }
 
+    //TODO: FULL METADATA MAPPING
+    //TODO: HOW TO HANDLE MESSAGES ON USERS WITHOUT COMMUNITY USER?
     private void convertToThread(Kafka_Henvendelse kfHenv) {
         //The thread starter is a message in itself
         Thread__c thread = new Thread__c();
