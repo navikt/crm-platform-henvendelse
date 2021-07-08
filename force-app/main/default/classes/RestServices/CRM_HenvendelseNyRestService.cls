@@ -100,6 +100,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
             return null;
         }
 
+        //Method from CRM_HenvendelseApiUtils
         String actingNavIdent = getActingNavIdent();
         return new Conversation_Note__c(
             CRM_Account__c = accountId,
@@ -120,6 +121,8 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
     private static Message__c validateNewMessage(String req, String threadId) {
         NewMessageRequest messageRequest;
         Message__c newMessage = new Message__c();
+        String actingNavIdent = getActingNavIdent();
+
         try {
             messageRequest = (NewMessageRequest) JSON.deserializeStrict(req, NewMessageRequest.class);
         } catch (JSONException jsonEx) {
@@ -149,12 +152,23 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
                 return null;
             }
         } else {
-            //Create new thread?
+            //How should we handle if the recipient does not have an existing community User?!?
+            try {
+                Thread__c newThread = new Thread__c(
+                    CRM_Created_By_Ident__c = actingNavIdent,
+                    CRM_Created_By_NAV_Unit__c = messageRequest.enhet
+                );
+                insert newThread;
+                newMessage.CRM_Thread__c = newThread.Id;
+            } catch (DmlException dmlEx) {
+                errorResponse(500, 'Unexpected error: ' + dmlEx.getMessage());
+                return null;
+            }
         }
 
         newMessage.CRM_Message_Text__c = messageRequest.fritekst;
         newMessage.CRM_From_NAV_Unit__c = messageRequest.enhet;
-        newMessage.CRM_From_Ident__c = getActingNavIdent();
+        newMessage.CRM_From_Ident__c = actingNavIdent;
 
         return newMessage;
     }
