@@ -24,6 +24,9 @@
             "enableNetworksEnabled": true,
             "enableOotbProfExtUserOpsEnable": true
         },
+        "experienceBundleSettings": {
+            "enableExperienceBundleMetadata": true
+        },
         "lightningExperienceSettings": {
             "enableS1DesktopEnabled": true
         },
