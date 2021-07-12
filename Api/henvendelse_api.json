@@ -27,6 +27,12 @@
                 "responses": {
                     "200": {
                         "description": "OK"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
                     }
                 }
             }
@@ -57,24 +63,59 @@
                 "responses": {
                     "200": {
                         "description": "OK"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
                     }
                 }
             }
         },
-        "/henvendelse/ny/{type}": {
+        "/henvendelse/ny/samtalereferat": {
             "post": {
-                "tags": ["Henvendelse Behandling"],
-                "description": "Opprett ny henvendelse relatert til en aktør",
+                "tags": ["Ny Henvendelse"],
+                "description": "Opprett nytt samtalereferat tilknyttet en aktør",
                 "parameters": [
                     {
-                        "name": "type",
-                        "in": "path",
+                        "$ref": "#/components/parameters/X-Correlation-ID"
+                    },
+                    {
+                        "name": "SamtalereferatRequest",
+                        "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string",
-                            "enum": ["samtalereferat", "melding"]
-                        },
-                        "description": "Type henvendelse du ønsker å opprette"
+                            "$ref": "#components/schemas/SamtalereferatRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/henvendelse/ny/melding": {
+            "post": {
+                "tags": ["Ny Henvendelse"],
+                "description": "Opprett ny melding relatert til en aktør",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/X-Correlation-ID"
                     },
                     {
                         "name": "kjedeId",
@@ -83,12 +124,30 @@
                         "description": "Kjedeid hvis ny melding skal opprettes på en eksisterende tråd. Hvis denne er blank opprettes meldingen på en ny tråd."
                     },
                     {
-                        "$ref": "#/components/parameters/X-Correlation-ID"
+                        "name": "SamtalereferatRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#components/schemas/MeldingRequest"
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "403": {
+                        "description": "Cannot insert new message on closed thread",
+                        "$ref": "#/components/responses/NoNewMessageOnClosedThread"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
                     }
                 }
             }
@@ -121,6 +180,15 @@
                                 }
                             }
                         }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
                     }
                 }
             }
@@ -129,6 +197,54 @@
     "security": [{ "Salesforce_auth": [] }],
     "components": {
         "schemas": {
+            "MeldingRequest": {
+                "type": "object",
+                "properties": {
+                    "aktorId": {
+                        "type": "string",
+                        "example": "2786793959304"
+                    },
+                    "temagruppe": {
+                        "type": "string",
+                        "example": "ARBD"
+                    },
+                    "enhet": {
+                        "type": "string",
+                        "example": "4100"
+                    },
+                    "fritekst": {
+                        "type": "string",
+                        "example": "Dette er en melding"
+                    }
+                }
+            },
+            "SamtalereferatRequest": {
+                "type": "object",
+                "properties": {
+                    "aktorId": {
+                        "type": "string",
+                        "example": "2786793959304"
+                    },
+                    "temagruppe": {
+                        "type": "string",
+                        "example": "ARBD"
+                    },
+                    "enhet": {
+                        "type": "string",
+                        "example": "4100"
+                    },
+                    "fritekst": {
+                        "type": "string",
+                        "example": "Dette er en melding"
+                    },
+                    "kanal": {
+                        "type": "string",
+                        "enum": ["TELEFON", "OPPMOTE"],
+                        "description": "Definerer om referatet er skrevet etter en telefonsamtale eller et fysisk oppmote hos NAV",
+                        "example": "TELEFON"
+                    }
+                }
+            },
             "JournalRequest": {
                 "type": "object",
                 "properties": {
@@ -145,7 +261,7 @@
                     "saksId": {
                         "type": "string",
                         "description": "Referanse til fagsak i overenstemmelse med påkrevd input til [Dokarkiv API](https://dokarkiv-q2.nais.preprod.local/swagger-ui.html#/arkiver-og-journalfoer-rest-controller/opprettJournalpostUsingPOST). Ved blank/null som saksId vil journalposten opprettes som generell sak på tema.",
-                        "example": "2021-06-27T12:00:00.000Z"
+                        "example": "005602185"
                     },
                     "temakode": {
                         "type": "string",
@@ -166,6 +282,11 @@
                         "type": "string",
                         "description": "NAV-ident til veilder/saksbehandler som opprettet journalposten",
                         "example": "Z999999"
+                    },
+                    "journalforerNavEnhet": {
+                        "type": "string",
+                        "description": "NAV-enhet til veilder/saksbehandler som opprettet journalposten",
+                        "example": "4100"
                     },
                     "journalfortDato": {
                         "type": "string",
@@ -280,6 +401,79 @@
                         "type": "array",
                         "items": {
                             "$ref": "#components/schemas/Melding"
+                        }
+                    }
+                }
+            },
+            "Error": {
+                "type": "object",
+                "properties": {
+                    "statusCode": {
+                        "type": "integer"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "NotFound": {
+                "description": "NOT FOUND",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Error"
+                        }
+                    }
+                }
+            },
+            "Forbidden": {
+                "description": "FORBIDDEN",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Error"
+                        }
+                    }
+                }
+            },
+            "NoNewMessageOnClosedThread": {
+                "description": "Cannot insert new message on closed thread",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "statusCode": {
+                                    "type": "integer",
+                                    "example": 403
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Cannot insert new message on closed thread"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "BadRequest": {
+                "description": "BAD REQUEST",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Error"
+                        }
+                    }
+                }
+            },
+            "InternalServerError": {
+                "description": "UNEXPECTED EXCEPTION",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Error"
                         }
                     }
                 }

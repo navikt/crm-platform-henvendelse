@@ -15,7 +15,8 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
             Thread__c.OwnerId,
             Thread__c.CRM_Recipient__c,
             Thread__c.CRM_Office_Restriction_Activated_By__c,
-            Thread__c.CRM_Disposal_Datetime__c
+            Thread__c.CRM_Disposal_Datetime__c,
+            Thread__c.CRM_Created_By_Ident__c
         };
     }
 
