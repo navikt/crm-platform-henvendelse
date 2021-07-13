@@ -1,5 +1,6 @@
 global class CRM_JournalfortInformasjon {
     global String journalforerNavIdent;
+    global String journalforendeEnhet;
     global String journalfortDato;
     global String journalfortTema;
     global String journalpostId;
@@ -11,5 +12,6 @@ global class CRM_JournalfortInformasjon {
             : null;
         this.journalfortTema = jEntry.CRM_Theme_Code__c;
         this.journalforerNavIdent = jEntry.CRM_Created_By_Ident__c;
+        this.journalforendeEnhet = jEntry.CRM_Created_By_NAV_Unit__c;
     }
 }

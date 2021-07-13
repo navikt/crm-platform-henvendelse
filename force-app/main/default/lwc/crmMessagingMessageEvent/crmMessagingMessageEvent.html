@@ -1,13 +1,15 @@
 <template>
-    <div class="slds-chat-event">
+    <div class="slds-chat-event slds-var-p-top_small sdls-var-p-bottom_small">
         <div class="slds-chat-event__body">
             <lightning-icon
-                icon-name="utility:change_owner"
-                alternative-text="Chat changed owner!"
-                title="Changed owner"
+                icon-name="utility:events"
+                alternative-text="Hendelse"
+                title="Hendelse"
+                size="small"
+                class="slds-var-p-right_small"
             ></lightning-icon>
             <p>
-                <b>{message.CreatedById}</b> {message.Message_Text__c} •
+                <b>{message.CreatedById}</b> {message.CRM_Message_Text__c} •
                 <lightning-formatted-date-time
                     value={message.CreatedDate}
                     month="numeric"

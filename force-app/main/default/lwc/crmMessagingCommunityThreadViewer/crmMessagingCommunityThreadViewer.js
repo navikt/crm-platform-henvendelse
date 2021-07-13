@@ -16,9 +16,11 @@ export default class CommityThreadViewer extends LightningElement {
     buttonisdisabled = false;
     @api recordId;
     @track msgVal;
+
     connectedCallback() {
         markasread({ threadId: this.recordId });
     }
+
     @wire(getRecord, { recordId: '$recordId', fields })
     thread;
     get name() {

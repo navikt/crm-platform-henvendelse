@@ -8,7 +8,7 @@ public inherited sharing class CRM_ConversationNoteSelector extends CRM_ApiSelec
         'CRM_Theme_Code__c',
         'CRM_Office_Restriction__c',
         'CRM_Read_Date__c',
-        'CRM_Date_Time_Registered__c',
+        'CRM_Registered_Datetime_Formula__c',
         'CRM_Conversation_Note__c',
         'CRM_Created_By_Ident__c',
         'CRM_Office_Restriction_Activated_By__c',

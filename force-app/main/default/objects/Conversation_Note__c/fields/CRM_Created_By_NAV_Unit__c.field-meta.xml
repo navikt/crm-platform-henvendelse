@@ -3,7 +3,7 @@
     <fullName>CRM_Created_By_NAV_Unit__c</fullName>
     <description>NAV unit of the user creating the conversation note.</description>
     <externalId>true</externalId>
-    <label>Created By</label>
+    <label>Created By NAV Unit</label>
     <length>7</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
