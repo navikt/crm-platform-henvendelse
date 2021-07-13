@@ -14,7 +14,8 @@ public inherited sharing class CRM_MessageSelector extends CRM_ApiSelector {
             Message__c.CRM_Sent_Datetime_Formula__c,
             Message__c.CRM_From__c,
             Message__c.CRM_Read_Datetime__c,
-            Message__c.CRM_External_Message__c
+            Message__c.CRM_External_Message__c,
+            Message__c.CRM_From_Ident_Formula__c
         };
     }
 
