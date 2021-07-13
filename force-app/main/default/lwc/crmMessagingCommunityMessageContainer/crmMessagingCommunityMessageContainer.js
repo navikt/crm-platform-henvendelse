@@ -20,7 +20,7 @@ export default class CommunityMessageContainer extends LightningElement {
             this.isoutbound = false;
         }
 
-        if (this.message.Type__c == 'Event') {
+        if (this.message.CRM_Type__c == 'Event') {
             this.isevent = true;
         }
     }

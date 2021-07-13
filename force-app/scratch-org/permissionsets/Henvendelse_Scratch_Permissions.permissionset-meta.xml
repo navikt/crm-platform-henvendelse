@@ -82,7 +82,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Conversation_Note__c.CRM_Created_By__c</field>
+        <field>Conversation_Note__c.CRM_Created_By_Ident__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -143,11 +143,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Conversation_Note__c.CRM_Office_Restriction__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Conversation_Note__c.CRM_Owner_Department__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

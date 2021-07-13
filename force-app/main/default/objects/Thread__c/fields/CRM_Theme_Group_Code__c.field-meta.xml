@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>CRM_Created_By_NAV_Unit__c</fullName>
-    <description>NAV unit number of the user creating the journal entry.</description>
-    <externalId>true</externalId>
-    <label>Created By NAV Unit</label>
-    <length>4</length>
+    <fullName>CRM_Theme_Group_Code__c</fullName>
+    <externalId>false</externalId>
+    <formula>CRM_Theme_Group__r.CRM_Code__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Theme Group Code</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Text</type>

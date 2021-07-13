@@ -13,7 +13,7 @@ export default class CommunityMessageInbound extends LightningElement {
 
         console.log(this.message.CRM_From_Label__c);
         console.log(this.message.CRM_Message_Text__c);
-        this.fromId = this.message.From__c;
+        this.fromId = this.message.CRM_From__c;
     }
 
     @wire(getlicenses, { userId: '$fromId' })

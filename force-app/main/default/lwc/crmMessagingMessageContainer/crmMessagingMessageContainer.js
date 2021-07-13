@@ -19,7 +19,7 @@ export default class messagingMessageContainer extends LightningElement {
             this.isoutbound = false;
         }
 
-        if (this.message.Type__c == 'Event') {
+        if (this.message.CRM_Type__c == 'Event') {
             this.isevent = true;
         }
         if (typeof this.message.Previous_Message__c != 'undefined') {

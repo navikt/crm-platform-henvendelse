@@ -20,7 +20,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils {
         this.aktorId = convNote.CRM_Account__r.CRM_Person__r.INT_ActorId__c;
         this.gjeldendeTemagruppe = convNote.CRM_Theme_Group_Code__c;
         this.gjeldendeTema = convNote.CRM_Theme_Code__c;
-        this.opprettetDato = gmtFormatDateTime(convNote.CRM_Date_Time_Registered__c);
+        this.opprettetDato = gmtFormatDateTime(convNote.CRM_Registered_Datetime_Formula__c);
         this.avsluttetDato = this.opprettetDato;
         this.kjedeId = null;
         this.henvendelseId = convNote.Id;
@@ -40,12 +40,16 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils {
 
     global CRM_Henvendelse(Thread__c thread, List<Message__c> messages, List<Journal_Entry__c> jeList) {
         this.kjedeId = thread.Id;
+        //this.fnr =
+        this.aktorId = thread.CRM_External_ActorId__c;
         this.henvendelseId = thread.Id;
         this.kasseringsDato = gmtFormatDateTime(thread.CRM_Disposal_Datetime__c);
-        this.opprettetDato = gmtFormatDateTime(thread.CreatedDate);
-        this.avsluttetDato = null; //TODO: Define when thread is closed
+        this.opprettetDato = gmtFormatDateTime(thread.CRM_Registered_Datetime_Formula__c);
+        this.avsluttetDato = gmtFormatDateTime(thread.CRM_Closed_Date__c);
         this.meldinger = new List<CRM_Melding>();
         this.henvendelseType = HENVENDELSE_TYPE.MELDINGSKJEDE.name();
+        this.gjeldendeTemagruppe = thread.CRM_Theme_Group_Code__c;
+        this.gjeldendeTema = thread.CRM_Theme_Code__c;
 
         for (Message__c message : messages) {
             this.meldinger.add(new CRM_Melding(message));
@@ -58,13 +62,5 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils {
             }
             this.journalposter = journalPosts;
         }
-    }
-
-    global CRM_Henvendelse(Message__c message) {
-        /*this.kjedeId = message.CRM_Thread__c;
-        this.henvendelseId = message.Id;
-        this.henvendelseType = HENVENDELSE_TYPE.MELDING.name();
-        this.meldinger = new List<CRM_Melding>();
-        this.meldinger.add(new CRM_Melding(message));*/
     }
 }
