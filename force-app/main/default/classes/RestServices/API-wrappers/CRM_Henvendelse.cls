@@ -41,13 +41,15 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils {
     global CRM_Henvendelse(Thread__c thread, List<Message__c> messages, List<Journal_Entry__c> jeList) {
         this.kjedeId = thread.Id;
         //this.fnr =
-        //this.aktorId =
+        this.aktorId = thread.CRM_External_ActorId__c;
         this.henvendelseId = thread.Id;
         this.kasseringsDato = gmtFormatDateTime(thread.CRM_Disposal_Datetime__c);
         this.opprettetDato = gmtFormatDateTime(thread.CRM_Registered_Datetime_Formula__c);
         this.avsluttetDato = gmtFormatDateTime(thread.CRM_Closed_Date__c);
         this.meldinger = new List<CRM_Melding>();
         this.henvendelseType = HENVENDELSE_TYPE.MELDINGSKJEDE.name();
+        this.gjeldendeTemagruppe = thread.CRM_Theme_Group_Code__c;
+        this.gjeldendeTema = thread.CRM_Theme_Code__c;
 
         for (Message__c message : messages) {
             this.meldinger.add(new CRM_Melding(message));
