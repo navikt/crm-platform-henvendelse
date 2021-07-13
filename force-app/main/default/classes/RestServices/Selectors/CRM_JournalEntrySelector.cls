@@ -3,6 +3,7 @@ public inherited sharing class CRM_JournalEntrySelector extends CRM_ApiSelector 
         return new List<Schema.SObjectField>{
             Journal_Entry__c.Id,
             Journal_Entry__c.CRM_Created_By_Ident__c,
+            Journal_Entry__c.CRM_Created_By_NAV_Unit__c,
             Journal_Entry__c.CRM_Journal_Date__c,
             Journal_Entry__c.Journal_Entry_ID__c,
             Journal_Entry__c.Journal_Entry_Status__c,

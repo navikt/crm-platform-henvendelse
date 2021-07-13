@@ -43,7 +43,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils {
         this.henvendelseId = thread.Id;
         this.kasseringsDato = gmtFormatDateTime(thread.CRM_Disposal_Datetime__c);
         this.opprettetDato = gmtFormatDateTime(thread.CreatedDate);
-        this.avsluttetDato = null; //TODO: Define when thread is closed
+        this.avsluttetDato = gmtFormatDateTime(thread.CRM_Closed_Date__c);
         this.meldinger = new List<CRM_Melding>();
         this.henvendelseType = HENVENDELSE_TYPE.MELDINGSKJEDE.name();
 
