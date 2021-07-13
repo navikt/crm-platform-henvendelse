@@ -4,8 +4,6 @@ import markasread from '@salesforce/apex/CRM_MessageHelper.markAsRead';
 import { refreshApex } from '@salesforce/apex';
 import userId from '@salesforce/user/Id';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import dekoratoren from '@salesforce/resourceUrl/dekoratoren';
-import { loadStyle } from 'lightning/platformResourceLoader';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 
 import THREADNAME_FIELD from '@salesforce/schema/Thread__c.Name';
@@ -21,10 +19,6 @@ export default class CommityThreadViewer extends LightningElement {
 
     connectedCallback() {
         markasread({ threadId: this.recordId });
-    }
-
-    renderedCallback() {
-        loadStyle(this, dekoratoren);
     }
 
     @wire(getRecord, { recordId: '$recordId', fields })
