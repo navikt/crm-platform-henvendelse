@@ -41,7 +41,6 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
         }
     }
 
-    @future
     private static void initiateJournalFlow(String flowName, String inputParams) {
         Map<String, Object> flowInputs = (Map<String, Object>) JSON.deserializeUntyped(inputParams);
 
