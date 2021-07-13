@@ -7,7 +7,7 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
         return new List<Schema.SObjectField>{
             Thread__c.CRM_From__c,
             Thread__c.CRM_isActive__c,
-            Thread__c.CreatedDate,
+            Thread__c.CRM_Registered_Datetime_Formula__c,
             Thread__c.CRM_Office_Restriction__c,
             Thread__c.Id,
             Thread__c.Name,
