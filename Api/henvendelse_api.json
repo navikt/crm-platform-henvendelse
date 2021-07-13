@@ -280,12 +280,12 @@
                 "properties": {
                     "journalforerNavIdent": {
                         "type": "string",
-                        "description": "NAV-ident til veilder/saksbehandler som opprettet journalposten",
+                        "description": "NAV-ident til veileder/saksbehandler som opprettet journalposten",
                         "example": "Z999999"
                     },
-                    "journalforerNavEnhet": {
+                    "journalforendeEnhet": {
                         "type": "string",
-                        "description": "NAV-enhet til veilder/saksbehandler som opprettet journalposten",
+                        "description": "NAV-enhet til veileder/saksbehandler som opprettet journalposten",
                         "example": "4100"
                     },
                     "journalfortDato": {

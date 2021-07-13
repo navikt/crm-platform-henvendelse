@@ -40,7 +40,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils {
 
     global CRM_Henvendelse(Thread__c thread, List<Message__c> messages, List<Journal_Entry__c> jeList) {
         this.kjedeId = thread.Id;
-        this.henvendelseId = thread.Id;
+        this.fnr = this.aktorId = this.henvendelseId = thread.Id;
         this.kasseringsDato = gmtFormatDateTime(thread.CRM_Disposal_Datetime__c);
         this.opprettetDato = gmtFormatDateTime(thread.CreatedDate);
         this.avsluttetDato = gmtFormatDateTime(thread.CRM_Closed_Date__c);
@@ -58,13 +58,5 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils {
             }
             this.journalposter = journalPosts;
         }
-    }
-
-    global CRM_Henvendelse(Message__c message) {
-        /*this.kjedeId = message.CRM_Thread__c;
-        this.henvendelseId = message.Id;
-        this.henvendelseType = HENVENDELSE_TYPE.MELDING.name();
-        this.meldinger = new List<CRM_Melding>();
-        this.meldinger.add(new CRM_Melding(message));*/
     }
 }
