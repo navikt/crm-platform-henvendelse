@@ -12,7 +12,7 @@ public without sharing class KafkaHenvendelseEngine implements Database.Batchabl
     Map<String, Id> commonCodeMap = new Map<String, Id>();
 
     public Database.QueryLocator start(Database.BatchableContext BC) {
-        String query = 'SELECT Id, CRM_Key__c, CRM_Message__c, CRM_Topic__c FROM KafkaMessage__c WHERE CRM_Topic__c = SOMETOPIC';
+        String query = 'SELECT Id, CRM_Key__c, CRM_Message__c, CRM_Topic__c, CreatedDate FROM KafkaMessage__c WHERE CRM_Topic__c = SOMETOPIC ORDER BY CreatedDate';
         return Database.getQueryLocator(query);
     }
     public void execute(Database.BatchableContext BC, List<SObject> scope) {
@@ -119,8 +119,7 @@ public without sharing class KafkaHenvendelseEngine implements Database.Batchabl
 
         for (Kafka_Henvendelse kfHenv : kfHenvList) {
             switch on kfHenv.henvendelseType {
-                //TODO: TYPE DEFINITION
-                when 'SAMTALEREFERAT TYPES' {
+                when 'REFERAT_TELEFON', 'REFERAT_OPPMOTE' {
                     //Convert to conversation note
                     convertToConversationNote(kfHenv);
                 }
