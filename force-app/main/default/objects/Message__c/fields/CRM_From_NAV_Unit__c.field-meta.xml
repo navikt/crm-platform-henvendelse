@@ -3,7 +3,7 @@
     <fullName>CRM_From_NAV_Unit__c</fullName>
     <description>NAV unit number of the user sending the message</description>
     <externalId>true</externalId>
-    <label>From Ident</label>
+    <label>From NAV Unit</label>
     <length>4</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
