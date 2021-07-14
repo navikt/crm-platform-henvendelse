@@ -14,7 +14,7 @@ public without sharing class KafkaHenvendelseEngine implements Database.Batchabl
     //TODO: HOW SHOULD RECORD OWNER BE HANDLED?
 
     public Database.QueryLocator start(Database.BatchableContext BC) {
-        String query = 'SELECT Id, CRM_Key__c, CRM_Message__c, CRM_Topic__c, CreatedDate FROM KafkaMessage__c WHERE CRM_Topic__c = SOMETOPIC ORDER BY CreatedDate';
+        String query = 'SELECT Id, CRM_Key__c, CRM_Value__c, CRM_Topic__c, CreatedDate FROM KafkaMessage__c WHERE CRM_Topic__c = \'Henvendelse-Migration\' ORDER BY CreatedDate';
         return Database.getQueryLocator(query);
     }
     public void execute(Database.BatchableContext BC, List<SObject> scope) {
@@ -22,22 +22,22 @@ public without sharing class KafkaHenvendelseEngine implements Database.Batchabl
         doTransform((List<KafkaMessage__c>) scope);
 
         List<Database.UpsertResult> convUpsRes = Database.upsert(
-            convNotes.values(),
+            this.convNotes.values(),
             Conversation_Note__c.CRM_Henvendelse_BehandlingsId__c,
             false
         );
         List<Database.UpsertResult> threadsUpsRes = Database.upsert(
-            threads.values(),
+            this.threads.values(),
             Thread__c.CRM_Henvendelse_BehandlingsId__c,
             false
         );
         List<Database.UpsertResult> messageUpsRes = Database.upsert(
-            messages.values(),
+            this.messages.values(),
             Message__c.CRM_Henvendelse_BehandlingsId__c,
             false
         );
         List<Database.UpsertResult> jEntryUpsRes = Database.upsert(
-            journalEntries,
+            this.journalEntries,
             Journal_Entry__c.Journal_Entry_ID__c,
             false
         );
@@ -107,7 +107,10 @@ public without sharing class KafkaHenvendelseEngine implements Database.Batchabl
         List<Kafka_Henvendelse> kfHenvList = new List<Kafka_Henvendelse>();
         for (KafkaMessage__c kafkaMessage : kafkaMessages) {
             Kafka_Henvendelse kfHenv = convertToKafkaHenvendelse(kafkaMessage);
-            if (String.isBlank(kfHenv.utgaarDato) || Datetime.valueOf(kfHenv.utgaarDato) > System.now()) {
+            if (
+                String.isBlank(kfHenv.utgaarDato) ||
+                Datetime.valueOf(kfHenv.utgaarDato.replace('T', ' ')) > System.now()
+            ) {
                 kafkaMessageMap.put(kafkaMessage.CRM_Key__c, kafkaMessage); //Assume key is the behandlingsId
                 actorIds.add(kfHenv.aktorId);
                 kfHenvList.add(kfHenv);
@@ -151,9 +154,11 @@ public without sharing class KafkaHenvendelseEngine implements Database.Batchabl
         }
         convNote.CRM_Created_By_NAV_Unit__c = kfHenv.tilknyttetEnhet;
         convNote.CRM_Henvendelse_BehandlingsId__c = kfHenv.behandlingsId;
-        convNote.CRM_Read_Date__c = String.isNotBlank(kfHenv.lestDato) ? Datetime.valueOf(kfHenv.lestDato) : null;
+        convNote.CRM_Read_Date__c = String.isNotBlank(kfHenv.lestDato)
+            ? Datetime.valueOf(kfHenv.lestDato.replace('T', ' '))
+            : null;
         convNote.CRM_Date_Time_Registered__c = String.isNotBlank(kfHenv.opprettetDato)
-            ? Datetime.valueOf(kfHenv.opprettetDato)
+            ? Datetime.valueOf(kfHenv.opprettetDato.replace('T', ' '))
             : null;
         convNote.CRM_Theme_Group__c = commonCodeMap.containsKey(kfHenv.gjeldendeTemagruppe)
             ? commonCodeMap.get(kfHenv.gjeldendeTemagruppe)
@@ -195,6 +200,7 @@ public without sharing class KafkaHenvendelseEngine implements Database.Batchabl
     private void convertToThread(Kafka_Henvendelse kfHenv) {
         //The thread starter is a message in itself
         Thread__c thread = new Thread__c();
+        thread.CRM_Henvendelse_BehandlingsId__c = kfHenv.behandlingsId;
         if (!actorAccMap.containsKey(kfHenv.aktorId)) {
             //Update message error and return
             setMessageError(kfHenv.behandlingsId, 'Actor does not exist: ' + kfHenv.aktorId);
@@ -230,10 +236,10 @@ public without sharing class KafkaHenvendelseEngine implements Database.Batchabl
         }
 
         thread.CRM_Disposal_Datetime__c = String.isNotBlank(kfHenv.utgaarDato)
-            ? Datetime.valueOf(kfHenv.utgaarDato)
+            ? Datetime.valueOf(kfHenv.utgaarDato.replace('T', ' '))
             : null;
         thread.CRM_Date_Time_Registered__c = String.isNotBlank(kfHenv.opprettetDato)
-            ? Datetime.valueOf(kfHenv.opprettetDato)
+            ? Datetime.valueOf(kfHenv.opprettetDato.replace('T', ' '))
             : null;
         thread.CRM_Created_By_Ident__c = kfHenv.eksternAktor;
         thread.CRM_Theme_Group__c = commonCodeMap.containsKey(kfHenv.gjeldendeTemagruppe)
@@ -271,7 +277,9 @@ public without sharing class KafkaHenvendelseEngine implements Database.Batchabl
         String accountId = actorAccMap.get(kfHenv.aktorId);
         message.CRM_Thread__r = new Thread__c(CRM_Henvendelse_BehandlingsId__c = kfHenv.behandlingsKjedeId);
         message.CRM_Henvendelse_BehandlingsId__c = kfHenv.behandlingsId;
-        message.CRM_Read_Datetime__c = String.isNotBlank(kfHenv.lestDato) ? Datetime.valueOf(kfHenv.lestDato) : null;
+        message.CRM_Read_Datetime__c = String.isNotBlank(kfHenv.lestDato)
+            ? Datetime.valueOf(kfHenv.lestDato.replace('T', ' '))
+            : null;
         message.CRM_Read__c = String.isNotBlank(kfHenv.lestDato);
 
         if (
@@ -314,7 +322,7 @@ public without sharing class KafkaHenvendelseEngine implements Database.Batchabl
                 CRM_Created_By_Ident__c = kfJournal.journalforerNavIdent,
                 CRM_Created_By_NAV_Unit__c = kfJournal.journalforendeEnhet,
                 Journal_Entry_Status__c = 'Completed',
-                CRM_Journal_Date__c = Datetime.valueOf(kfJournal.journalfortDato),
+                CRM_Journal_Date__c = Datetime.valueOf(kfJournal.journalfortDato.replace('T', ' ')),
                 Journal_Entry_ID__c = kfJournal.journalpostId
             )
         );
@@ -333,7 +341,7 @@ public without sharing class KafkaHenvendelseEngine implements Database.Batchabl
                 CRM_Created_By_Ident__c = kfJournal.journalforerNavIdent,
                 CRM_Created_By_NAV_Unit__c = kfJournal.journalforendeEnhet,
                 Journal_Entry_Status__c = 'Completed',
-                CRM_Journal_Date__c = Datetime.valueOf(kfJournal.journalfortDato),
+                CRM_Journal_Date__c = Datetime.valueOf(kfJournal.journalfortDato.replace('T', ' ')),
                 Journal_Entry_ID__c = kfJournal.journalpostId
             )
         );
@@ -344,6 +352,9 @@ public without sharing class KafkaHenvendelseEngine implements Database.Batchabl
     //##########################################################//
 
     private void verifyUpsertResults(List<Sobject> upsertObjects, List<Database.UpsertResult> upsResList) {
+        if (upsertObjects.isEmpty()) {
+            return;
+        }
         String objectName = upsertObjects[0].getSObjectType().getDescribe().getName();
 
         for (Integer i = 0; i < upsResList.size() - 1; i++) {
