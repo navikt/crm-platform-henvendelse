@@ -11,6 +11,8 @@ public without sharing class KafkaHenvendelseEngine implements Database.Batchabl
     Map<String, Id> internalUserMap = new Map<String, Id>();
     Map<String, Id> commonCodeMap = new Map<String, Id>();
 
+    //TODO: HOW SHOULD RECORD OWNER BE HANDLED?
+
     public Database.QueryLocator start(Database.BatchableContext BC) {
         String query = 'SELECT Id, CRM_Key__c, CRM_Message__c, CRM_Topic__c, CreatedDate FROM KafkaMessage__c WHERE CRM_Topic__c = SOMETOPIC ORDER BY CreatedDate';
         return Database.getQueryLocator(query);
