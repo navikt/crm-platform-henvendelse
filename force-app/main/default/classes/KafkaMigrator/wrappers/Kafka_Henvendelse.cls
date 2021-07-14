@@ -2,6 +2,7 @@ public class Kafka_Henvendelse {
     public String aktorId;
     public String applikasjonsId;
     public String avsluttetDato;
+    public String utgaarDato;
     public String behandlingsId;
     public String behandlingskjedeId;
     public String behandlingstema;
