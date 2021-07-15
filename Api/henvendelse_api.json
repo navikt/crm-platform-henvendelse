@@ -4,24 +4,29 @@
         "title": "Salesforce Henvendelse API",
         "version": "1.0"
     },
-    "servers": [{ "url": "https://test.salesforce.com/services/apexrest" }],
+    "servers": [
+        { "url": "https://sf-henvendelse.dev.intern.nav.no/api" },
+        { "url": "https://test.salesforce.com/services/apexrest" }
+    ],
     "paths": {
         "/henvendelse/journal": {
             "post": {
                 "tags": ["Journal"],
                 "description": "Endepunkt for igangsettelse av journalføring mot JOARK.",
+                "requestBody": {
+                    "required": true,
+                    "description": "JSON request med metadata for journalpost",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JournalRequest"
+                            }
+                        }
+                    }
+                },
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/X-Correlation-ID"
-                    },
-                    {
-                        "name": "JournalRequest",
-                        "in": "body",
-                        "required": true,
-                        "description": "JSON request med metadata for journalpost",
-                        "schema": {
-                            "$ref": "#/components/schemas/JournalRequest"
-                        }
                     }
                 ],
                 "responses": {
@@ -30,6 +35,9 @@
                     },
                     "400": {
                         "$ref": "#/components/responses/BadRequest"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
                     },
                     "500": {
                         "$ref": "#/components/responses/InternalServerError"
@@ -41,23 +49,28 @@
             "patch": {
                 "tags": ["Henvendelse Behandling"],
                 "description": "Behandling/oppdatering av eksisterende henvendelser. Benyttes til f.eks å oppdatere felter som kasseringsdato, gjeldendeTema. Request body er JSON som følger objektmodellen til henvendelse, men krever kun at du sender med felter hvor dataene skal oppdateres.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#components/schemas/Henvendelse"
+                            }
+                        }
+                    }
+                },
                 "parameters": [
                     {
                         "name": "henvId",
                         "in": "path",
                         "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
                         "description": "Unik id til samtalereferat eller tråd som man ønsker å behandle"
                     },
                     {
                         "$ref": "#/components/parameters/X-Correlation-ID"
-                    },
-                    {
-                        "name": "HenvendelseData",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#components/schemas/Henvendelse"
-                        }
                     }
                 ],
                 "responses": {
@@ -66,6 +79,9 @@
                     },
                     "400": {
                         "$ref": "#/components/responses/BadRequest"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
                     },
                     "404": {
                         "$ref": "#/components/responses/NotFound"
@@ -80,17 +96,19 @@
             "post": {
                 "tags": ["Ny Henvendelse"],
                 "description": "Opprett nytt samtalereferat tilknyttet en aktør",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#components/schemas/SamtalereferatRequest"
+                            }
+                        }
+                    }
+                },
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/X-Correlation-ID"
-                    },
-                    {
-                        "name": "SamtalereferatRequest",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#components/schemas/SamtalereferatRequest"
-                        }
                     }
                 ],
                 "responses": {
@@ -99,6 +117,9 @@
                     },
                     "400": {
                         "$ref": "#/components/responses/BadRequest"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
                     },
                     "404": {
                         "$ref": "#/components/responses/NotFound"
@@ -113,6 +134,16 @@
             "post": {
                 "tags": ["Ny Henvendelse"],
                 "description": "Opprett ny melding relatert til en aktør",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#components/schemas/MeldingRequest"
+                            }
+                        }
+                    }
+                },
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/X-Correlation-ID"
@@ -121,15 +152,10 @@
                         "name": "kjedeId",
                         "in": "query",
                         "required": false,
-                        "description": "Kjedeid hvis ny melding skal opprettes på en eksisterende tråd. Hvis denne er blank opprettes meldingen på en ny tråd."
-                    },
-                    {
-                        "name": "SamtalereferatRequest",
-                        "in": "body",
-                        "required": true,
                         "schema": {
-                            "$ref": "#components/schemas/MeldingRequest"
-                        }
+                            "type": "string"
+                        },
+                        "description": "Kjedeid hvis ny melding skal opprettes på en eksisterende tråd. Hvis denne er blank opprettes meldingen på en ny tråd."
                     }
                 ],
                 "responses": {
@@ -140,7 +166,6 @@
                         "$ref": "#/components/responses/BadRequest"
                     },
                     "403": {
-                        "description": "Cannot insert new message on closed thread",
                         "$ref": "#/components/responses/NoNewMessageOnClosedThread"
                     },
                     "404": {
@@ -161,6 +186,9 @@
                         "name": "aktorid",
                         "in": "query",
                         "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
                         "description": "Aktørid til person for uthentelse av henvendelseliste"
                     },
                     {
@@ -424,6 +452,20 @@
                     "application/json": {
                         "schema": {
                             "$ref": "#/components/schemas/Error"
+                        },
+                        "examples": {
+                            "ActorNotFound": {
+                                "value": {
+                                    "statusCode": 404,
+                                    "message": "Could not find actor"
+                                }
+                            },
+                            "HenvendelesNotFound": {
+                                "value": {
+                                    "statusCode": 404,
+                                    "message": "No henvendelse with Id: {id}"
+                                }
+                            }
                         }
                     }
                 }
@@ -434,6 +476,14 @@
                     "application/json": {
                         "schema": {
                             "$ref": "#/components/schemas/Error"
+                        },
+                        "examples": {
+                            "MissingActorId": {
+                                "value": {
+                                    "statusCode": 403,
+                                    "message": "Invalid or missing sub-claim in auth token"
+                                }
+                            }
                         }
                     }
                 }
@@ -443,15 +493,19 @@
                 "content": {
                     "application/json": {
                         "schema": {
-                            "type": "object",
-                            "properties": {
-                                "statusCode": {
-                                    "type": "integer",
-                                    "example": 403
-                                },
-                                "message": {
-                                    "type": "string",
-                                    "example": "Cannot insert new message on closed thread"
+                            "$ref": "#/components/schemas/Error"
+                        },
+                        "examples": {
+                            "MissingActorId": {
+                                "value": {
+                                    "statusCode": 403,
+                                    "message": "Invalid or missing sub-claim in auth token"
+                                }
+                            },
+                            "ClosedThread": {
+                                "value": {
+                                    "statusCode": 403,
+                                    "message": "Cannot insert new message on closed thread"
                                 }
                             }
                         }
@@ -464,6 +518,34 @@
                     "application/json": {
                         "schema": {
                             "$ref": "#/components/schemas/Error"
+                        },
+                        "examples": {
+                            "MissingRequiredInput": {
+                                "value": {
+                                    "statusCode": 400,
+                                    "message": "Missing required input"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "MissingNavIdent": {
+                "description": "Missing sub claim in bearer token",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "statusCode": {
+                                    "type": "integer",
+                                    "example": 403
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Invalid or missing sub-claim in auth token"
+                                }
+                            }
                         }
                     }
                 }
@@ -474,6 +556,14 @@
                     "application/json": {
                         "schema": {
                             "$ref": "#/components/schemas/Error"
+                        },
+                        "examples": {
+                            "InternalError": {
+                                "value": {
+                                    "statusCode": 500,
+                                    "message": "Service unavailable"
+                                }
+                            }
                         }
                     }
                 }
@@ -484,7 +574,10 @@
                 "name": "X-Correlation-ID",
                 "in": "header",
                 "required": true,
-                "description": "Unik UUID for inkommende request"
+                "description": "Unik UUID for inkommende request",
+                "schema": {
+                    "type": "string"
+                }
             }
         },
         "securitySchemes": {
