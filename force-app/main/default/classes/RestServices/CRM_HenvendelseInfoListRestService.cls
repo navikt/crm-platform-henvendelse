@@ -20,6 +20,8 @@ global without sharing class CRM_HenvendelseInfoListRestService extends ApexRest
             setResponse(200, JSON.serializePretty(returnList));
         } catch (QueryException queryEx) {
             errorResponse(500, 'Query exception: ' + queryEx.getMessage());
+        } catch (fflib_SecurityUtils.FlsException flsEx) {
+            errorResponse(403, 'Insufficient access: ' + flsEx.getMessage());
         } catch (Exception ex) {
             errorResponse(500, 'Exception: ' + ex.getMessage());
         }
