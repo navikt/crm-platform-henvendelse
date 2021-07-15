@@ -19,6 +19,11 @@
     <description>Permission set that grants access to the henvendelse API in addition to read and write access to necessary fields.</description>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.CRM_Person__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Conversation_Note__c.CRM_Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -169,6 +174,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Message__c.CRM_From_Ident_Formula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Message__c.CRM_From_Label__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -215,6 +225,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Message__c.CRM_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Person__c.INT_ActorId__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -305,6 +320,24 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Henvendelse API Permission</label>
     <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Account</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Contact</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
@@ -329,6 +362,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Message__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Person__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>

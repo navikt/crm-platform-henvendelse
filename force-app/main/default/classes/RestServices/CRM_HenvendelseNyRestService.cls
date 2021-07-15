@@ -2,6 +2,7 @@
 global without sharing class CRM_HenvendelseNyRestService extends CRM_HenvendelseApiUtils {
     private static final String SAMTALEREFERAT_TYPE = HENVENDELSE_TYPE.SAMTALEREFERAT.name();
     private static final String MELDING_TYPE = HENVENDELSE_TYPE.MELDING.name();
+    private static LoggerUtility logger = new LoggerUtility('Henvendelse API');
 
     @HttpPost
     global static void createHenvendelse(String requestBody) {
