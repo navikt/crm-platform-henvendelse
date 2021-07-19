@@ -1,10 +1,14 @@
 @RestResource(urlmapping='/henvendelse/journal/*')
 global without sharing class CRM_HenvendelseJournalRestService extends CRM_HenvendelseApiUtils {
+    private static LoggerUtility logger = new LoggerUtility('Henvendelse API');
     @HttpPost
     global static void createJournalPost(HenvendelseJournalRequest request) {
         //Super validation handles setting the response so return if this fails
         if (!validate())
             return;
+
+        String correlationId = getXCorrelation();
+        logger.apiTransaction(correlationId, RestContext.request, Domain.NKS);
 
         try {
             Id henvId = (Id) request.henvendelseId;
@@ -22,22 +26,26 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
                 when 'Conversation_Note__c' {
                     initiateJournalFlow('CRM_Journal_Conversation_Note', JSON.serialize(flowInputs));
                     setResponse(200);
-                    return;
                 }
                 when 'Thread__c' {
                     initiateJournalFlow('CRM_Journal_Message_Thread', JSON.serialize(flowInputs));
                     setResponse(200);
-                    return;
                 }
                 when else {
                     errorResponse(400, 'No journal flow defined for ID: ' + henvId);
-                    return;
+                    logger.error('No journal flow defined for ID: ' + henvId, null, Domain.NKS, correlationId);
                 }
             }
+            logger.publish();
+            return;
         } catch (StringException stringEx) {
             errorResponse(400, 'Invalid ID: ' + stringEx.getMessage());
+            logger.error('Invalid ID: ' + stringEx.getMessage(), null, Domain.NKS, correlationId);
         } catch (Exception ex) {
             errorResponse(500, ex.getMessage());
+            logger.error(ex.getMessage(), null, Domain.NKS, correlationId);
+        } finally {
+            logger.publish();
         }
     }
 

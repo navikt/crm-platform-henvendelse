@@ -1,4 +1,4 @@
-global virtual class ApexRestService {
+global virtual class ApexRestService extends CRM_ApplicationDomain {
     private static Exception simulatedException;
     private static final Map<Integer, String> DEFAULT_RESPONSE_MAP = new Map<Integer, String>{
         200 => 'OK',
@@ -123,11 +123,20 @@ global virtual class ApexRestService {
     global static Boolean validate() {
         //All endpoints must have a unique correlation ID used for troubleshooting in the callout chain
         RestRequest request = RestContext.request;
-        Boolean valid = request.headers.containsKey('X-Correlation-ID');
+        Boolean valid = String.isNotBlank(getXCorrelation());
         if (!valid) {
             setResponse(400, 'Missing required parameter: X-Correlation-ID');
         }
         return valid;
+    }
+
+    /**
+     * @description: Gets the X-Correlation header for an incoming request
+     * @author Stian Ruud Schikora | 07-19-2021
+     * @return String
+     **/
+    global static String getXCorrelation() {
+        return getRequestHeader('X-Correlation-ID');
     }
 
     public class Error {
