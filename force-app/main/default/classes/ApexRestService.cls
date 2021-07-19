@@ -125,7 +125,7 @@ global virtual class ApexRestService extends CRM_ApplicationDomain {
         RestRequest request = RestContext.request;
         Boolean valid = String.isNotBlank(getXCorrelation());
         if (!valid) {
-            setResponse(400, 'Missing required parameter: X-Correlation-ID');
+            errorResponse(400, 'Missing required parameter: X-Correlation-ID');
         }
         return valid;
     }

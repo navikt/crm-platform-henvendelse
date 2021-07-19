@@ -9,6 +9,32 @@
         { "url": "https://test.salesforce.com/services/apexrest" }
     ],
     "paths": {
+        "/henvendelse/kodeverk/temagrupper": {
+            "get": {
+                "tags": ["Kodeverk"],
+                "description": "Returnerer gyldige temagrupper for en henvendelse",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Temagruppe"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/X-Correlation-ID"
+                    }
+                ]
+            }
+        },
         "/henvendelse/journal": {
             "post": {
                 "tags": ["Journal"],
@@ -180,7 +206,7 @@
         "/henvendelseinfo/henvendelseliste": {
             "get": {
                 "tags": ["Henvendelse Info"],
-                "description": "",
+                "description": "Returnerer en liste med henvendelser for en gitt aktør",
                 "parameters": [
                     {
                         "name": "aktorid",
@@ -224,7 +250,7 @@
         "/henvendelseinfo/henvendelse": {
             "get": {
                 "tags": ["Henvendelse Info"],
-                "description": "",
+                "description": "Returnerer informasjon for en gitt henvendelse",
                 "parameters": [
                     {
                         "name": "henvendelseId",
@@ -501,6 +527,19 @@
                         "items": {
                             "$ref": "#/components/schemas/Markering"
                         }
+                    }
+                }
+            },
+            "Temagruppe": {
+                "type": "object",
+                "properties": {
+                    "navn": {
+                        "type": "string",
+                        "example": "Familie"
+                    },
+                    "kode": {
+                        "type": "string",
+                        "example": "FMLI"
                     }
                 }
             },
