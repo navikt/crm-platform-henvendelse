@@ -27,6 +27,7 @@ global virtual class ApexRestService {
         // Instantiate the RestResponse
         RestResponse response = RestContext.response;
         response.statusCode = responseCode;
+        response.addHeader('Content-Type', 'application/json');
         if (DEFAULT_RESPONSE_MAP.containsKey(responseCode))
             response.responseBody = Blob.valueOf(DEFAULT_RESPONSE_MAP.get(responseCode));
     }
@@ -43,6 +44,7 @@ global virtual class ApexRestService {
         // Instantiate the RestResponse
         RestResponse response = RestContext.response;
         response.statusCode = responseCode;
+        response.addHeader('Content-Type', 'application/json');
         if (String.isNotBlank(payload))
             response.responseBody = Blob.valueOf(payload);
     }
@@ -57,6 +59,7 @@ global virtual class ApexRestService {
         // Instantiate the RestResponse
         RestResponse response = RestContext.response;
         response.statusCode = responseCode;
+        response.addHeader('Content-Type', 'application/json');
         if (String.isNotBlank(message)) {
             response.responseBody = Blob.valueOf(JSON.serialize(new Error(responseCode, message)));
         } else {
