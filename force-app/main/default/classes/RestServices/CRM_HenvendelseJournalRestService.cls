@@ -15,7 +15,7 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
                 'Journal_Case_ID' => request.saksId,
                 'Journal_Theme_Code' => request.temakode,
                 'Journal_Entry_Unit' => request.journalforendeEnhet,
-                'Journal_Entry_NAV_Ident' => request.journalforerNavIdent
+                'Journal_Entry_NAV_Ident' => getActingNavIdent()
             };
 
             switch on objectType {
@@ -50,7 +50,6 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
 
     global class HenvendelseJournalRequest {
         global String journalforendeEnhet;
-        global String journalforerNavIdent;
         global String saksId;
         global String henvendelseId;
         global String temakode;
