@@ -220,6 +220,47 @@
                     }
                 }
             }
+        },
+        "/henvendelseinfo/henvendelse": {
+            "get": {
+                "tags": ["Henvendelse Info"],
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "henvendelseId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Unik ID til henvendelsen"
+                    },
+                    {
+                        "$ref": "#/components/parameters/X-Correlation-ID"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Henvendelse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
         }
     },
     "security": [{ "Salesforce_auth": [] }],
