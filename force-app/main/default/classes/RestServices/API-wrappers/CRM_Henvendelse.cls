@@ -41,7 +41,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
             CRM_Markering officeRest = new CRM_Markering();
             officeRest.markeringstype = CRM_Markering.MARKING_TYPES.KONTORSPERRE.name();
             officeRest.markertAv = convNote.CRM_Office_Restriction_Activated_By__c;
-            //officeRest.markertDato =  NEED DATE FILED HERE?
+            officeRest.markertDato = gmtFormatDateTime(convNote.CRM_Office_Restriction_Date__c);
             this.markeringer = new List<CRM_Markering>();
             this.markeringer.add(officeRest);
         }
@@ -76,7 +76,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
             CRM_Markering officeRest = new CRM_Markering();
             officeRest.markeringstype = CRM_Markering.MARKING_TYPES.KONTORSPERRE.name();
             officeRest.markertAv = thread.CRM_Office_Restriction_Activated_By__c;
-            //officeRest.markertDato =  NEED DATE FILED HERE?
+            officeRest.markertDato = gmtFormatDateTime(thread.CRM_Office_Restriction_Date__c);
             this.markeringer = new List<CRM_Markering>();
             this.markeringer.add(officeRest);
         }

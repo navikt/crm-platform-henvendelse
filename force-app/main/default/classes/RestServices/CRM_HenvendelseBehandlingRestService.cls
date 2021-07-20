@@ -9,7 +9,7 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
         if (!validate()) {
             return;
         }
-
+        String navIdent = getActingNavIdent();
         String correlationId = getXCorrelation();
         logger.apiTransaction(correlationId, RestContext.request, Domain.NKS);
         try {
@@ -20,6 +20,7 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
             switch on objectName {
                 when 'Thread__c' {
                     Thread__c thread = convertToThread(req);
+                    thread.CRM_Last_Edited_By__c = navIdent;
                     SObjectAccessDecision decision = Security.stripInaccessible(
                         AccessType.UPDATABLE,
                         new List<Thread__c>{ thread },
@@ -30,6 +31,7 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
                 }
                 when 'Conversation_Note__c' {
                     Conversation_Note__c convNote = convertToConvNote(req);
+                    convNote.CRM_Last_Edited_By__c = navIdent;
                     SObjectAccessDecision decision = Security.stripInaccessible(
                         AccessType.UPDATABLE,
                         new List<Conversation_Note__c>{ convNote },
