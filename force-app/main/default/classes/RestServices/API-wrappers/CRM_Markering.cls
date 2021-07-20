@@ -4,7 +4,7 @@ global class CRM_Markering {
         KONTORSPERRE
     }
 
-    global String markeringsType;
+    global String markeringstype;
     global String markertAv; //NAV Ident of the user activating the marking
-    global String dato;
+    global String markertDato;
 }

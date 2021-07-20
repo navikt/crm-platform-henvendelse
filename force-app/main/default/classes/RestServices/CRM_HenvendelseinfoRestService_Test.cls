@@ -1,5 +1,5 @@
 @isTest
-public class CRM_HenvendelseInfoListRestService_Test {
+public class CRM_HenvendelseinfoRestService_Test {
     @TestSetup
     static void makeData() {
         Person__c dummyPerson = (Person__c) CRM_HENV_TestDataFactory.createRecord(
@@ -50,85 +50,116 @@ public class CRM_HenvendelseInfoListRestService_Test {
     }
 
     @isTest
-    static void testGetHenvendelseList() {
+    static void testGetConversationNote() {
+        String convNoteId = [SELECT Id FROM Conversation_Note__c LIMIT 1].Id;
+
         RestRequest req = new RestRequest();
         RestResponse resp = new RestResponse();
 
         req.requestURI =
-            Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste';
-        req.httpMethod = 'GET';
-        req.params.put('aktorid', '123456789101213');
+            Url.getSalesforceBaseUrl().toExternalForm() +
+            '/services/apexrest/henvendelseinfo/henvendelse/' +
+            convNoteId;
         req.headers.put('X-Correlation-ID', '123TEST');
+        req.httpMethod = 'GET';
         RestContext.request = req;
         RestContext.response = resp;
 
         Test.startTest();
-        CRM_HenvendelseInfoListRestService.getHenvendelseList();
+        CRM_HenvendelseinfoRestService.getHenvendelse();
         Test.stopTest();
 
         System.assertEquals(200, RestContext.response.statusCode);
     }
 
     @isTest
-    static void testGetHenvedelseListQueryException() {
+    static void testGetThread() {
+        String threadId = [SELECT Id FROM Thread__c LIMIT 1].Id;
+
         RestRequest req = new RestRequest();
         RestResponse resp = new RestResponse();
 
         req.requestURI =
-            Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste';
-        req.httpMethod = 'GET';
-        req.params.put('aktorid', '123456789101213');
+            Url.getSalesforceBaseUrl().toExternalForm() +
+            '/services/apexrest/henvendelseinfo/henvendelse/' +
+            threadId;
         req.headers.put('X-Correlation-ID', '123TEST');
+        req.httpMethod = 'GET';
         RestContext.request = req;
         RestContext.response = resp;
 
         Test.startTest();
-        //Simulating exception from selector call
-        CRM_ApiSelector.simulateException(new QueryException('DUMMY ERROR'));
-        CRM_HenvendelseInfoListRestService.getHenvendelseList();
+        CRM_HenvendelseinfoRestService.getHenvendelse();
         Test.stopTest();
 
-        System.assertEquals(500, RestContext.response.statusCode);
+        System.assertEquals(200, RestContext.response.statusCode);
     }
 
     @isTest
-    static void testGetHenvedelseListException() {
+    static void testInvalidObjextId() {
+        String account = [SELECT Id FROM Account LIMIT 1].Id;
+
         RestRequest req = new RestRequest();
         RestResponse resp = new RestResponse();
 
         req.requestURI =
-            Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste';
-        req.httpMethod = 'GET';
-        req.params.put('aktorid', '123456789101213');
+            Url.getSalesforceBaseUrl().toExternalForm() +
+            '/services/apexrest/henvendelseinfo/henvendelse/' +
+            account;
         req.headers.put('X-Correlation-ID', '123TEST');
+        req.httpMethod = 'GET';
         RestContext.request = req;
         RestContext.response = resp;
 
         Test.startTest();
-        //Simulating exception from selector call
-        CRM_ApiSelector.simulateException(new JSONException('DUMMY ERROR'));
-        CRM_HenvendelseInfoListRestService.getHenvendelseList();
-        Test.stopTest();
-
-        System.assertEquals(500, RestContext.response.statusCode);
-    }
-
-    @isTest
-    static void testMissingActorIdInput() {
-        RestRequest req = new RestRequest();
-        RestResponse resp = new RestResponse();
-
-        req.requestURI =
-            Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelseinfo/henvendelseliste';
-        req.httpMethod = 'GET';
-        req.headers.put('X-Correlation-ID', '123TEST');
-        RestContext.request = req;
-        RestContext.response = resp;
-
-        Test.startTest();
-        CRM_HenvendelseInfoListRestService.getHenvendelseList();
+        CRM_HenvendelseinfoRestService.getHenvendelse();
         Test.stopTest();
 
         System.assertEquals(400, RestContext.response.statusCode);
+    }
+
+    @isTest
+    static void testInvalidId() {
+        RestRequest req = new RestRequest();
+        RestResponse resp = new RestResponse();
+
+        req.requestURI =
+            Url.getSalesforceBaseUrl().toExternalForm() +
+            '/services/apexrest/henvendelseinfo/henvendelse/' +
+            'INVALID';
+        req.headers.put('X-Correlation-ID', '123TEST');
+        req.httpMethod = 'GET';
+        RestContext.request = req;
+        RestContext.response = resp;
+
+        Test.startTest();
+        CRM_HenvendelseinfoRestService.getHenvendelse();
+        Test.stopTest();
+
+        System.assertEquals(400, RestContext.response.statusCode);
+    }
+
+    @isTest
+    static void testException() {
+        String threadId = [SELECT Id FROM Thread__c LIMIT 1].Id;
+
+        RestRequest req = new RestRequest();
+        RestResponse resp = new RestResponse();
+
+        req.requestURI =
+            Url.getSalesforceBaseUrl().toExternalForm() +
+            '/services/apexrest/henvendelseinfo/henvendelse/' +
+            threadId;
+        req.headers.put('X-Correlation-ID', '123TEST');
+        req.httpMethod = 'GET';
+        RestContext.request = req;
+        RestContext.response = resp;
+
+        Test.startTest();
+        CRM_HenvendelseinfoRestService.simulateException(new QueryException('TEST'));
+        CRM_HenvendelseinfoRestService.getHenvendelse();
+        Test.stopTest();
+
+        System.assertEquals(500, RestContext.response.statusCode);
     }
 }
