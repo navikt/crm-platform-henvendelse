@@ -22,18 +22,52 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
     }
 
     public static Thread__c convertToThread(CRM_Henvendelse henv) {
-        return new Thread__c(
-            CRM_Office_Restriction__c = henv.kontorsperre != null ? henv.kontorsperre : false,
-            CRM_Disposal_Datetime__c = Datetime.valueOfGmt(henv.kasseringsDato.replace('T', ' '))
-        );
-    }
-    public static Conversation_Note__c convertToConvNote(CRM_Henvendelse henv) {
-        return new Conversation_Note__c(
-            CRM_Office_Restriction__c = henv.kontorsperre != null ? henv.kontorsperre : false,
-            CRM_Disposal_Datetime__c = Datetime.valueOfGmt(henv.kasseringsDato.replace('T', ' '))
-        );
+        Thread__c convertedThread = new Thread__c();
+        if (String.isNotBlank(henv.kasseringsDato)) {
+            convertedThread.CRM_Disposal_Datetime__c = Datetime.valueOfGmt(henv.kasseringsDato.replace('T', ' '));
+        }
+        if (henv.kontorsperre != null) {
+            convertedThread.CRM_Office_Restriction__c = henv.kontorsperre;
+        }
+        if (String.isNotBlank(henv.gjeldendeTemagruppe)) {
+            Id themeGroupId = getThemeGroup(henv.gjeldendeTemagruppe);
+
+            if (themeGroupId == null)
+                throw new HenvendelseConversionException('Invalid code for theme group: ' + henv.gjeldendeTemagruppe);
+            convertedThread.CRM_Theme_Group__c = themeGroupId;
+        }
+        return convertedThread;
     }
 
+    public static Conversation_Note__c convertToConvNote(CRM_Henvendelse henv) {
+        Conversation_Note__c convNote = new Conversation_Note__c();
+
+        if (String.isNotBlank(henv.kasseringsDato)) {
+            convNote.CRM_Disposal_Datetime__c = Datetime.valueOfGmt(henv.kasseringsDato.replace('T', ' '));
+        }
+        if (henv.kontorsperre != null) {
+            convNote.CRM_Office_Restriction__c = henv.kontorsperre;
+        }
+        if (String.isNotBlank(henv.gjeldendeTemagruppe)) {
+            Id themeGroupId = getThemeGroup(henv.gjeldendeTemagruppe);
+
+            if (themeGroupId == null)
+                throw new HenvendelseConversionException('Invalid code for theme group: ' + henv.gjeldendeTemagruppe);
+            convNote.CRM_Theme_Group__c = themeGroupId;
+        }
+        return convNote;
+    }
+
+    public static Id getThemeGroup(String code) {
+        return [SELECT Id FROM Common_Code__c WHERE CRM_Code_Set__c = 'Temagrupper' AND CRM_Code__c = :code]?.Id;
+    }
+
+    /**
+     * @description: Formats a datetime to a valid ISO string
+     * @author Stian Ruud Schikora | 07-20-2021
+     * @param timestamp
+     * @return String
+     **/
     public String gmtFormatDateTime(DateTime timestamp) {
         return timestamp != null ? timestamp.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss.SSSZ') : null;
     }
@@ -45,5 +79,8 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
      **/
     public static String getActingNavIdent() {
         return getRequestHeader('X-ACTING-NAV-IDENT');
+    }
+
+    public class HenvendelseConversionException extends exception {
     }
 }

@@ -46,21 +46,23 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
                     update decision.getRecords();
                 }
                 when else {
-                    setResponse(400, 'Invalid reference value for henv/thread ID: ' + henvId);
+                    errorResponse(400, 'Invalid reference value for henv/thread ID: ' + henvId);
                 }
             }
             logger.publish();
         } catch (DmlException dmlEx) {
             if (StatusCode.FIELD_INTEGRITY_EXCEPTION == dmlEx.getDmlType(0)) {
-                setResponse(400, dmlEx.getMessage());
+                errorResponse(400, dmlEx.getMessage());
             } else {
-                setResponse(500, dmlEx.getMessage());
+                errorResponse(500, dmlEx.getMessage());
                 logger.error('DML EXCEPTION: ' + dmlEx.getMessage(), null, Domain.NKS, correlationId);
             }
         } catch (StringException stringEx) {
-            setResponse(400, 'Invalid ID: ' + stringEx.getMessage());
+            errorResponse(400, 'Invalid ID: ' + stringEx.getMessage());
+        } catch (HenvendelseConversionException conversionEx) {
+            errorResponse(400, conversionEx.getMessage());
         } catch (Exception ex) {
-            setResponse(500, 'Failed to update: ' + ex.getMessage());
+            errorResponse(500, 'Failed to update: ' + ex.getMessage());
             logger.error('Failed to update: ' + ex.getMessage(), null, Domain.NKS, correlationId);
         } finally {
             logger.publish();
