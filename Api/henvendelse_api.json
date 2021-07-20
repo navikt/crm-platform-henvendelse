@@ -496,6 +496,16 @@
                         "format": "date-time",
                         "example": "2021-06-27T12:00:00.000Z"
                     },
+                    "kontorsperre": {
+                        "type": "boolean",
+                        "description": "Definerer om henvendelsen er markert som kontorsperret. Markeringsinformasjon finnes i listen av markeringer",
+                        "example": false
+                    },
+                    "feilsendt": {
+                        "type": "boolean",
+                        "description": "Definerer om henvendelsen er markert som feilsendt. Markeringsinformasjon finnes i listen av markeringer",
+                        "example": true
+                    },
                     "henvendelseId": {
                         "type": "string"
                     },
