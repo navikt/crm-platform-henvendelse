@@ -21,6 +21,12 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
         return returnType;
     }
 
+    /**
+     * @description: Converts a CRM_Henvendelse to a valid Thread__c. Used for patch updates
+     * @author Stian Ruud Schikora | 07-20-2021
+     * @param henv
+     * @return Thread__
+     **/
     public static Thread__c convertToThread(CRM_Henvendelse henv) {
         Thread__c convertedThread = new Thread__c();
         if (String.isNotBlank(henv.kasseringsDato)) {
@@ -39,6 +45,12 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
         return convertedThread;
     }
 
+    /**
+     * @description: Converts a CRM_Henvendelse to a valid Conversation_Note__c. Used for patch updates
+     * @author Stian Ruud Schikora | 07-20-2021
+     * @param henv
+     * @return Conversation_Note__c
+     **/
     public static Conversation_Note__c convertToConvNote(CRM_Henvendelse henv) {
         Conversation_Note__c convNote = new Conversation_Note__c();
 
