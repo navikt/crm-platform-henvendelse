@@ -3,9 +3,8 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
     private static LoggerUtility logger = new LoggerUtility('Henvendelse API');
 
     @HttpPatch
-    global static void updateHenvendelse(CRM_Henvendelse req) {
+    global static void updateHenvendelse() {
         RestRequest request = RestContext.request;
-
         if (!validate()) {
             return;
         }
@@ -13,6 +12,10 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
         String correlationId = getXCorrelation();
         logger.apiTransaction(correlationId, RestContext.request, Domain.NKS);
         try {
+            CRM_Henvendelse req = (CRM_Henvendelse) JSON.deserialize(
+                request.requestBody.toString(),
+                CRM_Henvendelse.class
+            );
             Id henvId = (Id) getLastPathParameter();
 
             String objectName = henvId.getSobjectType().getDescribe().getName();
@@ -20,6 +23,7 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
             switch on objectName {
                 when 'Thread__c' {
                     Thread__c thread = convertToThread(req);
+                    thread.Id = henvId;
                     thread.CRM_Last_Edited_By__c = navIdent;
                     SObjectAccessDecision decision = Security.stripInaccessible(
                         AccessType.UPDATABLE,
@@ -31,6 +35,7 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
                 }
                 when 'Conversation_Note__c' {
                     Conversation_Note__c convNote = convertToConvNote(req);
+                    convNote.Id = henvId;
                     convNote.CRM_Last_Edited_By__c = navIdent;
                     SObjectAccessDecision decision = Security.stripInaccessible(
                         AccessType.UPDATABLE,

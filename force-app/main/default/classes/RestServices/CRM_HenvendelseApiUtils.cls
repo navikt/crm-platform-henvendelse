@@ -22,10 +22,16 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
     }
 
     public static Thread__c convertToThread(CRM_Henvendelse henv) {
-        return new Thread__c();
+        return new Thread__c(
+            CRM_Office_Restriction__c = henv.kontorsperre != null ? henv.kontorsperre : false,
+            CRM_Disposal_Datetime__c = Datetime.valueOfGmt(henv.kasseringsDato.replace('T', ' '))
+        );
     }
     public static Conversation_Note__c convertToConvNote(CRM_Henvendelse henv) {
-        return new Conversation_Note__c();
+        return new Conversation_Note__c(
+            CRM_Office_Restriction__c = henv.kontorsperre != null ? henv.kontorsperre : false,
+            CRM_Disposal_Datetime__c = Datetime.valueOfGmt(henv.kasseringsDato.replace('T', ' '))
+        );
     }
 
     public String gmtFormatDateTime(DateTime timestamp) {

@@ -13,12 +13,19 @@
         <defaultConnectorLabel>Activated in Salesforce</defaultConnectorLabel>
         <rules>
             <name>Activated_Through_API</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.CRM_Last_Edited_By__c</leftValueReference>
-                <operator>NotEqualTo</operator>
+                <leftValueReference>$Record.LastModifiedBy.CRM_NAV_Ident__c</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>$Record__Prior.CRM_Last_Edited_By__c</elementReference>
+                    <stringValue/>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.LastModifiedBy.CRM_NAV_Ident__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>

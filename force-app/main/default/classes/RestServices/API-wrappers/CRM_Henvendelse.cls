@@ -4,6 +4,8 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
     global String kasseringsDato;
     global String avsluttetDato;
     global String opprettetDato;
+    global Boolean kontorsperre = false;
+    global Boolean feilsendt = false;
     global String henvendelseId;
     global String kjedeId;
     global String opprinneligGT;
@@ -39,6 +41,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
 
         if (convNote.CRM_Office_Restriction__c == true) {
             CRM_Markering officeRest = new CRM_Markering();
+            this.kontorsperre = true;
             officeRest.markeringstype = CRM_Markering.MARKING_TYPES.KONTORSPERRE.name();
             officeRest.markertAv = convNote.CRM_Office_Restriction_Activated_By__c;
             officeRest.markertDato = gmtFormatDateTime(convNote.CRM_Office_Restriction_Date__c);
@@ -74,6 +77,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
 
         if (thread.CRM_Office_Restriction__c == true) {
             CRM_Markering officeRest = new CRM_Markering();
+            this.kontorsperre = true;
             officeRest.markeringstype = CRM_Markering.MARKING_TYPES.KONTORSPERRE.name();
             officeRest.markertAv = thread.CRM_Office_Restriction_Activated_By__c;
             officeRest.markertDato = gmtFormatDateTime(thread.CRM_Office_Restriction_Date__c);
