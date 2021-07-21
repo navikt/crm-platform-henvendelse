@@ -35,6 +35,7 @@ global without sharing class CRM_HenvendelseInfoListRestService extends ApexRest
             errorResponse(403, 'Insufficient access: ' + flsEx.getMessage());
             logger.error('Insufficient access: ' + flsEx.getMessage(), null, Domain.NKS, correlationId);
         } catch (Exception ex) {
+            System.debug(ex.getStackTraceString());
             errorResponse(500, 'Exception: ' + ex.getMessage());
             logger.error('Exception: ' + ex.getMessage(), null, Domain.NKS, correlationId);
         } finally {

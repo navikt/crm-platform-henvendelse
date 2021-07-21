@@ -91,9 +91,15 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
 
         Integer retVal = 0;
 
-        if (Datetime.valueOf(this.opprettetDato) > Datetime.valueOf(compHenv.opprettetDato)) {
+        if (
+            Datetime.valueOf(this.opprettetDato.replace('T', ' ')) >
+            Datetime.valueOf(compHenv.opprettetDato.replace('T', ' '))
+        ) {
             retVal = 1;
-        } else if (Datetime.valueOf(this.opprettetDato) > Datetime.valueOf(compHenv.opprettetDato)) {
+        } else if (
+            Datetime.valueOf(this.opprettetDato.replace('T', ' ')) >
+            Datetime.valueOf(compHenv.opprettetDato.replace('T', ' '))
+        ) {
             retVal = -1;
         }
 
