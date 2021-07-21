@@ -2,6 +2,7 @@
 global without sharing class CRM_HenvendelseNyRestService extends CRM_HenvendelseApiUtils {
     private static final String SAMTALEREFERAT_TYPE = HENVENDELSE_TYPE.SAMTALEREFERAT.name();
     private static final String MELDING_TYPE = HENVENDELSE_TYPE.MELDING.name();
+    private static String correlationId;
     private static LoggerUtility logger = new LoggerUtility('Henvendelse API');
 
     @HttpPost
@@ -9,6 +10,9 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
         //Super validation handles setting the response so return if this fails
         if (!validate())
             return;
+
+        correlationId = getXCorrelation();
+        logger.apiTransaction(correlationId, RestContext.request, Domain.NKS);
 
         RestRequest request = RestContext.request;
 
@@ -31,11 +35,14 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
                         '\n Approved types are: ' +
                         JSON.serializePretty(HENVENDELSE_TYPE.values())
                     );
-                    return;
                 }
             }
+            logger.publish();
         } catch (Exception ex) {
             errorResponse(500, 'Unknown error: ' + ex.getMessage());
+            logger.error('Unknown error: ' + ex.getMessage(), null, Domain.NKS, correlationId);
+        } finally {
+            logger.publish();
         }
     }
 
@@ -49,6 +56,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
             setResponse(200, newNote.Id);
         } catch (DmlException dmlEx) {
             errorResponse(500, 'Insertion failed: ' + dmlEx.getMessage());
+            logger.error('Insertion failed: ' + dmlEx.getMessage(), null, Domain.NKS, correlationId);
         }
     }
 
@@ -62,6 +70,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
             setResponse(200, newMessage.CRM_Thread__c); //Returns the ID of the thread
         } catch (DmlException dmlEx) {
             errorResponse(500, 'Insertion failed: ' + dmlEx.getMessage());
+            logger.error('Insertion failed: ' + dmlEx.getMessage(), null, Domain.NKS, correlationId);
         }
     }
 
@@ -163,6 +172,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
                 newMessage.CRM_Thread__c = newThread.Id;
             } catch (DmlException dmlEx) {
                 errorResponse(500, 'Unexpected error: ' + dmlEx.getMessage());
+                logger.error('Unexpected error: ' + dmlEx.getMessage(), null, Domain.NKS, correlationId);
                 return null;
             }
         }

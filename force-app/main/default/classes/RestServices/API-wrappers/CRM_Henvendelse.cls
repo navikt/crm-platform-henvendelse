@@ -1,9 +1,11 @@
-global class CRM_Henvendelse extends CRM_HenvendelseApiUtils {
+global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparable {
     global String fnr;
     global String aktorId;
     global String kasseringsDato;
     global String avsluttetDato;
     global String opprettetDato;
+    global Boolean kontorsperre = false;
+    global Boolean feilsendt = false;
     global String henvendelseId;
     global String kjedeId;
     global String opprinneligGT;
@@ -36,6 +38,16 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils {
             }
             this.journalposter = journalPosts;
         }
+
+        if (convNote.CRM_Office_Restriction__c == true) {
+            CRM_Markering officeRest = new CRM_Markering();
+            this.kontorsperre = true;
+            officeRest.markeringstype = CRM_Markering.MARKING_TYPES.KONTORSPERRE.name();
+            officeRest.markertAv = convNote.CRM_Office_Restriction_Activated_By__c;
+            officeRest.markertDato = gmtFormatDateTime(convNote.CRM_Office_Restriction_Date__c);
+            this.markeringer = new List<CRM_Markering>();
+            this.markeringer.add(officeRest);
+        }
     }
 
     global CRM_Henvendelse(Thread__c thread, List<Message__c> messages, List<Journal_Entry__c> jeList) {
@@ -62,5 +74,35 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils {
             }
             this.journalposter = journalPosts;
         }
+
+        if (thread.CRM_Office_Restriction__c == true) {
+            CRM_Markering officeRest = new CRM_Markering();
+            this.kontorsperre = true;
+            officeRest.markeringstype = CRM_Markering.MARKING_TYPES.KONTORSPERRE.name();
+            officeRest.markertAv = thread.CRM_Office_Restriction_Activated_By__c;
+            officeRest.markertDato = gmtFormatDateTime(thread.CRM_Office_Restriction_Date__c);
+            this.markeringer = new List<CRM_Markering>();
+            this.markeringer.add(officeRest);
+        }
+    }
+
+    global Integer compareTo(Object compareTo) {
+        CRM_Henvendelse compHenv = (CRM_Henvendelse) compareTo;
+
+        Integer retVal = 0;
+
+        if (
+            Datetime.valueOf(this.opprettetDato.replace('T', ' ')) >
+            Datetime.valueOf(compHenv.opprettetDato.replace('T', ' '))
+        ) {
+            retVal = 1;
+        } else if (
+            Datetime.valueOf(this.opprettetDato.replace('T', ' ')) >
+            Datetime.valueOf(compHenv.opprettetDato.replace('T', ' '))
+        ) {
+            retVal = -1;
+        }
+
+        return retVal;
     }
 }

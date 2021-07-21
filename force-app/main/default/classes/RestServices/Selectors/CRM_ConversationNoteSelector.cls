@@ -12,6 +12,7 @@ public inherited sharing class CRM_ConversationNoteSelector extends CRM_ApiSelec
         'CRM_Conversation_Note__c',
         'CRM_Created_By_Ident__c',
         'CRM_Office_Restriction_Activated_By__c',
+        'CRM_Office_Restriction_Date__c',
         'CRM_Disposal_Datetime__c'
     };
 
@@ -23,10 +24,10 @@ public inherited sharing class CRM_ConversationNoteSelector extends CRM_ApiSelec
         return Conversation_Note__c.sObjectType;
     }
 
-    public List<Conversation_Note__c> selectById(Set<Id> idSet) {
+    public Conversation_Note__c selectById(Id convId) {
         fflib_QueryFactory query = newQueryFactory();
-        query.selectFields(QUERY_FIELDS).setCondition('Id in :idSet');
-        return (List<Conversation_Note__c>) Database.query(query.toSOQL());
+        query.selectFields(QUERY_FIELDS).setCondition('Id=: convId');
+        return (Conversation_Note__c) Database.query(query.toSOQL());
     }
 
     public List<Conversation_Note__c> selectByActorId(Set<String> actorIds) {

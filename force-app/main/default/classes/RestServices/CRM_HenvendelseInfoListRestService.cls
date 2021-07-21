@@ -1,11 +1,20 @@
 @RestResource(urlmapping='/henvendelseinfo/henvendelseliste/*')
 global without sharing class CRM_HenvendelseInfoListRestService extends ApexRestService {
+    private static LoggerUtility logger = new LoggerUtility('Henvendelse API');
     @HttpGet
     global static void getHenvendelseList() {
         String actorId = getRequestParam('aktorid');
 
+        if (!validate()) {
+            return;
+        }
+
+        String correlationId = getXCorrelation();
+        logger.apiTransaction(correlationId, RestContext.request, Domain.NKS);
+
         if (String.isBlank(actorId)) {
             errorResponse(400, 'Missing required query input: aktorid');
+            logger.publish();
             return;
         }
 
@@ -17,13 +26,20 @@ global without sharing class CRM_HenvendelseInfoListRestService extends ApexRest
 
             List<Thread__c> threadList = new CRM_ThreadSelector().selectByActorId(new Set<String>{ actorId });
             returnList.addAll(convertToHenvendelseList(threadList));
+            returnList.sort();
             setResponse(200, JSON.serializePretty(returnList));
         } catch (QueryException queryEx) {
             errorResponse(500, 'Query exception: ' + queryEx.getMessage());
+            logger.error('Query exception: ' + queryEx.getMessage(), null, Domain.NKS, correlationId);
         } catch (fflib_SecurityUtils.FlsException flsEx) {
             errorResponse(403, 'Insufficient access: ' + flsEx.getMessage());
+            logger.error('Insufficient access: ' + flsEx.getMessage(), null, Domain.NKS, correlationId);
         } catch (Exception ex) {
+            System.debug(ex.getStackTraceString());
             errorResponse(500, 'Exception: ' + ex.getMessage());
+            logger.error('Exception: ' + ex.getMessage(), null, Domain.NKS, correlationId);
+        } finally {
+            logger.publish();
         }
     }
 

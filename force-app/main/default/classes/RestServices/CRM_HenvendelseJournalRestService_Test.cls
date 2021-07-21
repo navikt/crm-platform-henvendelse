@@ -15,13 +15,13 @@ public class CRM_HenvendelseJournalRestService_Test {
 
         CRM_HenvendelseJournalRestService.HenvendelseJournalRequest journalReq = new CRM_HenvendelseJournalRestService.HenvendelseJournalRequest();
         journalReq.journalforendeEnhet = '4100';
-        journalReq.journalforerNavIdent = 'Z999999';
         journalReq.saksId = '123CASE';
         journalReq.temakode = 'DAG;';
         journalReq.henvendelseId = convNote.Id;
 
         RestRequest restReq = new RestRequest();
         restReq.headers.put('X-Correlation-ID', '123RANDOM');
+        restReq.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
 
         RestContext.request = restReq;
         RestContext.response = new RestResponse();
@@ -46,13 +46,13 @@ public class CRM_HenvendelseJournalRestService_Test {
 
         CRM_HenvendelseJournalRestService.HenvendelseJournalRequest journalReq = new CRM_HenvendelseJournalRestService.HenvendelseJournalRequest();
         journalReq.journalforendeEnhet = '4100';
-        journalReq.journalforerNavIdent = 'Z999999';
         journalReq.saksId = '123CASE';
         journalReq.temakode = 'DAG;';
         journalReq.henvendelseId = thread.Id;
 
         RestRequest restReq = new RestRequest();
         restReq.headers.put('X-Correlation-ID', '123RANDOM');
+        restReq.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
 
         RestContext.request = restReq;
         RestContext.response = new RestResponse();
@@ -72,13 +72,13 @@ public class CRM_HenvendelseJournalRestService_Test {
 
         CRM_HenvendelseJournalRestService.HenvendelseJournalRequest journalReq = new CRM_HenvendelseJournalRestService.HenvendelseJournalRequest();
         journalReq.journalforendeEnhet = '4100';
-        journalReq.journalforerNavIdent = 'Z999999';
         journalReq.saksId = '123CASE';
         journalReq.temakode = 'DAG;';
         journalReq.henvendelseId = (String) CRM_HENV_TestDataFactory.createRecord(new Case()).get('Id');
 
         RestRequest restReq = new RestRequest();
         restReq.headers.put('X-Correlation-ID', '123RANDOM');
+        restReq.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
 
         RestContext.request = restReq;
         RestContext.response = new RestResponse();
@@ -96,13 +96,13 @@ public class CRM_HenvendelseJournalRestService_Test {
 
         CRM_HenvendelseJournalRestService.HenvendelseJournalRequest journalReq = new CRM_HenvendelseJournalRestService.HenvendelseJournalRequest();
         journalReq.journalforendeEnhet = '4100';
-        journalReq.journalforerNavIdent = 'Z999999';
         journalReq.saksId = '123CASE';
         journalReq.temakode = 'DAG;';
         journalReq.henvendelseId = '123INVALIDID';
 
         RestRequest restReq = new RestRequest();
         restReq.headers.put('X-Correlation-ID', '123RANDOM');
+        restReq.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
 
         RestContext.request = restReq;
         RestContext.response = new RestResponse();
@@ -120,12 +120,12 @@ public class CRM_HenvendelseJournalRestService_Test {
 
         CRM_HenvendelseJournalRestService.HenvendelseJournalRequest journalReq = new CRM_HenvendelseJournalRestService.HenvendelseJournalRequest();
         journalReq.journalforendeEnhet = '4100';
-        journalReq.journalforerNavIdent = 'Z999999';
         journalReq.saksId = '123CASE';
         journalReq.temakode = 'DAG;';
         journalReq.henvendelseId = '123INVALIDID';
 
         RestRequest restReq = new RestRequest();
+        restReq.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
 
         RestContext.request = restReq;
         RestContext.response = new RestResponse();

@@ -3,7 +3,7 @@
     <fullName>CRM_From_External__c</fullName>
     <description>True if the dialogue was initiated by an external user.</description>
     <externalId>false</externalId>
-    <formula>CRM_From__r.ContactId != null</formula>
+    <formula>NOT(ISBLANK(CRM_From__r.ContactId))</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>From External</label>
     <trackTrending>false</trackTrending>

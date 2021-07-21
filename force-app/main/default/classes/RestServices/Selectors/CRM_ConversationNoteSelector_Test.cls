@@ -18,8 +18,8 @@ public class CRM_ConversationNoteSelector_Test {
 
         System.assert(!convList.isEmpty());
 
-        convList = new CRM_ConversationNoteSelector().selectById(new Set<Id>{ convList[0].Id });
+        Conversation_Note__c convNote = new CRM_ConversationNoteSelector().selectById(convList[0].Id);
 
-        System.assert(!convList.isEmpty());
+        System.assertNotEquals(null, convNote);
     }
 }

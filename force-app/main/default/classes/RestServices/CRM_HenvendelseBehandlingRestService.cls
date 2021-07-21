@@ -1,10 +1,21 @@
 @RestResource(urlmapping='/henvendelse/behandling/*')
 global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_HenvendelseApiUtils {
-    @HttpPatch
-    global static void updateHenvendelse(CRM_Henvendelse req) {
-        RestRequest request = RestContext.request;
+    private static LoggerUtility logger = new LoggerUtility('Henvendelse API');
 
+    @HttpPatch
+    global static void updateHenvendelse() {
+        RestRequest request = RestContext.request;
+        if (!validate()) {
+            return;
+        }
+        String navIdent = getActingNavIdent();
+        String correlationId = getXCorrelation();
+        logger.apiTransaction(correlationId, RestContext.request, Domain.NKS);
         try {
+            CRM_Henvendelse req = (CRM_Henvendelse) JSON.deserialize(
+                request.requestBody.toString(),
+                CRM_Henvendelse.class
+            );
             Id henvId = (Id) getLastPathParameter();
 
             String objectName = henvId.getSobjectType().getDescribe().getName();
@@ -12,6 +23,8 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
             switch on objectName {
                 when 'Thread__c' {
                     Thread__c thread = convertToThread(req);
+                    thread.Id = henvId;
+                    thread.CRM_Last_Edited_By__c = navIdent;
                     SObjectAccessDecision decision = Security.stripInaccessible(
                         AccessType.UPDATABLE,
                         new List<Thread__c>{ thread },
@@ -22,6 +35,8 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
                 }
                 when 'Conversation_Note__c' {
                     Conversation_Note__c convNote = convertToConvNote(req);
+                    convNote.Id = henvId;
+                    convNote.CRM_Last_Edited_By__c = navIdent;
                     SObjectAccessDecision decision = Security.stripInaccessible(
                         AccessType.UPDATABLE,
                         new List<Conversation_Note__c>{ convNote },
@@ -31,19 +46,26 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
                     update decision.getRecords();
                 }
                 when else {
-                    setResponse(400, 'Invalid reference value for henv/thread ID: ' + henvId);
+                    errorResponse(400, 'Invalid reference value for henv/thread ID: ' + henvId);
                 }
             }
+            logger.publish();
         } catch (DmlException dmlEx) {
             if (StatusCode.FIELD_INTEGRITY_EXCEPTION == dmlEx.getDmlType(0)) {
-                setResponse(400, dmlEx.getMessage());
+                errorResponse(400, dmlEx.getMessage());
             } else {
-                setResponse(500, dmlEx.getMessage());
+                errorResponse(500, dmlEx.getMessage());
+                logger.error('DML EXCEPTION: ' + dmlEx.getMessage(), null, Domain.NKS, correlationId);
             }
         } catch (StringException stringEx) {
-            setResponse(400, 'Invalid ID: ' + stringEx.getMessage());
+            errorResponse(400, 'Invalid ID: ' + stringEx.getMessage());
+        } catch (HenvendelseConversionException conversionEx) {
+            errorResponse(400, conversionEx.getMessage());
         } catch (Exception ex) {
-            setResponse(500, 'Failed to update: ' + ex.getMessage());
+            errorResponse(500, 'Failed to update: ' + ex.getMessage());
+            logger.error('Failed to update: ' + ex.getMessage(), null, Domain.NKS, correlationId);
+        } finally {
+            logger.publish();
         }
     }
 }
