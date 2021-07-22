@@ -7,4 +7,5 @@ global class CRM_MessageFrom {
 
     global String identType;
     global String ident;
+    global String navEnhet;
 }

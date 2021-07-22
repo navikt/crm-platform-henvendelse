@@ -10,7 +10,7 @@ global without sharing class CRM_HenvendelseInfoListRestService extends ApexRest
         }
 
         String correlationId = getXCorrelation();
-        logger.apiTransaction(correlationId, RestContext.request, Domain.NKS);
+        logger.apiTransaction(correlationId, RestContext.request, CRM_ApplicationDomain.Domain.NKS);
 
         if (String.isBlank(actorId)) {
             errorResponse(400, 'Missing required query input: aktorid');
@@ -30,14 +30,24 @@ global without sharing class CRM_HenvendelseInfoListRestService extends ApexRest
             setResponse(200, JSON.serializePretty(returnList));
         } catch (QueryException queryEx) {
             errorResponse(500, 'Query exception: ' + queryEx.getMessage());
-            logger.error('Query exception: ' + queryEx.getMessage(), null, Domain.NKS, correlationId);
+            logger.error(
+                'Query exception: ' + queryEx.getMessage(),
+                null,
+                CRM_ApplicationDomain.Domain.NKS,
+                correlationId
+            );
         } catch (fflib_SecurityUtils.FlsException flsEx) {
             errorResponse(403, 'Insufficient access: ' + flsEx.getMessage());
-            logger.error('Insufficient access: ' + flsEx.getMessage(), null, Domain.NKS, correlationId);
+            logger.error(
+                'Insufficient access: ' + flsEx.getMessage(),
+                null,
+                CRM_ApplicationDomain.Domain.NKS,
+                correlationId
+            );
         } catch (Exception ex) {
             System.debug(ex.getStackTraceString());
             errorResponse(500, 'Exception: ' + ex.getMessage());
-            logger.error('Exception: ' + ex.getMessage(), null, Domain.NKS, correlationId);
+            logger.error('Exception: ' + ex.getMessage(), null, CRM_ApplicationDomain.Domain.NKS, correlationId);
         } finally {
             logger.publish();
         }

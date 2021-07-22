@@ -8,7 +8,7 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
             return;
 
         String correlationId = getXCorrelation();
-        logger.apiTransaction(correlationId, RestContext.request, Domain.NKS);
+        logger.apiTransaction(correlationId, RestContext.request, CRM_ApplicationDomain.Domain.NKS);
 
         try {
             Id henvId = (Id) request.henvendelseId;
@@ -33,17 +33,22 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
                 }
                 when else {
                     errorResponse(400, 'No journal flow defined for ID: ' + henvId);
-                    logger.error('No journal flow defined for ID: ' + henvId, null, Domain.NKS, correlationId);
+                    logger.error(
+                        'No journal flow defined for ID: ' + henvId,
+                        null,
+                        CRM_ApplicationDomain.Domain.NKS,
+                        correlationId
+                    );
                 }
             }
             logger.publish();
             return;
         } catch (StringException stringEx) {
             errorResponse(400, 'Invalid ID: ' + stringEx.getMessage());
-            logger.error('Invalid ID: ' + stringEx.getMessage(), null, Domain.NKS, correlationId);
+            logger.error('Invalid ID: ' + stringEx.getMessage(), null, CRM_ApplicationDomain.Domain.NKS, correlationId);
         } catch (Exception ex) {
             errorResponse(500, ex.getMessage());
-            logger.error(ex.getMessage(), null, Domain.NKS, correlationId);
+            logger.error(ex.getMessage(), null, CRM_ApplicationDomain.Domain.NKS, correlationId);
         } finally {
             logger.publish();
         }
