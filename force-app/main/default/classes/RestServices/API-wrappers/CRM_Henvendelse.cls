@@ -52,7 +52,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
 
     global CRM_Henvendelse(Thread__c thread, List<Message__c> messages, List<Journal_Entry__c> jeList) {
         this.kjedeId = thread.Id;
-        //this.fnr =
+        this.fnr = thread.CRM_External_Person_Ident__c;
         this.aktorId = thread.CRM_External_ActorId__c;
         this.henvendelseId = thread.Id;
         this.kasseringsDato = gmtFormatDateTime(thread.CRM_Disposal_Datetime__c);
@@ -95,12 +95,12 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
             Datetime.valueOf(this.opprettetDato.replace('T', ' ')) >
             Datetime.valueOf(compHenv.opprettetDato.replace('T', ' '))
         ) {
-            retVal = 1;
+            retVal = -1;
         } else if (
             Datetime.valueOf(this.opprettetDato.replace('T', ' ')) >
             Datetime.valueOf(compHenv.opprettetDato.replace('T', ' '))
         ) {
-            retVal = -1;
+            retVal = 1;
         }
 
         return retVal;
