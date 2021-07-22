@@ -8,7 +8,7 @@ global without sharing class CRM_HenvendelseinfoRestService extends CRM_Henvende
         }
 
         String correlationId = getXCorrelation();
-        logger.apiTransaction(correlationId, RestContext.request, Domain.NKS);
+        logger.apiTransaction(correlationId, RestContext.request, CRM_ApplicationDomain.Domain.NKS);
         try {
             Id henvId = (Id) getLastPathParameter();
 
@@ -35,7 +35,7 @@ global without sharing class CRM_HenvendelseinfoRestService extends CRM_Henvende
             errorResponse(400, 'Invalid ID: ' + stringEx.getMessage());
         } catch (Exception ex) {
             errorResponse(500, 'Exception: ' + ex.getMessage());
-            logger.error('Exception: ' + ex.getMessage(), null, Domain.NKS, correlationId);
+            logger.error('Exception: ' + ex.getMessage(), null, CRM_ApplicationDomain.Domain.NKS, correlationId);
         } finally {
             logger.publish();
         }

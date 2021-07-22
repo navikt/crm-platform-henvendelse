@@ -10,7 +10,7 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
         }
         String navIdent = getActingNavIdent();
         String correlationId = getXCorrelation();
-        logger.apiTransaction(correlationId, RestContext.request, Domain.NKS);
+        logger.apiTransaction(correlationId, RestContext.request, CRM_ApplicationDomain.Domain.NKS);
         try {
             CRM_Henvendelse req = (CRM_Henvendelse) JSON.deserialize(
                 request.requestBody.toString(),
@@ -55,7 +55,12 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
                 errorResponse(400, dmlEx.getMessage());
             } else {
                 errorResponse(500, dmlEx.getMessage());
-                logger.error('DML EXCEPTION: ' + dmlEx.getMessage(), null, Domain.NKS, correlationId);
+                logger.error(
+                    'DML EXCEPTION: ' + dmlEx.getMessage(),
+                    null,
+                    CRM_ApplicationDomain.Domain.NKS,
+                    correlationId
+                );
             }
         } catch (StringException stringEx) {
             errorResponse(400, 'Invalid ID: ' + stringEx.getMessage());
@@ -63,7 +68,7 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
             errorResponse(400, conversionEx.getMessage());
         } catch (Exception ex) {
             errorResponse(500, 'Failed to update: ' + ex.getMessage());
-            logger.error('Failed to update: ' + ex.getMessage(), null, Domain.NKS, correlationId);
+            logger.error('Failed to update: ' + ex.getMessage(), null, CRM_ApplicationDomain.Domain.NKS, correlationId);
         } finally {
             logger.publish();
         }
