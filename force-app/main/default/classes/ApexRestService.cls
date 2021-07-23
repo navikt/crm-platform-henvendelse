@@ -1,4 +1,4 @@
-global virtual class ApexRestService extends CRM_ApplicationDomain {
+global virtual class ApexRestService {
     private static Exception simulatedException;
     private static final Map<Integer, String> DEFAULT_RESPONSE_MAP = new Map<Integer, String>{
         200 => 'OK',
