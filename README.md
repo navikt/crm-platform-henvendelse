@@ -1,8 +1,8 @@
 # crm-platform-henvendelse
 
-[![Build](https://github.com/navikt/XXXXXXXXXXXXX/workflows/%5BPUSH%5D%20Create%20Package/badge.svg)](https://github.com/navikt/XXXXXXXXXXXXX/actions?query=workflow%3Acreate)
-[![GitHub version](https://badgen.net/github/release/navikt/XXXXXXXXXXXXX/stable)](https://github.com/navikt/XXXXXXXXXXXXX)
-[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/navikt/XXXXXXXXXXXXX/blob/master/LICENSE)
+[![Build](https://github.com/navikt/crm-platform-henvendelse/workflows/%5BPUSH%5D%20Create%20Package/badge.svg)](https://github.com/navikt/crm-platform-henvendelse/actions?query=workflow%3Acreate)
+[![GitHub version](https://badgen.net/github/release/navikt/crm-platform-henvendelse/stable)](https://github.com/navikt/crm-platform-henvendelse)
+[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/navikt/crm-platform-henvendelse/blob/master/LICENSE)
 
 Repository containing data model and functionality connected to dialogues between NAV and their end-users. This package exposes a custom rest API for consumers to submit and retrieve inquiry(henvendels) information to and from Salesforce.
 
