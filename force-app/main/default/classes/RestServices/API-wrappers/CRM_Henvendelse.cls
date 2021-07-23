@@ -6,7 +6,6 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
     global String opprettetDato;
     global Boolean kontorsperre = false;
     global Boolean feilsendt = false;
-    global String henvendelseId;
     global String kjedeId;
     global String opprinneligGT;
     global String gjeldendeTemagruppe;
@@ -17,6 +16,12 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
     global List<CRM_Markering> markeringer;
     global String tilknyttetEnhet;
 
+    /**
+     * @description: Converting Conversation_Note__c and journal entries into wrappers
+     * @author Stian Ruud Schikora | 07-23-2021
+     * @param convNote
+     * @param jeList
+     **/
     global CRM_Henvendelse(Conversation_Note__c convNote, List<Journal_Entry__c> jeList) {
         this.fnr = convNote.CRM_Account__r.CRM_Person__r.Name;
         this.aktorId = convNote.CRM_Account__r.CRM_Person__r.INT_ActorId__c;
@@ -24,8 +29,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         this.gjeldendeTema = convNote.CRM_Theme_Code__c;
         this.opprettetDato = gmtFormatDateTime(convNote.CRM_Registered_Datetime_Formula__c);
         this.avsluttetDato = this.opprettetDato;
-        this.kjedeId = null;
-        this.henvendelseId = convNote.Id;
+        this.kjedeId = convNote.Id;
         this.henvendelseType = HENVENDELSE_TYPE.SAMTALEREFERAT.name();
 
         this.meldinger = new List<CRM_Melding>();
@@ -50,11 +54,18 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         }
     }
 
+    /**
+     * @description: Converting a Thread__c and its list of messages and journal entries into wrappers
+     * @author Stian Ruud Schikora | 07-23-2021
+     * @param thread
+     * @param messages
+     * @param jeList
+     **/
     global CRM_Henvendelse(Thread__c thread, List<Message__c> messages, List<Journal_Entry__c> jeList) {
         this.kjedeId = thread.Id;
         this.fnr = thread.CRM_External_Person_Ident__c;
         this.aktorId = thread.CRM_External_ActorId__c;
-        this.henvendelseId = thread.Id;
+        this.kjedeId = thread.Id;
         this.kasseringsDato = gmtFormatDateTime(thread.CRM_Disposal_Datetime__c);
         this.opprettetDato = gmtFormatDateTime(thread.CRM_Registered_Datetime_Formula__c);
         this.avsluttetDato = gmtFormatDateTime(thread.CRM_Closed_Date__c);
@@ -86,6 +97,12 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         }
     }
 
+    /**
+     * @description: Sort functionality which sorts entries by opprettetDato, newest first
+     * @author Stian Ruud Schikora | 07-23-2021
+     * @param compareTo
+     * @return Integer
+     **/
     global Integer compareTo(Object compareTo) {
         CRM_Henvendelse compHenv = (CRM_Henvendelse) compareTo;
 
