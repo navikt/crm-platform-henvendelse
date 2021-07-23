@@ -253,7 +253,7 @@
                 "description": "Returnerer informasjon for en gitt henvendelse",
                 "parameters": [
                     {
-                        "name": "henvendelseId",
+                        "name": "kjedeId",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -381,13 +381,13 @@
                         "description": "Temakode for journalpost som skal opprettes",
                         "example": "DAG"
                     },
-                    "henvendelseId": {
+                    "kjedeId": {
                         "type": "string",
                         "description": "Unik ID til henvendelsen som skal journalføres",
                         "example": "a0J3N000004dUBJUA2"
                     }
                 },
-                "required": ["journalforendeEnhet", "temakode", "henvendelseId"]
+                "required": ["journalforendeEnhet", "temakode", "kjedeId"]
             },
             "Journalpost": {
                 "type": "object",
@@ -521,11 +521,9 @@
                         "description": "Definerer om henvendelsen er markert som feilsendt. Markeringsinformasjon finnes i listen av markeringer",
                         "example": true
                     },
-                    "henvendelseId": {
-                        "type": "string"
-                    },
                     "kjedeId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Unik if for henvendelsen"
                     },
                     "gjeldendeTemagruppe": {
                         "type": "string",
@@ -562,7 +560,7 @@
                     "opprettetDato",
                     "kontorsperre",
                     "feilsendt",
-                    "henvendelseId",
+                    "kjedeId",
                     "gjeldendeTemagruppe"
                 ]
             },
