@@ -16,6 +16,12 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
     global List<CRM_Markering> markeringer;
     global String tilknyttetEnhet;
 
+    /**
+     * @description: Converting Conversation_Note__c and journal entries into wrappers
+     * @author Stian Ruud Schikora | 07-23-2021
+     * @param convNote
+     * @param jeList
+     **/
     global CRM_Henvendelse(Conversation_Note__c convNote, List<Journal_Entry__c> jeList) {
         this.fnr = convNote.CRM_Account__r.CRM_Person__r.Name;
         this.aktorId = convNote.CRM_Account__r.CRM_Person__r.INT_ActorId__c;
@@ -48,6 +54,13 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         }
     }
 
+    /**
+     * @description: Converting a Thread__c and its list of messages and journal entries into wrappers
+     * @author Stian Ruud Schikora | 07-23-2021
+     * @param thread
+     * @param messages
+     * @param jeList
+     **/
     global CRM_Henvendelse(Thread__c thread, List<Message__c> messages, List<Journal_Entry__c> jeList) {
         this.kjedeId = thread.Id;
         this.fnr = thread.CRM_External_Person_Ident__c;
@@ -84,6 +97,12 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         }
     }
 
+    /**
+     * @description: Sort functionality which sorts entries by opprettetDato, newest first
+     * @author Stian Ruud Schikora | 07-23-2021
+     * @param compareTo
+     * @return Integer
+     **/
     global Integer compareTo(Object compareTo) {
         CRM_Henvendelse compHenv = (CRM_Henvendelse) compareTo;
 
