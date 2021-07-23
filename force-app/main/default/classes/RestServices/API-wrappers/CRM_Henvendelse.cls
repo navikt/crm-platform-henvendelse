@@ -6,7 +6,6 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
     global String opprettetDato;
     global Boolean kontorsperre = false;
     global Boolean feilsendt = false;
-    global String henvendelseId;
     global String kjedeId;
     global String opprinneligGT;
     global String gjeldendeTemagruppe;
@@ -24,8 +23,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         this.gjeldendeTema = convNote.CRM_Theme_Code__c;
         this.opprettetDato = gmtFormatDateTime(convNote.CRM_Registered_Datetime_Formula__c);
         this.avsluttetDato = this.opprettetDato;
-        this.kjedeId = null;
-        this.henvendelseId = convNote.Id;
+        this.kjedeId = convNote.Id;
         this.henvendelseType = HENVENDELSE_TYPE.SAMTALEREFERAT.name();
 
         this.meldinger = new List<CRM_Melding>();
@@ -54,7 +52,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         this.kjedeId = thread.Id;
         this.fnr = thread.CRM_External_Person_Ident__c;
         this.aktorId = thread.CRM_External_ActorId__c;
-        this.henvendelseId = thread.Id;
+        this.kjedeId = thread.Id;
         this.kasseringsDato = gmtFormatDateTime(thread.CRM_Disposal_Datetime__c);
         this.opprettetDato = gmtFormatDateTime(thread.CRM_Registered_Datetime_Formula__c);
         this.avsluttetDato = gmtFormatDateTime(thread.CRM_Closed_Date__c);
