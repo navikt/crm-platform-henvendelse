@@ -17,7 +17,7 @@ public class CRM_HenvendelseJournalRestService_Test {
         journalReq.journalforendeEnhet = '4100';
         journalReq.saksId = '123CASE';
         journalReq.temakode = 'DAG;';
-        journalReq.henvendelseId = convNote.Id;
+        journalReq.kjedeId = convNote.Id;
 
         RestRequest restReq = new RestRequest();
         restReq.headers.put('X-Correlation-ID', '123RANDOM');
@@ -48,7 +48,7 @@ public class CRM_HenvendelseJournalRestService_Test {
         journalReq.journalforendeEnhet = '4100';
         journalReq.saksId = '123CASE';
         journalReq.temakode = 'DAG;';
-        journalReq.henvendelseId = thread.Id;
+        journalReq.kjedeId = thread.Id;
 
         RestRequest restReq = new RestRequest();
         restReq.headers.put('X-Correlation-ID', '123RANDOM');
@@ -74,7 +74,7 @@ public class CRM_HenvendelseJournalRestService_Test {
         journalReq.journalforendeEnhet = '4100';
         journalReq.saksId = '123CASE';
         journalReq.temakode = 'DAG;';
-        journalReq.henvendelseId = (String) CRM_HENV_TestDataFactory.createRecord(new Case()).get('Id');
+        journalReq.kjedeId = (String) CRM_HENV_TestDataFactory.createRecord(new Case()).get('Id');
 
         RestRequest restReq = new RestRequest();
         restReq.headers.put('X-Correlation-ID', '123RANDOM');
@@ -98,7 +98,7 @@ public class CRM_HenvendelseJournalRestService_Test {
         journalReq.journalforendeEnhet = '4100';
         journalReq.saksId = '123CASE';
         journalReq.temakode = 'DAG;';
-        journalReq.henvendelseId = '123INVALIDID';
+        journalReq.kjedeId = '123INVALIDID';
 
         RestRequest restReq = new RestRequest();
         restReq.headers.put('X-Correlation-ID', '123RANDOM');
@@ -122,7 +122,7 @@ public class CRM_HenvendelseJournalRestService_Test {
         journalReq.journalforendeEnhet = '4100';
         journalReq.saksId = '123CASE';
         journalReq.temakode = 'DAG;';
-        journalReq.henvendelseId = '123INVALIDID';
+        journalReq.kjedeId = '123INVALIDID';
 
         RestRequest restReq = new RestRequest();
         restReq.headers.put('X-ACTING-NAV-IDENT', 'Z999999');

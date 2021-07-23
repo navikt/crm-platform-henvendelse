@@ -11,11 +11,11 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
         logger.apiTransaction(correlationId, RestContext.request, CRM_ApplicationDomain.Domain.NKS);
 
         try {
-            Id henvId = (Id) request.henvendelseId;
+            Id henvId = (Id) request.kjedeId;
 
             String objectType = henvId.getSobjectType().getDescribe().getName();
             Map<String, Object> flowInputs = new Map<String, Object>{
-                'recordId' => request.henvendelseId,
+                'recordId' => request.kjedeId,
                 'Journal_Case_ID' => request.saksId,
                 'Journal_Theme_Code' => request.temakode,
                 'Journal_Entry_Unit' => request.journalforendeEnhet,
@@ -64,7 +64,7 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
     global class HenvendelseJournalRequest {
         global String journalforendeEnhet;
         global String saksId;
-        global String henvendelseId;
+        global String kjedeId;
         global String temakode;
     }
 }
