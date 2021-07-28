@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <classAccesses>
+        <apexClass>CRM_CommonCodeRestService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>CRM_HenvendelseBehandlingRestService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -14,6 +18,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>CRM_HenvendelseNyRestService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CRM_HenvendelseinfoRestService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <description>Permission set that grants access to the henvendelse API in addition to read and write access to necessary fields.</description>
@@ -34,22 +42,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Conversation_Note__c.CRM_Conversation_Note__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Conversation_Note__c.CRM_Communication_Channel__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Conversation_Note__c.CRM_Created_By_Ident__c</field>
+        <field>Conversation_Note__c.CRM_Conversation_Note__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Conversation_Note__c.CRM_Last_Edited_By__c</field>
+        <editable>false</editable>
+        <field>Conversation_Note__c.CRM_Created_By_Ident__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -88,18 +91,23 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Conversation_Note__c.CRM_Last_Edited_By__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Conversation_Note__c.CRM_Office_Restriction_Activated_By__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Conversation_Note__c.CRM_Office_Restriction__c</field>
+        <editable>false</editable>
+        <field>Conversation_Note__c.CRM_Office_Restriction_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>Conversation_Note__c.CRM_Office_Restriction_Date__c</field>
+        <editable>true</editable>
+        <field>Conversation_Note__c.CRM_Office_Restriction__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -259,11 +267,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Thread__c.CRM_External_Person_Ident__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Thread__c.CRM_Created_By_NAV_Unit__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -284,12 +287,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Thread__c.CRM_From__c</field>
+        <field>Thread__c.CRM_External_Person_Ident__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Thread__c.CRM_Latest_Message_Datetime__c</field>
+        <field>Thread__c.CRM_From__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -299,17 +302,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Thread__c.CRM_Office_Restriction_Activated_By__c</field>
+        <field>Thread__c.CRM_Latest_Message_Datetime__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Thread__c.CRM_Office_Restriction__c</field>
+        <editable>false</editable>
+        <field>Thread__c.CRM_Office_Restriction_Activated_By__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Thread__c.CRM_Office_Restriction_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Thread__c.CRM_Office_Restriction__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

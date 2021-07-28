@@ -8,7 +8,7 @@
 			CRM_Recipient__r.Contact.Account.INT_PersonIdent__c
 			)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>External Actor ID</label>
+    <label>External Person Ident</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Text</type>
