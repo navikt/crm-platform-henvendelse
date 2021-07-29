@@ -27,6 +27,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         this.aktorId = convNote.CRM_Account__r.CRM_Person__r.INT_ActorId__c;
         this.gjeldendeTemagruppe = convNote.CRM_Theme_Group_Code__c;
         this.gjeldendeTema = convNote.CRM_Theme_Code__c;
+        this.opprinneligGT = convNote.CRM_Original_Person_GT__c;
         this.opprettetDato = gmtFormatDateTime(convNote.CRM_Registered_Datetime_Formula__c);
         this.avsluttetDato = this.opprettetDato;
         this.kjedeId = convNote.Id;
@@ -66,6 +67,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         this.fnr = thread.CRM_External_Person_Ident__c;
         this.aktorId = thread.CRM_External_ActorId__c;
         this.kjedeId = thread.Id;
+        this.opprinneligGT = thread.CRM_Original_Person_GT__c;
         this.kasseringsDato = gmtFormatDateTime(thread.CRM_Disposal_Datetime__c);
         this.opprettetDato = gmtFormatDateTime(thread.CRM_Registered_Datetime_Formula__c);
         this.avsluttetDato = gmtFormatDateTime(thread.CRM_Closed_Date__c);
