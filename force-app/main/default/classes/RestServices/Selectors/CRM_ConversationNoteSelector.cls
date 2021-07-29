@@ -15,7 +15,8 @@ public inherited sharing class CRM_ConversationNoteSelector extends CRM_ApiSelec
         'CRM_Office_Restriction_Date__c',
         'CRM_Disposal_Datetime__c',
         'CRM_Communication_Channel__c',
-        'CRM_Created_By_NAV_Unit__c'
+        'CRM_Created_By_NAV_Unit__c',
+        'CRM_Original_Person_GT__c'
     };
 
     public List<Schema.SObjectField> getSObjectFieldList() {
