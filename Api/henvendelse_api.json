@@ -19,7 +19,10 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Temagruppe"
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Temagruppe"
+                                    }
                                 }
                             }
                         }
@@ -467,6 +470,12 @@
                         "description": "Datetime string",
                         "format": "date-time",
                         "example": "2021-06-27T12:00:00.000Z"
+                    },
+                    "kanal": {
+                        "type": "string",
+                        "description": "Meldingskanalen",
+                        "enum": ["TELEFON", "OPPMOTE", "DIGITAL"],
+                        "example": "DIGITAL"
                     },
                     "fra": {
                         "$ref": "#/components/schemas/MeldingFra"
