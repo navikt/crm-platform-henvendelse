@@ -64,6 +64,14 @@ export default class messagingThreadViewer extends LightningElement {
         }
     }
 
+    //Enriching the toolbar event with reference to the thread id
+    handleToolbarAction(event) {
+        let threadId = this.threadid;
+        let eventDetails = event.detail;
+        eventDetails.threadId = threadId;
+        event.detail = eventDetails;
+    }
+
     closeThread() {
         const fields = {};
         fields[THREAD_ID_FIELD.fieldApiName] = this.threadid;

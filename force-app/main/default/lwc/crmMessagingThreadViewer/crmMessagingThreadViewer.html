@@ -18,7 +18,15 @@
                     <lightning-layout>
                         <lightning-layout-item size="8">
                             <lightning-layout horizontal-align="start">
-                                <slot name="toolbar"></slot>
+                                <lightning-button-group ontoolbaraction={handleToolbarAction}>
+                                    <lightning-button-icon-stateful
+                                        icon-name="utility:quick_text"
+                                        alternative-text="Hurtigtekst"
+                                        onclick={showQuickText}
+                                    >
+                                    </lightning-button-icon-stateful>
+                                    <slot name="toolbar"></slot>
+                                </lightning-button-group>
                             </lightning-layout>
                         </lightning-layout-item>
                         <lightning-layout-item size="4">
