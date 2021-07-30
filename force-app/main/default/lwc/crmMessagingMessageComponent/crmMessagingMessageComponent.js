@@ -3,7 +3,7 @@ import getThreads from '@salesforce/apex/CRM_MessageHelper.getThreadsCollection'
 import createThread from '@salesforce/apex/CRM_MessageHelper.createThread';
 import { refreshApex } from '@salesforce/apex';
 
-export default class LightningExampleAccordionBasic extends LightningElement {
+export default class CrmMessagingMessageComponent extends LightningElement {
     showmodal = false;
     showtaskmodal = false;
     shownewbutton = false;
