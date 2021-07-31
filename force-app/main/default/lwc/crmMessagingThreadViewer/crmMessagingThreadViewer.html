@@ -69,5 +69,11 @@
         <lightning-input-field field-name="CRM_From__c" value={userid} class="slds-hide"></lightning-input-field>
     </lightning-record-edit-form>
 
+    <!-- POSSIBLE DISPLAY OF JOURNAL ENTRIES RELATED TO THE THREAD
+    <div if:true={journalEntries}>
+        <template for:each={journalEntries} for:item="journalEntry"> {journalEntry.CRM_Created_By_Ident__c} </template>
+    </div>
+        -->
+
     <!-- Reply Box End-->
 </template>

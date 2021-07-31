@@ -1,5 +1,6 @@
 import { LightningElement, api, wire } from 'lwc';
 import getmessages from '@salesforce/apex/CRM_MessageHelper.getMessagesFromThread';
+import getJournalInfo from '@salesforce/apex/CRM_MessageHelper.getJournalEntries';
 
 import getusertype from '@salesforce/apex/CRM_MessageHelper.getUserLisenceType';
 import userId from '@salesforce/user/Id';
@@ -28,6 +29,9 @@ export default class messagingThreadViewer extends LightningElement {
     wiretype(result) {
         this.usertype = result.data;
     }
+
+    @wire(getJournalInfo, { threadId: '$threadid' })
+    wiredJournalEntries;
 
     @wire(getRecord, { recordId: '$threadid', fields: [ACTIVE_FIELD] })
     wiredThread;
@@ -65,11 +69,12 @@ export default class messagingThreadViewer extends LightningElement {
     }
 
     //Enriching the toolbar event with reference to the thread id
+    //A custom toolbaraction event can be passed from the component in the toolbar slot that the thread viewer enrich with the thread id
     handleToolbarAction(event) {
         let threadId = this.threadid;
         let eventDetails = event.detail;
         eventDetails.threadId = threadId;
-        event.detail = eventDetails;
+        event.threadId = threadId;
     }
 
     closeThread() {
@@ -97,6 +102,15 @@ export default class messagingThreadViewer extends LightningElement {
             });
         }
         return refreshApex(this._mySendForSplitting);
+    }
+
+    get journalEntries() {
+        if (this.wiredJournalEntries) {
+            console.log(JSON.stringify(this.wiredJournalEntries, null, 2));
+            return this.wiredJournalEntries.data;
+        }
+
+        return null;
     }
 
     get closedThread() {
