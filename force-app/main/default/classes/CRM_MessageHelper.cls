@@ -22,6 +22,21 @@ public with sharing class CRM_MessageHelper {
     }
 
     @AuraEnabled(cacheable=true)
+    public static List<Journal_Entry__c> getJournalEntries(Id threadId) {
+        return [
+            SELECT
+                Id,
+                Theme__c,
+                NAV_Case_Reference__c,
+                CRM_Journal_Date__c,
+                Journal_Entry_ID__c,
+                CRM_Created_By_Ident__c
+            FROM Journal_Entry__c
+            WHERE CRM_Thread__c = :threadId
+        ];
+    }
+
+    @AuraEnabled(cacheable=true)
     public static List<Thread__c> getThreads(Id recordId) {
         Id currentUser = UserInfo.getUserId();
 
