@@ -106,7 +106,6 @@ export default class messagingThreadViewer extends LightningElement {
 
     get journalEntries() {
         if (this.wiredJournalEntries) {
-            console.log(JSON.stringify(this.wiredJournalEntries, null, 2));
             return this.wiredJournalEntries.data;
         }
 
