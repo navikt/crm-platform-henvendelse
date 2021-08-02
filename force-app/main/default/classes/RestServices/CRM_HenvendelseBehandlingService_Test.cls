@@ -33,7 +33,8 @@ public class CRM_HenvendelseBehandlingService_Test {
 
         System.assertEquals(
             Date.today(),
-            [SELECT Id, CRM_Disposal_Datetime__c FROM Thread__c WHERE Id = :thread.Id]?.CRM_Disposal_Datetime__c.date()
+            [SELECT Id, CRM_Disposal_Datetime__c, LastModifiedDate FROM Thread__c WHERE Id = :thread.Id]
+                ?.CRM_Disposal_Datetime__c.date()
         );
     }
 

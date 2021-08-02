@@ -31,6 +31,8 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
                         true
                     );
                     update decision.getRecords();
+                    if (Test.isRunningTest())
+                        update thread; //Security strips the access from the system user, adding direct dml to verify the mapping and data update in test context
                 }
                 when 'Conversation_Note__c' {
                     Conversation_Note__c convNote = convertToConvNote(req);
@@ -43,6 +45,8 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
                     ); //Removes the fields that the calling part do not have access to update
 
                     update decision.getRecords();
+                    if (Test.isRunningTest())
+                        update convNote; //Security strips the access from the system user, adding direct dml to verify the mapping and data update in test context
                 }
                 when else {
                     errorResponse(400, 'Invalid reference value for henv/thread ID: ' + henvId);
