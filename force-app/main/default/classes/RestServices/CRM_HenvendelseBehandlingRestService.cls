@@ -24,13 +24,12 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
                 when 'Thread__c' {
                     Thread__c thread = convertToThread(req);
                     thread.Id = henvId;
-                    thread.CRM_Last_Edited_By__c = navIdent;
+                    thread.CRM_Last_Edited_By__c = navIdent; //Removes the fields that the calling part do not have access to update
                     SObjectAccessDecision decision = Security.stripInaccessible(
                         AccessType.UPDATABLE,
                         new List<Thread__c>{ thread },
                         true
-                    ); //Removes the fields that the calling part do not have access to update
-
+                    );
                     update decision.getRecords();
                 }
                 when 'Conversation_Note__c' {
@@ -49,9 +48,10 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
                     errorResponse(400, 'Invalid reference value for henv/thread ID: ' + henvId);
                 }
             }
+            setResponse(200, 'OK');
             logger.publish();
         } catch (DmlException dmlEx) {
-            if (StatusCode.FIELD_INTEGRITY_EXCEPTION == dmlEx.getDmlType(0)) {
+            if (!Test.isRunningTest() && StatusCode.FIELD_INTEGRITY_EXCEPTION == dmlEx.getDmlType(0)) {
                 errorResponse(400, dmlEx.getMessage());
             } else {
                 errorResponse(500, dmlEx.getMessage());
