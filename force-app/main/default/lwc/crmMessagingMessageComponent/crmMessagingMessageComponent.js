@@ -41,4 +41,8 @@ export default class CrmMessagingMessageComponent extends LightningElement {
             })
             .catch((error) => {});
     }
+
+    get cardTitle() {
+        return this.singleThread === true ? 'Samtale' : 'Samtaler';
+    }
 }
