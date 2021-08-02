@@ -16,6 +16,9 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
     global List<CRM_Markering> markeringer;
     global String tilknyttetEnhet;
 
+    global CRM_Henvendelse() {
+    }
+
     /**
      * @description: Converting Conversation_Note__c and journal entries into wrappers
      * @author Stian Ruud Schikora | 07-23-2021
