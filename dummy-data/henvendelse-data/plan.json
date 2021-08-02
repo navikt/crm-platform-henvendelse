@@ -28,5 +28,11 @@
         "saveRefs": false,
         "resolveRefs": true,
         "files": ["journal_entries.json"]
+    },
+    {
+        "sobject": "PushTopic",
+        "saveRefs": false,
+        "resolveRefs": false,
+        "files": ["pushtopics.json"]
     }
 ]
