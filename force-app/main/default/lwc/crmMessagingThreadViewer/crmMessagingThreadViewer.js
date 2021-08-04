@@ -18,7 +18,7 @@ export default class messagingThreadViewer extends LightningElement {
     threadheader;
     threadid;
     messages = [];
-    subscription;
+    text;
     //Constructor, called onload
     connectedCallback() {
         if (this.thread) {
@@ -77,7 +77,7 @@ export default class messagingThreadViewer extends LightningElement {
         } else if (result.data) {
             this.messages = result.data;
             this.showspinner = false;
-            this.setheader();
+
         }
     }
     //If empty, stop submitting.
@@ -87,7 +87,7 @@ export default class messagingThreadViewer extends LightningElement {
         // If messagefield is empty, stop the submit
         textInput.CRM_Thread__c = this.thread.Id;
         textInput.CRM_From_User__c = userId;
-
+      
         if (textInput.CRM_Message_Text__c == null || textInput.CRM_Message_Text__c == '') {
             const event1 = new ShowToastEvent({
                 title: 'Message Body missing',
@@ -117,7 +117,7 @@ export default class messagingThreadViewer extends LightningElement {
         const threadInput = { fields };
 
         updateRecord(threadInput)
-            .then(() => {})
+            .then(() => { })
             .catch((error) => {
                 console.log(JSON.stringify(error, null, 2));
             });
@@ -126,7 +126,9 @@ export default class messagingThreadViewer extends LightningElement {
     handlesuccess(event) {
         this.recordId = event.detail;
 
+        this.template.querySelector('c-crm-messaging-quick-text').clear(event);
         const inputFields = this.template.querySelectorAll('.msgText');
+
         if (inputFields) {
             inputFields.forEach((field) => {
                 field.reset();
@@ -137,6 +139,7 @@ export default class messagingThreadViewer extends LightningElement {
 
     refreshMessages() {
         return refreshApex(this._mySendForSplitting);
+
     }
 
     get journalEntries() {
@@ -151,5 +154,11 @@ export default class messagingThreadViewer extends LightningElement {
         return !getFieldValue(this.wiredThread.data, ACTIVE_FIELD);
     }
 
-    setheader() {}
+    showQuickText(event) {
+        this.template.querySelector('c-crm-messaging-quick-text').showModal(event);
+    }
+    handleConversationNoteChange(event) {
+        this.text = event.detail;
+
+    }
 }
