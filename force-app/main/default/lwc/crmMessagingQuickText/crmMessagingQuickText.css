@@ -1,0 +1,8 @@
+.quicktext-item div:hover {
+    background: #eeeeee;
+    cursor: pointer;
+}
+
+.modalHide {
+    display: none;
+}
