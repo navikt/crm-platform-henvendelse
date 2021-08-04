@@ -9,18 +9,16 @@ public with sharing class CRM_MessageHelperTest {
         Thread__c t = new Thread__c();
         t.CRM_Related_Object__c = acc.Id;
         t.CRM_isPublic__c = true;
-        insert t;
 
         Thread__c t2 = new Thread__c();
         t2.CRM_Related_Object__c = acc.Id;
         t2.CRM_isPublic__c = true;
-        insert t2;
 
         Thread__c t3 = new Thread__c();
         t3.CRM_Related_Object__c = acc.Id;
         t3.CRM_isPublic__c = false;
-        t3.CRM_From__c = UserInfo.getUserId();
-        insert t3;
+
+        CRM_HENV_TestDataFactory.createRecordList(new List<Thread__c>{ t, t2, t3 });
 
         Message__c m = new Message__c();
         m.CRM_Thread__c = t.Id;
@@ -52,7 +50,7 @@ public with sharing class CRM_MessageHelperTest {
         Test.startTest();
         List<Thread__c> resList = CRM_MessageHelper.getThreadsCollection(accList.get(0).Id, false);
         Test.stopTest();
-        System.assertEquals(1, resList.size());
+        System.assertEquals(3, resList.size());
     }
 
     @isTest

@@ -10,6 +10,11 @@ public with sharing class CRM_MessageHelper {
         return objectType;
     }
 
+    @AuraEnabled
+    public static string getUserContactId() {
+        return [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()]?.ContactId;
+    }
+
     @AuraEnabled(cacheable=true)
     public static List<Thread__c> getThreadsCollection(Id recordId, Boolean singleThread) {
         if (singleThread == false) {
@@ -38,27 +43,12 @@ public with sharing class CRM_MessageHelper {
 
     @AuraEnabled(cacheable=true)
     public static List<Thread__c> getThreads(Id recordId) {
-        Id currentUser = UserInfo.getUserId();
-
         List<Thread__c> threadList;
         try {
             threadList = [
-                SELECT
-                    Id,
-                    CRM_From__c,
-                    CRM_From__r.FirstName,
-                    CRM_From__r.LastName,
-                    CRM_Recipient__r.FirstName,
-                    CRM_Recipient__r.LastName,
-                    CRM_isPublic__c,
-                    CRM_Number_of_External_Messages__c,
-                    CRM_Related_Object__c,
-                    CRM_isActive__c
+                SELECT Id, CRM_Number_of_External_Messages__c, CRM_Related_Object__c, CRM_isActive__c
                 FROM Thread__c
-                WHERE
-                    CRM_Related_Object__c = :recordId
-                    AND (CRM_From__c = :currentUser
-                    OR CRM_Recipient__c = :currentUser)
+                WHERE CRM_Related_Object__c = :recordId
             ];
         } catch (Exception e) {
         }
@@ -68,19 +58,9 @@ public with sharing class CRM_MessageHelper {
     public static Thread__c getSingleThread(Id recordId) {
         try {
             Thread__c t = [
-                SELECT
-                    Id,
-                    CRM_From__c,
-                    CRM_From__r.FirstName,
-                    CRM_From__r.LastName,
-                    CRM_Recipient__r.FirstName,
-                    CRM_Recipient__r.LastName,
-                    CRM_isPublic__c,
-                    CRM_Number_of_External_Messages__c,
-                    CRM_Related_Object__c,
-                    CRM_isActive__c
+                SELECT Id, CRM_Number_of_External_Messages__c, CRM_Related_Object__c, CRM_isActive__c
                 FROM Thread__c
-                WHERE CRM_isPublic__c = TRUE AND CRM_Related_Object__c = :recordId
+                WHERE CRM_Related_Object__c = :recordId
                 LIMIT 1
             ];
 
@@ -92,7 +72,6 @@ public with sharing class CRM_MessageHelper {
     @AuraEnabled
     public static void createThread(Id recordId) {
         Thread__c newThread = new Thread__c();
-        newThread.CRM_isPublic__c = true;
         newThread.CRM_Related_Object__c = recordId;
         insert newThread;
     }
@@ -106,10 +85,10 @@ public with sharing class CRM_MessageHelper {
                     CRM_Message_Text__c,
                     CRM_Type__c,
                     CreatedDate,
-                    CRM_From__c,
-                    CRM_From_Label__c,
-                    CRM_From__r.FirstName,
-                    CRM_From__r.LastName,
+                    CRM_From_User__c,
+                    CRM_From_Contact__c,
+                    CRM_From_First_Name__c,
+                    CRM_From_Last_Name__c,
                     CRM_External_Message__c
                 FROM Message__c
                 WHERE CRM_Thread__c = :threadId
