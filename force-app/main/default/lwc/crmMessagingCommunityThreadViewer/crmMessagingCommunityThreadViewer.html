@@ -7,6 +7,7 @@
             <c-crm-messaging-Community-Message-Container
                 tabindex="0"
                 message={message}
+                user-contact-id={userContactId}
                 key={message.id}
             ></c-crm-messaging-Community-Message-Container>
         </template>
@@ -44,8 +45,8 @@
                 </div>
 
                 <lightning-input-field
-                    field-name="CRM_From__c"
-                    value={userid}
+                    field-name="CRM_From_Contact__c"
+                    value={userContactId}
                     class="slds-hidden"
                 ></lightning-input-field>
                 <lightning-input-field field-name="CRM_Thread__c" value={recordId} class="slds-hidden">

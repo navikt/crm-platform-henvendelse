@@ -67,13 +67,12 @@
             </lightning-layout-item>
         </lightning-layout>
         <!--</div> -->
+        <lightning-input-field field-name="CRM_From_User__c" value={userid} class="slds-hide"></lightning-input-field>
         <lightning-input-field
             class="msgText slds-hide"
             value={text}
             field-name="CRM_Message_Text__c"
         ></lightning-input-field>
-        <lightning-input-field field-name="CRM_Recipient__c" class="slds-hide"></lightning-input-field>
-        <lightning-input-field field-name="CRM_From__c" value={userid} class="slds-hide"></lightning-input-field>
     </lightning-record-edit-form>
 
     <!-- POSSIBLE DISPLAY OF JOURNAL ENTRIES RELATED TO THE THREAD

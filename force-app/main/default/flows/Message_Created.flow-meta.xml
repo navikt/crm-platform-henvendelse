@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>51.0</apiVersion>
     <decisions>
         <processMetadataValues>
             <name>index</name>
@@ -32,22 +33,31 @@
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue
-                >IF([Message__c].CRM_From__r.Alias != null, [Message__c].CRM_From__r.Alias, [Message__c].CRM_From__r.FirstName )
-</stringValue>
+                <stringValue>IF([Message__c].CRM_From_User__c != null,
+    IF([Message__c].CRM_From_User__r.Alias != null,
+        [Message__c].CRM_From_User__r.Alias,
+        [Message__c].CRM_From_User__r.FirstName 
+    ),
+    [Message__c].CRM_From_Contact__r.FirstName
+)</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_2_myRule_1_A1_8302703876</name>
+        <name>formula_2_myRule_1_A1_0476827967</name>
         <dataType>String</dataType>
-        <expression
-        >IF({!myVariable_current.CRM_From__r.Alias} != null, {!myVariable_current.CRM_From__r.Alias}, {!myVariable_current.CRM_From__r.FirstName} )</expression>
+        <expression>IF({!myVariable_current.CRM_From_User__c} != null,
+    IF({!myVariable_current.CRM_From_User__r.Alias} != null,
+        {!myVariable_current.CRM_From_User__r.Alias},
+        {!myVariable_current.CRM_From_User__r.FirstName} 
+    ),
+    {!myVariable_current.CRM_From_Contact__r.FirstName}
+)</expression>
     </formulas>
     <formulas>
         <name>formula_myRule_1</name>
         <dataType>Boolean</dataType>
         <expression>true</expression>
     </formulas>
-    <interviewLabel>Message_Created-2_InterviewLabel</interviewLabel>
+    <interviewLabel>Message_Created-3_InterviewLabel</interviewLabel>
     <label>Message Created</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -101,7 +111,7 @@
             <processMetadataValues>
                 <name>leftHandSideReferenceTo</name>
                 <value>
-                    <stringValue />
+                    <stringValue/>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -149,6 +159,7 @@
         <connector>
             <targetReference>myRule_1_A2</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <processMetadataValues>
                 <name>implicit</name>
@@ -184,7 +195,7 @@
             <processMetadataValues>
                 <name>leftHandSideReferenceTo</name>
                 <value>
-                    <stringValue />
+                    <stringValue/>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -195,7 +206,7 @@
             </processMetadataValues>
             <field>CRM_From_Label__c</field>
             <value>
-                <elementReference>formula_2_myRule_1_A1_8302703876</elementReference>
+                <elementReference>formula_2_myRule_1_A1_0476827967</elementReference>
             </value>
         </inputAssignments>
         <object>Message__c</object>

@@ -11,12 +11,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Message__c.CRM_From_Label__c</field>
+        <field>Message__c.CRM_From_Contact__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Message__c.CRM_From__c</field>
+        <field>Message__c.CRM_From_User__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Message__c.CRM_From_Label__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -41,11 +46,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Message__c.CRM_Recipient__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Message__c.CRM_Sent_date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -61,6 +61,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Thread__c.CRM_Contact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Thread__c.CRM_Latest_Message_Datetime__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -72,11 +77,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Thread__c.CRM_Number_of_unread_Messages__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Thread__c.CRM_Recipient__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

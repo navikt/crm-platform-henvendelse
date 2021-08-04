@@ -518,13 +518,12 @@ public class CRM_HENV_TestDataFactory {
         }
         public Map<String, Object> getFieldDefaults(Boolean bulkify) {
             return new Map<String, Object>{
-                'CRM_From__c' => bulkify ? 'User' : createRecord('User', null),
-                'CRM_isActive__c' => true,
-                'CRM_Recipient__c' => bulkify ? 'User' : createRecord('User', null)
+                'CRM_Contact__c' => bulkify ? 'Contact' : createRecord('Contact', null),
+                'CRM_isActive__c' => true
             };
         }
         public Map<String, String> getDmlFields() {
-            return new Map<String, String>{ 'CRM_From__c' => 'User', 'CRM_Recipient__c' => 'User' };
+            return new Map<String, String>{ 'CRM_Contact__c' => 'Contact' };
         }
     }
 
@@ -537,11 +536,11 @@ public class CRM_HENV_TestDataFactory {
                 'CRM_Sent_date__c' => Datetime.now(),
                 'CRM_Message_Text__c' => 'DUMMY TEXT',
                 'CRM_Thread__c' => bulkify ? 'Thread__c' : createRecord('Thread__c', null),
-                'CRM_From__c' => bulkify ? 'User' : createRecord('User', null)
+                'CRM_From_Contact__c' => bulkify ? 'Contact' : createRecord('Contact', null)
             };
         }
         public Map<String, String> getDmlFields() {
-            return new Map<String, String>{ 'CRM_Thread__c' => 'Thread__c', 'CRM_From__c' => 'User' };
+            return new Map<String, String>{ 'CRM_Thread__c' => 'Thread__c', 'CRM_From_Contact__c' => 'Contact' };
         }
     }
 

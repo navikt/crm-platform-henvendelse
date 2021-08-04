@@ -1,28 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>52.0</apiVersion>
-    <decisions>
-        <name>Check_From_Label</name>
-        <label>Check From Label</label>
-        <locationX>182</locationX>
-        <locationY>431</locationY>
-        <defaultConnectorLabel>Sent From NAV</defaultConnectorLabel>
-        <rules>
-            <name>External_Sender</name>
-            <conditionLogic>or</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Sender_User.ContactId</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Updated_External_Message</targetReference>
-            </connector>
-            <label>External Sender</label>
-        </rules>
-    </decisions>
     <description>Record triggered flow to update message information before save.</description>
     <interviewLabel>New Message Created {!$Flow.CurrentDateTime}</interviewLabel>
     <label>New Message Created</label>
@@ -45,34 +23,12 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordLookups>
-        <description>Get user information from the message sender</description>
-        <name>Get_Sender_User</name>
-        <label>Get Sender User</label>
-        <locationX>182</locationX>
-        <locationY>311</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Check_From_Label</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.CRM_From__c</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>User</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <recordUpdates>
         <description>Sets the external message flag for the message if it was sent from end-user</description>
         <name>Updated_External_Message</name>
         <label>Updated External Message</label>
-        <locationX>50</locationX>
-        <locationY>551</locationY>
+        <locationX>176</locationX>
+        <locationY>311</locationY>
         <inputAssignments>
             <field>CRM_External_Message__c</field>
             <value>
@@ -82,14 +38,14 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>56</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Sender_User</targetReference>
+            <targetReference>Updated_External_Message</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>CRM_From__c</field>
+            <field>CRM_From_Contact__c</field>
             <operator>IsNull</operator>
             <value>
                 <booleanValue>false</booleanValue>

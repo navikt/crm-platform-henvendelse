@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CRM_From_Last_Name__c</fullName>
+    <description></description>
+    <externalId>false</externalId>
+    <formula>
+    IF( CRM_From_Contact__c != null,
+		CRM_From_Contact__r.LastName,
+        IF(CRM_From_User__c != null,
+		    CRM_From_User__r.LastName,
+            CRM_From_Ident__c 
+        )
+    )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>From Last Name</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

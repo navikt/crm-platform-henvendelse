@@ -2,7 +2,7 @@ import { LightningElement, wire, api, track } from 'lwc';
 import getmessages from '@salesforce/apex/CRM_MessageHelper.getMessagesFromThread';
 import markasread from '@salesforce/apex/CRM_MessageHelper.markAsRead';
 import { refreshApex } from '@salesforce/apex';
-import userId from '@salesforce/user/Id';
+import getContactId from '@salesforce/apex/CRM_MessageHelper.getUserContactId';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 
@@ -16,9 +16,17 @@ export default class CommityThreadViewer extends LightningElement {
     buttonisdisabled = false;
     @api recordId;
     @track msgVal;
+    userContactId;
 
     connectedCallback() {
         markasread({ threadId: this.recordId });
+        getContactId({})
+            .then((contactId) => {
+                this.userContactId = contactId;
+            })
+            .catch((error) => {
+                //Apex error
+            });
     }
 
     @wire(getRecord, { recordId: '$recordId', fields })
@@ -45,7 +53,7 @@ export default class CommityThreadViewer extends LightningElement {
         // If messagefield is empty, stop the submit
         textInput.CRM_Thread__c = this.recordId;
 
-        textInput.CRM_From__c = userId;
+        textInput.CRM_From_Contact__c = this.userContactId;
         textInput.CRM_Message_Text__c = this.msgVal;
 
         if (textInput.CRM_Message_Text__c == null || textInput.CRM_Message_Text__c == '') {
@@ -62,7 +70,7 @@ export default class CommityThreadViewer extends LightningElement {
     }
 
     handlesuccess(event) {
-        const inputFields = this.template.querySelectorAll('.msgText'); //Todo - Blank ut nye inputfel +  Styling
+        const inputFields = this.template.querySelectorAll('.msgText');
         if (inputFields) {
             inputFields.forEach((field) => {
                 field.reset();
