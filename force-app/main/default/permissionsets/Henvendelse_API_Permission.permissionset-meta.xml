@@ -217,11 +217,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Message__c.CRM_From__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Message__c.CRM_Message_Text__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -233,11 +228,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Message__c.CRM_Read__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Message__c.CRM_Recipient__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -328,11 +318,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Thread__c.CRM_Office_Restriction__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Thread__c.CRM_Recipient__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
