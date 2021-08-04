@@ -8,15 +8,12 @@ public with sharing class CRM_MessageHelperTest {
 
         Thread__c t = new Thread__c();
         t.CRM_Related_Object__c = acc.Id;
-        t.CRM_isPublic__c = true;
 
         Thread__c t2 = new Thread__c();
         t2.CRM_Related_Object__c = acc.Id;
-        t2.CRM_isPublic__c = true;
 
         Thread__c t3 = new Thread__c();
         t3.CRM_Related_Object__c = acc.Id;
-        t3.CRM_isPublic__c = false;
 
         CRM_HENV_TestDataFactory.createRecordList(new List<Thread__c>{ t, t2, t3 });
 
