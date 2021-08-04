@@ -16,6 +16,7 @@
                     style="display: block; border-radius: 0"
                 >
                     <lightning-layout>
+                        <!-- Toolbar -->
                         <lightning-layout-item size="8">
                             <lightning-layout horizontal-align="start">
                                 <lightning-button-group ontoolbaraction={handleToolbarAction}>
@@ -29,6 +30,7 @@
                                 </lightning-button-group>
                             </lightning-layout>
                         </lightning-layout-item>
+                        <!-- Avslutt samtalen -->
                         <lightning-layout-item size="4">
                             <lightning-layout horizontal-align="end">
                                 <lightning-record-edit-form record-id={threadid} object-api-name="Thread__c">
@@ -44,11 +46,11 @@
                         </lightning-layout-item>
                     </lightning-layout>
                 </div>
-                <lightning-input-field
-                    class="msgText"
-                    variant="label-hidden"
-                    field-name="CRM_Message_Text__c"
-                ></lightning-input-field>
+                <c-crm-messaging-quick-text
+                    oncommentschange={handleConversationNoteChange}
+                    conversation-note={conversationNote}
+                >
+                </c-crm-messaging-quick-text>
             </lightning-layout-item>
             <br />
             <lightning-layout-item size="12" padding="horizontalSmall">
@@ -65,6 +67,11 @@
             </lightning-layout-item>
         </lightning-layout>
         <!--</div> -->
+        <lightning-input-field
+            class="msgText slds-hide"
+            value={text}
+            field-name="CRM_Message_Text__c"
+        ></lightning-input-field>
         <lightning-input-field field-name="CRM_Recipient__c" class="slds-hide"></lightning-input-field>
         <lightning-input-field field-name="CRM_From__c" value={userid} class="slds-hide"></lightning-input-field>
     </lightning-record-edit-form>
