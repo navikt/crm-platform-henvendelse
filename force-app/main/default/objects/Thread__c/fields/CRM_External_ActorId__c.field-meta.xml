@@ -3,10 +3,7 @@
     <fullName>CRM_External_ActorId__c</fullName>
     <description>Formula field to define which party is the external. Field is populated with the persons actor id</description>
     <externalId>false</externalId>
-    <formula>IF(NOT(ISBLANK(CRM_From__r.Contact.Id )),
-			 CRM_From__r.Contact.Account.CRM_Person__r.INT_ActorId__c,
-			CRM_Recipient__r.Contact.Account.CRM_Person__r.INT_ActorId__c
-			)</formula>
+    <formula>CRM_Account__r.CRM_Person__r.INT_ActorId__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>External Actor ID</label>
     <required>false</required>

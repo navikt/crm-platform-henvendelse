@@ -3,10 +3,7 @@
     <fullName>CRM_External_Actor_Account_ID__c</fullName>
     <description>Formula field to define which party is the external. Field is populated with the Salesforce account ID.</description>
     <externalId>false</externalId>
-    <formula>IF(NOT(ISBLANK(CRM_From__r.Contact.Id )),
-			 CRM_From__r.Contact.Account.Id,
-			CRM_Recipient__r.Contact.Account.Id
-			)</formula>
+    <formula>CRM_Account__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>External Actor Account ID</label>
     <required>false</required>

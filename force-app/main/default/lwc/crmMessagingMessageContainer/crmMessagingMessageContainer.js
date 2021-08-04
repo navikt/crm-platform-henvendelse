@@ -1,4 +1,4 @@
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api } from 'lwc';
 import Id from '@salesforce/user/Id';
 
 export default class messagingMessageContainer extends LightningElement {
@@ -7,13 +7,14 @@ export default class messagingMessageContainer extends LightningElement {
     isevent = false;
     showReplybutton;
     @api message;
-    @track isoutbound;
-    @track userid;
+    isoutbound;
+    userid;
+
     connectedCallback() {
         this.userid = Id;
         //Indicate if the message is inbound or outbound, i.e left or right hand of the screen. tea
 
-        if (this.userid == this.message.CRM_From__c) {
+        if (this.userid == this.message.CRM_From_User__c) {
             this.isoutbound = true;
         } else {
             this.isoutbound = false;

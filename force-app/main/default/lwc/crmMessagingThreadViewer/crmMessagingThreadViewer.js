@@ -3,7 +3,6 @@ import getmessages from '@salesforce/apex/CRM_MessageHelper.getMessagesFromThrea
 import getJournalInfo from '@salesforce/apex/CRM_MessageHelper.getJournalEntries';
 import { subscribe, unsubscribe } from 'lightning/empApi';
 
-import getusertype from '@salesforce/apex/CRM_MessageHelper.getUserLisenceType';
 import userId from '@salesforce/user/Id';
 import { updateRecord, getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import ACTIVE_FIELD from '@salesforce/schema/Thread__c.CRM_isActive__c';
@@ -64,11 +63,6 @@ export default class messagingThreadViewer extends LightningElement {
             });
     }
 
-    @wire(getusertype, { otheruserId: '$otheruser' })
-    wiretype(result) {
-        this.usertype = result.data;
-    }
-
     @wire(getJournalInfo, { threadId: '$threadid' })
     wiredJournalEntries;
 
@@ -88,12 +82,11 @@ export default class messagingThreadViewer extends LightningElement {
     }
     //If empty, stop submitting.
     handlesubmit(event) {
-        console.log('submit');
         event.preventDefault();
         const textInput = event.detail.fields;
         // If messagefield is empty, stop the submit
         textInput.CRM_Thread__c = this.thread.Id;
-        textInput.CRM_From__c = userId;
+        textInput.CRM_From_User__c = userId;
 
         if (textInput.CRM_Message_Text__c == null || textInput.CRM_Message_Text__c == '') {
             const event1 = new ShowToastEvent({
