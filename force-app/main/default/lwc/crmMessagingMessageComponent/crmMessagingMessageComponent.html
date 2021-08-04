@@ -1,5 +1,10 @@
 <template>
-    <lightning-card class="slds--sds-c-card-shadow" variant="Narrow" title="Samtaler" icon-name="standard:CRM_user">
+    <lightning-card
+        class="slds--sds-c-card-shadow"
+        variant="Narrow"
+        title={cardTitle}
+        icon-name="standard:messaging_user"
+    >
         <div style="width: 95%; margin-left: auto; margin-right: auto">
             <!-- Singlethread true - WIll only ever be one thread in the iteration-->
             <template if:true={shownewbutton}>

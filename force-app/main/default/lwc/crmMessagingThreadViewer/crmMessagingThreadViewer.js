@@ -1,6 +1,7 @@
 import { LightningElement, api, wire } from 'lwc';
 import getmessages from '@salesforce/apex/CRM_MessageHelper.getMessagesFromThread';
 import getJournalInfo from '@salesforce/apex/CRM_MessageHelper.getJournalEntries';
+import { subscribe, unsubscribe } from 'lightning/empApi';
 
 import getusertype from '@salesforce/apex/CRM_MessageHelper.getUserLisenceType';
 import userId from '@salesforce/user/Id';
@@ -18,14 +19,55 @@ export default class messagingThreadViewer extends LightningElement {
     threadheader;
     threadid;
     messages = [];
+<<<<<<< HEAD
     text;
+=======
+    subscription;
+>>>>>>> origin/master
     //Constructor, called onload
     connectedCallback() {
         if (this.thread) {
             this.threadid = this.thread.Id;
         }
-        //this.threadheader = this.thread.From__r.FirstName + ' ' + this.thread.From__r.LastName + ' - ' + this.thread.Recipient__r.FirstName + ' ' + this.thread.Recipient__r.LastName ;
+        this.handleSubscribe();
     }
+
+    disconnectedCallback() {
+        this.handleUnsubscribe();
+    }
+
+    //Handles subscription to streaming API for listening to changes to auth status
+    handleSubscribe() {
+        let _this = this;
+        // Callback invoked whenever a new message event is received
+        const messageCallback = function (response) {
+            const messageThreadId = response.data.sobject.CRM_Thread__c;
+            if (_this.threadid == messageThreadId) {
+                //Refreshes the message in the component if the new message event is for the viewed thread
+                _this.refreshMessages();
+            }
+        };
+
+        // Invoke subscribe method of empApi. Pass reference to messageCallback
+        subscribe('/topic/Thread_New_Message', -1, messageCallback).then((response) => {
+            // Response contains the subscription information on successful subscribe call
+            this.subscription = response;
+        });
+    }
+
+    handleUnsubscribe() {
+        unsubscribe(this.subscription, (response) => {
+            console.log('Unsubscribed: ', JSON.stringify(response));
+            // Response is true for successful unsubscribe
+        })
+            .then((success) => {
+                //Successfull unsubscribe
+            })
+            .catch((error) => {
+                console.log('EMP unsubscribe failed: ' + JSON.stringify(error, null, 2));
+            });
+    }
+
     @wire(getusertype, { otheruserId: '$otheruser' })
     wiretype(result) {
         this.usertype = result.data;
@@ -91,7 +133,6 @@ export default class messagingThreadViewer extends LightningElement {
     }
 
     handlesuccess(event) {
-        console.log('Success start');
         this.recordId = event.detail;
 
         this.template.querySelector('c-crm-messaging-quick-text').clear(event);
@@ -102,6 +143,10 @@ export default class messagingThreadViewer extends LightningElement {
                 field.reset();
             });
         }
+        this.refreshMessages();
+    }
+
+    refreshMessages() {
         return refreshApex(this._mySendForSplitting);
 
     }
