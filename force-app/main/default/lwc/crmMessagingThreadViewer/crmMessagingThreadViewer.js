@@ -19,11 +19,7 @@ export default class messagingThreadViewer extends LightningElement {
     threadheader;
     threadid;
     messages = [];
-<<<<<<< HEAD
     text;
-=======
-    subscription;
->>>>>>> origin/master
     //Constructor, called onload
     connectedCallback() {
         if (this.thread) {
