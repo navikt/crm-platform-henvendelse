@@ -13,10 +13,18 @@
                 <elementReference>Message_Summary_Text</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Thread.CRM_Latest_Message_Datetime__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Update_Thread</targetReference>
         </connector>
     </assignments>
+    <description>Updates the conversation summary and the latest message datetime of the thread,</description>
     <interviewLabel>Update Thread Conversation Summary {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Update Thread Conversation Summary</label>
     <processMetadataValues>
