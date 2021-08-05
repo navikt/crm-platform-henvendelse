@@ -168,7 +168,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
                 }
             } catch (QueryException queryEx) {
                 //The thread does not exist
-                errorResponse(500, 'Failed to query thread: ' + queryEx.getMessage());
+                errorResponse(404, 'Message thread does not exist: ' + queryEx.getMessage());
                 return null;
             }
         } else {
