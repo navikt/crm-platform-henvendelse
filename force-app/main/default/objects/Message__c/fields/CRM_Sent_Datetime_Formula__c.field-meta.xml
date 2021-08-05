@@ -3,7 +3,7 @@
     <fullName>CRM_Sent_Datetime_Formula__c</fullName>
     <description>Returns the date and time the message was created. For data which was migrated this results in the timestamp from the Date time registered field, after migration this defaults to system timestamps.</description>
     <externalId>false</externalId>
-    <formula>IF(CRM_Sent_date__c == null,
+    <formula>IF(ISBLANK(CRM_Sent_date__c),
 			 CreatedDate,
 			 CRM_Sent_date__c
 			)</formula>

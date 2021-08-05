@@ -168,13 +168,13 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
                 }
             } catch (QueryException queryEx) {
                 //The thread does not exist
-                errorResponse(404, 'Message thread does not exist: ' + queryEx.getMessage());
+                errorResponse(500, 'Failed to query thread: ' + queryEx.getMessage());
                 return null;
             }
         } else {
-            //How should we handle if the recipient does not have an existing community User?!?
             try {
                 Thread__c newThread = new Thread__c(
+                    CRM_Account__c = accountId,
                     CRM_Created_By_Ident__c = actingNavIdent,
                     CRM_Created_By_NAV_Unit__c = messageRequest.enhet
                 );
