@@ -96,6 +96,6 @@
     <textTemplates>
         <name>Message_Summary_Text</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;{!$Record.CRM_From_First_Name__c} ({!$Record.CRM_From_Ident_Formula__c}) - {!$Record.CreatedDate}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;{!$Record.CRM_Message_Text__c}&lt;/p&gt;</text>
+        <text>&lt;p&gt;&lt;b&gt;{!$Record.CRM_From_First_Name__c} ({!$Record.CRM_From_Ident_Formula__c}) - {!$Record.CreatedDate}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;{!$Record.CRM_Message_Text__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</text>
     </textTemplates>
 </Flow>
