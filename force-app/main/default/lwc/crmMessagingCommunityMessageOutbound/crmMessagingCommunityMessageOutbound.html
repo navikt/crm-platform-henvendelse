@@ -2,13 +2,13 @@
     <div class="body-wrapper">
         <div class="snakkeboble snakkeboble--hoyre">
             <lightning-layout class="slds-m-top_x-small slds-p-top_small" multiple-rows="false">
-                <lightning-layout-item padding="horizontalSmall" size="11">
+                <lightning-layout-item padding="horizontalSmall" size="10">
                     <div class="panel snakkeboble-panel">
                         <div class="snakkeboble-panel__tekst">
                             <lightning-formatted-date-time
                                 value={message.CreatedDate}
-                                month="numeric"
                                 day="numeric"
+                                month="long"
                                 hour="2-digit"
                                 minute="2-digit"
                                 class="timestamp"
@@ -19,7 +19,7 @@
                     </div>
                 </lightning-layout-item>
 
-                <lightning-layout-item padding="horizontalSmall" size="1" class="iconholder">
+                <lightning-layout-item padding="horizontalSmall" size="2" class="iconholder">
                     <img src={navlogo} alt="Person-Icon" class="Person-Icon" />
                 </lightning-layout-item>
             </lightning-layout>
