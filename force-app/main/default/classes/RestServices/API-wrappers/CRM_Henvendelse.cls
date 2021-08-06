@@ -4,8 +4,8 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
     global String kasseringsDato;
     global String avsluttetDato;
     global String opprettetDato;
-    global Boolean kontorsperre = false;
-    global Boolean feilsendt = false;
+    global Boolean kontorsperre;
+    global Boolean feilsendt;
     global String kjedeId;
     global String opprinneligGT;
     global String gjeldendeTemagruppe;
@@ -48,11 +48,11 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         }
 
         if (convNote.CRM_Office_Restriction__c == true) {
-            CRM_Markering officeRest = new CRM_Markering();
+            CRM_Markering_Kontorsperre officeRest = new CRM_Markering_Kontorsperre();
             this.kontorsperre = true;
-            officeRest.markeringstype = CRM_Markering.MARKING_TYPES.KONTORSPERRE.name();
             officeRest.markertAv = convNote.CRM_Office_Restriction_Activated_By__c;
             officeRest.markertDato = gmtFormatDateTime(convNote.CRM_Office_Restriction_Date__c);
+            officeRest.kontorsperreGT = String.isNotBlank(this.opprinneligGT) ? this.opprinneligGT : null;
             this.markeringer = new List<CRM_Markering>();
             this.markeringer.add(officeRest);
         }
@@ -92,11 +92,11 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         }
 
         if (thread.CRM_Office_Restriction__c == true) {
-            CRM_Markering officeRest = new CRM_Markering();
+            CRM_Markering_Kontorsperre officeRest = new CRM_Markering_Kontorsperre();
             this.kontorsperre = true;
-            officeRest.markeringstype = CRM_Markering.MARKING_TYPES.KONTORSPERRE.name();
             officeRest.markertAv = thread.CRM_Office_Restriction_Activated_By__c;
             officeRest.markertDato = gmtFormatDateTime(thread.CRM_Office_Restriction_Date__c);
+            officeRest.kontorsperreGT = String.isNotBlank(this.opprinneligGT) ? this.opprinneligGT : null;
             this.markeringer = new List<CRM_Markering>();
             this.markeringer.add(officeRest);
         }
