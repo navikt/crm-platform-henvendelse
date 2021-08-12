@@ -4,10 +4,11 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
     global String kasseringsDato;
     global String avsluttetDato;
     global String opprettetDato;
-    global Boolean kontorsperre = false;
-    global Boolean feilsendt = false;
+    global Boolean kontorsperre;
+    global Boolean feilsendt;
     global String kjedeId;
     global String opprinneligGT;
+    global String opprinneligEnhet;
     global String gjeldendeTemagruppe;
     global String gjeldendeTema;
     global String henvendelseType;
@@ -31,6 +32,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         this.gjeldendeTemagruppe = convNote.CRM_Theme_Group_Code__c;
         this.gjeldendeTema = convNote.CRM_Theme_Code__c;
         this.opprinneligGT = convNote.CRM_Original_Person_GT__c;
+        this.opprinneligEnhet = convNote.CRM_Original_Person_NAV_Unit__c;
         this.opprettetDato = gmtFormatDateTime(convNote.CRM_Registered_Datetime_Formula__c);
         this.avsluttetDato = this.opprettetDato;
         this.kjedeId = convNote.Id;
@@ -48,11 +50,12 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         }
 
         if (convNote.CRM_Office_Restriction__c == true) {
-            CRM_Markering officeRest = new CRM_Markering();
+            CRM_Markering_Kontorsperre officeRest = new CRM_Markering_Kontorsperre();
             this.kontorsperre = true;
-            officeRest.markeringstype = CRM_Markering.MARKING_TYPES.KONTORSPERRE.name();
             officeRest.markertAv = convNote.CRM_Office_Restriction_Activated_By__c;
             officeRest.markertDato = gmtFormatDateTime(convNote.CRM_Office_Restriction_Date__c);
+            officeRest.kontorsperreGT = String.isNotBlank(this.opprinneligGT) ? this.opprinneligGT : null;
+            officeRest.kontorsperreEnhet = String.isNotBlank(this.opprinneligEnhet) ? this.opprinneligEnhet : null;
             this.markeringer = new List<CRM_Markering>();
             this.markeringer.add(officeRest);
         }
@@ -71,6 +74,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         this.aktorId = thread.CRM_External_ActorId__c;
         this.kjedeId = thread.Id;
         this.opprinneligGT = thread.CRM_Original_Person_GT__c;
+        this.opprinneligEnhet = thread.CRM_Original_Person_NAV_Unit__c;
         this.kasseringsDato = gmtFormatDateTime(thread.CRM_Disposal_Datetime__c);
         this.opprettetDato = gmtFormatDateTime(thread.CRM_Registered_Datetime_Formula__c);
         this.avsluttetDato = gmtFormatDateTime(thread.CRM_Closed_Date__c);
@@ -92,11 +96,12 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         }
 
         if (thread.CRM_Office_Restriction__c == true) {
-            CRM_Markering officeRest = new CRM_Markering();
+            CRM_Markering_Kontorsperre officeRest = new CRM_Markering_Kontorsperre();
             this.kontorsperre = true;
-            officeRest.markeringstype = CRM_Markering.MARKING_TYPES.KONTORSPERRE.name();
             officeRest.markertAv = thread.CRM_Office_Restriction_Activated_By__c;
             officeRest.markertDato = gmtFormatDateTime(thread.CRM_Office_Restriction_Date__c);
+            officeRest.kontorsperreGT = String.isNotBlank(this.opprinneligGT) ? this.opprinneligGT : null;
+            officeRest.kontorsperreEnhet = String.isNotBlank(this.opprinneligEnhet) ? this.opprinneligEnhet : null;
             this.markeringer = new List<CRM_Markering>();
             this.markeringer.add(officeRest);
         }

@@ -6,7 +6,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
     private static LoggerUtility logger = new LoggerUtility('Henvendelse API');
 
     @HttpPost
-    global static void createHenvendelse(String requestBody) {
+    global static void createHenvendelse() {
         //Super validation handles setting the response so return if this fails
         if (!validate())
             return;
@@ -22,10 +22,10 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
 
             switch on henvType {
                 when SAMTALEREFERAT {
-                    handleNewConversationNote(requestBody);
+                    handleNewConversationNote(request.requestBody.toString());
                 }
                 when MELDING {
-                    handleNewMessage(requestBody, threadId);
+                    handleNewMessage(request.requestBody.toString(), threadId);
                 }
                 when else {
                     errorResponse(

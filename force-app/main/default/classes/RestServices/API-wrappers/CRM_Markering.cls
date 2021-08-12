@@ -1,4 +1,4 @@
-global class CRM_Markering {
+global virtual class CRM_Markering {
     global enum MARKING_TYPES {
         FEILSENDT,
         KONTORSPERRE
