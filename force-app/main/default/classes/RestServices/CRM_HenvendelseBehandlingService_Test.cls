@@ -8,7 +8,9 @@ public class CRM_HenvendelseBehandlingService_Test {
     }
     @isTest
     static void testSetDisposalDateThread() {
-        Thread__c thread = (Thread__c) CRM_HENV_TestDataFactory.createRecord(new Thread__c());
+        Thread__c thread = (Thread__c) CRM_HENV_TestDataFactory.createRecord(
+            new Thread__c(CRM_Office_Restriction__c = true)
+        );
 
         CRM_Henvendelse henv = new CRM_Henvendelse();
         henv.kasseringsDato = String.valueOfGmt(Datetime.now());
@@ -31,11 +33,14 @@ public class CRM_HenvendelseBehandlingService_Test {
         CRM_HenvendelseBehandlingRestService.updateHenvendelse();
         Test.stopTest();
 
-        System.assertEquals(
-            Date.today(),
-            [SELECT Id, CRM_Disposal_Datetime__c, LastModifiedDate FROM Thread__c WHERE Id = :thread.Id]
-                ?.CRM_Disposal_Datetime__c.date()
-        );
+        Thread__c updatedThread = [
+            SELECT Id, CRM_Disposal_Datetime__c, LastModifiedDate, CRM_Office_Restriction__c
+            FROM Thread__c
+            WHERE Id = :thread.Id
+        ];
+
+        System.assertEquals(true, updatedThread.CRM_Office_Restriction__c); //Verify that office restriction has not been overwritten to default false
+        System.assertEquals(Date.today(), updatedThread.CRM_Disposal_Datetime__c.date());
     }
 
     @isTest

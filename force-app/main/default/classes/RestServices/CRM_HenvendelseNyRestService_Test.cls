@@ -22,11 +22,12 @@ public class CRM_HenvendelseNyRestService_Test {
             Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/samtalereferat';
         req.httpMethod = 'POST';
         req.headers.put('X-Correlation-ID', '123RANDOM');
+        req.requestBody = Blob.valueOf(JSON.serialize(convNoteReq));
         RestContext.request = req;
         RestContext.response = resp;
 
         Test.startTest();
-        CRM_HenvendelseNyRestService.createHenvendelse(JSON.serialize(convNoteReq));
+        CRM_HenvendelseNyRestService.createHenvendelse();
         Test.stopTest();
 
         System.assertEquals(1, [SELECT COUNT() FROM Conversation_Note__c]);
@@ -43,11 +44,12 @@ public class CRM_HenvendelseNyRestService_Test {
             Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/samtalereferat';
         req.httpMethod = 'POST';
         req.headers.put('X-Correlation-ID', '123RANDOM');
+        req.requestBody = Blob.valueOf(requestBody);
         RestContext.request = req;
         RestContext.response = resp;
 
         Test.startTest();
-        CRM_HenvendelseNyRestService.createHenvendelse(requestBody);
+        CRM_HenvendelseNyRestService.createHenvendelse();
         Test.stopTest();
 
         System.assertEquals(400, RestContext.response.statusCode);
@@ -70,11 +72,12 @@ public class CRM_HenvendelseNyRestService_Test {
             Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/samtalereferat';
         req.httpMethod = 'POST';
         req.headers.put('X-Correlation-ID', '123RANDOM');
+        req.requestBody = Blob.valueOf(JSON.serialize(convNoteReq));
         RestContext.request = req;
         RestContext.response = resp;
 
         Test.startTest();
-        CRM_HenvendelseNyRestService.createHenvendelse(JSON.serialize(convNoteReq));
+        CRM_HenvendelseNyRestService.createHenvendelse();
         Test.stopTest();
 
         System.assertEquals(404, RestContext.response.statusCode);
@@ -97,12 +100,13 @@ public class CRM_HenvendelseNyRestService_Test {
             Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/samtalereferat';
         req.httpMethod = 'POST';
         req.headers.put('X-Correlation-ID', '123RANDOM');
+        req.requestBody = Blob.valueOf(JSON.serialize(convNoteReq));
         RestContext.request = req;
         RestContext.response = resp;
 
         Test.startTest();
         CRM_HenvendelseNyRestService.simulateException(new DmlException('TESTING'));
-        CRM_HenvendelseNyRestService.createHenvendelse(JSON.serialize(convNoteReq));
+        CRM_HenvendelseNyRestService.createHenvendelse();
         Test.stopTest();
 
         System.assertEquals(500, RestContext.response.statusCode);
@@ -118,11 +122,12 @@ public class CRM_HenvendelseNyRestService_Test {
         req.requestURI = Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/invalidtype';
         req.httpMethod = 'POST';
         req.headers.put('X-Correlation-ID', '123RANDOM');
+        req.requestBody = Blob.valueOf(JSON.serialize(convNoteReq));
         RestContext.request = req;
         RestContext.response = resp;
 
         Test.startTest();
-        CRM_HenvendelseNyRestService.createHenvendelse(JSON.serialize(convNoteReq));
+        CRM_HenvendelseNyRestService.createHenvendelse();
         Test.stopTest();
 
         System.assertEquals(400, RestContext.response.statusCode);
@@ -137,11 +142,12 @@ public class CRM_HenvendelseNyRestService_Test {
 
         req.requestURI = Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/invalidtype';
         req.httpMethod = 'POST';
+        req.requestBody = Blob.valueOf(JSON.serialize(convNoteReq));
         RestContext.request = req;
         RestContext.response = resp;
 
         Test.startTest();
-        CRM_HenvendelseNyRestService.createHenvendelse(JSON.serialize(convNoteReq));
+        CRM_HenvendelseNyRestService.createHenvendelse();
         Test.stopTest();
 
         System.assertEquals(400, RestContext.response.statusCode);
@@ -165,11 +171,12 @@ public class CRM_HenvendelseNyRestService_Test {
         req.addParameter('kjedeId', thread.Id);
         req.headers.put('X-Correlation-ID', '123RANDOM');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.requestBody = Blob.valueOf(JSON.serialize(messageReq));
         RestContext.request = req;
         RestContext.response = resp;
 
         Test.startTest();
-        CRM_HenvendelseNyRestService.createHenvendelse(JSON.serialize(messageReq));
+        CRM_HenvendelseNyRestService.createHenvendelse();
         Test.stopTest();
 
         System.assertEquals(200, RestContext.response.statusCode);
@@ -193,11 +200,12 @@ public class CRM_HenvendelseNyRestService_Test {
         req.httpMethod = 'POST';
         req.headers.put('X-Correlation-ID', '123RANDOM');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.requestBody = Blob.valueOf(JSON.serialize(messageReq));
         RestContext.request = req;
         RestContext.response = resp;
 
         Test.startTest();
-        CRM_HenvendelseNyRestService.createHenvendelse(JSON.serialize(messageReq));
+        CRM_HenvendelseNyRestService.createHenvendelse();
         Test.stopTest();
 
         System.assertEquals(200, RestContext.response.statusCode);
@@ -224,11 +232,12 @@ public class CRM_HenvendelseNyRestService_Test {
         req.addParameter('kjedeId', thread.Id);
         req.headers.put('X-Correlation-ID', '123RANDOM');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.requestBody = Blob.valueOf(JSON.serialize(messageReq));
         RestContext.request = req;
         RestContext.response = resp;
 
         Test.startTest();
-        CRM_HenvendelseNyRestService.createHenvendelse(JSON.serialize(messageReq));
+        CRM_HenvendelseNyRestService.createHenvendelse();
         Test.stopTest();
 
         System.assertEquals(403, RestContext.response.statusCode);
@@ -254,11 +263,12 @@ public class CRM_HenvendelseNyRestService_Test {
         req.addParameter('kjedeId', fakeThreadId);
         req.headers.put('X-Correlation-ID', '123RANDOM');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.requestBody = Blob.valueOf(JSON.serialize(messageReq));
         RestContext.request = req;
         RestContext.response = resp;
 
         Test.startTest();
-        CRM_HenvendelseNyRestService.createHenvendelse(JSON.serialize(messageReq));
+        CRM_HenvendelseNyRestService.createHenvendelse();
         Test.stopTest();
 
         System.assertEquals(404, RestContext.response.statusCode);
@@ -274,11 +284,12 @@ public class CRM_HenvendelseNyRestService_Test {
         req.addParameter('kjedeId', 'fakeThreadId');
         req.headers.put('X-Correlation-ID', '123RANDOM');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.requestBody = Blob.valueOf(JSON.serialize('[]'));
         RestContext.request = req;
         RestContext.response = resp;
 
         Test.startTest();
-        CRM_HenvendelseNyRestService.createHenvendelse('[]');
+        CRM_HenvendelseNyRestService.createHenvendelse();
         Test.stopTest();
 
         System.assertEquals(400, RestContext.response.statusCode);
@@ -302,11 +313,12 @@ public class CRM_HenvendelseNyRestService_Test {
         req.addParameter('kjedeId', thread.Id);
         req.headers.put('X-Correlation-ID', '123RANDOM');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.requestBody = Blob.valueOf(JSON.serialize(messageReq));
         RestContext.request = req;
         RestContext.response = resp;
 
         Test.startTest();
-        CRM_HenvendelseNyRestService.createHenvendelse(JSON.serialize(messageReq));
+        CRM_HenvendelseNyRestService.createHenvendelse();
         Test.stopTest();
 
         System.assertEquals(404, RestContext.response.statusCode);
@@ -330,12 +342,13 @@ public class CRM_HenvendelseNyRestService_Test {
         req.addParameter('kjedeId', thread.Id);
         req.headers.put('X-Correlation-ID', '123RANDOM');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.requestBody = Blob.valueOf(JSON.serialize(messageReq));
         RestContext.request = req;
         RestContext.response = resp;
 
         Test.startTest();
         CRM_HenvendelseNyRestService.simulateException(new DmlException('TEST'));
-        CRM_HenvendelseNyRestService.createHenvendelse(JSON.serialize(messageReq));
+        CRM_HenvendelseNyRestService.createHenvendelse();
         Test.stopTest();
 
         System.assertEquals(500, RestContext.response.statusCode);
