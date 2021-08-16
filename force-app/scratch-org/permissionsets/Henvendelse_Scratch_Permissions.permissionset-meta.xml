@@ -336,7 +336,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Thread__c.CRM_External_ActorId__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -346,7 +346,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Thread__c.CRM_External_Person_Ident__c</field>
         <readable>true</readable>
     </fieldPermissions>
