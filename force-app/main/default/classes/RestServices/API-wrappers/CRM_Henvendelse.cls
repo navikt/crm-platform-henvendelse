@@ -12,6 +12,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
     global String gjeldendeTemagruppe;
     global String gjeldendeTema;
     global String henvendelseType;
+    global String saksid;
     global List<CRM_JournalfortInformasjon> journalposter;
     global List<CRM_Melding> meldinger;
     global List<CRM_Markering> markeringer;
@@ -32,7 +33,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         this.gjeldendeTemagruppe = convNote.CRM_Theme_Group_Code__c;
         this.gjeldendeTema = convNote.CRM_Theme_Code__c;
         this.opprinneligGT = convNote.CRM_Original_Person_GT__c;
-        this.opprinneligEnhet = convNote.CRM_Original_Person_NAV_Unit__c;
+        //this.opprinneligEnhet = convNote.CRM_Original_Person_NAV_Unit__c;
         this.opprettetDato = gmtFormatDateTime(convNote.CRM_Registered_Datetime_Formula__c);
         this.avsluttetDato = this.opprettetDato;
         this.kjedeId = convNote.Id;
@@ -70,9 +71,9 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
      **/
     global CRM_Henvendelse(Thread__c thread, List<Message__c> messages, List<Journal_Entry__c> jeList) {
         this.kjedeId = thread.Id;
+        this.saksId = thread.CRM_NAV_Case_Reference__c;
         this.fnr = thread.CRM_External_Person_Ident__c;
         this.aktorId = thread.CRM_External_ActorId__c;
-        this.kjedeId = thread.Id;
         this.opprinneligGT = thread.CRM_Original_Person_GT__c;
         this.opprinneligEnhet = thread.CRM_Original_Person_NAV_Unit__c;
         this.kasseringsDato = gmtFormatDateTime(thread.CRM_Disposal_Datetime__c);

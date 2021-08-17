@@ -42,6 +42,9 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
                 throw new HenvendelseConversionException('Invalid code for theme group: ' + henv.gjeldendeTemagruppe);
             convertedThread.CRM_Theme_Group__c = themeGroupId;
         }
+        if (String.isNotBlank(henv.saksId)) {
+            convertedThread.CRM_NAV_Case_Reference__c = henv.saksId;
+        }
         return convertedThread;
     }
 

@@ -206,6 +206,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
         global String temagruppe;
         global String enhet;
         global String fritekst;
+        global String saksid;
     }
 
     global class NewConversationNoteRequest {

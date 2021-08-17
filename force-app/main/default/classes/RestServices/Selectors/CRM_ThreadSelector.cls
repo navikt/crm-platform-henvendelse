@@ -22,7 +22,8 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
             Thread__c.CRM_External_ActorId__c,
             Thread__c.CRM_External_Person_Ident__c,
             Thread__c.CRM_Original_Person_GT__c,
-            Thread__c.CRM_Original_Person_NAV_Unit__c
+            Thread__c.CRM_Original_Person_NAV_Unit__c,
+            Thread__c.CRM_NAV_Case_Reference__c
         };
     }
 
