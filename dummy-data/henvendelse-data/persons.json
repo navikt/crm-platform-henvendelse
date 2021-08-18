@@ -7,6 +7,7 @@
             },
             "Name": "12345678901",
             "INT_MunicipalityNumber__c": "0301",
+            "INT_GTDistrictNumber__c": "030103",
             "INT_FirstName__c": "Harry",
             "INT_LastName__c": "Potter",
             "INT_IsDeceased__c": false,
