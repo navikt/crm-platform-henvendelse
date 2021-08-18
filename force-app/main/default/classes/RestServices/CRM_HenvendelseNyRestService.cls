@@ -126,7 +126,8 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
             CRM_Account__c = accountId,
             CRM_Conversation_Note__c = convRequest.fritekst,
             CRM_Created_By_Ident__c = actingNavIdent,
-            CRM_Created_By_NAV_Unit__c = convRequest.enhet
+            CRM_Created_By_NAV_Unit__c = convRequest.enhet,
+            CRM_NAV_Case_Reference__c = convRequest.saksId
         );
     }
 
@@ -216,5 +217,6 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
         global String enhet;
         global String fritekst;
         global String kanal; //Separate between phone and physical meet?
+        global String saksId;
     }
 }

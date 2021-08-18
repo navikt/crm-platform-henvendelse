@@ -397,6 +397,10 @@
                         "enum": ["TELEFON", "OPPMOTE"],
                         "description": "Definerer om referatet er skrevet etter en telefonsamtale eller et fysisk oppmote hos NAV",
                         "example": "TELEFON"
+                    },
+                    "saksId": {
+                        "type": "string",
+                        "example": "005602185"
                     }
                 },
                 "required": ["aktorId", "temagruppe", "enhet", "fritekst", "kanal"]

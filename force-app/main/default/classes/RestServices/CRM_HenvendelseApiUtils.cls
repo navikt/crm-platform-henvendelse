@@ -38,8 +38,9 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
         if (String.isNotBlank(henv.gjeldendeTemagruppe)) {
             Id themeGroupId = getThemeGroup(henv.gjeldendeTemagruppe);
 
-            if (themeGroupId == null)
+            if (themeGroupId == null) {
                 throw new HenvendelseConversionException('Invalid code for theme group: ' + henv.gjeldendeTemagruppe);
+            }
             convertedThread.CRM_Theme_Group__c = themeGroupId;
         }
         if (String.isNotBlank(henv.saksId)) {
@@ -66,9 +67,13 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
         if (String.isNotBlank(henv.gjeldendeTemagruppe)) {
             Id themeGroupId = getThemeGroup(henv.gjeldendeTemagruppe);
 
-            if (themeGroupId == null)
+            if (themeGroupId == null) {
                 throw new HenvendelseConversionException('Invalid code for theme group: ' + henv.gjeldendeTemagruppe);
+            }
             convNote.CRM_Theme_Group__c = themeGroupId;
+        }
+        if (String.isNotBlank(henv.saksId)) {
+            convNote.CRM_NAV_Case_Reference__c = henv.saksId;
         }
         return convNote;
     }
