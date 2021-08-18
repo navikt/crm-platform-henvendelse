@@ -361,6 +361,10 @@
                     "fritekst": {
                         "type": "string",
                         "example": "Dette er en melding"
+                    },
+                    "saksId": {
+                        "type": "string",
+                        "example": "005602185"
                     }
                 },
                 "required": ["aktorId", "temagruppe", "enhet", "fritekst"]
@@ -389,6 +393,10 @@
                         "enum": ["TELEFON", "OPPMOTE"],
                         "description": "Definerer om referatet er skrevet etter en telefonsamtale eller et fysisk oppmote hos NAV",
                         "example": "TELEFON"
+                    },
+                    "saksId": {
+                        "type": "string",
+                        "example": "005602185"
                     }
                 },
                 "required": ["aktorId", "temagruppe", "enhet", "fritekst", "kanal"]
@@ -568,6 +576,10 @@
                     "gjeldendeTema": {
                         "type": "string",
                         "example": "DAG"
+                    },
+                    "saksId": {
+                        "type": "string",
+                        "example": "005602185"
                     },
                     "journalposter": {
                         "type": "array",
