@@ -354,10 +354,6 @@
                         "type": "string",
                         "example": "ARBD"
                     },
-                    "temakode": {
-                        "type": "string",
-                        "example": "DAG"
-                    },
                     "enhet": {
                         "type": "string",
                         "example": "4100"

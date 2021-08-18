@@ -127,7 +127,8 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
             CRM_Conversation_Note__c = convRequest.fritekst,
             CRM_Created_By_Ident__c = actingNavIdent,
             CRM_Created_By_NAV_Unit__c = convRequest.enhet,
-            CRM_NAV_Case_Reference__c = convRequest.saksId
+            CRM_NAV_Case_Reference__c = convRequest.saksId,
+            CRM_Theme_Group__c = getThemeGroup(convRequest.temagruppe)
         );
     }
 
