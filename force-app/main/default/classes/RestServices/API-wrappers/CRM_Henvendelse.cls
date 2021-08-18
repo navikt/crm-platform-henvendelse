@@ -33,7 +33,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         this.gjeldendeTemagruppe = convNote.CRM_Theme_Group_Code__c;
         this.gjeldendeTema = convNote.CRM_Theme_Code__c;
         this.opprinneligGT = convNote.CRM_Original_Person_GT__c;
-        //this.opprinneligEnhet = convNote.CRM_Original_Person_NAV_Unit__c;
+        this.opprinneligEnhet = convNote.CRM_Original_Person_NAV_Unit__c;
         this.opprettetDato = gmtFormatDateTime(convNote.CRM_Registered_Datetime_Formula__c);
         this.avsluttetDato = this.opprettetDato;
         this.kjedeId = convNote.Id;

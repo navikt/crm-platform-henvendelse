@@ -178,7 +178,8 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
                     CRM_Account__c = accountId,
                     CRM_Created_By_Ident__c = actingNavIdent,
                     CRM_Created_By_NAV_Unit__c = messageRequest.enhet,
-                    CRM_Theme_Group__c = getThemeGroup(messageRequest.temagruppe)
+                    CRM_Theme_Group__c = getThemeGroup(messageRequest.temagruppe),
+                    CRM_NAV_Case_Reference__c = messageRequest.saksId
                 );
                 insert newThread;
                 newMessage.CRM_Thread__c = newThread.Id;
@@ -206,7 +207,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
         global String temagruppe;
         global String enhet;
         global String fritekst;
-        global String saksid;
+        global String saksId;
     }
 
     global class NewConversationNoteRequest {

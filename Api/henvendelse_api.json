@@ -354,6 +354,10 @@
                         "type": "string",
                         "example": "ARBD"
                     },
+                    "temakode": {
+                        "type": "string",
+                        "example": "DAG"
+                    },
                     "enhet": {
                         "type": "string",
                         "example": "4100"
@@ -361,6 +365,10 @@
                     "fritekst": {
                         "type": "string",
                         "example": "Dette er en melding"
+                    },
+                    "saksId": {
+                        "type": "string",
+                        "example": "005602185"
                     }
                 },
                 "required": ["aktorId", "temagruppe", "enhet", "fritekst"]
@@ -568,6 +576,10 @@
                     "gjeldendeTema": {
                         "type": "string",
                         "example": "DAG"
+                    },
+                    "saksId": {
+                        "type": "string",
+                        "example": "005602185"
                     },
                     "journalposter": {
                         "type": "array",
