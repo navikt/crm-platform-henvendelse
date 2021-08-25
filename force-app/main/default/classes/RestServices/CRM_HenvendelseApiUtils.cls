@@ -72,14 +72,15 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
             }
             convNote.CRM_Theme_Group__c = themeGroupId;
         }
-        if (String.isNotBlank(henv.saksId)) {
-            convNote.CRM_NAV_Case_Reference__c = henv.saksId;
-        }
         return convNote;
     }
 
     public static Id getThemeGroup(String code) {
         return [SELECT Id FROM Common_Code__c WHERE CRM_Code_Set__c = 'Temagrupper' AND CRM_Code__c = :code]?.Id;
+    }
+
+    public static Id getTheme(String code) {
+        return [SELECT Id FROM Common_Code__c WHERE CRM_Code_Set__c = 'Tema' AND CRM_Code__c = :code]?.Id;
     }
 
     /**

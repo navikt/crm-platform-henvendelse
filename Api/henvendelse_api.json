@@ -354,6 +354,11 @@
                         "type": "string",
                         "example": "ARBD"
                     },
+                    "tema": {
+                        "type": "string",
+                        "description": "Temakode for journalpost som skal opprettes",
+                        "example": "DAG"
+                    },
                     "enhet": {
                         "type": "string",
                         "example": "4100"
@@ -367,7 +372,7 @@
                         "example": "005602185"
                     }
                 },
-                "required": ["aktorId", "temagruppe", "enhet", "fritekst"]
+                "required": ["aktorId", "temagruppe", "tema", "enhet", "fritekst"]
             },
             "SamtalereferatRequest": {
                 "type": "object",
@@ -379,6 +384,11 @@
                     "temagruppe": {
                         "type": "string",
                         "example": "ARBD"
+                    },
+                    "tema": {
+                        "type": "string",
+                        "description": "Temakode for journalpost som skal opprettes",
+                        "example": "DAG"
                     },
                     "enhet": {
                         "type": "string",
@@ -393,13 +403,9 @@
                         "enum": ["TELEFON", "OPPMOTE"],
                         "description": "Definerer om referatet er skrevet etter en telefonsamtale eller et fysisk oppmote hos NAV",
                         "example": "TELEFON"
-                    },
-                    "saksId": {
-                        "type": "string",
-                        "example": "005602185"
                     }
                 },
-                "required": ["aktorId", "temagruppe", "enhet", "fritekst", "kanal"]
+                "required": ["aktorId", "temagruppe", "tema", "enhet", "fritekst", "kanal"]
             },
             "JournalRequest": {
                 "type": "object",
