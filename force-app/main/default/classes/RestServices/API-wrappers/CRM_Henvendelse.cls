@@ -37,7 +37,6 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         this.opprettetDato = gmtFormatDateTime(convNote.CRM_Registered_Datetime_Formula__c);
         this.avsluttetDato = this.opprettetDato;
         this.kjedeId = convNote.Id;
-        this.saksId = convNote.CRM_NAV_Case_Reference__c;
         this.henvendelseType = HENVENDELSE_TYPE.SAMTALEREFERAT.name();
 
         this.meldinger = new List<CRM_Melding>();
