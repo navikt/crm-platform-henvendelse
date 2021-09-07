@@ -11,46 +11,43 @@
                 key={message.id}
             ></c-crm-messaging-Community-Message-Container>
         </template>
-        <lightning-record-edit-form object-api-name="Message__c" onsuccess={handlesuccess} onsubmit={handlesubmit}>
-            <div>
-                <lightning-messages></lightning-messages>
-                <lightning-input-field
-                    class="msgText slds-hidden"
-                    field-name="CRM_Message_Text__c"
-                ></lightning-input-field>
-                <div class="body-wrapper" style="margin: 0.5em; border-radius: 0px">
-                    <div class="example__inner">
-                        <div class="panel">
-                            <lightning-textarea
-                                data-name="messagearea"
-                                class="messagearea"
-                                name="message"
-                                type="text"
-                                label=""
-                                onchange={synchtext}
-                            ></lightning-textarea>
-                            <button
-                                disabled={buttonisdisabled}
-                                type="submit"
-                                class="knapp knapp--hoved .slds-float_right"
-                                name="submit"
-                                label="Send"
-                            >
-                                Send
-                                <!-- CHANGE TO CUSTOM LABEL in LABAL ATT-->
-                            </button>
-                        </div>
+
+        <div>
+            <lightning-messages></lightning-messages>
+            <lightning-input-field class="msgText slds-hidden" field-name="CRM_Message_Text__c"></lightning-input-field>
+            <div class="body-wrapper" style="margin: 0.5em; border-radius: 0px">
+                <div class="example__inner">
+                    <div class="panel">
+                        <lightning-textarea
+                            data-name="messagearea"
+                            class="messagearea"
+                            name="message"
+                            type="text"
+                            label=""
+                            onchange={synchtext}
+                        ></lightning-textarea>
+                        <button
+                            disabled={buttonisdisabled}
+                            type="submit"
+                            class="knapp knapp--hoved .slds-float_right"
+                            name="submit"
+                            label="Send"
+                            onclick={createMessage}
+                        >
+                            Send
+                            <!-- CHANGE TO CUSTOM LABEL in LABAL ATT-->
+                        </button>
                     </div>
                 </div>
-
-                <lightning-input-field
-                    field-name="CRM_From_Contact__c"
-                    value={userContactId}
-                    class="slds-hidden"
-                ></lightning-input-field>
-                <lightning-input-field field-name="CRM_Thread__c" value={recordId} class="slds-hidden">
-                </lightning-input-field>
             </div>
-        </lightning-record-edit-form>
+
+            <lightning-input-field
+                field-name="CRM_From_Contact__c"
+                value={userContactId}
+                class="slds-hidden"
+            ></lightning-input-field>
+            <lightning-input-field field-name="CRM_Thread__c" value={recordId} class="slds-hidden">
+            </lightning-input-field>
+        </div>
     </div>
 </template>
