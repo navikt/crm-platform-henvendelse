@@ -122,4 +122,25 @@ public with sharing class CRM_MessageHelper {
         }
         update msgList;
     }
+
+    /**
+     * Creates a message
+     * Used in the community components
+     * @Author Lars Petter Johnsen
+     */
+    @AuraEnabled
+    public static Boolean createMessage(Id threadId, String messageText, Id fromContactId){
+        Message__c m = new Message__c();
+        m.CRM_Message_Text__c = messageText;
+        m.CRM_Thread__c = threadId;
+        m.CRM_From_Contact__c = fromContactId;
+
+        try{
+            insert m;
+            return true;
+        }
+        catch (Exception e){
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
 }
