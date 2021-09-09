@@ -62,8 +62,7 @@ public class CRM_HenvendelseJournalRestService_Test {
         Test.stopTest();
 
         System.assertEquals(200, RestContext.response.statusCode);
-        Thread__c updatedThread = [SELECT Id, CRM_Journal_Status__c FROM Thread__c WHERE Id = :thread.Id];
-        System.assert(updatedThread.CRM_Journal_Status__c.equalsIgnoreCase('Journal Completed'));
+        System.assertNotEquals(0, [SELECT COUNT() FROM Journal_Entry__c WHERE CRM_Thread__c = :thread.Id]);
     }
 
     @isTest

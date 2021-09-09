@@ -10,6 +10,7 @@ global class CRM_Melding extends CRM_HenvendelseApiUtils {
     global String sendtDato;
     global String lestDato;
     global String kanal;
+    global String henvendelseId; //Legacy ID for verification purposes
 
     global CRM_Melding(Message__c message) {
         this.fritekst = message.CRM_Message_Text__c;

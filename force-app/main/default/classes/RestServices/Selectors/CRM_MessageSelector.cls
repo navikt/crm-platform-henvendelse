@@ -6,6 +6,7 @@ public inherited sharing class CRM_MessageSelector extends CRM_ApiSelector {
     public List<Schema.SObjectField> getSObjectFieldList() {
         return new List<Schema.SObjectField>{
             Message__c.CRM_Type__c,
+            Message__c.CRM_HenvendelseId__c,
             Message__c.CRM_Read__c,
             Message__c.CRM_Thread__c,
             Message__c.CRM_Message_Text__c,

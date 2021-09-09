@@ -2,6 +2,8 @@ public inherited sharing class CRM_ConversationNoteSelector extends CRM_ApiSelec
     private final List<String> QUERY_FIELDS = new List<String>{
         'Id',
         'Name',
+        'CRM_HenvendelseId__c',
+        'CRM_Henvendelse_BehandlingskjedeId__c',
         'CRM_Account__r.CRM_Person__r.INT_ActorId__c',
         'CRM_Account__r.CRM_Person__r.Name',
         'CRM_Theme_Group_Code__c',
