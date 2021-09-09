@@ -9,6 +9,7 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
             Thread__c.CRM_Registered_Datetime_Formula__c,
             Thread__c.CRM_Office_Restriction__c,
             Thread__c.Id,
+            Thread__c.CRM_HenvendelseId__c,
             Thread__c.Name,
             Thread__c.CRM_Related_Object__c,
             Thread__c.OwnerId,
@@ -22,8 +23,7 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
             Thread__c.CRM_External_ActorId__c,
             Thread__c.CRM_External_Person_Ident__c,
             Thread__c.CRM_Original_Person_GT__c,
-            Thread__c.CRM_Original_Person_NAV_Unit__c,
-            Thread__c.CRM_NAV_Case_Reference__c
+            Thread__c.CRM_Original_Person_NAV_Unit__c
         };
     }
 

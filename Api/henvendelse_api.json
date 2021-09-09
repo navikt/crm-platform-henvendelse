@@ -138,6 +138,15 @@
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/X-Correlation-ID"
+                    },
+                    {
+                        "name": "kjedeId",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Kjedeid hvis referatet skal knyttes som et oppfølingsreferat."
                     }
                 ],
                 "responses": {
@@ -366,13 +375,9 @@
                     "fritekst": {
                         "type": "string",
                         "example": "Dette er en melding"
-                    },
-                    "saksId": {
-                        "type": "string",
-                        "example": "005602185"
                     }
                 },
-                "required": ["aktorId", "temagruppe", "tema", "enhet", "fritekst"]
+                "required": ["aktorId", "temagruppe", "enhet", "fritekst"]
             },
             "SamtalereferatRequest": {
                 "type": "object",
@@ -405,7 +410,7 @@
                         "example": "TELEFON"
                     }
                 },
-                "required": ["aktorId", "temagruppe", "tema", "enhet", "fritekst", "kanal"]
+                "required": ["aktorId", "temagruppe", "enhet", "fritekst", "kanal"]
             },
             "JournalRequest": {
                 "type": "object",
@@ -582,10 +587,6 @@
                     "gjeldendeTema": {
                         "type": "string",
                         "example": "DAG"
-                    },
-                    "saksId": {
-                        "type": "string",
-                        "example": "005602185"
                     },
                     "journalposter": {
                         "type": "array",

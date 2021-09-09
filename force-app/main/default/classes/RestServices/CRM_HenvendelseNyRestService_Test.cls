@@ -34,6 +34,39 @@ public class CRM_HenvendelseNyRestService_Test {
     }
 
     @isTest
+    static void testNewFollowUpConversationNote() {
+        Person__c person = [SELECT Id, CRM_Account__c FROM Person__c LIMIT 1];
+        Conversation_Note__c firstNote = (Conversation_Note__c) CRM_HENV_TestDataFactory.createRecord(
+            new Conversation_Note__c(CRM_Account__c = person.CRM_Account__c)
+        );
+        RestRequest req = new RestRequest();
+        RestResponse resp = new RestResponse();
+
+        CRM_HenvendelseNyRestService.NewConversationNoteRequest convNoteReq = new CRM_HenvendelseNyRestService.NewConversationNoteRequest();
+        convNoteReq.aktorId = '123456789101112';
+        convNoteReq.enhet = '4100';
+        convNoteReq.kanal = 'TELEFON';
+        convNoteReq.temagruppe = 'ARBD';
+        convNoteReq.fritekst = 'REFERAT NUMBER 2';
+
+        req.requestURI =
+            Url.getSalesforceBaseUrl().toExternalForm() +
+            '/services/apexrest/henvendelse/ny/samtalereferat?kjedeId=' +
+            firstNote.Id;
+        req.httpMethod = 'POST';
+        req.headers.put('X-Correlation-ID', '123RANDOM');
+        req.requestBody = Blob.valueOf(JSON.serialize(convNoteReq));
+        RestContext.request = req;
+        RestContext.response = resp;
+
+        Test.startTest();
+        CRM_HenvendelseNyRestService.createHenvendelse();
+        Test.stopTest();
+
+        System.assertEquals(2, [SELECT COUNT() FROM Conversation_Note__c]);
+    }
+
+    @isTest
     static void testNewConversationNoteInvalidBody() {
         RestRequest req = new RestRequest();
         RestResponse resp = new RestResponse();

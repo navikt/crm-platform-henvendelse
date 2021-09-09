@@ -28,7 +28,7 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
                     setResponse(200);
                 }
                 when 'Thread__c' {
-                    initiateJournalFlow('CRM_Journal_Message_Thread', JSON.serialize(flowInputs));
+                    initiateJournalFlow('CRM_Thread_Create_Journal_Entry', JSON.serialize(flowInputs));
                     setResponse(200);
                 }
                 when else {

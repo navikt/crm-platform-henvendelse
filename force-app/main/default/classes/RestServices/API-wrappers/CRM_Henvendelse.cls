@@ -3,6 +3,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
     global String aktorId;
     global String kasseringsDato;
     global String avsluttetDato;
+    global Boolean aapen; //Defines if the chain is still open
     global String opprettetDato;
     global Boolean kontorsperre;
     global Boolean feilsendt;
@@ -12,11 +13,11 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
     global String gjeldendeTemagruppe;
     global String gjeldendeTema;
     global String henvendelseType;
-    global String saksid;
     global List<CRM_JournalfortInformasjon> journalposter;
     global List<CRM_Melding> meldinger;
     global List<CRM_Markering> markeringer;
     global String tilknyttetEnhet;
+    global String henvendelseId; //Legacy ID for verification purposes, not included in swagger documentation
 
     global CRM_Henvendelse() {
     }
@@ -29,6 +30,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
      **/
     global CRM_Henvendelse(Conversation_Note__c convNote, List<Journal_Entry__c> jeList) {
         this.fnr = convNote.CRM_Account__r.CRM_Person__r.Name;
+        this.henvendelseId = convNote.CRM_HenvendelseId__c;
         this.aktorId = convNote.CRM_Account__r.CRM_Person__r.INT_ActorId__c;
         this.gjeldendeTemagruppe = convNote.CRM_Theme_Group_Code__c;
         this.gjeldendeTema = convNote.CRM_Theme_Code__c;
@@ -36,7 +38,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         this.opprinneligEnhet = convNote.CRM_Original_Person_NAV_Unit__c;
         this.opprettetDato = gmtFormatDateTime(convNote.CRM_Registered_Datetime_Formula__c);
         this.avsluttetDato = this.opprettetDato;
-        this.kjedeId = convNote.Id;
+        this.kjedeId = convNote.CRM_Henvendelse_BehandlingskjedeId__c;
         this.henvendelseType = HENVENDELSE_TYPE.SAMTALEREFERAT.name();
 
         this.meldinger = new List<CRM_Melding>();
@@ -71,7 +73,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
      **/
     global CRM_Henvendelse(Thread__c thread, List<Message__c> messages, List<Journal_Entry__c> jeList) {
         this.kjedeId = thread.Id;
-        this.saksId = thread.CRM_NAV_Case_Reference__c;
+        this.henvendelseId = thread.CRM_HenvendelseId__c;
         this.fnr = thread.CRM_External_Person_Ident__c;
         this.aktorId = thread.CRM_External_ActorId__c;
         this.opprinneligGT = thread.CRM_Original_Person_GT__c;

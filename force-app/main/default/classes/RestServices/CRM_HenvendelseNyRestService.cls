@@ -18,14 +18,14 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
 
         try {
             HENVENDELSE_TYPE henvType = getHenvendelseType(getLastPathParameter());
-            String threadId = getRequestParam('kjedeId');
+            String kjedeId = getRequestParam('kjedeId');
 
             switch on henvType {
                 when SAMTALEREFERAT {
-                    handleNewConversationNote(request.requestBody.toString());
+                    handleNewConversationNote(request.requestBody.toString(), kjedeId);
                 }
                 when MELDING {
-                    handleNewMessage(request.requestBody.toString(), threadId);
+                    handleNewMessage(request.requestBody.toString(), kjedeId);
                 }
                 when else {
                     errorResponse(
@@ -46,8 +46,8 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
         }
     }
 
-    private static void handleNewConversationNote(String req) {
-        Conversation_Note__c newNote = validateNewConversationNote(req);
+    private static void handleNewConversationNote(String req, String kjedeId) {
+        Conversation_Note__c newNote = validateNewConversationNote(req, kjedeId);
         if (newNote == null)
             return; //Failed validation
 
@@ -105,13 +105,25 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
      * @param req
      * @return Conversation_Note__c
      **/
-    private static Conversation_Note__c validateNewConversationNote(String req) {
+    private static Conversation_Note__c validateNewConversationNote(String req, String kjedeId) {
         NewConversationNoteRequest convRequest;
+        Conversation_Note__c newNote = new Conversation_Note__c();
         try {
             convRequest = (NewConversationNoteRequest) JSON.deserializeStrict(req, NewConversationNoteRequest.class);
         } catch (JSONException jsonEx) {
             errorResponse(400, 'Invalid request body: ' + jsonEx.getMessage());
             return null;
+        }
+
+        if (String.isNotBlank(kjedeId)) {
+            //Validate if the conversation note chain exists
+            Conversation_Note__c chainStarter = new CRM_ConversationNoteSelector().selectById(kjedeId);
+            if (chainStarter == null) {
+                errorResponse(404, 'Conversation note chain does not exists: ' + kjedeId);
+                return null;
+            } else {
+                newNote.CRM_Henvendelse_BehandlingskjedeId__c = kjedeId;
+            }
         }
 
         String accountId = getAccountId(convRequest.aktorId);
@@ -122,14 +134,13 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
 
         //Method from CRM_HenvendelseApiUtils
         String actingNavIdent = getActingNavIdent();
-        return new Conversation_Note__c(
-            CRM_Account__c = accountId,
-            CRM_Conversation_Note__c = convRequest.fritekst,
-            CRM_Created_By_Ident__c = actingNavIdent,
-            CRM_Created_By_NAV_Unit__c = convRequest.enhet,
-            CRM_Theme_Group__c = getThemeGroup(convRequest.temagruppe),
-            CRM_Theme__c = getTheme(convRequest.tema)
-        );
+        newNote.CRM_Account__c = accountId;
+        newNote.CRM_Conversation_Note__c = convRequest.fritekst;
+        newNote.CRM_Created_By_Ident__c = actingNavIdent;
+        newNote.CRM_Created_By_NAV_Unit__c = convRequest.enhet;
+        newNote.CRM_Theme_Group__c = getThemeGroup(convRequest.temagruppe);
+        newNote.CRM_Theme__c = getTheme(convRequest.tema);
+        return newNote;
     }
 
     /**
@@ -181,8 +192,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
                     CRM_Created_By_Ident__c = actingNavIdent,
                     CRM_Created_By_NAV_Unit__c = messageRequest.enhet,
                     CRM_Theme_Group__c = getThemeGroup(messageRequest.temagruppe),
-                    CRM_Theme__c = getTheme(messageRequest.tema),
-                    CRM_NAV_Case_Reference__c = messageRequest.saksId
+                    CRM_Theme__c = getTheme(messageRequest.tema)
                 );
                 insert newThread;
                 newMessage.CRM_Thread__c = newThread.Id;
@@ -211,7 +221,6 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
         global String tema;
         global String enhet;
         global String fritekst;
-        global String saksId;
     }
 
     global class NewConversationNoteRequest {

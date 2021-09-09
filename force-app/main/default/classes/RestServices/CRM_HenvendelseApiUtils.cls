@@ -43,9 +43,6 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
             }
             convertedThread.CRM_Theme_Group__c = themeGroupId;
         }
-        if (String.isNotBlank(henv.saksId)) {
-            convertedThread.CRM_NAV_Case_Reference__c = henv.saksId;
-        }
         return convertedThread;
     }
 

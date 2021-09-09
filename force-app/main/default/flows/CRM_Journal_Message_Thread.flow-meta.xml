@@ -14,7 +14,7 @@
         <inputParameters>
             <name>visualForceReference</name>
             <value>
-                <stringValue>/apex/CRM_Thread_PDF?id={!recordId}</stringValue>
+                <stringValue>/apex/CRM_Thread_PDF?id={!Journal_Entry_SF.CRM_Thread__c}</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -49,7 +49,7 @@
         <inputParameters>
             <name>referenceId</name>
             <value>
-                <elementReference>recordId</elementReference>
+                <elementReference>Journal_Entry_SF.CRM_Thread__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -89,21 +89,7 @@
         <name>Assign_Journal_Entry_Default_data</name>
         <label>Assign Journal Entry Default data</label>
         <locationX>182</locationX>
-        <locationY>1574</locationY>
-        <assignmentItems>
-            <assignToReference>Journal_Entry_SF.CRM_Created_By_Ident__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Journal_Entry_NAV_Ident</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Journal_Entry_SF.NAV_Case_Reference__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Journal_Case_ID</elementReference>
-            </value>
-        </assignmentItems>
+        <locationY>1454</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.CRM_Journal_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -111,15 +97,8 @@
                 <elementReference>$Flow.CurrentDateTime</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Journal_Entry_SF.Theme__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_SF_Theme_Common_Code.Id</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
-            <targetReference>Create_Journal_Entry</targetReference>
+            <targetReference>Update_Journal_Entry</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -198,7 +177,7 @@
             <assignToReference>Journal_Request.journalfoerendeEnhet</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Journal_Entry_Unit</elementReference>
+                <elementReference>Journal_Entry_SF.CRM_Created_By_NAV_Unit__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -240,14 +219,14 @@
             <assignToReference>Journal_Request.tema</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Journal_Theme_Code</elementReference>
+                <elementReference>Journal_Entry_SF.CRM_Theme_Code__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Journal_Request.behandlingstema</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Journal_Subtheme_Code</elementReference>
+                <elementReference>Journal_Entry_SF.CRM_Subtheme_Code__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -264,7 +243,7 @@
             <assignToReference>Journal_Sak.fagsakId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Journal_Case_ID</elementReference>
+                <elementReference>Journal_Entry_SF.NAV_Case_Reference__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -312,7 +291,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_SF_Theme_Common_Code</targetReference>
+            <targetReference>Assign_Journal_Entry_Default_data</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -335,7 +314,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_SF_Theme_Common_Code</targetReference>
+            <targetReference>Assign_Journal_Entry_Default_data</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -367,7 +346,7 @@
         <description>Formula to define the journal case type (Sakstype). If no Journal Case ID has been input, default is GENERELL_SAK</description>
         <name>Journal_Case_Type</name>
         <dataType>String</dataType>
-        <expression>IF(ISBLANK({!Journal_Case_ID}), &apos;GENERELL_SAK&apos;, &apos;FAGSAK&apos;)</expression>
+        <expression>IF(ISBLANK({!Journal_Entry_SF.NAV_Case_Reference__c}), &apos;GENERELL_SAK&apos;, &apos;FAGSAK&apos;)</expression>
     </formulas>
     <formulas>
         <description>Defines the journal post type depending on if the dialogue was initiated by NAV or the end user</description>
@@ -405,17 +384,6 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordCreates>
-        <description>Inserts a journal entry record. If post failed the entry status is set to failed and should be handled in asynchronous retry</description>
-        <name>Create_Journal_Entry</name>
-        <label>Create Journal Entry</label>
-        <locationX>182</locationX>
-        <locationY>1694</locationY>
-        <connector>
-            <targetReference>Update_Thread</targetReference>
-        </connector>
-        <inputReference>Journal_Entry_SF</inputReference>
-    </recordCreates>
     <recordLookups>
         <description>Get necessary account information to post a journal entry</description>
         <name>Get_Account_Info</name>
@@ -453,47 +421,28 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>recordId</elementReference>
+                <elementReference>Journal_Entry_SF.CRM_Thread__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Thread__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordLookups>
-        <name>Get_SF_Theme_Common_Code</name>
-        <label>Get SF Theme Common Code</label>
+    <recordUpdates>
+        <name>Update_Journal_Entry</name>
+        <label>Update Journal Entry</label>
         <locationX>182</locationX>
-        <locationY>1454</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <locationY>1574</locationY>
         <connector>
-            <targetReference>Assign_Journal_Entry_Default_data</targetReference>
+            <targetReference>Update_Thread</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>CRM_Code__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Journal_Theme_Code</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>CRM_Code_Set__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Tema</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Common_Code__c</object>
-        <queriedFields>Id</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
+        <inputReference>Journal_Entry_SF</inputReference>
+    </recordUpdates>
     <recordUpdates>
         <name>Update_Thread</name>
         <label>Update Thread</label>
         <locationX>182</locationX>
-        <locationY>1814</locationY>
+        <locationY>1694</locationY>
         <inputReference>Get_Necessary_Record_Info</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
@@ -515,14 +464,6 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <description>Unique reference to the case in NAVs fagsystem that the journal post should relate to.</description>
-        <name>Journal_Case_ID</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
         <description>Wrapper class for list of documents to journal</description>
         <name>Journal_Documents</name>
         <apexClass>CRM_Dokumenter</apexClass>
@@ -532,29 +473,13 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <description>NAV ident of the user initiating the journal entry flow</description>
-        <name>Journal_Entry_NAV_Ident</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
         <description>SF journal entry record to be created for a journal request</description>
         <name>Journal_Entry_SF</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Journal_Entry__c</objectType>
-    </variables>
-    <variables>
-        <description>NAV unit number of the user initiating the journal entry.</description>
-        <name>Journal_Entry_Unit</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+        <objectType>Journal_Entry__c</objectType>
     </variables>
     <variables>
         <description>Wrapper class for the actual journal request to be sent.</description>
@@ -575,34 +500,10 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <description>Unique subtheme code for the journal entry (Not required)</description>
-        <name>Journal_Subtheme_Code</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <description>Unique theme code for the journal entry</description>
-        <name>Journal_Theme_Code</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
         <name>PDF_DOCUMENT</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <description>Id of the record triggering the journal flow</description>
-        <name>recordId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>
