@@ -22,13 +22,28 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
     global CRM_Henvendelse() {
     }
 
-    /**
-     * @description: Converting Conversation_Note__c and journal entries into wrappers
-     * @author Stian Ruud Schikora | 07-23-2021
-     * @param convNote
-     * @param jeList
-     **/
-    global CRM_Henvendelse(Conversation_Note__c convNote, List<Journal_Entry__c> jeList) {
+    global CRM_Henvendelse(List<Conversation_Note__c> noteList) {
+        if (noteList.size() > 1) {
+            for (Conversation_Note__c convNote : noteList) {
+                if (this.kjedeId == null) {
+                    //First conversation note defines the henvendelse
+                    convertConvNote(convNote, convNote.Journal_Entries__r);
+                } else {
+                    //Add subsequent conversation note as message wrappers
+                    this.meldinger.add(new CRM_Melding(convNote));
+                    for (Journal_Entry__c jEntry : convNote.Journal_Entries__r) {
+                        if (this.journalposter == null)
+                            this.journalposter = new List<CRM_JournalfortInformasjon>();
+                        this.journalposter.add(new CRM_JournalfortInformasjon(jEntry));
+                    }
+                }
+            }
+        } else {
+            convertConvNote(noteList[0], noteList[0].Journal_Entries__r);
+        }
+    }
+
+    private void convertConvNote(Conversation_Note__c convNote, List<Journal_Entry__c> jeList) {
         this.fnr = convNote.CRM_Account__r.CRM_Person__r.Name;
         this.henvendelseId = convNote.CRM_HenvendelseId__c;
         this.aktorId = convNote.CRM_Account__r.CRM_Person__r.INT_ActorId__c;
@@ -62,6 +77,16 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
             this.markeringer = new List<CRM_Markering>();
             this.markeringer.add(officeRest);
         }
+    }
+
+    /**
+     * @description: Converting Conversation_Note__c and journal entries into wrappers
+     * @author Stian Ruud Schikora | 07-23-2021
+     * @param convNote
+     * @param jeList
+     **/
+    global CRM_Henvendelse(Conversation_Note__c convNote, List<Journal_Entry__c> jeList) {
+        convertConvNote(convNote, jeList);
     }
 
     /**

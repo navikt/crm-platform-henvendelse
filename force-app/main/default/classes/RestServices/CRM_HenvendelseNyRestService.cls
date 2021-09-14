@@ -84,6 +84,11 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
         }
     }
 
+    @future
+    private static void closeThread(String threadId) {
+        update new Thread__c(id = threadId, CRM_isActive__c = false);
+    }
+
     //###########################################################//
     //###############     HELPER METHODS       ##################//
     //###########################################################//
@@ -192,7 +197,8 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
                     CRM_Created_By_Ident__c = actingNavIdent,
                     CRM_Created_By_NAV_Unit__c = messageRequest.enhet,
                     CRM_Theme_Group__c = getThemeGroup(messageRequest.temagruppe),
-                    CRM_Theme__c = getTheme(messageRequest.tema)
+                    CRM_Theme__c = getTheme(messageRequest.tema),
+                    CRM_isActive__c = messageRequest.lukkTraad
                 );
                 insert newThread;
                 newMessage.CRM_Thread__c = newThread.Id;
@@ -211,6 +217,8 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
         newMessage.CRM_Message_Text__c = messageRequest.fritekst;
         newMessage.CRM_From_NAV_Unit__c = messageRequest.enhet;
         newMessage.CRM_From_Ident__c = actingNavIdent;
+        if (messageRequest.lukkTraad)
+            closeThread(threadId);
 
         return newMessage;
     }
@@ -221,6 +229,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
         global String tema;
         global String enhet;
         global String fritekst;
+        global Boolean lukkTraad = false; //Boolean to automatically close thread after posting the new message
     }
 
     global class NewConversationNoteRequest {

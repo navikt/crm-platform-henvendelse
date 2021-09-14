@@ -375,6 +375,11 @@
                     "fritekst": {
                         "type": "string",
                         "example": "Dette er en melding"
+                    },
+                    "lukkTraad": {
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Settes til true hvis man ønsker at samtaletråden skal lukke etter utsendelse av den nye melding. Dette medfører at ingen nye meldinger kan legges til på kjeden"
                     }
                 },
                 "required": ["aktorId", "temagruppe", "enhet", "fritekst"]
