@@ -86,6 +86,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
 
     @future
     private static void closeThread(String threadId) {
+        update new Thread__c(id = threadId, CRM_isActive__c = false);
     }
 
     //###########################################################//
