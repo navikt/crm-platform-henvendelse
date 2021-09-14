@@ -9,7 +9,17 @@ public class CRM_HenvendelseinfoRestService_Test {
         Contact personCon = [SELECT Id, AccountId FROM Contact WHERE Account.CRM_Person__c = :dummyPerson.Id LIMIT 1];
 
         Conversation_Note__c convNote = (Conversation_Note__c) CRM_HENV_TestDataFactory.createRecord(
-            new Conversation_Note__c(CRM_Account__c = personCon.AccountId)
+            new Conversation_Note__c(
+                CRM_Account__c = personCon.AccountId,
+                CRM_Henvendelse_BehandlingskjedeId__c = '1234TEST'
+            )
+        );
+        //Adding a follow up note to the test data
+        CRM_HENV_TestDataFactory.createRecord(
+            new Conversation_Note__c(
+                CRM_Account__c = personCon.AccountId,
+                CRM_Henvendelse_BehandlingskjedeId__c = '1234TEST'
+            )
         );
         Thread__c thread = (Thread__c) CRM_HENV_TestDataFactory.createRecord(
             new Thread__c(CRM_Contact__c = personCon.Id, CRM_Account__c = personCon.AccountId)

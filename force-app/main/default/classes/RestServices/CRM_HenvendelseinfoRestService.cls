@@ -23,8 +23,9 @@ global without sharing class CRM_HenvendelseinfoRestService extends CRM_Henvende
                     );
                 }
                 when 'Conversation_Note__c' {
-                    Conversation_Note__c convNote = new CRM_ConversationNoteSelector().selectById(henvId);
-                    setResponse(200, JSON.serializePretty(new CRM_Henvendelse(convNote, convNote.Journal_Entries__r)));
+                    List<Conversation_Note__c> noteList = new CRM_ConversationNoteSelector()
+                        .selectByBehandlingskjedeId(henvId);
+                    setResponse(200, JSON.serializePretty(new CRM_Henvendelse(noteList)));
                 }
                 when else {
                     errorResponse(400, 'Invalid reference value for henv/thread ID: ' + henvId);
