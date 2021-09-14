@@ -24,7 +24,6 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
 
     global CRM_Henvendelse(List<Conversation_Note__c> noteList) {
         if (noteList.size() > 1) {
-            System.debug('Multiple Messages!');
             for (Conversation_Note__c convNote : noteList) {
                 if (this.kjedeId == null) {
                     //First conversation note defines the henvendelse

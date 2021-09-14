@@ -71,7 +71,6 @@ global without sharing class CRM_HenvendelseInfoListRestService extends ApexRest
             }
         }
         for (List<Conversation_Note__c> noteList : convNoteMap.values()) {
-            System.debug('MAP VALUES: ' + noteList);
             retList.add(new CRM_Henvendelse(noteList));
         }
 
