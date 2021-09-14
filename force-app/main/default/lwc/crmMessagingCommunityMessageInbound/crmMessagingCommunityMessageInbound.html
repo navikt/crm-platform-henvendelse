@@ -5,16 +5,17 @@
                 <lightning-layout-item padding="horizontalSmall" size="1">
                     <img src={navlogo} alt="NAV-logo" class="ikon nav-ikon" />
                 </lightning-layout-item>
-                <lightning-layout-item padding="horizontalSmall" size="11">
+                <lightning-layout-item padding="horizontalSmall" size="10">
                     <div class="panel snakkeboble-panel">
                         <div class="snakkeboble-panel__tekst">
-                            <span class="message-from">{message.CRM_From_Label__c}</span>
+                            <span class="message-from">{message.CRM_From_Label__c} </span>
                             <lightning-formatted-date-time
                                 value={message.CreatedDate}
-                                month="numeric"
                                 day="numeric"
+                                month="long"
                                 hour="2-digit"
                                 minute="2-digit"
+                                class="timestamp"
                             >
                             </lightning-formatted-date-time>
                         </div>
