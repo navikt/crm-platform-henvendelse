@@ -59,8 +59,20 @@ global without sharing class CRM_HenvendelseInfoListRestService extends ApexRest
 
     private static List<CRM_Henvendelse> convertToHenvendelseList(List<Conversation_Note__c> convList) {
         List<CRM_Henvendelse> retList = new List<CRM_Henvendelse>();
+        Map<String, List<Conversation_Note__c>> convNoteMap = new Map<String, List<Conversation_Note__c>>(); //Mapping behandlingskjedeId to a list of conversation notes
         for (Conversation_Note__c convNote : convList) {
-            retList.add(new CRM_Henvendelse(convNote, convNote.Journal_Entries__r));
+            String behandlingskjedeId = convNote.CRM_Henvendelse_BehandlingskjedeId__c;
+            if (convNoteMap.containsKey(behandlingskjedeId)) {
+                List<Conversation_Note__c> tempNotes = convNoteMap.get(behandlingskjedeId);
+                tempNotes.add(convNote);
+                convNoteMap.put(behandlingskjedeId, tempNotes);
+            } else {
+                convNoteMap.put(behandlingskjedeId, new List<Conversation_Note__c>{ convNote });
+            }
+        }
+        for (List<Conversation_Note__c> noteList : convNoteMap.values()) {
+            System.debug('MAP VALUES: ' + noteList);
+            retList.add(new CRM_Henvendelse(noteList));
         }
 
         return retList;
