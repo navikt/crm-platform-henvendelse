@@ -5,15 +5,17 @@
                 <lightning-layout-item padding="horizontalSmall" size="10">
                     <div class="panel snakkeboble-panel">
                         <div class="snakkeboble-panel__tekst">
-                            <lightning-formatted-date-time
-                                value={message.CreatedDate}
-                                day="numeric"
-                                month="long"
-                                hour="2-digit"
-                                minute="2-digit"
-                                class="timestamp"
-                            >
-                            </lightning-formatted-date-time>
+                            <div class="datewrapper">
+                                <lightning-formatted-date-time
+                                    value={message.CreatedDate}
+                                    day="numeric"
+                                    month="long"
+                                    hour="2-digit"
+                                    minute="2-digit"
+                                    class="timestamp"
+                                >
+                                </lightning-formatted-date-time>
+                            </div>
                         </div>
                         <div class="message-text">{message.CRM_Message_Text__c}</div>
                     </div>

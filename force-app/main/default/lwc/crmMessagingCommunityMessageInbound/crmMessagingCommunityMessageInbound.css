@@ -6,10 +6,13 @@
 .message-text {
     font-size: 16px;
 }
-.snakkeboble {
+.snakkeboble-panel {
     display: block;
     max-width: 80%;
 }
 .ikon {
     margin-top: 1em;
+}
+.timestamp {
+    font-size: 0.8em;
 }
