@@ -182,4 +182,7 @@ export default class nksQuickText extends LightningElement {
         let inputField = this.template.querySelector('.conversationNoteTextArea');
         inputField.value = '';
     }
+    handlePaste() {
+        handleChange()
+    }
 }
