@@ -1,16 +1,17 @@
 .decorator-wrapper {
-    max-width: 80%;
+    width: 80%;
     margin: auto;
+    max-width: 80em;
 }
 .submitbtn {
     float: right;
 }
-.messagearea {
-}
 .knapp {
-    margin: 1em;
     float: right;
 }
 .panel {
     overflow: auto;
+}
+.host {
+    --sds-c-textarea-color-background: purple;
 }
