@@ -1,0 +1,11 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "Thread__c",
+                "referenceId": "ThreadRef1"
+            },
+            "CRM_isActive__c": true
+        }
+    ]
+}

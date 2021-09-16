@@ -3,20 +3,36 @@
 
     <div class="header">
         <!-- HEADER CONTENT-->
-        <div>Something here</div>
+        <apex:image
+            url="{!URLFOR($Resource.stoLogos,
+            'navLogo.png')}"
+        />
     </div>
     <div class="footer">
         <!-- FOOTER CONTENT -->
-        <div>Page <span class="pagenumber" /> of <span class="pagecount" /></div>
+        <div>Side <span class="pagenumber" /> av <span class="pagecount" /></div>
     </div>
     <div class="content">
-        <h1>
-            Samtale med NAV
-            <apex:outputText value=" - {0, date, dd/MM/yyy}">
+        <h2>Journalført henvendelse</h2>
+
+        <span> <b>Navn: </b>{!conversation_note__c.CRM_Account__r.Name} <br /> </span>
+        <span> <b>Fødselsnummer: </b>{!conversation_note__c.CRM_Account__r.INT_PersonIdent__c} <br /> </span>
+        <span>
+            <b>Mottatt/Sendt: </b>
+            <apex:outputText value=" {0, date, dd/MM/yyy}">
                 <apex:param value="{!conversation_note__c.CRM_Date_Time_Registered__c}" />
             </apex:outputText>
-        </h1>
+            <br />
+        </span>
+        <apex:outputPanel rendered="{!conversation_note__c.CRM_Communication_Channel__c == 'Meeting'}">
+            <span> <b>Type: </b>Samtalereferat (oppmøte) <br /> </span>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!conversation_note__c.CRM_Communication_Channel__c == 'Phone'}">
+            <span> <b>Type: </b>Samtalereferat (telefon) <br /> </span>
+        </apex:outputPanel>
+        <br />
 
-        <div>{!conversation_note__c.CRM_Conversation_Note__c}</div>
+        <h2>Innhold:</h2>
+        <p>{!conversation_note__c.CRM_Conversation_Note__c}</p>
     </div>
 </apex:page>

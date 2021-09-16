@@ -1,0 +1,12 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "Message__c",
+                "referenceId": "MessageRef1"
+            },
+            "CRM_Thread__c": "@ThreadRef1",
+            "CRM_Message_Text__c": "This is a test message"
+        }
+    ]
+}

@@ -15,6 +15,9 @@ div.footer {
   padding: 5px;
   position: running(footer);
 }
+div.content {
+    padding-top: 15px;
+}
 .pagenumber:before {
   content: counter(page);
 }
