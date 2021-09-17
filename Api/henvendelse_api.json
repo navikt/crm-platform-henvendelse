@@ -121,6 +121,37 @@
                 }
             }
         },
+        "/henvendelse/meldingskjede/lukk": {
+            "patch": {
+                "tags": ["Henvendelse Behandling"],
+                "description": "Endepunkt som benyttes for lukking av en meldingskjede. Når kjeden er lukket er det ikke lenger mulig å skrive flere meldinger.",
+                "parameters": [
+                    {
+                        "name": "henvId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Unik id til meldingstråden som skal lukkes"
+                    },
+                    {
+                        "$ref": "#/components/parameters/X-Correlation-ID"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
         "/henvendelse/ny/samtalereferat": {
             "post": {
                 "tags": ["Ny Henvendelse"],
@@ -375,11 +406,6 @@
                     "fritekst": {
                         "type": "string",
                         "example": "Dette er en melding"
-                    },
-                    "lukkTraad": {
-                        "type": "boolean",
-                        "example": true,
-                        "description": "Settes til true hvis man ønsker at samtaletråden skal lukke etter utsendelse av den nye melding. Dette medfører at ingen nye meldinger kan legges til på kjeden"
                     }
                 },
                 "required": ["aktorId", "temagruppe", "enhet", "fritekst"]

@@ -21,7 +21,7 @@ public class CRM_HenvendelseBehandlingService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() +
             '/services/apexrest/henvendelse/behandling/' +
-            thread.Id;
+            CRM_HenvendelseApiUtils.convertReference((String) thread.Id);
         req.httpMethod = 'PATCH';
         req.headers.put('X-Correlation-ID', '123TEST');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
@@ -56,7 +56,7 @@ public class CRM_HenvendelseBehandlingService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() +
             '/services/apexrest/henvendelse/behandling/' +
-            thread.Id;
+            CRM_HenvendelseApiUtils.convertReference((String) thread.Id);
         req.httpMethod = 'PATCH';
         req.headers.put('X-Correlation-ID', '123TEST');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
@@ -88,7 +88,7 @@ public class CRM_HenvendelseBehandlingService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() +
             '/services/apexrest/henvendelse/behandling/' +
-            thread.Id;
+            CRM_HenvendelseApiUtils.convertReference((String) thread.Id);
         req.httpMethod = 'PATCH';
         req.headers.put('X-Correlation-ID', '123TEST');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
@@ -116,7 +116,7 @@ public class CRM_HenvendelseBehandlingService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() +
             '/services/apexrest/henvendelse/behandling/' +
-            thread.Id;
+            CRM_HenvendelseApiUtils.convertReference((String) thread.Id);
         req.httpMethod = 'PATCH';
         req.headers.put('X-Correlation-ID', '123TEST');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
@@ -145,7 +145,7 @@ public class CRM_HenvendelseBehandlingService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() +
             '/services/apexrest/henvendelse/behandling/' +
-            thread.Id;
+            CRM_HenvendelseApiUtils.convertReference((String) thread.Id);
         req.httpMethod = 'PATCH';
         req.headers.put('X-Correlation-ID', '123TEST');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
@@ -174,7 +174,7 @@ public class CRM_HenvendelseBehandlingService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() +
             '/services/apexrest/henvendelse/behandling/' +
-            'INVALIDID';
+            CRM_HenvendelseApiUtils.convertReference('INVALIDID');
         req.httpMethod = 'PATCH';
         req.headers.put('X-Correlation-ID', '123TEST');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
@@ -204,7 +204,7 @@ public class CRM_HenvendelseBehandlingService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() +
             '/services/apexrest/henvendelse/behandling/' +
-            convNote.Id;
+            CRM_HenvendelseApiUtils.convertReference((String) convNote.Id);
         req.httpMethod = 'PATCH';
         req.headers.put('X-Correlation-ID', '123TEST');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');

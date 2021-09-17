@@ -10,7 +10,8 @@ global without sharing class CRM_HenvendelseinfoRestService extends CRM_Henvende
         String correlationId = getXCorrelation();
         logger.apiTransaction(correlationId, RestContext.request, CRM_ApplicationDomain.Domain.NKS);
         try {
-            Id henvId = (Id) getLastPathParameter();
+            String encodedHenvId = getLastPathParameter();
+            Id henvId = (Id) decodeReference(encodedHenvId);
 
             String objectName = henvId.getSobjectType().getDescribe().getName();
 

@@ -16,7 +16,8 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
                 request.requestBody.toString(),
                 CRM_Henvendelse.class
             );
-            Id henvId = (Id) getLastPathParameter();
+            String encodedHenvId = getLastPathParameter();
+            Id henvId = (Id) decodeReference(encodedHenvId); //API exposes encoded internal ID that needs to be decoded
 
             String objectName = henvId.getSobjectType().getDescribe().getName();
 
