@@ -31,7 +31,7 @@
             <br />
 
             <span style="font-weight: 400; font-size: 16pt">Innhold:</span> <br />
-            {!conversation_note__c.CRM_Conversation_Note__c}
+            <div style="margin-top: 0.25em">{!conversation_note__c.CRM_Conversation_Note__c}</div>
         </div>
 
         <div class="footer">
