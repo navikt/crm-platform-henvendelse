@@ -7,10 +7,15 @@ import userId from '@salesforce/user/Id';
 import { updateRecord, getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import ACTIVE_FIELD from '@salesforce/schema/Thread__c.CRM_isActive__c';
 import THREAD_ID_FIELD from '@salesforce/schema/Thread__c.Id';
+import CREATED_BY_FIELD from '@salesforce/schema/Thread__c.CreatedById';
+import CREATED_DATE from '@salesforce/schema/Thread__c.CreatedDate';
+import FIRSTNAME_FIELD from '@salesforce/schema/Thread__c.CreatedBy.FirstName';
+import LASTNAME_FIELD from '@salesforce/schema/Thread__c.CreatedBy.LastName';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
 
 export default class messagingThreadViewer extends LightningElement {
+    createdbyid;
     usertype;
     otheruser;
     _mySendForSplitting;
@@ -66,8 +71,18 @@ export default class messagingThreadViewer extends LightningElement {
     @wire(getJournalInfo, { threadId: '$threadid' })
     wiredJournalEntries;
 
-    @wire(getRecord, { recordId: '$threadid', fields: [ACTIVE_FIELD] })
+    @wire(getRecord, { recordId: '$threadid', fields: [ACTIVE_FIELD, CREATED_BY_FIELD, FIRSTNAME_FIELD, LASTNAME_FIELD, CREATED_DATE] })
     wiredThread;
+
+    get firstname() {
+        return getFieldValue(this.wiredThread.data, FIRSTNAME_FIELD);
+    }
+    get lastname() {
+        return getFieldValue(this.wiredThread.data, LASTNAME_FIELD);
+    }
+    get createddate() {
+        return getFieldValue(this.wiredThread.data, CREATED_DATE);
+    }
 
     @wire(getmessages, { threadId: '$threadid' }) //Calls apex and extracts messages related to this record
     wiremessages(result) {
@@ -83,11 +98,12 @@ export default class messagingThreadViewer extends LightningElement {
     //If empty, stop submitting.
     handlesubmit(event) {
         event.preventDefault();
+        console.log(JSON.stringify(event));
         const textInput = event.detail.fields;
         // If messagefield is empty, stop the submit
         textInput.CRM_Thread__c = this.thread.Id;
         textInput.CRM_From_User__c = userId;
-      
+
         if (textInput.CRM_Message_Text__c == null || textInput.CRM_Message_Text__c == '') {
             const event1 = new ShowToastEvent({
                 title: 'Message Body missing',
@@ -96,6 +112,7 @@ export default class messagingThreadViewer extends LightningElement {
             });
             this.dispatchEvent(event1);
         } else {
+            console.log('Submit');
             this.template.querySelector('lightning-record-edit-form').submit(textInput);
         }
     }

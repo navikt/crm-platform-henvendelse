@@ -80,6 +80,7 @@ export default class nksQuickText extends LightningElement {
         }
 
         if (evt.key === 'Enter' || (queryTerm.length > 2 && this.loadingData == false)) {
+            evt.stopPropagation();
             this.loadingData = true;
             searchRecords({
                 search: queryTerm
