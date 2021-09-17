@@ -45,7 +45,7 @@ public class CRM_HenvendelseinfoRestService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() +
             '/services/apexrest/henvendelseinfo/henvendelse/' +
-            convNoteId;
+            CRM_HenvendelseApiUtils.convertReference(convNoteId);
         req.headers.put('X-Correlation-ID', '123TEST');
         req.httpMethod = 'GET';
         RestContext.request = req;
@@ -68,7 +68,7 @@ public class CRM_HenvendelseinfoRestService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() +
             '/services/apexrest/henvendelseinfo/henvendelse/' +
-            threadId;
+            CRM_HenvendelseApiUtils.convertReference(threadId);
         req.headers.put('X-Correlation-ID', '123TEST');
         req.httpMethod = 'GET';
         RestContext.request = req;
@@ -91,7 +91,7 @@ public class CRM_HenvendelseinfoRestService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() +
             '/services/apexrest/henvendelseinfo/henvendelse/' +
-            account;
+            CRM_HenvendelseApiUtils.convertReference(account);
         req.headers.put('X-Correlation-ID', '123TEST');
         req.httpMethod = 'GET';
         RestContext.request = req;
@@ -112,7 +112,7 @@ public class CRM_HenvendelseinfoRestService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() +
             '/services/apexrest/henvendelseinfo/henvendelse/' +
-            'INVALID';
+            CRM_HenvendelseApiUtils.convertReference('INVALID');
         req.headers.put('X-Correlation-ID', '123TEST');
         req.httpMethod = 'GET';
         RestContext.request = req;
@@ -135,7 +135,7 @@ public class CRM_HenvendelseinfoRestService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() +
             '/services/apexrest/henvendelseinfo/henvendelse/' +
-            threadId;
+            CRM_HenvendelseApiUtils.convertReference(threadId);
         req.headers.put('X-Correlation-ID', '123TEST');
         req.httpMethod = 'GET';
         RestContext.request = req;

@@ -99,6 +99,26 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
         return getRequestHeader('X-ACTING-NAV-IDENT');
     }
 
+    /**
+     * @description: Henvendelse API Exposes internal references as HEX converts. This allows for decoding for incoming requests
+     * @author Stian Ruud Schikora | 09-16-2021
+     * @param referenceId
+     * @return String
+     **/
+    public static String decodeReference(String referenceId) {
+        return EncodingUtil.convertFromHex(referenceId).toString();
+    }
+
+    /**
+     * @description: Utility method to convert internal references to HEX
+     * @author Stian Ruud Schikora | 09-16-2021
+     * @param referenceId
+     * @return String
+     **/
+    public static String convertReference(String referenceId) {
+        return EncodingUtil.convertToHex(Blob.valueOf(referenceId));
+    }
+
     public class HenvendelseConversionException extends exception {
     }
 }
