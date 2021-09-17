@@ -37,7 +37,11 @@
                     class="slds-modal__content slds-var-p-horizontal_small slds-is-relative slds-var-p-vertical_x-small"
                     id="modal-content-id-1"
                 >
-                    <lightning-spinner size="small" if:true={loadingData}></lightning-spinner>
+                    <lightning-spinner
+                        size="small"
+                        if:true={loadingData}
+                        alternative-text="Loading..."
+                    ></lightning-spinner>
                     <div if:true={data} class="slds-text-title_caps">{numberOfRows} resultater</div>
                     <ul>
                         <lightning-layout multiple-rows="true" pull-to-boundary="small">
