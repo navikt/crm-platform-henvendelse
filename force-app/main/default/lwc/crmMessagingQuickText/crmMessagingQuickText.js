@@ -106,6 +106,14 @@ export default class nksQuickText extends LightningElement {
     hideModal(event) {
         this.template.querySelector('[data-id="modal"]').className = 'modalHide';
     }
+    @api isopen() {
+        if (this.template.querySelector('[data-id="modal"]').className == 'modalShow') {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
     insertText(event) {
         const editor = this.template.querySelector('.conversationNoteTextArea');
