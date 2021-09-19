@@ -290,7 +290,7 @@
                 }
             }
         },
-        "/henvendelseinfo/henvendelse": {
+        "/henvendelseinfo/henvendelse/{kjedeId}": {
             "get": {
                 "tags": ["Henvendelse Info"],
                 "description": "Returnerer informasjon for en gitt henvendelse",
