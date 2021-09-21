@@ -12,6 +12,3 @@
 .panel {
     overflow: auto;
 }
-.host {
-    --sds-c-textarea-color-background: purple;
-}
