@@ -75,7 +75,7 @@ export default class nksQuickText extends LightningElement {
 
     handleKeyUp(evt) {
         const queryTerm = evt.target.value;
-        if (evt.key.length > 1 && evt.key !== 'Enter') {
+        if (evt.key.length > 1 && evt.key !== 'Enter' && evt.key !== 'Backspace') {
             return;
         }
 
