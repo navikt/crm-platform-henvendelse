@@ -12,3 +12,6 @@
 .panel {
     overflow: auto;
 }
+.infocontainer {
+    margin-top: 2em;
+}
