@@ -127,13 +127,13 @@
                 "description": "Endepunkt som benyttes for lukking av en meldingskjede. Når kjeden er lukket er det ikke lenger mulig å skrive flere meldinger.",
                 "parameters": [
                     {
-                        "name": "henvId",
+                        "name": "kjedeId",
                         "in": "query",
                         "required": true,
                         "schema": {
                             "type": "string"
                         },
-                        "description": "Unik id til meldingstråden som skal lukkes"
+                        "description": "Unik kjedeId til meldingstråden som skal lukkes"
                     },
                     {
                         "$ref": "#/components/parameters/X-Correlation-ID"
@@ -182,7 +182,15 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Henvendelse"
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/BadRequest"
@@ -229,7 +237,15 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Henvendelse"
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/BadRequest"
