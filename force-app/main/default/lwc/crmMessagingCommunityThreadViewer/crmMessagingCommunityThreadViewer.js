@@ -8,8 +8,9 @@ import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import createmsg from '@salesforce/apex/CRM_MessageHelper.createMessage';
 
 import THREADNAME_FIELD from '@salesforce/schema/Thread__c.Name';
+import THREADCLOSEDDATE_FIELD from '@salesforce/schema/Thread__c.CRM_Closed_Date__c';
 
-const fields = [THREADNAME_FIELD]; //Extract the name of the thread record
+const fields = [THREADNAME_FIELD, THREADCLOSEDDATE_FIELD]; //Extract the name of the thread record
 
 export default class CommityThreadViewer extends LightningElement {
     _mySendForSplitting;
@@ -18,9 +19,11 @@ export default class CommityThreadViewer extends LightningElement {
     @api recordId;
     @track msgVal;
     userContactId;
+    thread;
+    @api alerttext;
 
     connectedCallback() {
-        markasread({ threadId: this.recordId });
+
         getContactId({})
             .then((contactId) => {
                 this.userContactId = contactId;
@@ -31,10 +34,16 @@ export default class CommityThreadViewer extends LightningElement {
     }
 
     @wire(getRecord, { recordId: '$recordId', fields })
-    thread;
+    wirethread(result) {
+        this.thread = result;
+    }
+
+
     get name() {
         return getFieldValue(this.thread.data, THREADNAME_FIELD);
     }
+
+
 
     @wire(getmessages, { threadId: '$recordId' }) //Calls apex and extracts messages related to this record
     wiremessages(result) {
@@ -44,6 +53,14 @@ export default class CommityThreadViewer extends LightningElement {
         } else if (result.data) {
             this.messages = result.data;
             this.showspinner = false;
+        }
+    }
+    get isclosed() {
+        if (getFieldValue(this.thread.data, THREADCLOSEDDATE_FIELD)) {
+            return true;
+        }
+        else {
+            return false;
         }
     }
     /**
