@@ -6,7 +6,9 @@ public class CRM_ConversationNoteSelector_Test {
             new Person__c(Name = '12345678910', INT_ActorId__c = '123456789121314')
         );
         Account acc = (Account) CRM_HENV_TestDataFactory.createRecord(new Account(CRM_Person__c = person.Id));
-        CRM_HENV_TestDataFactory.createRecord(new Conversation_Note__c(CRM_Account__c = acc.Id));
+        CRM_HENV_TestDataFactory.createRecord(
+            new Conversation_Note__c(CRM_Account__c = acc.Id, CRM_Henvendelse_BehandlingsId__c = '123TEST')
+        );
     }
 
     @isTest
