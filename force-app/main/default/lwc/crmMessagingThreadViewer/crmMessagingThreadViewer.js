@@ -24,16 +24,21 @@ export default class messagingThreadViewer extends LightningElement {
     threadid;
     messages = [];
     text;
+    showspinner = false;
     //Constructor, called onload
     connectedCallback() {
         if (this.thread) {
             this.threadid = this.thread.Id;
         }
         this.handleSubscribe();
+        this.scrolltobottom();
     }
 
     disconnectedCallback() {
         this.handleUnsubscribe();
+    }
+    renderedCallback() {
+        this.scrolltobottom();
     }
 
     //Handles subscription to streaming API for listening to changes to auth status
@@ -97,7 +102,9 @@ export default class messagingThreadViewer extends LightningElement {
     }
     //If empty, stop submitting.
     handlesubmit(event) {
+
         event.preventDefault();
+        this.showspinner = true;
         if (!this.template.querySelector('c-crm-messaging-quick-text').isopen()) {
             const textInput = event.detail.fields;
             // If messagefield is empty, stop the submit
@@ -112,7 +119,6 @@ export default class messagingThreadViewer extends LightningElement {
                 });
                 this.dispatchEvent(event1);
             } else {
-                console.log('Submit');
                 this.template.querySelector('lightning-record-edit-form').submit(textInput);
             }
         }
@@ -152,9 +158,19 @@ export default class messagingThreadViewer extends LightningElement {
                 field.reset();
             });
         }
+        //this.showspinner = false;
+        this.showspinner = false;
         this.refreshMessages();
     }
 
+    scrolltobottom() {
+        var element = this.template.querySelector('.slds-box');
+        if (element) {
+            element.scrollTop = element.scrollHeight;
+        }
+
+
+    }
     refreshMessages() {
         return refreshApex(this._mySendForSplitting);
 

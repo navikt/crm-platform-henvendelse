@@ -437,6 +437,15 @@ public class CRM_HENV_TestDataFactory {
             //No dml fields
         }
     }
+    public static List<QuickText> createQuickTexts(Integer amount) {
+        List<QuickText> quickTexts = new List<QuickText>();
+        for (Integer i = 0; i < amount; i++) {
+            QuickText qt = new QuickText(Name = 'Test ' + i, Message = 'Dette er en melding');
+            quickTexts.add(qt);
+        }
+        insert quickTexts;
+        return quickTexts;
+    }
 
     public class QuickTextDefaults implements FieldDefaults {
         public Map<String, Object> getFieldDefaults() {
