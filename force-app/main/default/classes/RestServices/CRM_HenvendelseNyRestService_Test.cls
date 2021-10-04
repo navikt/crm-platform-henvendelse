@@ -1,5 +1,5 @@
 @isTest
-public class CRM_HenvendelseNyRestService_Test {
+public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
     @TestSetup
     static void makeData() {
         CRM_HENV_TestDataFactory.createRecord(new Person__c(INT_ActorId__c = '123456789101112'));
@@ -37,7 +37,10 @@ public class CRM_HenvendelseNyRestService_Test {
     static void testNewFollowUpConversationNote() {
         Person__c person = [SELECT Id, CRM_Account__c FROM Person__c LIMIT 1];
         Conversation_Note__c firstNote = (Conversation_Note__c) CRM_HENV_TestDataFactory.createRecord(
-            new Conversation_Note__c(CRM_Account__c = person.CRM_Account__c)
+            new Conversation_Note__c(
+                CRM_Account__c = person.CRM_Account__c,
+                CRM_Henvendelse_BehandlingskjedeId__c = '123TEST'
+            )
         );
         RestRequest req = new RestRequest();
         RestResponse resp = new RestResponse();
@@ -50,9 +53,8 @@ public class CRM_HenvendelseNyRestService_Test {
         convNoteReq.fritekst = 'REFERAT NUMBER 2';
 
         req.requestURI =
-            Url.getSalesforceBaseUrl().toExternalForm() +
-            '/services/apexrest/henvendelse/ny/samtalereferat?kjedeId=' +
-            firstNote.Id;
+            Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/samtalereferat';
+        req.addParameter('kjedeId', convertReference('123TEST'));
         req.httpMethod = 'POST';
         req.headers.put('X-Correlation-ID', '123RANDOM');
         req.requestBody = Blob.valueOf(JSON.serialize(convNoteReq));
@@ -63,7 +65,10 @@ public class CRM_HenvendelseNyRestService_Test {
         CRM_HenvendelseNyRestService.createHenvendelse();
         Test.stopTest();
 
-        System.assertEquals(2, [SELECT COUNT() FROM Conversation_Note__c]);
+        System.assertEquals(
+            2,
+            [SELECT COUNT() FROM Conversation_Note__c WHERE CRM_Henvendelse_BehandlingskjedeId__c = '123TEST']
+        );
     }
 
     @isTest
@@ -201,7 +206,7 @@ public class CRM_HenvendelseNyRestService_Test {
 
         req.requestURI = Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/melding';
         req.httpMethod = 'POST';
-        req.addParameter('kjedeId', thread.Id);
+        req.addParameter('kjedeId', convertReference((String) thread.Id));
         req.headers.put('X-Correlation-ID', '123RANDOM');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
         req.requestBody = Blob.valueOf(JSON.serialize(messageReq));
@@ -262,7 +267,7 @@ public class CRM_HenvendelseNyRestService_Test {
 
         req.requestURI = Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/melding';
         req.httpMethod = 'POST';
-        req.addParameter('kjedeId', thread.Id);
+        req.addParameter('kjedeId', convertReference((String) thread.Id));
         req.headers.put('X-Correlation-ID', '123RANDOM');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
         req.requestBody = Blob.valueOf(JSON.serialize(messageReq));
@@ -293,7 +298,7 @@ public class CRM_HenvendelseNyRestService_Test {
 
         req.requestURI = Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/melding';
         req.httpMethod = 'POST';
-        req.addParameter('kjedeId', fakeThreadId);
+        req.addParameter('kjedeId', convertReference(fakeThreadId));
         req.headers.put('X-Correlation-ID', '123RANDOM');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
         req.requestBody = Blob.valueOf(JSON.serialize(messageReq));
@@ -314,7 +319,7 @@ public class CRM_HenvendelseNyRestService_Test {
 
         req.requestURI = Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/melding';
         req.httpMethod = 'POST';
-        req.addParameter('kjedeId', 'fakeThreadId');
+        req.addParameter('kjedeId', convertReference('fakeThreadId'));
         req.headers.put('X-Correlation-ID', '123RANDOM');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
         req.requestBody = Blob.valueOf(JSON.serialize('[]'));
@@ -343,7 +348,7 @@ public class CRM_HenvendelseNyRestService_Test {
 
         req.requestURI = Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/melding';
         req.httpMethod = 'POST';
-        req.addParameter('kjedeId', thread.Id);
+        req.addParameter('kjedeId', convertReference((String) thread.Id));
         req.headers.put('X-Correlation-ID', '123RANDOM');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
         req.requestBody = Blob.valueOf(JSON.serialize(messageReq));

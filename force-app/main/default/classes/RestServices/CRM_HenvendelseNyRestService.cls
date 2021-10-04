@@ -18,7 +18,8 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
 
         try {
             HENVENDELSE_TYPE henvType = getHenvendelseType(getLastPathParameter());
-            String kjedeId = getRequestParam('kjedeId');
+            String encodedKjedeId = getRequestParam('kjedeId');
+            String kjedeId = String.isNotBlank(encodedKjedeId) ? decodeReference(encodedKjedeId) : null; //API exposes encoded internal ID that needs to be decoded
 
             switch on henvType {
                 when SAMTALEREFERAT {
@@ -53,7 +54,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
 
         try {
             insert newNote;
-            setResponse(200, newNote.Id);
+            setResponse(200, JSON.serializePretty(new CRM_ConversationNoteSelector().selectById(newNote.Id)));
         } catch (DmlException dmlEx) {
             errorResponse(500, 'Insertion failed: ' + dmlEx.getMessage());
             logger.error(
@@ -72,7 +73,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
 
         try {
             insert newMessage;
-            setResponse(200, newMessage.CRM_Thread__c); //Returns the ID of the thread
+            setResponse(200, JSON.serializePretty(new CRM_ThreadSelector().selectById(newMessage.CRM_Thread__c))); //Returns the ID of the thread
         } catch (DmlException dmlEx) {
             errorResponse(500, 'Insertion failed: ' + dmlEx.getMessage());
             logger.error(
@@ -117,8 +118,9 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
 
         if (String.isNotBlank(kjedeId)) {
             //Validate if the conversation note chain exists
-            Conversation_Note__c chainStarter = new CRM_ConversationNoteSelector().selectById(kjedeId);
-            if (chainStarter == null) {
+            List<Conversation_Note__c> convNoteChain = new CRM_ConversationNoteSelector()
+                .selectByBehandlingskjedeId(kjedeId);
+            if (convNoteChain.size() == 0) {
                 errorResponse(404, 'Conversation note chain does not exists: ' + kjedeId);
                 return null;
             } else {
