@@ -20,7 +20,7 @@
     </div>
     <!-- Header Stop-->
     <!-- Messages Start-->
-    <section role="log" class="slds-box slds-scrollable_y" style="height: 30em">
+    <section role="log" id="scroller" class="slds-box scroller slds-scrollable_y" style="height: 30em">
         <template for:each={messages} for:item="message">
             <c-crm-messaging-Message-Container message={message} key={message.Id}></c-crm-messaging-Message-Container>
         </template>
@@ -51,21 +51,15 @@
                             </lightning-layout>
                         </lightning-layout-item>
                         <!-- Avslutt samtalen -->
-                        <lightning-layout-item size="4">
-                            <!--<lightning-layout horizontal-align="end">
-                                <lightning-record-edit-form record-id={threadid} object-api-name="Thread__c">
-                                    <lightning-button
-                                        variant="destructive"
-                                        label="Avslutt Samtale"
-                                        disabled={closedThread}
-                                        onclick={closeThread}
-                                    >
-                                    </lightning-button>
-                                </lightning-record-edit-form>
-                            </lightning-layout>-->
-                        </lightning-layout-item>
+                        <lightning-layout-item size="4"> </lightning-layout-item>
                     </lightning-layout>
                 </div>
+                <h2>{showspinnner}</h2>
+                <template if:true={showspinner}>
+                    <div class="spinnerholder">
+                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                    </div>
+                </template>
                 <c-crm-messaging-quick-text
                     oncommentschange={handleConversationNoteChange}
                     conversation-note={conversationNote}
