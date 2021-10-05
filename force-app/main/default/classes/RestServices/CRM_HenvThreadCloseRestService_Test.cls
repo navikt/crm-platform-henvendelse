@@ -7,14 +7,14 @@ public class CRM_HenvThreadCloseRestService_Test {
 
     @isTest
     static void testThreadClose() {
-        Thread__c thread = [SELECT Id FROM Thread__c LIMIT 1];
+        Thread__c thread = [SELECT Id, CRM_API_Reference__c FROM Thread__c LIMIT 1];
 
         RestRequest req = new RestRequest();
         RestResponse resp = new RestResponse();
 
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/meldingskjede/lukk';
-        req.addParameter('kjedeId', CRM_HenvendelseApiUtils.convertReference((String) thread.Id));
+        req.addParameter('kjedeId', thread.CRM_API_Reference__c);
         req.httpMethod = 'POST';
         req.headers.put('X-Correlation-ID', '123TEST');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
@@ -30,14 +30,14 @@ public class CRM_HenvThreadCloseRestService_Test {
 
     @isTest
     static void testDmlException() {
-        Thread__c thread = [SELECT Id FROM Thread__c LIMIT 1];
+        Thread__c thread = [SELECT Id, CRM_API_Reference__c FROM Thread__c LIMIT 1];
 
         RestRequest req = new RestRequest();
         RestResponse resp = new RestResponse();
 
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/meldingskjede/lukk';
-        req.addParameter('kjedeId', CRM_HenvendelseApiUtils.convertReference((String) thread.Id));
+        req.addParameter('kjedeId', thread.CRM_API_Reference__c);
         req.httpMethod = 'POST';
         req.headers.put('X-Correlation-ID', '123TEST');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
@@ -54,14 +54,14 @@ public class CRM_HenvThreadCloseRestService_Test {
 
     @isTest
     static void testGenericExceoption() {
-        Thread__c thread = [SELECT Id FROM Thread__c LIMIT 1];
+        Thread__c thread = [SELECT Id, CRM_API_Reference__c FROM Thread__c LIMIT 1];
 
         RestRequest req = new RestRequest();
         RestResponse resp = new RestResponse();
 
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/meldingskjede/lukk';
-        req.addParameter('kjedeId', CRM_HenvendelseApiUtils.convertReference((String) thread.Id));
+        req.addParameter('kjedeId', thread.CRM_API_Reference__c);
         req.httpMethod = 'POST';
         req.headers.put('X-Correlation-ID', '123TEST');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');

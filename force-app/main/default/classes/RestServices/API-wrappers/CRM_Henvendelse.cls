@@ -55,7 +55,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         this.opprinneligEnhet = convNote.CRM_Original_Person_NAV_Unit__c;
         this.opprettetDato = gmtFormatDateTime(convNote.CRM_Registered_Datetime_Formula__c);
         this.avsluttetDato = this.opprettetDato;
-        this.kjedeId = convertReference(convNote.CRM_Henvendelse_BehandlingskjedeId__c);
+        this.kjedeId = convNote.CRM_Henvendelse_BehandlingskjedeId__c;
         this.henvendelseType = HENVENDELSE_TYPE.SAMTALEREFERAT.name();
 
         this.meldinger = new List<CRM_Melding>();
@@ -99,7 +99,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
      * @param jeList
      **/
     global CRM_Henvendelse(Thread__c thread, List<Message__c> messages, List<Journal_Entry__c> jeList) {
-        this.kjedeId = convertReference((String) thread.Id);
+        this.kjedeId = thread.CRM_API_Reference__c;
         this.henvendelseId = thread.CRM_HenvendelseId__c;
         this.fnr = thread.CRM_External_Person_Ident__c;
         this.aktorId = thread.CRM_External_ActorId__c;

@@ -10,14 +10,12 @@ global without sharing class CRM_HenvendelseinfoRestService extends CRM_Henvende
         String correlationId = getXCorrelation();
         logger.apiTransaction(correlationId, RestContext.request, CRM_ApplicationDomain.Domain.NKS);
         try {
-            String encodedHenvId = getLastPathParameter();
-            Id henvId = (Id) decodeReference(encodedHenvId);
-
-            String objectName = henvId.getSobjectType().getDescribe().getName();
+            String apiReference = getLastPathParameter();
+            String objectName = CRM_ReferenceUtil.getObjectNameFromIdPrefix(apiReference.substring(0, 3));
 
             switch on objectName {
                 when 'Thread__c' {
-                    Thread__c thread = new CRM_ThreadSelector().selectById(henvId);
+                    Thread__c thread = new CRM_ThreadSelector().selectByApiReference(apiReference);
                     setResponse(
                         200,
                         JSON.serializePretty(new CRM_Henvendelse(thread, thread.Messages__r, thread.Journal_Entries__r))
@@ -25,16 +23,14 @@ global without sharing class CRM_HenvendelseinfoRestService extends CRM_Henvende
                 }
                 when 'Conversation_Note__c' {
                     List<Conversation_Note__c> noteList = new CRM_ConversationNoteSelector()
-                        .selectByBehandlingskjedeId(henvId);
+                        .selectByBehandlingskjedeId(apiReference);
                     setResponse(200, JSON.serializePretty(new CRM_Henvendelse(noteList)));
                 }
                 when else {
-                    errorResponse(400, 'Invalid reference value for henv/thread ID: ' + henvId);
+                    errorResponse(400, 'Invalid reference value for henv/thread ID: ' + apiReference);
                 }
             }
             logger.publish();
-        } catch (StringException stringEx) {
-            errorResponse(400, 'Invalid ID: ' + stringEx.getMessage());
         } catch (Exception ex) {
             errorResponse(500, 'Exception: ' + ex.getMessage());
             logger.error('Exception: ' + ex.getMessage(), null, CRM_ApplicationDomain.Domain.NKS, correlationId);

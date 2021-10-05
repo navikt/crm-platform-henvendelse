@@ -19,7 +19,8 @@ public inherited sharing class CRM_ConversationNoteSelector extends CRM_ApiSelec
         'CRM_Communication_Channel__c',
         'CRM_Created_By_NAV_Unit__c',
         'CRM_Original_Person_GT__c',
-        'CRM_Original_Person_NAV_Unit__c'
+        'CRM_Original_Person_NAV_Unit__c',
+        'CRM_API_Reference__c'
     };
 
     public List<Schema.SObjectField> getSObjectFieldList() {
@@ -36,12 +37,18 @@ public inherited sharing class CRM_ConversationNoteSelector extends CRM_ApiSelec
         return (Conversation_Note__c) Database.query(query.toSOQL());
     }
 
+    public Conversation_Note__c selectByApiReference(String apiReference) {
+        fflib_QueryFactory query = newQueryFactory();
+        query.selectFields(QUERY_FIELDS).setCondition('CRM_API_Reference__c=: apiReference');
+        return (Conversation_Note__c) Database.query(query.toSOQL());
+    }
+
     public List<Conversation_Note__c> selectByActorId(Set<String> actorIds) {
         fflib_QueryFactory query = newQueryFactory();
         query
             .selectFields(QUERY_FIELDS)
             .setCondition(
-                'CRM_Account__r.CRM_Person__r.INT_ActorId__c in :actorIds AND CRM_Henvendelse_BehandlingsId__c != null'
+                'CRM_Account__r.CRM_Person__r.INT_ActorId__c in :actorIds AND CRM_Henvendelse_BehandlingskjedeId__c != null'
             )
             .setOrdering('CRM_Registered_Datetime_Formula__c', fflib_QueryFactory.SortOrder.DESCENDING);
         //Adds the Journal entry selector query as a relationship query to the Conversation Note query
