@@ -98,7 +98,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_Journal_Entry</targetReference>
+            <targetReference>DML_Check</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -277,17 +277,10 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Necessary_Record_Info.CRM_Journal_Status__c</assignToReference>
+            <assignToReference>JOURNALED_THREAD.CRM_Journal_Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Journal Completed</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Necessary_Record_Info.CRM_isActive__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
             </value>
         </assignmentItems>
         <connector>
@@ -307,7 +300,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Necessary_Record_Info.CRM_Journal_Status__c</assignToReference>
+            <assignToReference>JOURNALED_THREAD.CRM_Journal_Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Journal Error</stringValue>
@@ -342,6 +335,29 @@
             <label>Success</label>
         </rules>
     </decisions>
+    <decisions>
+        <description>Decision to determine if the dml should be performed directly in the flow or handled by a parent calling this.</description>
+        <name>DML_Check</name>
+        <label>DML Check</label>
+        <locationX>182</locationX>
+        <locationY>1574</locationY>
+        <defaultConnectorLabel>No DML</defaultConnectorLabel>
+        <rules>
+            <name>Do_DML</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>PERFORM_DML</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Journal_Entry</targetReference>
+            </connector>
+            <label>Do DML</label>
+        </rules>
+    </decisions>
     <formulas>
         <description>Formula to define the journal case type (Sakstype). If no Journal Case ID has been input, default is GENERELL_SAK</description>
         <name>Journal_Case_Type</name>
@@ -352,7 +368,7 @@
         <description>Defines the journal post type depending on if the dialogue was initiated by NAV or the end user</description>
         <name>JOURNAL_POST_TYPE</name>
         <dataType>String</dataType>
-        <expression>IF({!Get_Necessary_Record_Info.CRM_From_External__c} == true,
+        <expression>IF({!JOURNALED_THREAD.CRM_From_External__c} == true,
 &apos;INNGAAENDE&apos;,
 &apos;UTGAAENDE&apos;
 )</expression>
@@ -399,7 +415,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Necessary_Record_Info.CRM_External_Actor_Account_ID__c</elementReference>
+                <elementReference>JOURNALED_THREAD.CRM_External_Actor_Account_ID__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -424,15 +440,18 @@
                 <elementReference>Journal_Entry_SF.CRM_Thread__c</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Thread__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputReference>JOURNALED_THREAD</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>CRM_External_Actor_Account_ID__c</queriedFields>
+        <queriedFields>CRM_From_External__c</queriedFields>
+        <queriedFields>CRM_Journal_Status__c</queriedFields>
     </recordLookups>
     <recordUpdates>
         <name>Update_Journal_Entry</name>
         <label>Update Journal Entry</label>
-        <locationX>182</locationX>
-        <locationY>1574</locationY>
+        <locationX>50</locationX>
+        <locationY>1694</locationY>
         <connector>
             <targetReference>Update_Thread</targetReference>
         </connector>
@@ -441,9 +460,9 @@
     <recordUpdates>
         <name>Update_Thread</name>
         <label>Update Thread</label>
-        <locationX>182</locationX>
-        <locationY>1694</locationY>
-        <inputReference>Get_Necessary_Record_Info</inputReference>
+        <locationX>50</locationX>
+        <locationY>1814</locationY>
+        <inputReference>JOURNALED_THREAD</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
@@ -500,10 +519,37 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>JOURNALED_THREAD</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Thread__c</objectType>
+    </variables>
+    <variables>
         <name>PDF_DOCUMENT</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Input to determine if this flow should perform the DML to update relevant records after callout or if this should be handled outside the flow.</description>
+        <name>PERFORM_DML</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>true</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>THREAD_TO_JOURNAL</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Thread__c</objectType>
     </variables>
 </Flow>
