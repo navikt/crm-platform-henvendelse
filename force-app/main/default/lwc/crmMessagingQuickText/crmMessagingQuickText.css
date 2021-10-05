@@ -6,3 +6,6 @@
 .modalHide {
     display: none;
 }
+.conversationNoteTextArea {
+    border: 0;
+}
