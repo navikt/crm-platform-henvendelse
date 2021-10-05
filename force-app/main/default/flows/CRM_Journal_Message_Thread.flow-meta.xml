@@ -497,7 +497,7 @@
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>false</isOutput>
+        <isOutput>true</isOutput>
         <objectType>Journal_Entry__c</objectType>
     </variables>
     <variables>
