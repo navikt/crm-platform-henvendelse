@@ -16,12 +16,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Message__c.CRM_From_User__c</field>
+        <field>Message__c.CRM_From_Label__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Message__c.CRM_From_Label__c</field>
+        <field>Message__c.CRM_From_User__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -30,7 +30,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Message__c.CRM_Message_Text__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -56,12 +56,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Thread__c.CRM_From__c</field>
+        <field>Thread__c.CRM_Contact__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Thread__c.CRM_Contact__c</field>
+        <field>Thread__c.CRM_From__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
