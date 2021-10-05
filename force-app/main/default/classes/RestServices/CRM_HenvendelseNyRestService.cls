@@ -18,8 +18,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
 
         try {
             HENVENDELSE_TYPE henvType = getHenvendelseType(getLastPathParameter());
-            String encodedKjedeId = getRequestParam('kjedeId');
-            String kjedeId = String.isNotBlank(encodedKjedeId) ? decodeReference(encodedKjedeId) : null; //API exposes encoded internal ID that needs to be decoded
+            String kjedeId = getRequestParam('kjedeId');
 
             switch on henvType {
                 when SAMTALEREFERAT {
@@ -54,7 +53,12 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
 
         try {
             insert newNote;
-            setResponse(200, JSON.serializePretty(new CRM_ConversationNoteSelector().selectById(newNote.Id)));
+            setResponse(
+                200,
+                JSON.serializePretty(
+                    new CRM_Henvendelse(new CRM_ConversationNoteSelector().selectById(newNote.Id), null)
+                )
+            );
         } catch (DmlException dmlEx) {
             errorResponse(500, 'Insertion failed: ' + dmlEx.getMessage());
             logger.error(
@@ -73,7 +77,13 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
 
         try {
             insert newMessage;
-            setResponse(200, JSON.serializePretty(new CRM_ThreadSelector().selectById(newMessage.CRM_Thread__c))); //Returns the ID of the thread
+            Thread__c updatedThread = new CRM_ThreadSelector().selectById(newMessage.CRM_Thread__c);
+            setResponse(
+                200,
+                JSON.serializePretty(
+                    new CRM_Henvendelse(updatedThread, updatedThread.Messages__r, updatedThread.Journal_Entries__r)
+                )
+            );
         } catch (DmlException dmlEx) {
             errorResponse(500, 'Insertion failed: ' + dmlEx.getMessage());
             logger.error(
@@ -150,10 +160,10 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
      * a valid Message__c record is returned, else null
      * @author Stian Ruud Schikora | 07-08-2021
      * @param req
-     * @param threadId
+     * @param apiRef [Unique reference defined in CRM_API_Reference__c]
      * @return Message__c
      **/
-    private static Message__c validateNewMessage(String req, String threadId) {
+    private static Message__c validateNewMessage(String req, String apiRef) {
         NewMessageRequest messageRequest;
         Message__c newMessage = new Message__c();
         String actingNavIdent = getActingNavIdent();
@@ -171,10 +181,10 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
             return null;
         }
 
-        if (String.isNotBlank(threadId)) {
+        if (String.isNotBlank(apiRef)) {
             //Validate if the thread is open and existing
             try {
-                Thread__c thread = new CRM_ThreadSelector().selectById(threadId);
+                Thread__c thread = new CRM_ThreadSelector().selectByApiReference(apiRef);
                 if (thread.CRM_isActive__c == false) {
                     errorResponse(403, 'Cannot insert new message on closed thread');
                     return null;

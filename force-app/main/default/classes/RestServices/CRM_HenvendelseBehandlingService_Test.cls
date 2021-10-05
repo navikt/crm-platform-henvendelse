@@ -1,5 +1,8 @@
 @isTest
 public class CRM_HenvendelseBehandlingService_Test {
+    private static final String THREAD_PREFIX = Thread__c.getSObjectType().getDescribe().getKeyPrefix();
+    private static final String CONV_NOTE_PREFIX = Conversation_Note__c.getSObjectType().getDescribe().getKeyPrefix();
+
     @TestSetup
     static void makeData() {
         CRM_HENV_TestDataFactory.createRecord(
@@ -8,9 +11,9 @@ public class CRM_HenvendelseBehandlingService_Test {
     }
     @isTest
     static void testSetDisposalDateThread() {
-        Thread__c thread = (Thread__c) CRM_HENV_TestDataFactory.createRecord(
-            new Thread__c(CRM_Office_Restriction__c = true)
-        );
+        CRM_HENV_TestDataFactory.createRecord(new Thread__c(CRM_Office_Restriction__c = true));
+
+        Thread__c thread = [SELECT Id, CRM_API_Reference__c FROM Thread__c LIMIT 1];
 
         CRM_Henvendelse henv = new CRM_Henvendelse();
         henv.kasseringsDato = String.valueOfGmt(Datetime.now());
@@ -21,7 +24,7 @@ public class CRM_HenvendelseBehandlingService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() +
             '/services/apexrest/henvendelse/behandling/' +
-            CRM_HenvendelseApiUtils.convertReference((String) thread.Id);
+            thread.CRM_API_Reference__c;
         req.httpMethod = 'PATCH';
         req.headers.put('X-Correlation-ID', '123TEST');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
@@ -45,7 +48,8 @@ public class CRM_HenvendelseBehandlingService_Test {
 
     @isTest
     static void testChangeThemeGroupThread() {
-        Thread__c thread = (Thread__c) CRM_HENV_TestDataFactory.createRecord(new Thread__c());
+        CRM_HENV_TestDataFactory.createRecord(new Thread__c());
+        Thread__c thread = [SELECT Id, CRM_API_Reference__c FROM Thread__c LIMIT 1];
 
         CRM_Henvendelse henv = new CRM_Henvendelse();
         henv.gjeldendeTemagruppe = 'ARBD';
@@ -56,7 +60,7 @@ public class CRM_HenvendelseBehandlingService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() +
             '/services/apexrest/henvendelse/behandling/' +
-            CRM_HenvendelseApiUtils.convertReference((String) thread.Id);
+            thread.CRM_API_Reference__c;
         req.httpMethod = 'PATCH';
         req.headers.put('X-Correlation-ID', '123TEST');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
@@ -77,7 +81,8 @@ public class CRM_HenvendelseBehandlingService_Test {
 
     @isTest
     static void testInvalidThemeGroupChange() {
-        Thread__c thread = (Thread__c) CRM_HENV_TestDataFactory.createRecord(new Thread__c());
+        CRM_HENV_TestDataFactory.createRecord(new Thread__c());
+        Thread__c thread = [SELECT Id, CRM_API_Reference__c FROM Thread__c LIMIT 1];
 
         CRM_Henvendelse henv = new CRM_Henvendelse();
         henv.gjeldendeTemagruppe = 'INVALID';
@@ -88,7 +93,7 @@ public class CRM_HenvendelseBehandlingService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() +
             '/services/apexrest/henvendelse/behandling/' +
-            CRM_HenvendelseApiUtils.convertReference((String) thread.Id);
+            thread.CRM_API_Reference__c;
         req.httpMethod = 'PATCH';
         req.headers.put('X-Correlation-ID', '123TEST');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
@@ -105,7 +110,8 @@ public class CRM_HenvendelseBehandlingService_Test {
 
     @isTest
     static void testDmlException() {
-        Thread__c thread = (Thread__c) CRM_HENV_TestDataFactory.createRecord(new Thread__c());
+        CRM_HENV_TestDataFactory.createRecord(new Thread__c());
+        Thread__c thread = [SELECT Id, CRM_API_Reference__c FROM Thread__c LIMIT 1];
 
         CRM_Henvendelse henv = new CRM_Henvendelse();
         henv.gjeldendeTemagruppe = 'ARBD';
@@ -116,7 +122,7 @@ public class CRM_HenvendelseBehandlingService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() +
             '/services/apexrest/henvendelse/behandling/' +
-            CRM_HenvendelseApiUtils.convertReference((String) thread.Id);
+            thread.CRM_API_Reference__c;
         req.httpMethod = 'PATCH';
         req.headers.put('X-Correlation-ID', '123TEST');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
@@ -134,7 +140,8 @@ public class CRM_HenvendelseBehandlingService_Test {
 
     @isTest
     static void testGenericException() {
-        Thread__c thread = (Thread__c) CRM_HENV_TestDataFactory.createRecord(new Thread__c());
+        CRM_HENV_TestDataFactory.createRecord(new Thread__c());
+        Thread__c thread = [SELECT Id, CRM_API_Reference__c FROM Thread__c LIMIT 1];
 
         CRM_Henvendelse henv = new CRM_Henvendelse();
         henv.gjeldendeTemagruppe = 'ARBD';
@@ -145,7 +152,7 @@ public class CRM_HenvendelseBehandlingService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() +
             '/services/apexrest/henvendelse/behandling/' +
-            CRM_HenvendelseApiUtils.convertReference((String) thread.Id);
+            thread.CRM_API_Reference__c;
         req.httpMethod = 'PATCH';
         req.headers.put('X-Correlation-ID', '123TEST');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
@@ -174,7 +181,7 @@ public class CRM_HenvendelseBehandlingService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() +
             '/services/apexrest/henvendelse/behandling/' +
-            CRM_HenvendelseApiUtils.convertReference('INVALIDID');
+            'INVALIDID';
         req.httpMethod = 'PATCH';
         req.headers.put('X-Correlation-ID', '123TEST');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
@@ -191,10 +198,9 @@ public class CRM_HenvendelseBehandlingService_Test {
 
     @isTest
     static void testSetDisposalDateConvNote() {
-        Conversation_Note__c convNote = (Conversation_Note__c) CRM_HENV_TestDataFactory.createRecord(
-            new Conversation_Note__c()
-        );
+        CRM_HENV_TestDataFactory.createRecord(new Conversation_Note__c());
 
+        Conversation_Note__c convNote = [SELECT Id, CRM_API_Reference__c FROM Conversation_Note__c LIMIT 1];
         CRM_Henvendelse henv = new CRM_Henvendelse();
         henv.kasseringsDato = String.valueOfGmt(Datetime.now());
 
@@ -204,7 +210,7 @@ public class CRM_HenvendelseBehandlingService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() +
             '/services/apexrest/henvendelse/behandling/' +
-            CRM_HenvendelseApiUtils.convertReference((String) convNote.Id);
+            convNote.CRM_API_Reference__c;
         req.httpMethod = 'PATCH';
         req.headers.put('X-Correlation-ID', '123TEST');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');

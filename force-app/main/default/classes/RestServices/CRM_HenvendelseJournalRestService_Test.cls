@@ -10,14 +10,14 @@ public class CRM_HenvendelseJournalRestService_Test {
 
     @isTest
     static void testConvNoteJournal() {
-        Conversation_Note__c convNote = [SELECT Id FROM Conversation_Note__c LIMIT 1];
+        Conversation_Note__c convNote = [SELECT Id, CRM_API_Reference__c FROM Conversation_Note__c LIMIT 1];
         ApiMock.setTestMock('POST_CREATE_JOURNAL', 200, 'OK');
 
         CRM_HenvendelseJournalRestService.HenvendelseJournalRequest journalReq = new CRM_HenvendelseJournalRestService.HenvendelseJournalRequest();
         journalReq.journalforendeEnhet = '4100';
         journalReq.saksId = '123CASE';
         journalReq.temakode = 'DAG;';
-        journalReq.kjedeId = convNote.Id;
+        journalReq.kjedeId = convNote.CRM_API_Reference__c;
 
         RestRequest restReq = new RestRequest();
         restReq.headers.put('X-Correlation-ID', '123RANDOM');
@@ -41,14 +41,14 @@ public class CRM_HenvendelseJournalRestService_Test {
 
     @isTest
     static void testThreadJournal() {
-        Thread__c thread = [SELECT Id FROM Thread__c LIMIT 1];
+        Thread__c thread = [SELECT Id, CRM_API_Reference__c FROM Thread__c LIMIT 1];
         ApiMock.setTestMock('POST_CREATE_JOURNAL', 200, 'OK');
 
         CRM_HenvendelseJournalRestService.HenvendelseJournalRequest journalReq = new CRM_HenvendelseJournalRestService.HenvendelseJournalRequest();
         journalReq.journalforendeEnhet = '4100';
         journalReq.saksId = '123CASE';
         journalReq.temakode = 'DAG;';
-        journalReq.kjedeId = thread.Id;
+        journalReq.kjedeId = thread.CRM_API_Reference__c;
 
         RestRequest restReq = new RestRequest();
         restReq.headers.put('X-Correlation-ID', '123RANDOM');

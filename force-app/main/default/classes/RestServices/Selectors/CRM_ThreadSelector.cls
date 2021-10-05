@@ -23,7 +23,8 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
             Thread__c.CRM_External_ActorId__c,
             Thread__c.CRM_External_Person_Ident__c,
             Thread__c.CRM_Original_Person_GT__c,
-            Thread__c.CRM_Original_Person_NAV_Unit__c
+            Thread__c.CRM_Original_Person_NAV_Unit__c,
+            Thread__c.CRM_API_Reference__c
         };
     }
 
@@ -34,6 +35,12 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
     public Thread__c selectById(Id id) {
         fflib_QueryFactory query = newQueryFactory();
         query.setCondition('Id =: id').setLimit(1);
+        return (Thread__c) Database.query(query.toSOQL());
+    }
+
+    public Thread__c selectByApiReference(String apiRef) {
+        fflib_QueryFactory query = newQueryFactory();
+        query.setCondition('CRM_API_Reference__c =: apiRef').setLimit(1);
         return (Thread__c) Database.query(query.toSOQL());
     }
 

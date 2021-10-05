@@ -16,15 +16,14 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
                 request.requestBody.toString(),
                 CRM_Henvendelse.class
             );
-            String encodedHenvId = getLastPathParameter();
-            Id henvId = (Id) decodeReference(encodedHenvId); //API exposes encoded internal ID that needs to be decoded
-
-            String objectName = henvId.getSobjectType().getDescribe().getName();
+            String apiReference = getLastPathParameter();
+            String objectName = CRM_ReferenceUtil.getObjectNameFromIdPrefix(apiReference.substring(0, 3));
 
             switch on objectName {
                 when 'Thread__c' {
+                    Thread__c threadFromDb = new CRM_ThreadSelector().selectByApiReference(apiReference);
                     Thread__c thread = convertToThread(req);
-                    thread.Id = henvId;
+                    thread.Id = threadFromDb.Id;
                     thread.CRM_Last_Edited_By__c = navIdent; //Removes the fields that the calling part do not have access to update
                     SObjectAccessDecision decision = Security.stripInaccessible(
                         AccessType.UPDATABLE,
@@ -33,11 +32,13 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
                     );
                     update decision.getRecords();
                     if (Test.isRunningTest())
-                        update thread; //Security strips the access from the system user, adding direct dml to verify the mapping and data update in test context
+                        update thread; //Security strips the access from the system user, adding direct dml to verify the mapping and data update in test context*/
                 }
                 when 'Conversation_Note__c' {
+                    Conversation_Note__c convNoteFromDb = new CRM_ConversationNoteSelector()
+                        .selectByApiReference(apiReference);
                     Conversation_Note__c convNote = convertToConvNote(req);
-                    convNote.Id = henvId;
+                    convNote.Id = convNoteFromDb.Id;
                     convNote.CRM_Last_Edited_By__c = navIdent;
                     SObjectAccessDecision decision = Security.stripInaccessible(
                         AccessType.UPDATABLE,
@@ -50,7 +51,9 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
                         update convNote; //Security strips the access from the system user, adding direct dml to verify the mapping and data update in test context
                 }
                 when else {
-                    errorResponse(400, 'Invalid reference value for henv/thread ID: ' + henvId);
+                    errorResponse(400, 'Invalid reference value for henv/thread ID: ' + apiReference);
+                    logger.publish();
+                    return;
                 }
             }
             setResponse(200, 'OK');
@@ -67,8 +70,6 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
                     correlationId
                 );
             }
-        } catch (StringException stringEx) {
-            errorResponse(400, 'Invalid ID: ' + stringEx.getMessage());
         } catch (HenvendelseConversionException conversionEx) {
             errorResponse(400, conversionEx.getMessage());
         } catch (Exception ex) {

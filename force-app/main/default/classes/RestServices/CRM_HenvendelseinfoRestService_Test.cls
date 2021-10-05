@@ -1,5 +1,8 @@
 @isTest
 public class CRM_HenvendelseinfoRestService_Test {
+    private static final String THREAD_PREFIX = Thread__c.getSObjectType().getDescribe().getKeyPrefix();
+    private static final String CONV_NOTE_PREFIX = Conversation_Note__c.getSObjectType().getDescribe().getKeyPrefix();
+
     @TestSetup
     static void makeData() {
         Person__c dummyPerson = (Person__c) CRM_HENV_TestDataFactory.createRecord(
@@ -11,14 +14,14 @@ public class CRM_HenvendelseinfoRestService_Test {
         Conversation_Note__c convNote = (Conversation_Note__c) CRM_HENV_TestDataFactory.createRecord(
             new Conversation_Note__c(
                 CRM_Account__c = personCon.AccountId,
-                CRM_Henvendelse_BehandlingskjedeId__c = '1234TEST'
+                CRM_Henvendelse_BehandlingskjedeId__c = CONV_NOTE_PREFIX + '1234TEST'
             )
         );
         //Adding a follow up note to the test data
         CRM_HENV_TestDataFactory.createRecord(
             new Conversation_Note__c(
                 CRM_Account__c = personCon.AccountId,
-                CRM_Henvendelse_BehandlingskjedeId__c = '1234TEST'
+                CRM_Henvendelse_BehandlingskjedeId__c = CONV_NOTE_PREFIX + '1234TEST'
             )
         );
         Thread__c thread = (Thread__c) CRM_HENV_TestDataFactory.createRecord(
@@ -37,7 +40,7 @@ public class CRM_HenvendelseinfoRestService_Test {
 
     @isTest
     static void testGetConversationNote() {
-        String convNoteId = [SELECT Id FROM Conversation_Note__c LIMIT 1].Id;
+        String convNoteRef = [SELECT Id, CRM_API_Reference__c FROM Conversation_Note__c LIMIT 1].CRM_API_Reference__c;
 
         RestRequest req = new RestRequest();
         RestResponse resp = new RestResponse();
@@ -45,7 +48,7 @@ public class CRM_HenvendelseinfoRestService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() +
             '/services/apexrest/henvendelseinfo/henvendelse/' +
-            CRM_HenvendelseApiUtils.convertReference(convNoteId);
+            convNoteRef;
         req.headers.put('X-Correlation-ID', '123TEST');
         req.httpMethod = 'GET';
         RestContext.request = req;
@@ -60,7 +63,7 @@ public class CRM_HenvendelseinfoRestService_Test {
 
     @isTest
     static void testGetThread() {
-        String threadId = [SELECT Id FROM Thread__c LIMIT 1].Id;
+        String threadRef = [SELECT Id, CRM_API_Reference__c FROM Thread__c LIMIT 1].CRM_API_Reference__c;
 
         RestRequest req = new RestRequest();
         RestResponse resp = new RestResponse();
@@ -68,7 +71,7 @@ public class CRM_HenvendelseinfoRestService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() +
             '/services/apexrest/henvendelseinfo/henvendelse/' +
-            CRM_HenvendelseApiUtils.convertReference(threadId);
+            threadRef;
         req.headers.put('X-Correlation-ID', '123TEST');
         req.httpMethod = 'GET';
         RestContext.request = req;
@@ -83,7 +86,7 @@ public class CRM_HenvendelseinfoRestService_Test {
 
     @isTest
     static void testInvalidObjextId() {
-        String account = [SELECT Id FROM Account LIMIT 1].Id;
+        String accountRef = [SELECT Id FROM Account LIMIT 1].Id;
 
         RestRequest req = new RestRequest();
         RestResponse resp = new RestResponse();
@@ -91,7 +94,7 @@ public class CRM_HenvendelseinfoRestService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() +
             '/services/apexrest/henvendelseinfo/henvendelse/' +
-            CRM_HenvendelseApiUtils.convertReference(account);
+            accountRef;
         req.headers.put('X-Correlation-ID', '123TEST');
         req.httpMethod = 'GET';
         RestContext.request = req;
@@ -112,7 +115,7 @@ public class CRM_HenvendelseinfoRestService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() +
             '/services/apexrest/henvendelseinfo/henvendelse/' +
-            CRM_HenvendelseApiUtils.convertReference('INVALID');
+            'INVALID';
         req.headers.put('X-Correlation-ID', '123TEST');
         req.httpMethod = 'GET';
         RestContext.request = req;
@@ -127,7 +130,7 @@ public class CRM_HenvendelseinfoRestService_Test {
 
     @isTest
     static void testException() {
-        String threadId = [SELECT Id FROM Thread__c LIMIT 1].Id;
+        String threadRef = [SELECT Id, CRM_API_Reference__c FROM Thread__c LIMIT 1].CRM_API_Reference__c;
 
         RestRequest req = new RestRequest();
         RestResponse resp = new RestResponse();
@@ -135,7 +138,7 @@ public class CRM_HenvendelseinfoRestService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() +
             '/services/apexrest/henvendelseinfo/henvendelse/' +
-            CRM_HenvendelseApiUtils.convertReference(threadId);
+            threadRef;
         req.headers.put('X-Correlation-ID', '123TEST');
         req.httpMethod = 'GET';
         RestContext.request = req;

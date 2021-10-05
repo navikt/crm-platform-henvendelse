@@ -11,30 +11,22 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
         logger.apiTransaction(correlationId, RestContext.request, CRM_ApplicationDomain.Domain.NKS);
 
         try {
-            Id henvId = (Id) request.kjedeId;
-
-            String objectType = henvId.getSobjectType().getDescribe().getName();
-            Map<String, Object> flowInputs = new Map<String, Object>{
-                'recordId' => request.kjedeId,
-                'Journal_Case_ID' => request.saksId,
-                'Journal_Theme_Code' => request.temakode,
-                'Journal_Entry_Unit' => request.journalforendeEnhet,
-                'Journal_Entry_NAV_Ident' => getActingNavIdent()
-            };
+            String apiReference = request.kjedeId;
+            String objectType = CRM_ReferenceUtil.getObjectNameFromIdPrefix(apiReference.substring(0, 3));
 
             switch on objectType {
                 when 'Conversation_Note__c' {
-                    initiateJournalFlow('CRM_Journal_Conversation_Note', JSON.serialize(flowInputs));
+                    doConversationNoteJournal(apiReference, request);
                     setResponse(200);
                 }
                 when 'Thread__c' {
-                    initiateJournalFlow('CRM_Thread_Create_Journal_Entry', JSON.serialize(flowInputs));
+                    doThreadJournal(apiReference, request);
                     setResponse(200);
                 }
                 when else {
-                    errorResponse(400, 'No journal flow defined for ID: ' + henvId);
+                    errorResponse(400, 'No journal flow defined for ID: ' + apiReference);
                     logger.error(
-                        'No journal flow defined for ID: ' + henvId,
+                        'No journal flow defined for ID: ' + apiReference,
                         null,
                         CRM_ApplicationDomain.Domain.NKS,
                         correlationId
@@ -43,15 +35,42 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
             }
             logger.publish();
             return;
-        } catch (StringException stringEx) {
-            errorResponse(400, 'Invalid ID: ' + stringEx.getMessage());
-            logger.error('Invalid ID: ' + stringEx.getMessage(), null, CRM_ApplicationDomain.Domain.NKS, correlationId);
         } catch (Exception ex) {
             errorResponse(500, ex.getMessage());
             logger.error(ex.getMessage(), null, CRM_ApplicationDomain.Domain.NKS, correlationId);
         } finally {
             logger.publish();
         }
+    }
+
+    private static void doConversationNoteJournal(String apiReference, HenvendelseJournalRequest request) {
+        List<Conversation_Note__c> noteList = new CRM_ConversationNoteSelector()
+            .selectByBehandlingskjedeId(apiReference);
+
+        for (Conversation_Note__c convNote : noteList) {
+            Map<String, Object> flowInputs = new Map<String, Object>{
+                'recordId' => convNote.Id,
+                'Journal_Case_ID' => request.saksId,
+                'Journal_Theme_Code' => request.temakode,
+                'Journal_Entry_Unit' => request.journalforendeEnhet,
+                'Journal_Entry_NAV_Ident' => getActingNavIdent()
+            };
+            initiateJournalFlow('CRM_Journal_Conversation_Note', JSON.serialize(flowInputs));
+        }
+    }
+
+    private static void doThreadJournal(String apiReference, HenvendelseJournalRequest request) {
+        Thread__c thread = new CRM_ThreadSelector().selectByApiReference(apiReference);
+
+        Map<String, Object> flowInputs = new Map<String, Object>{
+            'recordId' => thread.Id,
+            'Journal_Case_ID' => request.saksId,
+            'Journal_Theme_Code' => request.temakode,
+            'Journal_Entry_Unit' => request.journalforendeEnhet,
+            'Journal_Entry_NAV_Ident' => getActingNavIdent()
+        };
+
+        initiateJournalFlow('CRM_Thread_Create_Journal_Entry', JSON.serialize(flowInputs));
     }
 
     private static void initiateJournalFlow(String flowName, String inputParams) {

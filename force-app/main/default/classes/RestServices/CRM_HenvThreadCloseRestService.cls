@@ -11,17 +11,16 @@ global without sharing class CRM_HenvThreadCloseRestService extends CRM_Henvende
 
         correlationId = getXCorrelation();
         logger.apiTransaction(correlationId, RestContext.request, CRM_ApplicationDomain.Domain.NKS);
-        String encodedKjedeId = getRequestParam('kjedeId');
-        String threadId = decodeReference(encodedKjedeId);
+        String apiReference = getRequestParam('kjedeId');
 
         try {
-            Thread__c thread = new CRM_ThreadSelector().selectById(threadId);
+            Thread__c thread = new CRM_ThreadSelector().selectByApiReference(apiReference);
             if (thread != null) {
                 thread.CRM_isActive__c = false;
                 update thread;
                 setResponse(200, 'OK');
             } else {
-                errorResponse(404, 'No henvendelse found with reference: ' + encodedKjedeId);
+                errorResponse(404, 'No henvendelse found with reference: ' + apiReference);
             }
         } catch (DmlException dmlEx) {
             errorResponse(500, 'Failed to close thread: ' + dmlEx.getMessage());
