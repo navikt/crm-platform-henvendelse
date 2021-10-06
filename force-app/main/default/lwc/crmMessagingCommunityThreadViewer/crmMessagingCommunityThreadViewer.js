@@ -21,6 +21,9 @@ export default class CommityThreadViewer extends LightningElement {
     userContactId;
     thread;
     @api alerttext;
+    @api header;
+    @api secondheader;
+    @api alertopen;
 
     connectedCallback() {
 
@@ -37,7 +40,12 @@ export default class CommityThreadViewer extends LightningElement {
     wirethread(result) {
         this.thread = result;
     }
-
+    get showopenwarning() {
+        if (this.alertopen) {
+            return true;
+        }
+        return false;
+    }
 
     get name() {
         return getFieldValue(this.thread.data, THREADNAME_FIELD);

@@ -1,5 +1,6 @@
 .message-from {
     margin-right: 0.5em;
+    font-weight: bolder;
 }
 
 .message-text {
@@ -13,5 +14,4 @@
     margin-top: 1em;
 }
 .timestamp {
-    font-size: 0.8em;
 }
