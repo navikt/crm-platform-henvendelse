@@ -1,7 +1,7 @@
 <template>
     <div class="decorator-wrapper">
         <div class="header" style="text-align: center">
-            <h1 class="typo-sidetittel">{name}</h1>
+            <h1 class="typo-sidetittel">{header}</h1>
         </div>
         <template for:each={messages} for:item="message">
             <c-crm-messaging-Community-Message-Container
@@ -46,6 +46,13 @@
                                     </button>
                                 </div>
                             </div>
+                            <template if:true={showopenwarning}>
+                                <c-crm-community-alert-stripe
+                                    class="alertbox closebox"
+                                    type="info"
+                                    alerttext={alertopen}
+                                ></c-crm-community-alert-stripe>
+                            </template>
                         </div>
 
                         <lightning-input-field

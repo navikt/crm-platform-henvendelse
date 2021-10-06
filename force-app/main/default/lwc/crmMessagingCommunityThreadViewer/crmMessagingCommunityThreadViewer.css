@@ -15,3 +15,7 @@
 .infocontainer {
     margin-top: 2em;
 }
+.closebox {
+    margin-top: 6em;
+    display: block;
+}
