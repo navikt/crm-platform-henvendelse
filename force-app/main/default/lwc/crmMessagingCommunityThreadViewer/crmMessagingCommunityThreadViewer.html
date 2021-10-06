@@ -1,7 +1,7 @@
 <template>
     <div class="decorator-wrapper">
         <div class="header" style="text-align: center">
-            <h1 class="typo-sidetittel">{header}</h1>
+            <span class="typo-sidetittel">{name}</span>
         </div>
         <template for:each={messages} for:item="message">
             <c-crm-messaging-Community-Message-Container
