@@ -4,7 +4,7 @@
         <name>Generate_Document</name>
         <label>Generate Document</label>
         <locationX>182</locationX>
-        <locationY>398</locationY>
+        <locationY>638</locationY>
         <actionName>CRM_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -33,7 +33,7 @@
         <name>Post_Journal_Request</name>
         <label>Post Journal Request</label>
         <locationX>182</locationX>
-        <locationY>998</locationY>
+        <locationY>1238</locationY>
         <actionName>CRM_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -66,7 +66,7 @@
         <name>Assign_Journal_Documents</name>
         <label>Assign Journal Documents</label>
         <locationX>182</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>Journal_Documents.dokumentvarianter</assignToReference>
             <operator>Add</operator>
@@ -89,7 +89,7 @@
         <name>Assign_Journal_Entry_Default_data</name>
         <label>Assign Journal Entry Default data</label>
         <locationX>182</locationX>
-        <locationY>1574</locationY>
+        <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.CRM_Created_By_Ident__c</assignToReference>
             <operator>Assign</operator>
@@ -118,8 +118,15 @@
                 <elementReference>Get_SF_Theme_Common_Code.Id</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Entry_SF.CRM_NAV_Case_Legacy_System__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Journal_Case_Legacy_System</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
-            <targetReference>Create_Journal_Entry</targetReference>
+            <targetReference>DML_Check</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -127,7 +134,7 @@
         <name>Document_Variant_Assignment</name>
         <label>Document Variant Assignment</label>
         <locationX>182</locationX>
-        <locationY>518</locationY>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>Document_Variant_PDF.filtype</assignToReference>
             <operator>Assign</operator>
@@ -158,7 +165,7 @@
         <name>Journal_Request_Assignment</name>
         <label>Journal Request Assignment</label>
         <locationX>182</locationX>
-        <locationY>878</locationY>
+        <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>Journal_Request.tittel</assignToReference>
             <operator>Assign</operator>
@@ -259,7 +266,7 @@
         <name>Journal_Sak_Assignment</name>
         <label>Journal Sak Assignment</label>
         <locationX>182</locationX>
-        <locationY>758</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>Journal_Sak.fagsakId</assignToReference>
             <operator>Assign</operator>
@@ -274,6 +281,13 @@
                 <elementReference>Journal_Case_Type</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Sak.fagsaksystem</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Journal_Case_Legacy_System</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Journal_Request_Assignment</targetReference>
         </connector>
@@ -282,7 +296,7 @@
         <name>Set_Post_Completed</name>
         <label>Set Post Completed</label>
         <locationX>50</locationX>
-        <locationY>1238</locationY>
+        <locationY>1478</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -298,7 +312,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Necessary_Record_Info.CRM_Journal_Status__c</assignToReference>
+            <assignToReference>JOURNALED_CONV_NOTE.CRM_Journal_Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Journal Completed</stringValue>
@@ -312,7 +326,7 @@
         <name>Set_Post_Failed</name>
         <label>Set Post Failed</label>
         <locationX>314</locationX>
-        <locationY>1238</locationY>
+        <locationY>1478</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -321,7 +335,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Necessary_Record_Info.CRM_Journal_Status__c</assignToReference>
+            <assignToReference>JOURNALED_CONV_NOTE.CRM_Journal_Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Journal Error</stringValue>
@@ -332,10 +346,33 @@
         </connector>
     </assignments>
     <decisions>
+        <description>Verify if a journal entry already exists for the inputs</description>
+        <name>Check_Journal_Entries</name>
+        <label>Check Journal Entries</label>
+        <locationX>380</locationX>
+        <locationY>278</locationY>
+        <defaultConnectorLabel>Entry Exists</defaultConnectorLabel>
+        <rules>
+            <name>Entry_Exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Existing_Journal_Entry</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Necessary_Record_Info</targetReference>
+            </connector>
+            <label>New Entry</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Post_State</name>
         <label>Check Post State</label>
         <locationX>182</locationX>
-        <locationY>1118</locationY>
+        <locationY>1358</locationY>
         <defaultConnector>
             <targetReference>Set_Post_Failed</targetReference>
         </defaultConnector>
@@ -354,6 +391,29 @@
                 <targetReference>Set_Post_Completed</targetReference>
             </connector>
             <label>Success</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Decision to determine if the dml should be performed directly in the flow or handled by a parent calling this.</description>
+        <name>DML_Check</name>
+        <label>DML Check</label>
+        <locationX>182</locationX>
+        <locationY>1934</locationY>
+        <defaultConnectorLabel>No DML</defaultConnectorLabel>
+        <rules>
+            <name>Do_DML</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>PERFORM_DML</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Journal_Entry</targetReference>
+            </connector>
+            <label>Do DML</label>
         </rules>
     </decisions>
     <description>Automatic journal initiation for the conversation note object.</description>
@@ -394,8 +454,8 @@
         <description>Inserts a journal entry record. If post failed the entry status is set to failed and should be handled in asynchronous retry</description>
         <name>Create_Journal_Entry</name>
         <label>Create Journal Entry</label>
-        <locationX>182</locationX>
-        <locationY>1694</locationY>
+        <locationX>50</locationX>
+        <locationY>2054</locationY>
         <connector>
             <targetReference>Update_Conversation_Note</targetReference>
         </connector>
@@ -406,7 +466,7 @@
         <name>Get_Account_Info</name>
         <label>Get Account Info</label>
         <locationX>182</locationX>
-        <locationY>278</locationY>
+        <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Generate_Document</targetReference>
@@ -416,7 +476,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Necessary_Record_Info.CRM_Account__c</elementReference>
+                <elementReference>JOURNALED_CONV_NOTE.CRM_Account__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -424,11 +484,46 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Existing_Journal_Entries</name>
+        <label>Get Existing Journal Entries</label>
+        <locationX>380</locationX>
+        <locationY>158</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Journal_Entries</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CRM_Theme_Code__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Journal_Theme_Code</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>CRM_Conversation_Note__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>NAV_Case_Reference__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Journal_Case_ID</elementReference>
+            </value>
+        </filters>
+        <object>Journal_Entry__c</object>
+        <outputReference>Existing_Journal_Entry</outputReference>
+        <queriedFields>Id</queriedFields>
+    </recordLookups>
+    <recordLookups>
         <description>Query the info needed from record and relations to submit a journal entry</description>
         <name>Get_Necessary_Record_Info</name>
         <label>Get Necessary Record Info</label>
         <locationX>182</locationX>
-        <locationY>158</locationY>
+        <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Account_Info</targetReference>
@@ -441,15 +536,16 @@
                 <elementReference>recordId</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Conversation_Note__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputReference>JOURNALED_CONV_NOTE</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>CRM_Account__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_SF_Theme_Common_Code</name>
         <label>Get SF Theme Common Code</label>
         <locationX>182</locationX>
-        <locationY>1454</locationY>
+        <locationY>1694</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_Journal_Entry_Default_data</targetReference>
@@ -478,16 +574,16 @@
         <description>Updates field on the conversation note to reflect the journal state</description>
         <name>Update_Conversation_Note</name>
         <label>Update Conversation Note</label>
-        <locationX>182</locationX>
-        <locationY>1814</locationY>
-        <inputReference>Get_Necessary_Record_Info</inputReference>
+        <locationX>50</locationX>
+        <locationY>2174</locationY>
+        <inputReference>JOURNALED_CONV_NOTE</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
-        <locationX>56</locationX>
+        <locationX>254</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Necessary_Record_Info</targetReference>
+            <targetReference>Get_Existing_Journal_Entries</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -501,8 +597,25 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <description>Logical record variable to check if a journal entry already exists for this combination.</description>
+        <name>Existing_Journal_Entry</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Journal_Entry__c</objectType>
+    </variables>
+    <variables>
         <description>Unique reference to the case in NAVs fagsystem that the journal post should relate to.</description>
         <name>Journal_Case_ID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Required variable for journal post in the Dokarkiv API.</description>
+        <name>Journal_Case_Legacy_System</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
@@ -531,7 +644,7 @@
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>false</isOutput>
+        <isOutput>true</isOutput>
         <objectType>Journal_Entry__c</objectType>
     </variables>
     <variables>
@@ -577,11 +690,30 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>JOURNALED_CONV_NOTE</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Conversation_Note__c</objectType>
+    </variables>
+    <variables>
         <name>PDF_DOCUMENT</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>By default the flow performs the DML to update the records. To handle callout exceptions when handling multiple posts, this can be set to false and handled in parent.</description>
+        <name>PERFORM_DML</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>true</booleanValue>
+        </value>
     </variables>
     <variables>
         <description>Id of the record triggering the journal flow</description>

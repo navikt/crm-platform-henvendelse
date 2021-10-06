@@ -8,7 +8,7 @@
         <actionName>CRM_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Document_Variant_Assignment</targetReference>
+            <targetReference>Validate_Subtheme</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -33,7 +33,7 @@
         <name>Post_Journal_Request</name>
         <label>Post Journal Request</label>
         <locationX>182</locationX>
-        <locationY>998</locationY>
+        <locationY>1334</locationY>
         <actionName>CRM_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -66,7 +66,7 @@
         <name>Assign_Journal_Documents</name>
         <label>Assign Journal Documents</label>
         <locationX>182</locationX>
-        <locationY>638</locationY>
+        <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>Journal_Documents.dokumentvarianter</assignToReference>
             <operator>Add</operator>
@@ -89,7 +89,7 @@
         <name>Assign_Journal_Entry_Default_data</name>
         <label>Assign Journal Entry Default data</label>
         <locationX>182</locationX>
-        <locationY>1454</locationY>
+        <locationY>1790</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.CRM_Journal_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -106,7 +106,7 @@
         <name>Document_Variant_Assignment</name>
         <label>Document Variant Assignment</label>
         <locationX>182</locationX>
-        <locationY>518</locationY>
+        <locationY>854</locationY>
         <assignmentItems>
             <assignToReference>Document_Variant_PDF.filtype</assignToReference>
             <operator>Assign</operator>
@@ -137,7 +137,7 @@
         <name>Journal_Request_Assignment</name>
         <label>Journal Request Assignment</label>
         <locationX>182</locationX>
-        <locationY>878</locationY>
+        <locationY>1214</locationY>
         <assignmentItems>
             <assignToReference>Journal_Request.tittel</assignToReference>
             <operator>Assign</operator>
@@ -226,7 +226,7 @@
             <assignToReference>Journal_Request.behandlingstema</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Journal_Entry_SF.CRM_Subtheme_Code__c</elementReference>
+                <elementReference>Journal_Entry_SF.Subtheme__r.CRM_Code__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -238,7 +238,7 @@
         <name>Journal_Sak_Assignment</name>
         <label>Journal Sak Assignment</label>
         <locationX>182</locationX>
-        <locationY>758</locationY>
+        <locationY>1094</locationY>
         <assignmentItems>
             <assignToReference>Journal_Sak.fagsakId</assignToReference>
             <operator>Assign</operator>
@@ -253,15 +253,35 @@
                 <elementReference>Journal_Case_Type</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Sak.fagsaksystem</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Journal_Entry_SF.CRM_NAV_Case_Legacy_System__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Journal_Request_Assignment</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Journal_Subtheme_Null</name>
+        <label>Set Journal Subtheme Null</label>
+        <locationX>270</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>Journal_Entry_SF.Subtheme__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>Document_Variant_Assignment</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_Post_Completed</name>
         <label>Set Post Completed</label>
         <locationX>50</locationX>
-        <locationY>1238</locationY>
+        <locationY>1574</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -291,7 +311,7 @@
         <name>Set_Post_Failed</name>
         <label>Set Post Failed</label>
         <locationX>314</locationX>
-        <locationY>1238</locationY>
+        <locationY>1574</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -314,7 +334,7 @@
         <name>Check_Post_State</name>
         <label>Check Post State</label>
         <locationX>182</locationX>
-        <locationY>1118</locationY>
+        <locationY>1454</locationY>
         <defaultConnector>
             <targetReference>Set_Post_Failed</targetReference>
         </defaultConnector>
@@ -340,7 +360,7 @@
         <name>DML_Check</name>
         <label>DML Check</label>
         <locationX>182</locationX>
-        <locationY>1574</locationY>
+        <locationY>1910</locationY>
         <defaultConnectorLabel>No DML</defaultConnectorLabel>
         <rules>
             <name>Do_DML</name>
@@ -356,6 +376,32 @@
                 <targetReference>Update_Journal_Entry</targetReference>
             </connector>
             <label>Do DML</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if the subtheme has been set for the journal entry from the parent calling the flow. If not this is strictly set to null</description>
+        <name>Validate_Subtheme</name>
+        <label>Validate Subtheme</label>
+        <locationX>182</locationX>
+        <locationY>518</locationY>
+        <defaultConnector>
+            <targetReference>Set_Journal_Subtheme_Null</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Subtheme Not Set</defaultConnectorLabel>
+        <rules>
+            <name>Subtheme_Was_Set</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Journal_Entry_SF.Subtheme__c</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Document_Variant_Assignment</targetReference>
+            </connector>
+            <label>Subtheme Was Set</label>
         </rules>
     </decisions>
     <formulas>
@@ -451,7 +497,7 @@
         <name>Update_Journal_Entry</name>
         <label>Update Journal Entry</label>
         <locationX>50</locationX>
-        <locationY>1694</locationY>
+        <locationY>2030</locationY>
         <connector>
             <targetReference>Update_Thread</targetReference>
         </connector>
@@ -461,7 +507,7 @@
         <name>Update_Thread</name>
         <label>Update Thread</label>
         <locationX>50</locationX>
-        <locationY>1814</locationY>
+        <locationY>2150</locationY>
         <inputReference>JOURNALED_THREAD</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
