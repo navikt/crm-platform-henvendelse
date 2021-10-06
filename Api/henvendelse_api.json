@@ -6,6 +6,7 @@
     },
     "servers": [
         { "url": "https://sf-henvendelse.dev.intern.nav.no/api" },
+        { "url": "https://sf-henvendelse.intern.nav.no/api" },
         { "url": "https://test.salesforce.com/services/apexrest" }
     ],
     "paths": {
@@ -357,7 +358,7 @@
                     "markeringstype": {
                         "type": "string",
                         "enum": ["FEILSENDT", "KONTORSPERRE"],
-                        "example": "FEILSENDT"
+                        "example": "KONTORSPERRE"
                     },
                     "markertDato": {
                         "type": "string",
@@ -368,32 +369,15 @@
                         "type": "string",
                         "description": "NAV ident til veileder/saksbehandler som har markert henvendelsen",
                         "example": "Z999999"
-                    }
-                },
-                "required": ["markeringstype", "markertDato", "markertAv"]
-            },
-            "Kontorsperremarkering": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/Markering"
-                    }
-                ],
-                "type": "object",
-                "description": "Klasse som arver den generiske modellen til Markering og utvidet med kontorsperreinformasjon",
-                "properties": {
-                    "markeringstype": {
-                        "type": "string",
-                        "enum": ["KONTORSPERRE"],
-                        "example": "KONTORSPERRE"
                     },
                     "kontorsperreEnhet": {
                         "type": "string",
-                        "description": "Enheten henvendelsen er kontorsperret til",
+                        "description": "Enheten henvendelsen er kontorsperret til. Kun definert hvis markeringstype = KONTORSPERRE",
                         "example": "3410"
                     },
                     "kontorsperreGT": {
                         "type": "string",
-                        "description": "GT henvendelsen er kontorsperret til",
+                        "description": "GT henvendelsen er kontorsperret til. Kun definert hvis markeringstype = KONTORSPERRE",
                         "example": "3410"
                     }
                 },

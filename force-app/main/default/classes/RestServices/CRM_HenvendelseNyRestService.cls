@@ -56,7 +56,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
             setResponse(
                 200,
                 JSON.serializePretty(
-                    new CRM_Henvendelse(new CRM_ConversationNoteSelector().selectById(newNote.Id), null)
+                    new CRM_Henvendelse(new CRM_ConversationNoteSelector().selectByBehandlingskjedeId(kjedeId))
                 )
             );
         } catch (DmlException dmlEx) {
