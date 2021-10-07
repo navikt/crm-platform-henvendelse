@@ -14,6 +14,7 @@
     max-width: 80%;
     float: right;
     background-color: #cce1ff !important;
+    min-width: fit-content;
 }
 .Person-Icon {
     height: 3em;
