@@ -9,9 +9,12 @@
 .snakkeboble-panel {
     display: block;
     max-width: 80%;
+    min-width: fit-content;
 }
 .ikon {
+    display: block;
     margin-top: 1em;
+    min-width: 25px;
 }
 .timestamp {
 }

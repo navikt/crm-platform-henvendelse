@@ -48,6 +48,7 @@ export default class CommityThreadViewer extends LightningElement {
     }
 
     get name() {
+        console.log(getFieldValue(this.thread.data, THREADNAME_FIELD));
         return getFieldValue(this.thread.data, THREADNAME_FIELD);
     }
 
@@ -64,7 +65,7 @@ export default class CommityThreadViewer extends LightningElement {
         }
     }
     get isclosed() {
-        if (getFieldValue(this.thread.data, THREADCLOSEDDATE_FIELD)) {
+        if (getFieldValue(this.thread)) {
             return true;
         }
         else {

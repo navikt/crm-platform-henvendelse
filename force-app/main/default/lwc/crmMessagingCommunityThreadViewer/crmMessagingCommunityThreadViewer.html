@@ -65,15 +65,15 @@
                     </lightning-layout-item>
                 </lightning-layout>
             </template>
-            <template if:true={isclosed}>
-                <div class="infocontainer">
-                    <c-crm-community-alert-stripe
-                        class="alertbox"
-                        type="info"
-                        alerttext={alerttext}
-                    ></c-crm-community-alert-stripe>
-                </div>
-            </template>
         </div>
+        <template if:true={isclosed}>
+            <div class="infocontainer">
+                <c-crm-community-alert-stripe
+                    class="alertbox"
+                    type="info"
+                    alerttext={alerttext}
+                ></c-crm-community-alert-stripe>
+            </div>
+        </template>
     </div>
 </template>
