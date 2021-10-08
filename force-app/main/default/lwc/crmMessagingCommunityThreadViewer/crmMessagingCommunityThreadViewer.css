@@ -1,4 +1,6 @@
 .decorator-wrapper {
+}
+.contentholder {
     margin: auto;
     max-width: 80em;
 }
@@ -17,4 +19,8 @@
 .closebox {
     margin-top: 6em;
     display: block;
+}
+.example__inner {
+    max-width: 80em;
+    margin: auto;
 }
