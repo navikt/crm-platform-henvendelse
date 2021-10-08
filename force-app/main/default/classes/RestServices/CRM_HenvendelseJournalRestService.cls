@@ -44,6 +44,8 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
     }
 
     private static void doConversationNoteJournal(String apiReference, HenvendelseJournalRequest request) {
+        List<Conversation_Note__c> notesToUpdate = new List<Conversation_Note__c>();
+        List<Journal_Entry__c> jEntriesToCreate = new List<Journal_Entry__c>();
         List<Conversation_Note__c> noteList = new CRM_ConversationNoteSelector()
             .selectByBehandlingskjedeId(apiReference);
 
@@ -51,12 +53,22 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
             Map<String, Object> flowInputs = new Map<String, Object>{
                 'recordId' => convNote.Id,
                 'Journal_Case_ID' => request.saksId,
+                'Journal_Case_Legacy_System' => request.fagsaksystem,
                 'Journal_Theme_Code' => request.temakode,
                 'Journal_Entry_Unit' => request.journalforendeEnhet,
-                'Journal_Entry_NAV_Ident' => getActingNavIdent()
+                'Journal_Entry_NAV_Ident' => getActingNavIdent(),
+                'PERFORM_DML' => false
             };
-            initiateJournalFlow('CRM_Journal_Conversation_Note', JSON.serialize(flowInputs));
+            Flow.Interview convNoteJournalFlow = initiateJournalFlow(
+                'CRM_Journal_Conversation_Note',
+                JSON.serialize(flowInputs)
+            );
+            notesToUpdate.add((Conversation_Note__c) convNoteJournalFlow.getVariableValue('JOURNALED_CONV_NOTE'));
+            jEntriesToCreate.add((Journal_Entry__c) convNoteJournalFlow.getVariableValue('Journal_Entry_SF'));
         }
+
+        update notesToUpdate;
+        insert jEntriesToCreate;
     }
 
     private static void doThreadJournal(String apiReference, HenvendelseJournalRequest request) {
@@ -65,6 +77,7 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
         Map<String, Object> flowInputs = new Map<String, Object>{
             'recordId' => thread.Id,
             'Journal_Case_ID' => request.saksId,
+            'Journal_Case_Legacy_System' => request.fagsaksystem,
             'Journal_Theme_Code' => request.temakode,
             'Journal_Entry_Unit' => request.journalforendeEnhet,
             'Journal_Entry_NAV_Ident' => getActingNavIdent()
@@ -73,11 +86,12 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
         initiateJournalFlow('CRM_Thread_Create_Journal_Entry', JSON.serialize(flowInputs));
     }
 
-    private static void initiateJournalFlow(String flowName, String inputParams) {
+    private static Flow.Interview initiateJournalFlow(String flowName, String inputParams) {
         Map<String, Object> flowInputs = (Map<String, Object>) JSON.deserializeUntyped(inputParams);
 
         Flow.Interview journalFlow = Flow.Interview.createInterview(flowName, flowInputs);
         journalFlow.start();
+        return journalFlow;
     }
 
     global class HenvendelseJournalRequest {
@@ -85,5 +99,6 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
         global String saksId;
         global String kjedeId;
         global String temakode;
+        global String fagsaksystem;
     }
 }

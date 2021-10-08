@@ -3,15 +3,16 @@
         <div class="header" style="text-align: center">
             <span class="typo-sidetittel">{name}</span>
         </div>
-        <template for:each={messages} for:item="message">
-            <c-crm-messaging-Community-Message-Container
-                tabindex="0"
-                message={message}
-                user-contact-id={userContactId}
-                key={message.id}
-            ></c-crm-messaging-Community-Message-Container>
-        </template>
-
+        <div class="contentholder">
+            <template for:each={messages} for:item="message">
+                <c-crm-messaging-Community-Message-Container
+                    tabindex="0"
+                    message={message}
+                    user-contact-id={userContactId}
+                    key={message.id}
+                ></c-crm-messaging-Community-Message-Container>
+            </template>
+        </div>
         <div>
             <template if:false={isclosed}>
                 <lightning-layout horizontal-align="center">
@@ -21,7 +22,7 @@
                             class="msgText slds-hidden"
                             field-name="CRM_Message_Text__c"
                         ></lightning-input-field>
-                        <div class="body-wrapper" style="margin: 0.5em; border-radius: 0px">
+                        <div class="body-wrapper" style="">
                             <div class="example__inner">
                                 <div class="">
                                     <lightning-textarea

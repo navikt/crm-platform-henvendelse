@@ -49,7 +49,7 @@
     <recordCreates>
         <name>Create_Journal_Entry</name>
         <label>Create Journal Entry</label>
-        <locationX>264</locationX>
+        <locationX>308</locationX>
         <locationY>518</locationY>
         <inputAssignments>
             <field>CRM_Created_By_Ident__c</field>
@@ -67,6 +67,12 @@
             <field>CRM_Journal_Date__c</field>
             <value>
                 <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CRM_NAV_Case_Legacy_System__c</field>
+            <value>
+                <elementReference>Journal_Case_Legacy_System</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -135,7 +141,7 @@
         <description>Query the SF id to the common code to be journaled.</description>
         <name>Get_Theme_Common_Code</name>
         <label>Get Theme Common Code</label>
-        <locationX>264</locationX>
+        <locationX>308</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -181,6 +187,14 @@
     <variables>
         <description>NAV case id the journal entry relates to.</description>
         <name>Journal_Case_ID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Required variable for journal post in the Dokarkiv API.</description>
+        <name>Journal_Case_Legacy_System</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
