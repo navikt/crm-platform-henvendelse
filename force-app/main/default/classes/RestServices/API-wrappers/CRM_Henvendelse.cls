@@ -3,7 +3,6 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
     global String aktorId;
     global String kasseringsDato;
     global String avsluttetDato;
-    global Boolean aapen; //Defines if the chain is still open
     global String opprettetDato;
     global Boolean kontorsperre;
     global Boolean feilsendt;
