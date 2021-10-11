@@ -91,6 +91,16 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
     }
 
     /**
+     * @description: Formats a datetime to a valid ISO string
+     * @author Stian Ruud Schikora | 07-20-2021
+     * @param timestamp
+     * @return String
+     **/
+    public String formatDateTime(DateTime timestamp) {
+        return timestamp != null ? timestamp.format('yyyy-MM-dd\'T\'HH:mm:ss.SSSZ') : null;
+    }
+
+    /**
      * @description: For system integration the NAV ident of the user performing the action should be included in a request header
      * @author Stian Ruud Schikora | 07-07-2021
      * @return String

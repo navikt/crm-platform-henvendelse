@@ -22,12 +22,13 @@ public class CRM_HenvendelseJournalRestService_Test {
         RestRequest restReq = new RestRequest();
         restReq.headers.put('X-Correlation-ID', '123RANDOM');
         restReq.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        restReq.requestBody = Blob.valueOf(JSON.serialize(journalReq));
 
         RestContext.request = restReq;
         RestContext.response = new RestResponse();
 
         Test.startTest();
-        CRM_HenvendelseJournalRestService.createJournalPost(journalReq);
+        CRM_HenvendelseJournalRestService.createJournalPost();
         Test.stopTest();
 
         System.assertEquals(200, RestContext.response.statusCode);
@@ -53,12 +54,13 @@ public class CRM_HenvendelseJournalRestService_Test {
         RestRequest restReq = new RestRequest();
         restReq.headers.put('X-Correlation-ID', '123RANDOM');
         restReq.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        restReq.requestBody = Blob.valueOf(JSON.serialize(journalReq));
 
         RestContext.request = restReq;
         RestContext.response = new RestResponse();
 
         Test.startTest();
-        CRM_HenvendelseJournalRestService.createJournalPost(journalReq);
+        CRM_HenvendelseJournalRestService.createJournalPost();
         Test.stopTest();
 
         System.assertEquals(200, RestContext.response.statusCode);
@@ -78,12 +80,13 @@ public class CRM_HenvendelseJournalRestService_Test {
         RestRequest restReq = new RestRequest();
         restReq.headers.put('X-Correlation-ID', '123RANDOM');
         restReq.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        restReq.requestBody = Blob.valueOf(JSON.serialize(journalReq));
 
         RestContext.request = restReq;
         RestContext.response = new RestResponse();
 
         Test.startTest();
-        CRM_HenvendelseJournalRestService.createJournalPost(journalReq);
+        CRM_HenvendelseJournalRestService.createJournalPost();
         Test.stopTest();
 
         System.assertEquals(400, RestContext.response.statusCode);
@@ -102,12 +105,13 @@ public class CRM_HenvendelseJournalRestService_Test {
         RestRequest restReq = new RestRequest();
         restReq.headers.put('X-Correlation-ID', '123RANDOM');
         restReq.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        restReq.requestBody = Blob.valueOf(JSON.serialize(journalReq));
 
         RestContext.request = restReq;
         RestContext.response = new RestResponse();
 
         Test.startTest();
-        CRM_HenvendelseJournalRestService.createJournalPost(journalReq);
+        CRM_HenvendelseJournalRestService.createJournalPost();
         Test.stopTest();
 
         System.assertEquals(400, RestContext.response.statusCode);
@@ -125,12 +129,13 @@ public class CRM_HenvendelseJournalRestService_Test {
 
         RestRequest restReq = new RestRequest();
         restReq.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        restReq.requestBody = Blob.valueOf(JSON.serialize(journalReq));
 
         RestContext.request = restReq;
         RestContext.response = new RestResponse();
 
         Test.startTest();
-        CRM_HenvendelseJournalRestService.createJournalPost(journalReq);
+        CRM_HenvendelseJournalRestService.createJournalPost();
         Test.stopTest();
 
         System.assertEquals(400, RestContext.response.statusCode);

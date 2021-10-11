@@ -2,7 +2,11 @@
 global without sharing class CRM_HenvendelseJournalRestService extends CRM_HenvendelseApiUtils {
     private static LoggerUtility logger = new LoggerUtility('Henvendelse API');
     @HttpPost
-    global static void createJournalPost(HenvendelseJournalRequest request) {
+    global static void createJournalPost() {
+        HenvendelseJournalRequest request = (HenvendelseJournalRequest) JSON.deserialize(
+            RestContext.request.requestBody.toString(),
+            HenvendelseJournalRequest.class
+        ); //Explicit deseriialization
         //Super validation handles setting the response so return if this fails
         if (!validate())
             return;

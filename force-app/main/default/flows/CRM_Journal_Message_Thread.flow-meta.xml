@@ -78,7 +78,7 @@
             <assignToReference>Journal_Documents.tittel</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>TITLE OF JOURNALED DOCUMENT</stringValue>
+                <elementReference>Document_Title</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -142,7 +142,7 @@
             <assignToReference>Journal_Request.tittel</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>TITLE OF JOURNAL</stringValue>
+                <elementReference>Document_Title</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -405,6 +405,11 @@
         </rules>
     </decisions>
     <formulas>
+        <name>Document_Title</name>
+        <dataType>String</dataType>
+        <expression>&apos;Samtale med NAV - &apos; + LPAD(TEXT(DAY(DATEVALUE({!JOURNALED_THREAD.CRM_Closed_Date__c}))),2,&apos;0&apos;) + &apos;.&apos; + LPAD(TEXT(MONTH(DATEVALUE({!JOURNALED_THREAD.CRM_Closed_Date__c}))),2,&apos;0&apos;) + &apos;.&apos; + TEXT(YEAR(DATEVALUE({!JOURNALED_THREAD.CRM_Closed_Date__c})))</expression>
+    </formulas>
+    <formulas>
         <description>Formula to define the journal case type (Sakstype). If no Journal Case ID has been input, default is GENERELL_SAK</description>
         <name>Journal_Case_Type</name>
         <dataType>String</dataType>
@@ -492,6 +497,7 @@
         <queriedFields>CRM_External_Actor_Account_ID__c</queriedFields>
         <queriedFields>CRM_From_External__c</queriedFields>
         <queriedFields>CRM_Journal_Status__c</queriedFields>
+        <queriedFields>CRM_Closed_Date__c</queriedFields>
     </recordLookups>
     <recordUpdates>
         <name>Update_Journal_Entry</name>
