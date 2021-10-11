@@ -7,7 +7,7 @@
     "servers": [
         { "url": "https://sf-henvendelse.dev.intern.nav.no/api" },
         { "url": "https://sf-henvendelse.intern.nav.no/api" },
-        { "url": "https://test.salesforce.com/services/apexrest" }
+        { "url": "https://navdialog--uat.my.salesforce.com/services/apexrest" }
     ],
     "paths": {
         "/henvendelse/kodeverk/temagrupper": {
