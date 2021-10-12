@@ -15,15 +15,21 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>eksternVarsling</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>fodselsnummer</name>
             <value>
-                <elementReference>ConversationNote.CRM_Created_By_Ident__c</elementReference>
+                <elementReference>ConversationNote.CRM_Account__r.CRM_Person__r.Name</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>grupperingsId</name>
             <value>
-                <elementReference>ConversationNote.CRM_HenvendelseId__c</elementReference>
+                <elementReference>ConversationNote.CRM_Henvendelse_BehandlingskjedeId__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
