@@ -1,11 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
-        <fullName>CRMHenveldelse_Blank</fullName>
-        <categories>Henvendelse</categories>
+        <fullName>CRMHenvendelse_NewConversationNoteNotification</fullName>
+        <categories>Henvendelse, User Notification</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CRMHenveldelse_Blank</shortDescription>
-        <value>Conversation Note Blank Error</value>
+        <shortDescription>CRM Henvendelse - New Conversation Note Notification</shortDescription>
+        <value>Du har mottatt et nytt samtale referat fra NAV.</value>
+    </labels>
+    <labels>
+        <fullName>CRMHenvendelse_NewMessageNotification</fullName>
+        <categories>Henvendelse, User Notification</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CRM Henvendelse New Message Notification</shortDescription>
+        <value>You have a new message from NAV in your innbox.</value>
+    </labels>
+    <labels>
+        <fullName>CRMHenvendelse_STOURL</fullName>
+        <categories>Henvendelse, User Notification</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CRM Henvendelse STO URL</shortDescription>
+        <value>https://innboks.nav.no/skriv-til-oss/</value>
+    </labels>
+    <labels>
+        <fullName>CRMHenvendelse_SamtalereferatURL</fullName>
+        <categories>Henvendelse, User Notification</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CRM Henvendelse Samtalereferat URL</shortDescription>
+        <value>https://innboks.nav.no/samtalereferat/</value>
+    </labels>
+    <labels>
+        <fullName>CRMHenvendelse_SystemUser</fullName>
+        <categories>Henvendelse, User Notification</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CRM Henvendelse System User</shortDescription>
+        <value>srvsfnksbrknot</value>
     </labels>
 </CustomLabels>
