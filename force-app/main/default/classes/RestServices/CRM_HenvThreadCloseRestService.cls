@@ -3,7 +3,7 @@ global without sharing class CRM_HenvThreadCloseRestService extends CRM_Henvende
     private static String correlationId;
     private static LoggerUtility logger = new LoggerUtility('Henvendelse API');
 
-    @HttpPost
+    @HttpPatch
     global static void closeThread() {
         //Super validation handles setting the response so return if this fails
         if (!validate())

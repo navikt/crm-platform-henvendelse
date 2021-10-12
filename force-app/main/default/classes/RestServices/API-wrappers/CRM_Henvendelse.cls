@@ -3,7 +3,6 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
     global String aktorId;
     global String kasseringsDato;
     global String avsluttetDato;
-    global Boolean aapen; //Defines if the chain is still open
     global String opprettetDato;
     global Boolean kontorsperre;
     global Boolean feilsendt;
@@ -53,7 +52,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         this.gjeldendeTema = convNote.CRM_Theme_Code__c;
         this.opprinneligGT = convNote.CRM_Original_Person_GT__c;
         this.opprinneligEnhet = convNote.CRM_Original_Person_NAV_Unit__c;
-        this.opprettetDato = gmtFormatDateTime(convNote.CRM_Registered_Datetime_Formula__c);
+        this.opprettetDato = formatDateTime(convNote.CRM_Registered_Datetime_Formula__c);
         this.avsluttetDato = this.opprettetDato;
         this.kjedeId = convNote.CRM_Henvendelse_BehandlingskjedeId__c;
         this.henvendelseType = HENVENDELSE_TYPE.SAMTALEREFERAT.name();
@@ -73,7 +72,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
             CRM_Markering_Kontorsperre officeRest = new CRM_Markering_Kontorsperre();
             this.kontorsperre = true;
             officeRest.markertAv = convNote.CRM_Office_Restriction_Activated_By__c;
-            officeRest.markertDato = gmtFormatDateTime(convNote.CRM_Office_Restriction_Date__c);
+            officeRest.markertDato = formatDateTime(convNote.CRM_Office_Restriction_Date__c);
             officeRest.kontorsperreGT = String.isNotBlank(this.opprinneligGT) ? this.opprinneligGT : null;
             officeRest.kontorsperreEnhet = String.isNotBlank(this.opprinneligEnhet) ? this.opprinneligEnhet : null;
             this.markeringer = new List<CRM_Markering>();
@@ -105,9 +104,9 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         this.aktorId = thread.CRM_External_ActorId__c;
         this.opprinneligGT = thread.CRM_Original_Person_GT__c;
         this.opprinneligEnhet = thread.CRM_Original_Person_NAV_Unit__c;
-        this.kasseringsDato = gmtFormatDateTime(thread.CRM_Disposal_Datetime__c);
-        this.opprettetDato = gmtFormatDateTime(thread.CRM_Registered_Datetime_Formula__c);
-        this.avsluttetDato = gmtFormatDateTime(thread.CRM_Closed_Date__c);
+        this.kasseringsDato = formatDateTime(thread.CRM_Disposal_Datetime__c);
+        this.opprettetDato = formatDateTime(thread.CRM_Registered_Datetime_Formula__c);
+        this.avsluttetDato = formatDateTime(thread.CRM_Closed_Date__c);
         this.meldinger = new List<CRM_Melding>();
         this.henvendelseType = HENVENDELSE_TYPE.MELDINGSKJEDE.name();
         this.gjeldendeTemagruppe = thread.CRM_Theme_Group_Code__c;
@@ -129,7 +128,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
             CRM_Markering_Kontorsperre officeRest = new CRM_Markering_Kontorsperre();
             this.kontorsperre = true;
             officeRest.markertAv = thread.CRM_Office_Restriction_Activated_By__c;
-            officeRest.markertDato = gmtFormatDateTime(thread.CRM_Office_Restriction_Date__c);
+            officeRest.markertDato = formatDateTime(thread.CRM_Office_Restriction_Date__c);
             officeRest.kontorsperreGT = String.isNotBlank(this.opprinneligGT) ? this.opprinneligGT : null;
             officeRest.kontorsperreEnhet = String.isNotBlank(this.opprinneligEnhet) ? this.opprinneligEnhet : null;
             this.markeringer = new List<CRM_Markering>();
