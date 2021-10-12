@@ -6,7 +6,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CRM Henvendelse - New Conversation Note Notification</shortDescription>
-        <value>Du har mottatt et nytt samtale referat fra NAV.</value>
+        <value>Du har mottatt et nytt samtalereferat som nå ligger tilgjengelig i din innboks.</value>
     </labels>
     <labels>
         <fullName>CRMHenvendelse_NewMessageNotification</fullName>
@@ -14,7 +14,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CRM Henvendelse New Message Notification</shortDescription>
-        <value>You have a new message from NAV in your innbox.</value>
+        <value>Du har mottatt en ny melding som ligger tilgjengelig i din innboks.</value>
     </labels>
     <labels>
         <fullName>CRMHenvendelse_STOURL</fullName>
