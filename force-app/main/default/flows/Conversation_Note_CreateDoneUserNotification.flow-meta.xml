@@ -94,7 +94,7 @@
             <targetReference>User_Notification_Collection</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Obsolete</status>
     <variables>
         <name>ConversationNote</name>
         <dataType>SObject</dataType>

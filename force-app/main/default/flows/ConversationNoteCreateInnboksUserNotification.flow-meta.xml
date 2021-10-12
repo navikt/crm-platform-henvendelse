@@ -65,7 +65,7 @@
         <inputParameters>
             <name>tidspunkt</name>
             <value>
-                <elementReference>ConversationNote.CRM_Date_Time_Registered__c</elementReference>
+                <elementReference>ConversationNote.CRM_Registered_Datetime_Formula__c</elementReference>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -105,7 +105,7 @@
             <targetReference>Create_Innboks_Notification</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Obsolete</status>
     <variables>
         <name>ConversationNote</name>
         <dataType>SObject</dataType>
