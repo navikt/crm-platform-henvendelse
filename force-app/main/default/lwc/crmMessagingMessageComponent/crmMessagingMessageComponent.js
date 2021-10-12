@@ -13,6 +13,7 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     _threadsforRefresh;
     @api recordId;
     @api singleThread;
+    setCardTitle;
 
     handleToggleSection(event) {
         this.activeSectionMessage = 'Open section name:  ' + event.detail.openSections;
@@ -35,14 +36,19 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     }
     handlenewpressed() {
         createThread({ recordId: this.recordId })
-            .then((result) => {
+            .then(result => {
                 this.shownewbutton = false;
                 return refreshApex(this._threadsforRefresh);
             })
-            .catch((error) => {});
+            .catch(error => {});
     }
 
     get cardTitle() {
-        return this.singleThread === true ? 'Samtale' : 'Samtaler';
+        return this.setCardTitle ?? (this.singleThread === true ? 'Samtale' : 'Samtaler');
+    }
+
+    @api
+    set cardTitle(cardTitle) {
+        this.setCardTitle = cardTitle;
     }
 }
