@@ -65,7 +65,7 @@ export default class CommityThreadViewer extends LightningElement {
         }
     }
     get isclosed() {
-        if (getFieldValue(this.thread)) {
+        if (getFieldValue(this.thread.data, THREADCLOSEDDATE_FIELD)) {
             return true;
         }
         else {
