@@ -50,17 +50,29 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Obsolete</status>
+    <status>Draft</status>
     <subflows>
         <name>Create_DONE_Event</name>
         <label>Create DONE Event</label>
         <locationX>308</locationX>
         <locationY>288</locationY>
-        <flowName>Conversation_Note_CreateDoneUserNotification</flowName>
+        <flowName>UN_UserNotificationCreateDoneEventFromRelatedRecordId</flowName>
         <inputAssignments>
-            <name>ConversationNote</name>
+            <name>DoneDateTime</name>
             <value>
-                <elementReference>$Record</elementReference>
+                <elementReference>$Record.CRM_Read_Date__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>RelatedRecordId</name>
+            <value>
+                <elementReference>$Record.CRM_Henvendelse_BehandlingskjedeId__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>systemuser</name>
+            <value>
+                <elementReference>$Label.CRMHenvendelse_SystemUser</elementReference>
             </value>
         </inputAssignments>
     </subflows>
