@@ -24,6 +24,14 @@
         <apexClass>CRM_HenvendelseinfoRestService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>CRM_JournalUtilities</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CRM_HenvThreadCloseRestService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <description>Permission set that grants access to the henvendelse API in addition to read and write access to necessary fields.</description>
     <fieldPermissions>
         <editable>false</editable>
