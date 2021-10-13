@@ -15,7 +15,7 @@ public class CRM_HenvThreadCloseRestService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/meldingskjede/lukk';
         req.addParameter('kjedeId', thread.CRM_API_Reference__c);
-        req.httpMethod = 'PATCH';
+        req.httpMethod = 'POST';
         req.headers.put('X-Correlation-ID', '123TEST');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
         RestContext.request = req;
@@ -38,7 +38,7 @@ public class CRM_HenvThreadCloseRestService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/meldingskjede/lukk';
         req.addParameter('kjedeId', thread.CRM_API_Reference__c);
-        req.httpMethod = 'PATCH';
+        req.httpMethod = 'POST';
         req.headers.put('X-Correlation-ID', '123TEST');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
         RestContext.request = req;
@@ -62,7 +62,7 @@ public class CRM_HenvThreadCloseRestService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/meldingskjede/lukk';
         req.addParameter('kjedeId', thread.CRM_API_Reference__c);
-        req.httpMethod = 'PATCH';
+        req.httpMethod = 'POST';
         req.headers.put('X-Correlation-ID', '123TEST');
         req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
         RestContext.request = req;
