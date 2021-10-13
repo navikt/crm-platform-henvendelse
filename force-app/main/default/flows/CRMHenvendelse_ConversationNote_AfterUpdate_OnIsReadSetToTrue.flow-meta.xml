@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
-    <interviewLabel>Conversation Note - After Update - Set User Notification To DONE {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Conversation Note - After Update - Set User Notification To DONE</label>
+    <interviewLabel>Conversation Note - After Update - On Is Read Set To True {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Conversation Note - After Update - On Is Read Set To True</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
