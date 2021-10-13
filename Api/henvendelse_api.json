@@ -123,7 +123,7 @@
             }
         },
         "/henvendelse/meldingskjede/lukk": {
-            "patch": {
+            "post": {
                 "tags": ["Henvendelse Behandling"],
                 "description": "Endepunkt som benyttes for lukking av en meldingskjede. Når kjeden er lukket er det ikke lenger mulig å skrive flere meldinger.",
                 "parameters": [
