@@ -1,35 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>52.0</apiVersion>
+    <apiVersion>53.0</apiVersion>
     <assignments>
-        <name>Assign_values</name>
-        <label>Assign values</label>
-        <locationX>177</locationX>
-        <locationY>434</locationY>
+        <name>Assign_Values</name>
+        <label>Assign Values</label>
+        <locationX>176</locationX>
+        <locationY>431</locationY>
         <assignmentItems>
             <assignToReference>$Record.CRM_External_ActorId__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_person.INT_ActorId__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>$Record.CRM_External_Person_Ident__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_person.Name</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>$Record.CRM_Original_Person_GT__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_person.CRM_GT__c</elementReference>
+                <elementReference>Person.INT_ActorId__c</elementReference>
             </value>
         </assignmentItems>
     </assignments>
-    <interviewLabel>Thread before insert {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Thread Before Insert</label>
+    <interviewLabel>Thread - Before Update - On Account Change {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Thread - Before Update - On Account Change</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -39,7 +25,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -50,13 +36,13 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <name>Get_person</name>
-        <label>Get person</label>
+        <name>Person</name>
+        <label>Person</label>
         <locationX>176</locationX>
-        <locationY>292</locationY>
+        <locationY>311</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Assign_values</targetReference>
+            <targetReference>Assign_Values</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -72,13 +58,21 @@
     </recordLookups>
     <start>
         <locationX>50</locationX>
-        <locationY>50</locationY>
+        <locationY>0</locationY>
         <connector>
-            <targetReference>Get_person</targetReference>
+            <targetReference>Person</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CRM_Account__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
         <object>Thread__c</object>
-        <recordTriggerType>Create</recordTriggerType>
+        <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
 </Flow>
