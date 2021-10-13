@@ -76,7 +76,7 @@
             }
         },
         "/henvendelse/behandling/{kjedeId}": {
-            "patch": {
+            "put": {
                 "tags": ["Henvendelse Behandling"],
                 "description": "Behandling/oppdatering av eksisterende henvendelser. Benyttes til f.eks å oppdatere felter som kasseringsdato, gjeldendeTema. Request body er JSON som følger objektmodellen til henvendelse, men krever kun at du sender med felter hvor dataene skal oppdateres.",
                 "requestBody": {
