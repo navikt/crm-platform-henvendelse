@@ -2,7 +2,7 @@
 global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_HenvendelseApiUtils {
     private static LoggerUtility logger = new LoggerUtility('Henvendelse API');
 
-    @HttpPatch
+    @HttpPut
     global static void updateHenvendelse() {
         RestRequest request = RestContext.request;
         if (!validate()) {
