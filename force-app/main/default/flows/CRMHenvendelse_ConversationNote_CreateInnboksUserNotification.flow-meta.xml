@@ -71,14 +71,13 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>52.0</apiVersion>
-    <description>Create a user notification when a new Conversation Note is published.</description>
     <formulas>
         <name>varLinkURL</name>
         <dataType>String</dataType>
         <expression>{!$Label.CRMHenvendelse_SamtalereferatURL} + {!ConversationNote.CRM_Henvendelse_BehandlingskjedeId__c}</expression>
     </formulas>
     <interviewLabel>Conversation Note - Create Innboks User Notification {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Conversation Note - Create Innboks User Notification</label>
+    <label>Conversation Note - Create Innboks User Notification 111</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -105,7 +104,7 @@
             <targetReference>Create_Innboks_Notification</targetReference>
         </connector>
     </start>
-    <status>Obsolete</status>
+    <status>Draft</status>
     <variables>
         <name>ConversationNote</name>
         <dataType>SObject</dataType>
