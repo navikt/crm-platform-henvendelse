@@ -50,7 +50,7 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Obsolete</status>
     <subflows>
         <name>Create_DONE_Event</name>
         <label>Create DONE Event</label>
@@ -66,7 +66,7 @@
         <inputAssignments>
             <name>RelatedRecordId</name>
             <value>
-                <elementReference>$Record.CRM_Thread__r.CRM_API_Reference__c</elementReference>
+                <elementReference>$Record.CRM_Thread__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

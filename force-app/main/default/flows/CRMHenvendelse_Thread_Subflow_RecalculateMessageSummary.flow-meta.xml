@@ -13,6 +13,13 @@
                 <elementReference>threadId</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Thread.CRM_Conversation_Summary__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue/>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Message</targetReference>
         </connector>
@@ -26,7 +33,7 @@
             <assignToReference>Thread.CRM_Conversation_Summary__c</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Message.CRM_Message_Text__c</elementReference>
+                <elementReference>MessageSummaryText</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -113,6 +120,11 @@
         </connector>
     </start>
     <status>Active</status>
+    <textTemplates>
+        <name>MessageSummaryText</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;b&gt;{!Message.CRM_From_First_Name__c} ({!Message.CRM_From_Ident_Formula__c}) - {!Message.CRM_Sent_Datetime_Formula__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;{!Message.CRM_Message_Text__c}&lt;/p&gt;</text>
+    </textTemplates>
     <variables>
         <name>lastMessageDate</name>
         <dataType>DateTime</dataType>
