@@ -125,6 +125,20 @@
                 <elementReference>Journal_Case_Legacy_System</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Entry_SF.CRM_Conversation_Note__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Entry_SF.CRM_Created_By_NAV_Unit__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Journal_Entry_Unit</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>DML_Check</targetReference>
         </connector>
