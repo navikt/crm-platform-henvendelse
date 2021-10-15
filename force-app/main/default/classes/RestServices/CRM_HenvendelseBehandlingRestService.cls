@@ -71,7 +71,6 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
                     return;
                 }
             }
-            setResponse(200, 'OK');
             logger.publish();
         } catch (DmlException dmlEx) {
             if (!Test.isRunningTest() && StatusCode.FIELD_INTEGRITY_EXCEPTION == dmlEx.getDmlType(0)) {

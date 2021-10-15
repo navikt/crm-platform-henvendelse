@@ -105,7 +105,8 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "$ref": "#/components/schemas/Henvendelse"
                     },
                     "400": {
                         "$ref": "#/components/responses/BadRequest"
