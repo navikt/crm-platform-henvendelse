@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
+    <description>Call the subflow &quot;Conversation Note - Create Innboks User Notification&quot;</description>
     <interviewLabel>Conversation Note - After Insert {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Conversation Note - After Insert111</label>
+    <label>Conversation Note - After Insert</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>

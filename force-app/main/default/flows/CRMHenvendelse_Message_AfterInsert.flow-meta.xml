@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
+    <description>Create a New Message event and call the subflow &quot;Thread - Subflow - Recalculate Message Summary&quot;</description>
     <interviewLabel>Message - After Insert {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Message - After Insert</label>
     <processMetadataValues>

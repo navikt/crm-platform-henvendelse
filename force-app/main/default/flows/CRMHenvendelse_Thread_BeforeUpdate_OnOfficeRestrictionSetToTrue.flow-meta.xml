@@ -78,6 +78,7 @@
             <label>Activated By API</label>
         </rules>
     </decisions>
+    <description>If office resrtiction is set to true update the office restriction fields</description>
     <interviewLabel>Thread - Before Update - On Office Restriction Set To True {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Thread - Before Update - On Office Restriction Set To True</label>
     <processMetadataValues>

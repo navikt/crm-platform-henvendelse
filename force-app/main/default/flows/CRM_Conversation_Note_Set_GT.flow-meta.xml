@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>52.0</apiVersion>
-    <description>Record triggered flow to automatically populate the original GT to the GT of the person on the time of creation.</description>
+    <description>[DEPRECATED] Record triggered flow to automatically populate the original GT to the GT of the person on the time of creation.</description>
     <interviewLabel>Conversation Note Set GT {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Conversation Note Set GT</label>
     <processMetadataValues>
@@ -76,5 +76,5 @@
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
 </Flow>

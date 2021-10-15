@@ -28,6 +28,7 @@
             </value>
         </assignmentItems>
     </assignments>
+    <description>[DEPRECATED]</description>
     <interviewLabel>Thread before insert {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Thread Before Insert</label>
     <processMetadataValues>
@@ -80,5 +81,5 @@
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Obsolete</status>
+    <status>Draft</status>
 </Flow>

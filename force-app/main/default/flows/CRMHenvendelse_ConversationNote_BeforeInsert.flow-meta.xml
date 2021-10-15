@@ -14,6 +14,7 @@
             </value>
         </assignmentItems>
     </assignments>
+    <description>Set Person GT on conversation note</description>
     <interviewLabel>Conversation Note - Before Insert {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Conversation Note - Before Insert</label>
     <processMetadataValues>

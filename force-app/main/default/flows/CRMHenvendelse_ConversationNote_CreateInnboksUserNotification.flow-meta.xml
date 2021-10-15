@@ -71,6 +71,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>52.0</apiVersion>
+    <description>Subflow creating inbox user notification from Conversation Note</description>
     <formulas>
         <name>varLinkURL</name>
         <dataType>String</dataType>
@@ -104,7 +105,7 @@
             <targetReference>Create_Innboks_Notification</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>ConversationNote</name>
         <dataType>SObject</dataType>

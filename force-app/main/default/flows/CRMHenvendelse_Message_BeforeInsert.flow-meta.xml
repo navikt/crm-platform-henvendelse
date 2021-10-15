@@ -21,6 +21,7 @@
             </value>
         </assignmentItems>
     </assignments>
+    <description>Set the fields external message and the From label</description>
     <formulas>
         <name>FromLabel</name>
         <dataType>String</dataType>
@@ -74,5 +75,5 @@
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>

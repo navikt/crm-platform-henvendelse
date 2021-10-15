@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>52.0</apiVersion>
-    <description>Record triggered flow setting the close date when the Thread get active set to false.</description>
+    <description>[DEPRECATED] Record triggered flow setting the close date when the Thread get active set to false.</description>
     <interviewLabel>Set Thread Close Date {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Set Thread Close Date</label>
     <processMetadataValues>
@@ -56,5 +56,5 @@
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Obsolete</status>
+    <status>Draft</status>
 </Flow>

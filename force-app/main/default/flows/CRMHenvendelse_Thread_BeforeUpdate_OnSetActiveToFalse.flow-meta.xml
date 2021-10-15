@@ -14,6 +14,7 @@
             </value>
         </assignmentItems>
     </assignments>
+    <description>Set Close Date on Thread</description>
     <interviewLabel>Thread - Before Update - On Set Active To False {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Thread - Before Update - On Set Active To False</label>
     <processMetadataValues>

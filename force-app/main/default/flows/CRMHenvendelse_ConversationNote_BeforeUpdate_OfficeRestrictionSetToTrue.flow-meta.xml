@@ -34,6 +34,7 @@
             <label>Activated Through API</label>
         </rules>
     </decisions>
+    <description>Set office restriction values if office restriction is set to true</description>
     <interviewLabel>Conversation Note - Before Update - Office Restriction Set to True {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Conversation Note - Before Update - Office Restriction Set To True</label>
     <processMetadataValues>

@@ -14,6 +14,7 @@
             </value>
         </assignmentItems>
     </assignments>
+    <description>If CRM_Account__c is changed, find the person related to the new Account and update the thread with the new Actor Id</description>
     <interviewLabel>Thread - Before Update - On Account Change {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Thread - Before Update - On Account Change</label>
     <processMetadataValues>

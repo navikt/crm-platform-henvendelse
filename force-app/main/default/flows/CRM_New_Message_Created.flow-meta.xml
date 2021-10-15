@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>52.0</apiVersion>
-    <description>Record triggered flow to update message information before save.</description>
+    <description>[DEPRECATED] Record triggered flow to update message information before save.</description>
     <interviewLabel>New Message Created {!$Flow.CurrentDateTime}</interviewLabel>
     <label>New Message Created</label>
     <processMetadataValues>
@@ -55,5 +55,5 @@
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Obsolete</status>
+    <status>Draft</status>
 </Flow>

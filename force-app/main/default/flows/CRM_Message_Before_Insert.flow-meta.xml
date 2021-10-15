@@ -68,6 +68,7 @@
             <label>Yes</label>
         </rules>
     </decisions>
+    <description>[DEPRECATED]</description>
     <formulas>
         <name>Message_From_Label</name>
         <dataType>String</dataType>
@@ -110,5 +111,5 @@
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Obsolete</status>
+    <status>Draft</status>
 </Flow>

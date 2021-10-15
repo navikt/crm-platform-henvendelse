@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
+    <description>If Type = message and External = false call the subflow &quot;Thread - Subflow - Create Innboks User Notification&quot;</description>
     <interviewLabel>Message - After Insert - On Internal Message {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Message - After Insert - On Internal Message</label>
     <processMetadataValues>

@@ -47,6 +47,8 @@
             <targetReference>Message</targetReference>
         </connector>
     </assignments>
+    <description>Find all messages related to a thread and generate a new Conversation Summary
+Set the Latest Message Date Time based on the latest message</description>
     <interviewLabel>Thread - Sub Flow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Thread - Subflow - Recalculate Message Summary</label>
     <loops>

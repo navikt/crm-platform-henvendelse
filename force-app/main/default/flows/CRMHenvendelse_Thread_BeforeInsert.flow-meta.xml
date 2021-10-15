@@ -21,6 +21,7 @@
             </value>
         </assignmentItems>
     </assignments>
+    <description>Set the associated person Actor Id and Natural ident (fnr/dnr/npid)</description>
     <interviewLabel>Thread - Before Insert {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Thread - Before Insert</label>
     <processMetadataValues>
