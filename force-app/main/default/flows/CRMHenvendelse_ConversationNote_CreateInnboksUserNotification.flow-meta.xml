@@ -77,7 +77,7 @@
         <expression>{!$Label.CRMHenvendelse_SamtalereferatURL} + {!ConversationNote.CRM_Henvendelse_BehandlingskjedeId__c}</expression>
     </formulas>
     <interviewLabel>Conversation Note - Create Innboks User Notification {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Conversation Note - Create Innboks User Notification 111</label>
+    <label>Conversation Note - Create Innboks User Notification</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -104,7 +104,7 @@
             <targetReference>Create_Innboks_Notification</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>ConversationNote</name>
         <dataType>SObject</dataType>
