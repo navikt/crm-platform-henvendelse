@@ -222,7 +222,7 @@
             <targetReference>Thread</targetReference>
         </connector>
     </start>
-    <status>Obsolete</status>
+    <status>Draft</status>
     <variables>
         <name>MessageDateTime</name>
         <dataType>DateTime</dataType>
