@@ -31,6 +31,7 @@
             <connector>
                 <targetReference>Create_Innbox_Event</targetReference>
             </connector>
+            <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>

@@ -54,6 +54,7 @@
             <connector>
                 <targetReference>Thread_recalculate_message_summary</targetReference>
             </connector>
+            <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>

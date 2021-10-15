@@ -47,6 +47,7 @@
             <connector>
                 <targetReference>Create_DONE_Event</targetReference>
             </connector>
+            <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
