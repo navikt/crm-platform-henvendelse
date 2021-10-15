@@ -40,4 +40,12 @@
         <shortDescription>CRM Henvendelse System User</shortDescription>
         <value>srvsfnksbrknot</value>
     </labels>
+    <labels>
+        <fullName>CRMHenveldelse_Blank</fullName>
+        <categories>Henvendelse</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CRMHenveldelse_Blank</shortDescription>
+        <value>Conversation Note Blank Error</value>
+    </labels>
 </CustomLabels>
