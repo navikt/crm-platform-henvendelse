@@ -33,6 +33,18 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
                     update decision.getRecords();
                     if (Test.isRunningTest())
                         update thread; //Security strips the access from the system user, adding direct dml to verify the mapping and data update in test context*/
+
+                    Thread__c updatedThread = new CRM_ThreadSelector().selectByApiReference(apiReference);
+                    setResponse(
+                        200,
+                        JSON.serializePretty(
+                            new CRM_Henvendelse(
+                                updatedThread,
+                                updatedThread.Messages__r,
+                                updatedThread.Journal_Entries__r
+                            )
+                        )
+                    );
                 }
                 when 'Conversation_Note__c' {
                     Conversation_Note__c convNoteFromDb = new CRM_ConversationNoteSelector()
@@ -49,6 +61,9 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
                     update decision.getRecords();
                     if (Test.isRunningTest())
                         update convNote; //Security strips the access from the system user, adding direct dml to verify the mapping and data update in test context
+                    List<Conversation_Note__c> notesFromDatabase = new CRM_ConversationNoteSelector()
+                        .selectByBehandlingskjedeId(apiReference);
+                    setResponse(200, JSON.serializePretty(new CRM_Henvendelse(notesFromDatabase)));
                 }
                 when else {
                     errorResponse(400, 'Invalid reference value for henv/thread ID: ' + apiReference);
@@ -56,7 +71,6 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
                     return;
                 }
             }
-            setResponse(200, 'OK');
             logger.publish();
         } catch (DmlException dmlEx) {
             if (!Test.isRunningTest() && StatusCode.FIELD_INTEGRITY_EXCEPTION == dmlEx.getDmlType(0)) {
