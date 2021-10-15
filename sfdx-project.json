@@ -24,7 +24,7 @@
     ],
     "namespace": "",
     "sfdcLoginUrl": "https://login.salesforce.com",
-    "sourceApiVersion": "51.0",
+    "sourceApiVersion": "53.0",
     "packageAliases": {
         "crm-henvendelse": "0Ho2o000000fxXfCAI",
         "crm-journal-utilities": "0Ho2o000000fxXkCAI",
