@@ -23,13 +23,13 @@
         <inputParameters>
             <name>fodselsnummer</name>
             <value>
-                <elementReference>ConversationNote.CRM_Account__r.CRM_Person__r.Name</elementReference>
+                <elementReference>ConversationNote.INT_PersonIdent__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>grupperingsId</name>
             <value>
-                <elementReference>ConversationNote.CRM_Henvendelse_BehandlingskjedeId__c</elementReference>
+                <elementReference>ConversationNote.CRM_API_Reference__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>

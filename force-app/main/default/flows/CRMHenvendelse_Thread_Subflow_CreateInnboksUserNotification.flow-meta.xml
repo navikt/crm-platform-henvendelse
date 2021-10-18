@@ -20,7 +20,7 @@
         <inputParameters>
             <name>eksternVarsling</name>
             <value>
-                <booleanValue>false</booleanValue>
+                <booleanValue>true</booleanValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -39,6 +39,12 @@
             <name>link</name>
             <value>
                 <elementReference>URL</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>prefererteKanaler</name>
+            <value>
+                <stringValue>EPOST</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
