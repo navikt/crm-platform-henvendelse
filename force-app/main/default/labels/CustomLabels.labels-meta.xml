@@ -9,6 +9,14 @@
         <value>Conversation Note Blank Error</value>
     </labels>
     <labels>
+        <fullName>CRMHenvendelse_InnboksBaseURL</fullName>
+        <categories>Henvendelse, STO, User Notification, Nav.no</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>https://innboks.nav.no</shortDescription>
+        <value>Conversation Note Blank Error</value>
+    </labels>
+    <labels>
         <fullName>CRMHenvendelse_NewConversationNoteNotification</fullName>
         <categories>Henvendelse, User Notification, Conversation Note</categories>
         <language>en_US</language>
@@ -21,15 +29,15 @@
         <categories>Henvendelse, User Notification</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CRM Henvendelse New Message Notification</shortDescription>
+        <shortDescription>CRM Henvendelse - New Message Notification</shortDescription>
         <value>Du har mottatt en ny melding fra NAV som ligger i din innboks.</value>
     </labels>
     <labels>
         <fullName>CRMHenvendelse_SamtalereferatURL</fullName>
-        <categories>Henvendelse, User Notification</categories>
+        <categories>Henvendelse, STO, User Notification, Nav.no</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CRM Henvendelse Samtalereferat URL</shortDescription>
+        <shortDescription>CRM Henvendelse - Samtalereferat URL</shortDescription>
         <value>/samtalereferat</value>
     </labels>
     <labels>
@@ -37,7 +45,15 @@
         <categories>Henvendelse, User Notification</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CRM Henvendelse System User</shortDescription>
+        <shortDescription>CRM Henvendelse - System User</shortDescription>
         <value>srvsfnksbrknot</value>
+    </labels>
+    <labels>
+        <fullName>CRMHenvendelse_ThreadURL</fullName>
+        <categories>Henvendelse, STO, User Notification, Nav.no</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CRM Henvendelse - Thread URL</shortDescription>
+        <value>/skriv-til-oss</value>
     </labels>
 </CustomLabels>
