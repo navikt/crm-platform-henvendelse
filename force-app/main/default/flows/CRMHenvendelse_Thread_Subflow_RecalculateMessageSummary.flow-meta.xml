@@ -17,7 +17,7 @@
             <assignToReference>Thread.CRM_Conversation_Summary__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue/>
+                <stringValue />
             </value>
         </assignmentItems>
         <connector>
@@ -57,7 +57,7 @@ Set the Latest Message Date Time based on the latest message</description>
         <locationX>176</locationX>
         <locationY>398</locationY>
         <collectionReference>Message_Collection</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
+        <iterationOrder>Desc</iterationOrder>
         <nextValueConnector>
             <targetReference>Set_values</targetReference>
         </nextValueConnector>
