@@ -75,7 +75,7 @@
     <formulas>
         <name>varLinkURL</name>
         <dataType>String</dataType>
-        <expression>{!$Label.CRMHenvendelse_SamtalereferatURL} + {!ConversationNote.CRM_Henvendelse_BehandlingskjedeId__c}</expression>
+        <expression>{!$Label.CRMHenvendelse_InnboksBaseURL}+{!$Label.CRMHenvendelse_SamtalereferatURL}+&apos;/&apos;+{!ConversationNote.Id}+&apos;/&apos;+{!ConversationNote.CRM_Henvendelse_BehandlingskjedeId__c}</expression>
     </formulas>
     <interviewLabel>Conversation Note - Create Innboks User Notification {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Conversation Note - Create Innboks User Notification</label>
