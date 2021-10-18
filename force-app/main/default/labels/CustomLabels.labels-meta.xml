@@ -10,11 +10,11 @@
     </labels>
     <labels>
         <fullName>CRMHenvendelse_NewConversationNoteNotification</fullName>
-        <categories>Henvendelse, User Notification</categories>
+        <categories>Henvendelse, User Notification, Conversation Note</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CRM Henvendelse - New Conversation Note Notification</shortDescription>
-        <value>Du har mottatt et nytt samtalereferat som nå ligger tilgjengelig i din innboks.</value>
+        <value>Et nytt samtalereferat er tilgjengelig i din innboks.</value>
     </labels>
     <labels>
         <fullName>CRMHenvendelse_NewMessageNotification</fullName>
@@ -22,7 +22,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CRM Henvendelse New Message Notification</shortDescription>
-        <value>Du har mottatt en ny melding som ligger tilgjengelig i din innboks.</value>
+        <value>Du har mottatt en ny melding fra NAV som ligger i din innboks.</value>
     </labels>
     <labels>
         <fullName>CRMHenvendelse_SamtalereferatURL</fullName>
