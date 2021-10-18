@@ -34,7 +34,7 @@
             <label>Activated Through API</label>
         </rules>
     </decisions>
-    <description>Automatically setting office restriction fields to track who made the activation and when it was activated</description>
+    <description>[DEPRECATED] Automatically setting office restriction fields to track who made the activation and when it was activated</description>
     <interviewLabel>Conversation Note Office Restriction Activated {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Conversation Note Office Restriction Activated</label>
     <processMetadataValues>
@@ -113,5 +113,5 @@
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>

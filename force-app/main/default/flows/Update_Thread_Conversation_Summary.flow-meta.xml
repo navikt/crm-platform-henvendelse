@@ -24,7 +24,7 @@
             <targetReference>Update_Thread</targetReference>
         </connector>
     </assignments>
-    <description>Updates the conversation summary and the latest message datetime of the thread,</description>
+    <description>[DEPRECATED] Updates the conversation summary and the latest message datetime of the thread,</description>
     <interviewLabel>Update Thread Conversation Summary {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Update Thread Conversation Summary</label>
     <processMetadataValues>
@@ -92,7 +92,7 @@
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Obsolete</status>
+    <status>Draft</status>
     <textTemplates>
         <name>Message_Summary_Text</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>53.0</apiVersion>
+    <description>Create a New Message event and call the subflow &quot;Thread - Subflow - Recalculate Message Summary&quot;</description>
+    <interviewLabel>Message - After Insert {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Message - After Insert</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Create_new_message_event</name>
+        <label>Create new message event</label>
+        <locationX>50</locationX>
+        <locationY>288</locationY>
+        <inputAssignments>
+            <field>CRM_Message_Id__c</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CRM_Related_Object_Id__c</field>
+            <value>
+                <elementReference>$Record.CRM_Thread__r.CRM_Related_Object__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>New_Message__e</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Create_new_message_event</targetReference>
+        </connector>
+        <object>Message__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Thread_recalculate_message_summary</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Thread_recalculate_message_summary</name>
+        <label>Thread - recalculate message summary</label>
+        <locationX>314</locationX>
+        <locationY>288</locationY>
+        <flowName>CRMHenvendelse_Thread_Subflow_RecalculateMessageSummary</flowName>
+        <inputAssignments>
+            <name>threadId</name>
+            <value>
+                <elementReference>$Record.CRM_Thread__c</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+</Flow>

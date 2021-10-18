@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>52.0</apiVersion>
-    <description>[DEPRECATED] Record triggered flow setting the close date when the Thread get active set to false.</description>
-    <interviewLabel>Set Thread Close Date {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Set Thread Close Date</label>
+    <apiVersion>53.0</apiVersion>
+    <assignments>
+        <name>Assign_on_close_values</name>
+        <label>Assign on close values</label>
+        <locationX>176</locationX>
+        <locationY>311</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.CRM_Closed_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <description>Set Close Date on Thread</description>
+    <interviewLabel>Thread - Before Update - On Set Active To False {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Thread - Before Update - On Set Active To False</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -23,25 +36,11 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordUpdates>
-        <description>Updates the thread close date when active is set to false.</description>
-        <name>Set_Thread_Close_Date</name>
-        <label>Set Thread Close Date</label>
-        <locationX>176</locationX>
-        <locationY>311</locationY>
-        <inputAssignments>
-            <field>CRM_Closed_Date__c</field>
-            <value>
-                <elementReference>$Flow.CurrentDateTime</elementReference>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Set_Thread_Close_Date</targetReference>
+            <targetReference>Assign_on_close_values</targetReference>
         </connector>
         <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>and</filterLogic>
@@ -56,5 +55,5 @@
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
 </Flow>

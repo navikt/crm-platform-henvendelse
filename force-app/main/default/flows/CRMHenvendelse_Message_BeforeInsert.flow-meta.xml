@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>53.0</apiVersion>
+    <assignments>
+        <name>Assign_values</name>
+        <label>Assign values</label>
+        <locationX>176</locationX>
+        <locationY>311</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.CRM_External_Message__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IsExternal</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.CRM_From_Label__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>FromLabel</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <description>Set the fields external message and the From label</description>
+    <formulas>
+        <name>FromLabel</name>
+        <dataType>String</dataType>
+        <expression>IF(
+	{!IsExternal},
+	IF(
+		{!$Record.CRM_From_User__c} != null,
+		IF(
+			{!$Record.CRM_From_User__r.Alias} != null,
+			{!$Record.CRM_From_User__r.Alias},
+			{!$Record.CRM_From_User__r.FirstName}
+		),
+		{!$Record.CRM_From_Contact__r.FirstName}
+	),
+	{!$User.NKS_GreetingName__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>IsExternal</name>
+        <dataType>Boolean</dataType>
+        <expression>NOT(ISBLANK({!$Record.CRM_From_Contact__c}))</expression>
+    </formulas>
+    <interviewLabel>Message - Before Insert {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Message - Before Insert</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Assign_values</targetReference>
+        </connector>
+        <object>Message__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Draft</status>
+</Flow>

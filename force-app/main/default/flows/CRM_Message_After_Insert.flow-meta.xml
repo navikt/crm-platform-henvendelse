@@ -24,7 +24,7 @@
             <targetReference>Update_Thread</targetReference>
         </connector>
     </assignments>
-    <description>After insert actions on Message__c</description>
+    <description>[DEPRECATED] After insert actions on Message__c</description>
     <interviewLabel>Message After Insert {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Message After Insert</label>
     <processMetadataValues>
@@ -107,7 +107,7 @@
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <textTemplates>
         <name>MessageSummaryText</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
