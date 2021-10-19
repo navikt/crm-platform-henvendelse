@@ -204,7 +204,8 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
                     CRM_Created_By_Ident__c = actingNavIdent,
                     CRM_Created_By_NAV_Unit__c = messageRequest.enhet,
                     CRM_Theme_Group__c = getThemeGroup(messageRequest.temagruppe),
-                    CRM_Theme__c = getTheme(messageRequest.tema)
+                    CRM_Theme__c = getTheme(messageRequest.tema),
+                    CRM_Thread_Type__c = 'STB'
                 );
                 insert newThread;
                 newMessage.CRM_Thread__c = newThread.Id;
