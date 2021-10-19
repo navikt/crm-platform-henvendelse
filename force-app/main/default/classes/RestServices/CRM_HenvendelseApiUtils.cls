@@ -87,7 +87,7 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
      * @return String
      **/
     public String gmtFormatDateTime(DateTime timestamp) {
-        return timestamp != null ? timestamp.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss.SSSZ') : null;
+        return timestamp != null ? timestamp.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss.SSSXXX') : null;
     }
 
     /**
@@ -97,7 +97,7 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
      * @return String
      **/
     public String formatDateTime(DateTime timestamp) {
-        return timestamp != null ? timestamp.format('yyyy-MM-dd\'T\'HH:mm:ss.SSSZ') : null;
+        return timestamp != null ? timestamp.format('yyyy-MM-dd\'T\'HH:mm:ss.SSSXXX') : null;
     }
 
     /**
