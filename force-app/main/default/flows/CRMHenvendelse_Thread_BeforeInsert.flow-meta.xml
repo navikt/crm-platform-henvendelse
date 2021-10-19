@@ -20,6 +20,22 @@
                 <elementReference>Person.Name</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Assign_Thread_Values</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Thread_Values</name>
+        <label>Assign Thread Values</label>
+        <locationX>176</locationX>
+        <locationY>551</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.CRM_Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.CRM_Thread_Type__c</elementReference>
+            </value>
+        </assignmentItems>
     </assignments>
     <description>Set the associated person Actor Id and Natural ident (fnr/dnr/npid)</description>
     <interviewLabel>Thread - Before Insert {!$Flow.CurrentDateTime}</interviewLabel>
