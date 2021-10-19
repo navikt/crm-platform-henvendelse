@@ -60,7 +60,9 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
 
     public List<Thread__c> selectByActorId(Set<String> actorIds) {
         fflib_QueryFactory query = newQueryFactory();
-        query.setCondition('(CRM_External_ActorId__c in :actorIds)');
+        query.setCondition(
+            '(CRM_External_ActorId__c in :actorIds AND (CRM_Type__c = \'STO\' OR CRM_Type__c = \'STB\'))'
+        );
         //Adds the Journal entry selector query as a relationship query to the Thread query
         new CRM_JournalEntrySelector().addQueryFactorySubselect(query, 'Journal_Entries__r');
         //Adds the Journal entry selector query as a relationship query to the Thread query

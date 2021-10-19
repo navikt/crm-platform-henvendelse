@@ -25,7 +25,7 @@ public inherited sharing class CRM_MessageSelector extends CRM_ApiSelector {
 
     public List<Message__c> selectById(Set<Id> idSet) {
         fflib_QueryFactory query = newQueryFactory();
-        query.setCondition('Id in :idSet');
+        query.setCondition('Id in :idSet AND CRM_Type__c = \'Message\'');
         return (List<Message__c>) Database.query(query.toSOQL());
     }
 }
