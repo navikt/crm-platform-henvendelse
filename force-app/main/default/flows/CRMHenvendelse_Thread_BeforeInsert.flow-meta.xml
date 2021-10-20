@@ -2,10 +2,26 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
     <assignments>
-        <name>Assign_Person_Values</name>
-        <label>Assign Person Values</label>
+        <name>Assign_Common_Thread_Values</name>
+        <label>Assign Common Thread Values</label>
         <locationX>176</locationX>
-        <locationY>431</locationY>
+        <locationY>311</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.CRM_Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.CRM_Thread_Type__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Person</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Person_Values_To_Thread</name>
+        <label>Assign Person Values To Thread</label>
+        <locationX>308</locationX>
+        <locationY>671</locationY>
         <assignmentItems>
             <assignToReference>$Record.CRM_External_ActorId__c</assignToReference>
             <operator>Assign</operator>
@@ -20,23 +36,29 @@
                 <elementReference>Person.Name</elementReference>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Assign_Thread_Values</targetReference>
-        </connector>
     </assignments>
-    <assignments>
-        <name>Assign_Thread_Values</name>
-        <label>Assign Thread Values</label>
+    <decisions>
+        <name>Has_Person</name>
+        <label>Has Person</label>
         <locationX>176</locationX>
         <locationY>551</locationY>
-        <assignmentItems>
-            <assignToReference>$Record.CRM_Type__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Record.CRM_Thread_Type__c</elementReference>
-            </value>
-        </assignmentItems>
-    </assignments>
+        <defaultConnector>
+            <targetReference>Assign_Person_Values_To_Thread</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Yes</defaultConnectorLabel>
+        <rules>
+            <name>Has_Person_No</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Person</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>No</label>
+        </rules>
+    </decisions>
     <description>Set the associated person Actor Id and Natural ident (fnr/dnr/npid)</description>
     <interviewLabel>Thread - Before Insert {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Thread - Before Insert</label>
@@ -63,10 +85,10 @@
         <name>Person</name>
         <label>Person</label>
         <locationX>176</locationX>
-        <locationY>311</locationY>
+        <locationY>431</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Assign_Person_Values</targetReference>
+            <targetReference>Has_Person</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -84,7 +106,7 @@
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Person</targetReference>
+            <targetReference>Assign_Common_Thread_Values</targetReference>
         </connector>
         <object>Thread__c</object>
         <recordTriggerType>Create</recordTriggerType>
