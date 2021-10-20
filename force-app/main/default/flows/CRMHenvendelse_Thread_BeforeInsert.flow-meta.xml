@@ -20,7 +20,45 @@
                 <elementReference>Person.Name</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Check_Date_Time_Registered</targetReference>
+        </connector>
     </assignments>
+    <assignments>
+        <name>Set_Registered_Datetime</name>
+        <label>Set Registered Datetime</label>
+        <locationX>264</locationX>
+        <locationY>671</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.CRM_Date_Time_Registered__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Check_Date_Time_Registered</name>
+        <label>Check Date Time Registered</label>
+        <locationX>176</locationX>
+        <locationY>551</locationY>
+        <defaultConnector>
+            <targetReference>Set_Registered_Datetime</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Datetime Not Set</defaultConnectorLabel>
+        <rules>
+            <name>Datetime_Set</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CRM_Date_Time_Registered__c</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Datetime Set</label>
+        </rules>
+    </decisions>
     <description>Set the associated person Actor Id and Natural ident (fnr/dnr/npid)</description>
     <interviewLabel>Thread - Before Insert {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Thread - Before Insert</label>

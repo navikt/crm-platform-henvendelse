@@ -13,7 +13,45 @@
                 <elementReference>Person.CRM_GT__c</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Check_Date_Time_Registered</targetReference>
+        </connector>
     </assignments>
+    <assignments>
+        <name>Set_Datetime_Registered</name>
+        <label>Set Datetime Registered</label>
+        <locationX>264</locationX>
+        <locationY>671</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.CRM_Date_Time_Registered__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Check_Date_Time_Registered</name>
+        <label>Check Date Time Registered</label>
+        <locationX>176</locationX>
+        <locationY>551</locationY>
+        <defaultConnector>
+            <targetReference>Set_Datetime_Registered</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Datetime Not Set</defaultConnectorLabel>
+        <rules>
+            <name>Datetime_Set</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CRM_Date_Time_Registered__c</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Datetime Set</label>
+        </rules>
+    </decisions>
     <description>Set Person GT on conversation note</description>
     <interviewLabel>Conversation Note - Before Insert {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Conversation Note - Before Insert</label>
