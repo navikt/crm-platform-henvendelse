@@ -21,11 +21,23 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
             switch on objectType {
                 when 'Conversation_Note__c' {
                     doConversationNoteJournal(apiReference, request);
-                    setResponse(200);
+                    List<Conversation_Note__c> notesFromDatabase = new CRM_ConversationNoteSelector()
+                        .selectByBehandlingskjedeId(apiReference);
+                    setResponse(200, JSON.serializePretty(new CRM_Henvendelse(notesFromDatabase)));
                 }
                 when 'Thread__c' {
                     doThreadJournal(apiReference, request);
-                    setResponse(200);
+                    Thread__c updatedThread = new CRM_ThreadSelector().selectByApiReference(apiReference);
+                    setResponse(
+                        200,
+                        JSON.serializePretty(
+                            new CRM_Henvendelse(
+                                updatedThread,
+                                updatedThread.Messages__r,
+                                updatedThread.Journal_Entries__r
+                            )
+                        )
+                    );
                 }
                 when else {
                     errorResponse(400, 'No journal flow defined for ID: ' + apiReference);

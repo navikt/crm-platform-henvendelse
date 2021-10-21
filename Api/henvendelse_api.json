@@ -61,7 +61,8 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "$ref": "#/components/schemas/Henvendelse"
                     },
                     "400": {
                         "$ref": "#/components/responses/BadRequest"
@@ -553,7 +554,7 @@
                         "example": "509934220"
                     }
                 },
-                "required": ["journalforerNavIdent", "journalforendeEnhet", "journalfortDato", "journalfortTema"]
+                "required": ["journalforerNavIdent", "journalfortDato", "journalfortTema"]
             },
             "MeldingFra": {
                 "type": "object",
@@ -690,7 +691,6 @@
                     "henvendelseType",
                     "aktorId",
                     "fnr",
-                    "opprinneligGT",
                     "opprettetDato",
                     "kontorsperre",
                     "feilsendt",
