@@ -109,6 +109,31 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
         return getRequestHeader('X-ACTING-NAV-IDENT');
     }
 
+    /**
+     * @description apiReference is unique accross the Thread and Conversation Note table. SOSL search to find the record Id with the matching apiReference
+     * @author Stian Ruud Schikora | 10-21-2021
+     * @param apiReference
+     * @return String
+     **/
+    public static Id getObjectId(String apiReference) {
+        Id objectId;
+
+        List<List<sObject>> soslResults = [
+            FIND :apiReference
+            RETURNING
+                Conversation_Note__c(Id, CRM_API_Reference__c WHERE CRM_API_Reference__c = :apiReference),
+                Thread__c(Id, CRM_API_Reference__c WHERE CRM_API_Reference__c = :apiReference)
+        ];
+        for (List<sObject> sobjectList : soslResults) {
+            if (sobjectList.size() > 0) {
+                objectId = (Id) sobjectList[0].get('Id');
+                break;
+            }
+        }
+
+        return objectId;
+    }
+
     public class HenvendelseConversionException extends exception {
     }
 }
