@@ -21,7 +21,7 @@
         <name>Assign_Person_Values_To_Thread</name>
         <label>Assign Person Values To Thread</label>
         <locationX>308</locationX>
-        <locationY>671</locationY>
+        <locationY>1007</locationY>
         <assignmentItems>
             <assignToReference>$Record.CRM_External_ActorId__c</assignToReference>
             <operator>Assign</operator>
@@ -37,11 +37,52 @@
             </value>
         </assignmentItems>
     </assignments>
+    <assignments>
+        <name>Set_Registered_Datetime</name>
+        <label>Set Registered Datetime</label>
+        <locationX>264</locationX>
+        <locationY>671</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.CRM_Date_Time_Registered__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Has_Person</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Check_Date_Time_Registered</name>
+        <label>Check Date Time Registered</label>
+        <locationX>176</locationX>
+        <locationY>551</locationY>
+        <defaultConnector>
+            <targetReference>Set_Registered_Datetime</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Datetime Not Set</defaultConnectorLabel>
+        <rules>
+            <name>Datetime_Set</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CRM_Date_Time_Registered__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Has_Person</targetReference>
+            </connector>
+            <label>Datetime Set</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Has_Person</name>
         <label>Has Person</label>
         <locationX>176</locationX>
-        <locationY>551</locationY>
+        <locationY>887</locationY>
         <defaultConnector>
             <targetReference>Assign_Person_Values_To_Thread</targetReference>
         </defaultConnector>
@@ -88,7 +129,7 @@
         <locationY>431</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Has_Person</targetReference>
+            <targetReference>Check_Date_Time_Registered</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>

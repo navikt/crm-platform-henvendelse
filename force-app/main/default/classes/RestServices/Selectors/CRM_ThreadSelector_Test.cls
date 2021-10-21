@@ -9,7 +9,11 @@ public class CRM_ThreadSelector_Test {
         Contact personCon = [SELECT Id, AccountId FROM Contact WHERE Account.CRM_Person__c = :dummyPerson.Id LIMIT 1];
 
         Thread__c thread = (Thread__c) CRM_HENV_TestDataFactory.createRecord(
-            new Thread__c(CRM_Contact__c = personCon.Id, CRM_Account__c = personCon.AccountId)
+            new Thread__c(
+                CRM_Thread_Type__c = 'STO',
+                CRM_Contact__c = personCon.Id,
+                CRM_Account__c = personCon.AccountId
+            )
         );
 
         CRM_HENV_TestDataFactory.createRecord(

@@ -20,7 +20,45 @@
                 <elementReference>FromLabel</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Check_Date_Time_Sent</targetReference>
+        </connector>
     </assignments>
+    <assignments>
+        <name>Set_Sent_Time</name>
+        <label>Set Sent Time</label>
+        <locationX>308</locationX>
+        <locationY>551</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.CRM_Sent_date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Check_Date_Time_Sent</name>
+        <label>Check Date Time Sent</label>
+        <locationX>176</locationX>
+        <locationY>431</locationY>
+        <defaultConnector>
+            <targetReference>Set_Sent_Time</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Sent Time Not Set</defaultConnectorLabel>
+        <rules>
+            <name>Sent_Time_Set</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CRM_Sent_date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Sent Time Set</label>
+        </rules>
+    </decisions>
     <description>Set the fields external message and the From label</description>
     <formulas>
         <name>FromLabel</name>
@@ -75,5 +113,5 @@
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
 </Flow>
