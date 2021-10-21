@@ -16,9 +16,10 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
 
         try {
             String apiReference = request.kjedeId;
-            String objectType = CRM_ReferenceUtil.getObjectNameFromIdPrefix(apiReference.substring(0, 3));
+            Id objectId = getObjectId(apiReference);
+            String objectName = objectId != null ? objectId.getSobjectType().getDescribe().getName() : null;
 
-            switch on objectType {
+            switch on objectName {
                 when 'Conversation_Note__c' {
                     doConversationNoteJournal(apiReference, request);
                     List<Conversation_Note__c> notesFromDatabase = new CRM_ConversationNoteSelector()
@@ -26,7 +27,7 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
                     setResponse(200, JSON.serializePretty(new CRM_Henvendelse(notesFromDatabase)));
                 }
                 when 'Thread__c' {
-                    doThreadJournal(apiReference, request);
+                    doThreadJournal(objectId, request);
                     Thread__c updatedThread = new CRM_ThreadSelector().selectByApiReference(apiReference);
                     setResponse(
                         200,
@@ -59,6 +60,13 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
         }
     }
 
+    /**
+     * @description: gets all the conversation note on the same behandlingskjedeId and calls journal flow for each record
+     * Flow handles if some entries already have been journaled.
+     * @author Stian Ruud Schikora | 10-21-2021
+     * @param apiReference
+     * @param request
+     **/
     private static void doConversationNoteJournal(String apiReference, HenvendelseJournalRequest request) {
         List<Conversation_Note__c> notesToUpdate = new List<Conversation_Note__c>();
         List<Journal_Entry__c> jEntriesToCreate = new List<Journal_Entry__c>();
@@ -87,11 +95,15 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
         insert jEntriesToCreate;
     }
 
-    private static void doThreadJournal(String apiReference, HenvendelseJournalRequest request) {
-        Thread__c thread = new CRM_ThreadSelector().selectByApiReference(apiReference);
-
+    /**
+     * @description: Calls the thread journal flow for a specified thread ID
+     * @author Stian Ruud Schikora | 10-21-2021
+     * @param threadId
+     * @param request
+     **/
+    private static void doThreadJournal(String threadId, HenvendelseJournalRequest request) {
         Map<String, Object> flowInputs = new Map<String, Object>{
-            'recordId' => thread.Id,
+            'recordId' => threadId,
             'Journal_Case_ID' => request.saksId,
             'Journal_Case_Legacy_System' => request.fagsaksystem,
             'Journal_Theme_Code' => request.temakode,

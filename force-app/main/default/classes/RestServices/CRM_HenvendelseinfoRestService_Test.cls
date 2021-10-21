@@ -40,7 +40,7 @@ public class CRM_HenvendelseinfoRestService_Test {
 
     @isTest
     static void testGetConversationNote() {
-        String convNoteRef = [SELECT Id, CRM_API_Reference__c FROM Conversation_Note__c LIMIT 1].CRM_API_Reference__c;
+        Conversation_Note__c convNote = [SELECT Id, CRM_API_Reference__c FROM Conversation_Note__c LIMIT 1];
 
         RestRequest req = new RestRequest();
         RestResponse resp = new RestResponse();
@@ -48,12 +48,16 @@ public class CRM_HenvendelseinfoRestService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() +
             '/services/apexrest/henvendelseinfo/henvendelse/' +
-            convNoteRef;
+            convNote.CRM_API_Reference__c;
         req.headers.put('X-Correlation-ID', '123TEST');
         req.httpMethod = 'GET';
         RestContext.request = req;
         RestContext.response = resp;
 
+        List<Id> fixedSearchResults = new List<Id>();
+        fixedSearchResults.add(convNote.Id);
+        //Setting the SOSL fixed search results
+        Test.setFixedSearchResults(fixedSearchResults);
         Test.startTest();
         CRM_HenvendelseinfoRestService.getHenvendelse();
         Test.stopTest();
@@ -63,7 +67,7 @@ public class CRM_HenvendelseinfoRestService_Test {
 
     @isTest
     static void testGetThread() {
-        String threadRef = [SELECT Id, CRM_API_Reference__c FROM Thread__c LIMIT 1].CRM_API_Reference__c;
+        Thread__c thread = [SELECT Id, CRM_API_Reference__c FROM Thread__c LIMIT 1];
 
         RestRequest req = new RestRequest();
         RestResponse resp = new RestResponse();
@@ -71,12 +75,16 @@ public class CRM_HenvendelseinfoRestService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() +
             '/services/apexrest/henvendelseinfo/henvendelse/' +
-            threadRef;
+            thread.CRM_API_Reference__c;
         req.headers.put('X-Correlation-ID', '123TEST');
         req.httpMethod = 'GET';
         RestContext.request = req;
         RestContext.response = resp;
 
+        List<Id> fixedSearchResults = new List<Id>();
+        fixedSearchResults.add(thread.Id);
+        //Setting the SOSL fixed search results
+        Test.setFixedSearchResults(fixedSearchResults);
         Test.startTest();
         CRM_HenvendelseinfoRestService.getHenvendelse();
         Test.stopTest();
@@ -130,7 +138,7 @@ public class CRM_HenvendelseinfoRestService_Test {
 
     @isTest
     static void testException() {
-        String threadRef = [SELECT Id, CRM_API_Reference__c FROM Thread__c LIMIT 1].CRM_API_Reference__c;
+        Thread__c thread = [SELECT Id, CRM_API_Reference__c FROM Thread__c LIMIT 1];
 
         RestRequest req = new RestRequest();
         RestResponse resp = new RestResponse();
@@ -138,12 +146,16 @@ public class CRM_HenvendelseinfoRestService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() +
             '/services/apexrest/henvendelseinfo/henvendelse/' +
-            threadRef;
+            thread.CRM_API_Reference__c;
         req.headers.put('X-Correlation-ID', '123TEST');
         req.httpMethod = 'GET';
         RestContext.request = req;
         RestContext.response = resp;
 
+        List<Id> fixedSearchResults = new List<Id>();
+        fixedSearchResults.add(thread.Id);
+        //Setting the SOSL fixed search results
+        Test.setFixedSearchResults(fixedSearchResults);
         Test.startTest();
         CRM_HenvendelseinfoRestService.simulateException(new QueryException('TEST'));
         CRM_HenvendelseinfoRestService.getHenvendelse();

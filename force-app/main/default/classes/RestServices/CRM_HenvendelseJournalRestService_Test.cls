@@ -27,6 +27,10 @@ public class CRM_HenvendelseJournalRestService_Test {
         RestContext.request = restReq;
         RestContext.response = new RestResponse();
 
+        List<Id> fixedSearchResults = new List<Id>();
+        fixedSearchResults.add(convNote.Id);
+        //Setting the SOSL fixed search results
+        Test.setFixedSearchResults(fixedSearchResults);
         Test.startTest();
         CRM_HenvendelseJournalRestService.createJournalPost();
         Test.stopTest();
@@ -59,6 +63,10 @@ public class CRM_HenvendelseJournalRestService_Test {
         RestContext.request = restReq;
         RestContext.response = new RestResponse();
 
+        List<Id> fixedSearchResults = new List<Id>();
+        fixedSearchResults.add(thread.Id);
+        //Setting the SOSL fixed search results
+        Test.setFixedSearchResults(fixedSearchResults);
         Test.startTest();
         CRM_HenvendelseJournalRestService.createJournalPost();
         Test.stopTest();
