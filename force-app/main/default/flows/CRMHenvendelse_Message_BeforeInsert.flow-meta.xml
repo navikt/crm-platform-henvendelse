@@ -27,7 +27,7 @@
     <assignments>
         <name>Set_Sent_Time</name>
         <label>Set Sent Time</label>
-        <locationX>264</locationX>
+        <locationX>308</locationX>
         <locationY>551</locationY>
         <assignmentItems>
             <assignToReference>$Record.CRM_Sent_date__c</assignToReference>
@@ -51,9 +51,9 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.CRM_Sent_date__c</leftValueReference>
-                <operator>WasSet</operator>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <label>Sent Time Set</label>
