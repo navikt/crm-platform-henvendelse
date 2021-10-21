@@ -62,6 +62,7 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
             convNote.CRM_Disposal_Datetime__c = Datetime.valueOfGmt(henv.kasseringsDato.replace('T', ' '));
         }
         if (henv.kontorsperre != null) {
+            //Update to set the correct sensoring fields
             convNote.CRM_Office_Restriction__c = henv.kontorsperre;
         }
         if (henv.feilsendt != null) {
