@@ -76,7 +76,7 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
         for (Conversation_Note__c convNote : noteList) {
             Map<String, Object> flowInputs = new Map<String, Object>{
                 'recordId' => convNote.Id,
-                'Journal_Case_ID' => request.saksId,
+                'Journal_Case_ID' => request.fagsakId,
                 'Journal_Case_Legacy_System' => request.fagsaksystem,
                 'Journal_Theme_Code' => request.temakode,
                 'Journal_Entry_Unit' => request.journalforendeEnhet,
@@ -104,7 +104,7 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
     private static void doThreadJournal(String threadId, HenvendelseJournalRequest request) {
         Map<String, Object> flowInputs = new Map<String, Object>{
             'recordId' => threadId,
-            'Journal_Case_ID' => request.saksId,
+            'Journal_Case_ID' => request.fagsakId,
             'Journal_Case_Legacy_System' => request.fagsaksystem,
             'Journal_Theme_Code' => request.temakode,
             'Journal_Entry_Unit' => request.journalforendeEnhet,
@@ -124,7 +124,7 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
 
     global class HenvendelseJournalRequest {
         global String journalforendeEnhet;
-        global String saksId;
+        global String fagsakId;
         global String kjedeId;
         global String temakode;
         global String fagsaksystem;
