@@ -13,6 +13,20 @@
                 <elementReference>Person.CRM_GT__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.INT_PersonIdent__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Person.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.INT_ActorId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Person.INT_ActorId__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Check_Date_Time_Registered</targetReference>
         </connector>

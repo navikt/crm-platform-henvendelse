@@ -75,7 +75,7 @@
         <inputAssignments>
             <name>MessageDateTime</name>
             <value>
-                <elementReference>$Record.CRM_Sent_Datetime_Formula__c</elementReference>
+                <elementReference>$Record.CRM_Sent_date__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
