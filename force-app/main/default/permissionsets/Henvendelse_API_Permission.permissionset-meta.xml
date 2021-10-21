@@ -32,6 +32,14 @@
         <apexClass>CRM_JournalUtilities</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>UN_DoneProducerLegacy</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>UN_InnboksProducerLegacy</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <description>Permission set that grants access to the henvendelse API in addition to read and write access to necessary fields.</description>
     <fieldPermissions>
         <editable>false</editable>
@@ -300,11 +308,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Thread__c.CRM_Type__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Thread__c.CRM_Created_By_Ident__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -406,6 +409,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Thread__c.CRM_Theme_Group_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Thread__c.CRM_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
