@@ -65,7 +65,7 @@
         <inputParameters>
             <name>tidspunkt</name>
             <value>
-                <elementReference>ConversationNote.CRM_Registered_Datetime_Formula__c</elementReference>
+                <elementReference>ConversationNote.CRM_Date_Time_Registered__c</elementReference>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
