@@ -14,7 +14,7 @@ global class CRM_Melding extends CRM_HenvendelseApiUtils {
 
     global CRM_Melding(Message__c message) {
         this.fritekst = message.CRM_Message_Text__c;
-        this.sendtDato = formatDateTime(message.CRM_Sent_Datetime_Formula__c);
+        this.sendtDato = formatDateTime(message.CRM_Sent_Date__c);
         this.lestDato = formatDateTime(message.CRM_Read_Datetime__c);
         this.kanal = Communication_Channel.DIGITAL.name();
 
@@ -29,7 +29,7 @@ global class CRM_Melding extends CRM_HenvendelseApiUtils {
     global CRM_Melding(Conversation_Note__c convNote) {
         this.fritekst = convNote.CRM_Conversation_Note__c;
         this.lestDato = formatDateTime(convNote.CRM_Read_Date__c);
-        this.sendtDato = formatDateTime(convNote.CRM_Registered_Datetime_Formula__c);
+        this.sendtDato = formatDateTime(convNote.CRM_Date_Time_Registered__c);
         if (String.isNotBlank(convNote.CRM_Communication_Channel__c)) {
             this.kanal = convNote.CRM_Communication_Channel__c.equalsIgnoreCase('Phone')
                 ? Communication_Channel.TELEFON.name()

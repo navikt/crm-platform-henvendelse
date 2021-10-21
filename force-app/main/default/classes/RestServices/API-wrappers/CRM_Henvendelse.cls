@@ -52,7 +52,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         this.gjeldendeTema = convNote.CRM_Theme_Code__c;
         this.opprinneligGT = convNote.CRM_Original_Person_GT__c;
         this.opprinneligEnhet = convNote.CRM_Original_Person_NAV_Unit__c;
-        this.opprettetDato = formatDateTime(convNote.CRM_Registered_Datetime_Formula__c);
+        this.opprettetDato = formatDateTime(convNote.CRM_Date_Time_Registered__c);
         this.avsluttetDato = this.opprettetDato;
         this.kjedeId = convNote.CRM_Henvendelse_BehandlingskjedeId__c;
         this.henvendelseType = HENVENDELSE_TYPE.SAMTALEREFERAT.name();
@@ -105,7 +105,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         this.opprinneligGT = thread.CRM_Original_Person_GT__c;
         this.opprinneligEnhet = thread.CRM_Original_Person_NAV_Unit__c;
         this.kasseringsDato = formatDateTime(thread.CRM_Disposal_Datetime__c);
-        this.opprettetDato = formatDateTime(thread.CRM_Registered_Datetime_Formula__c);
+        this.opprettetDato = formatDateTime(thread.CRM_Date_Time_Registered__c);
         this.avsluttetDato = formatDateTime(thread.CRM_Closed_Date__c);
         this.meldinger = new List<CRM_Melding>();
         this.henvendelseType = HENVENDELSE_TYPE.MELDINGSKJEDE.name();
