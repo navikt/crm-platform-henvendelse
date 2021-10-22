@@ -105,7 +105,7 @@
         <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>CRM_Office_Restriction__c</field>
+            <field>CRM_Incorrectly_Sent__c</field>
             <operator>EqualTo</operator>
             <value>
                 <booleanValue>true</booleanValue>
