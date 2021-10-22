@@ -56,4 +56,12 @@
         <shortDescription>CRM Henvendelse - Thread URL</shortDescription>
         <value>/skriv-til-oss</value>
     </labels>
+    <labels>
+        <fullName>CRMHenvendelse_RedactedMessageNotificationText</fullName>
+        <categories>Henvendelse, User Notification, Sladding</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Redacted Message Notification Text</shortDescription>
+        <value>Sensitiv informasjon har blitt fjernet fra din samtale med NAV</value>
+    </labels>
 </CustomLabels>
