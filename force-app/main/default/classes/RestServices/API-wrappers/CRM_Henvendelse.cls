@@ -80,6 +80,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         if (convNote.CRM_Incorrectly_Sent__c == true) {
             CRM_Markering incSent = new CRM_Markering();
             this.feilsendt = true;
+            incSent.markeringstype = CRM_Markering.MARKING_TYPES.FEILSENDT.name();
             incSent.markertAv = convNote.CRM_Incorrectly_Sent_Activated_By__c;
             incSent.markertDato = formatDateTime(convNote.CRM_Incorrectly_Sent_Date__c);
             addMarkering(incSent);
@@ -150,6 +151,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         if (thread.CRM_Incorrectly_Sent__c == true) {
             CRM_Markering incSent = new CRM_Markering();
             this.feilsendt = true;
+            incSent.markeringstype = CRM_Markering.MARKING_TYPES.FEILSENDT.name();
             incSent.markertAv = thread.CRM_Incorrectly_Sent_Activated_By__c;
             incSent.markertDato = formatDateTime(thread.CRM_Incorrectly_Sent_Date__c);
             addMarkering(incSent);
