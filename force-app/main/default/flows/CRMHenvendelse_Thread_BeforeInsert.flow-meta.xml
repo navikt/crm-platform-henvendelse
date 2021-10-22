@@ -4,7 +4,7 @@
     <assignments>
         <name>Assign_Common_Thread_Values</name>
         <label>Assign Common Thread Values</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>311</locationY>
         <assignmentItems>
             <assignToReference>$Record.CRM_Type__c</assignToReference>
@@ -20,7 +20,7 @@
     <assignments>
         <name>Assign_Person_Values_To_Thread</name>
         <label>Assign Person Values To Thread</label>
-        <locationX>308</locationX>
+        <locationX>50</locationX>
         <locationY>1007</locationY>
         <assignmentItems>
             <assignToReference>$Record.CRM_External_ActorId__c</assignToReference>
@@ -40,7 +40,7 @@
     <assignments>
         <name>Set_Registered_Datetime</name>
         <label>Set Registered Datetime</label>
-        <locationX>264</locationX>
+        <locationX>270</locationX>
         <locationY>671</locationY>
         <assignmentItems>
             <assignToReference>$Record.CRM_Date_Time_Registered__c</assignToReference>
@@ -56,7 +56,7 @@
     <decisions>
         <name>Check_Date_Time_Registered</name>
         <label>Check Date Time Registered</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>551</locationY>
         <defaultConnector>
             <targetReference>Set_Registered_Datetime</targetReference>
@@ -80,24 +80,31 @@
     </decisions>
     <decisions>
         <name>Has_Person</name>
-        <label>Has Person</label>
-        <locationX>176</locationX>
+        <label>Has Person and need details</label>
+        <locationX>182</locationX>
         <locationY>887</locationY>
-        <defaultConnector>
-            <targetReference>Assign_Person_Values_To_Thread</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Yes</defaultConnectorLabel>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
-            <name>Has_Person_No</name>
+            <name>Has_Person_Yes</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Person</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.INT_ActorId__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
-            <label>No</label>
+            <connector>
+                <targetReference>Assign_Person_Values_To_Thread</targetReference>
+            </connector>
+            <label>Yes</label>
         </rules>
     </decisions>
     <description>Set the associated person Actor Id and Natural ident (fnr/dnr/npid)</description>
@@ -125,7 +132,7 @@
     <recordLookups>
         <name>Person</name>
         <label>Person</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>431</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -144,7 +151,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Assign_Common_Thread_Values</targetReference>
