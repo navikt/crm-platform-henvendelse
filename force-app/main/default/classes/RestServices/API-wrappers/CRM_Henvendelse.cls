@@ -5,6 +5,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
     global String avsluttetDato;
     global String opprettetDato;
     global Boolean kontorsperre;
+    global Boolean sladding;
     global Boolean feilsendt;
     global String kjedeId;
     global String opprinneligGT;
@@ -56,6 +57,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         this.avsluttetDato = this.opprettetDato;
         this.kjedeId = convNote.CRM_Henvendelse_BehandlingskjedeId__c;
         this.henvendelseType = HENVENDELSE_TYPE.SAMTALEREFERAT.name();
+        this.sladding = convNote.STO_Sensitive_Information__c;
 
         this.meldinger = new List<CRM_Melding>();
         this.meldinger.add(new CRM_Melding(convNote));
@@ -126,6 +128,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         this.henvendelseType = HENVENDELSE_TYPE.MELDINGSKJEDE.name();
         this.gjeldendeTemagruppe = thread.CRM_Theme_Group_Code__c;
         this.gjeldendeTema = thread.CRM_Theme_Code__c;
+        this.sladding = thread.STO_Sensitive_Information__c;
 
         for (Message__c message : messages) {
             this.meldinger.add(new CRM_Melding(message));

@@ -38,6 +38,9 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
         if (henv.feilsendt != null) {
             convertedThread.CRM_Incorrectly_Sent__c = henv.feilsendt;
         }
+        if (henv.sladding != null && henv.sladding == true) {
+            convertedThread.STO_Sensitive_Information__c = henv.sladding;
+        }
         if (String.isNotBlank(henv.gjeldendeTemagruppe)) {
             Id themeGroupId = getThemeGroup(henv.gjeldendeTemagruppe);
 
@@ -67,6 +70,9 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
         }
         if (henv.feilsendt != null) {
             convNote.CRM_Incorrectly_Sent__c = henv.feilsendt;
+        }
+        if (henv.sladding != null && henv.sladding == true) {
+            convNote.STO_Sensitive_Information__c = henv.sladding;
         }
         if (String.isNotBlank(henv.gjeldendeTemagruppe)) {
             Id themeGroupId = getThemeGroup(henv.gjeldendeTemagruppe);
