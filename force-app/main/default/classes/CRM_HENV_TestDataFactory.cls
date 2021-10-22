@@ -513,7 +513,8 @@ public class CRM_HENV_TestDataFactory {
         public Map<String, Object> getFieldDefaults(Boolean bulkify) {
             return new Map<String, Object>{
                 'CRM_Case__c' => bulkify ? 'Case' : createRecord('Case', null),
-                'CRM_Account__c' => bulkify ? 'Account' : createRecord('Account', null)
+                'CRM_Account__c' => bulkify ? 'Account' : createRecord('Account', null),
+                'CRM_Created_By_Ident__c' => 'Z999999'
             };
         }
         public Map<String, String> getDmlFields() {

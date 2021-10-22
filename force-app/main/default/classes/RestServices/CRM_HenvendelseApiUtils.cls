@@ -35,6 +35,9 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
         if (henv.kontorsperre != null) {
             convertedThread.CRM_Office_Restriction__c = henv.kontorsperre;
         }
+        if (henv.feilsendt != null) {
+            convertedThread.CRM_Incorrectly_Sent__c = henv.feilsendt;
+        }
         if (String.isNotBlank(henv.gjeldendeTemagruppe)) {
             Id themeGroupId = getThemeGroup(henv.gjeldendeTemagruppe);
 
@@ -59,7 +62,11 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
             convNote.CRM_Disposal_Datetime__c = Datetime.valueOfGmt(henv.kasseringsDato.replace('T', ' '));
         }
         if (henv.kontorsperre != null) {
+            //Update to set the correct sensoring fields
             convNote.CRM_Office_Restriction__c = henv.kontorsperre;
+        }
+        if (henv.feilsendt != null) {
+            convNote.CRM_Incorrectly_Sent__c = henv.feilsendt;
         }
         if (String.isNotBlank(henv.gjeldendeTemagruppe)) {
             Id themeGroupId = getThemeGroup(henv.gjeldendeTemagruppe);

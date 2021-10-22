@@ -15,6 +15,9 @@ public inherited sharing class CRM_ConversationNoteSelector extends CRM_ApiSelec
         'CRM_Created_By_Ident__c',
         'CRM_Office_Restriction_Activated_By__c',
         'CRM_Office_Restriction_Date__c',
+        'CRM_Incorrectly_Sent_Activated_By__c',
+        'CRM_Incorrectly_Sent_Date__c',
+        'CRM_Incorrectly_Sent__c',
         'CRM_Disposal_Datetime__c',
         'CRM_Communication_Channel__c',
         'CRM_Created_By_NAV_Unit__c',
@@ -48,7 +51,7 @@ public inherited sharing class CRM_ConversationNoteSelector extends CRM_ApiSelec
         query
             .selectFields(QUERY_FIELDS)
             .setCondition(
-                'CRM_Account__r.CRM_Person__r.INT_ActorId__c in :actorIds AND CRM_Henvendelse_BehandlingskjedeId__c != null'
+                'CRM_Account__r.CRM_Person__r.INT_ActorId__c in :actorIds AND CRM_Henvendelse_BehandlingskjedeId__c != null AND CRM_Created_By_Ident__c != null'
             )
             .setOrdering('CRM_Date_Time_Registered__c', fflib_QueryFactory.SortOrder.DESCENDING);
         //Adds the Journal entry selector query as a relationship query to the Conversation Note query
