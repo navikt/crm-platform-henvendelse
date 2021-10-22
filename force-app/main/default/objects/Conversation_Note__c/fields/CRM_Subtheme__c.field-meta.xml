@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CRM_Subtheme__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
@@ -7,7 +7,6 @@
     <label>Subtheme</label>
     <lookupFilter>
         <active>true</active>
-        <errorMessage>Invalid value for chosen theme.</errorMessage>
         <filterItems>
             <field>Common_Code__c.CRM_Code_Set__c</field>
             <operation>equals</operation>

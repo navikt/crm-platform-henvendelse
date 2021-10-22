@@ -89,7 +89,7 @@ public with sharing class CRM_MessageHelper {
                     CRM_From_Contact__c,
                     CRM_From_First_Name__c,
                     CRM_From_Last_Name__c,
-                    CRM_External_Message__c, 
+                    CRM_External_Message__c,
                     CRM_From_Label__c
                 FROM Message__c
                 WHERE CRM_Thread__c = :threadId
@@ -130,17 +130,16 @@ public with sharing class CRM_MessageHelper {
      * @Author Lars Petter Johnsen
      */
     @AuraEnabled
-    public static Boolean createMessage(Id threadId, String messageText, Id fromContactId){
+    public static Boolean createMessage(Id threadId, String messageText, Id fromContactId) {
         Message__c m = new Message__c();
         m.CRM_Message_Text__c = messageText;
         m.CRM_Thread__c = threadId;
         m.CRM_From_Contact__c = fromContactId;
 
-        try{
+        try {
             insert m;
             return true;
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
     }

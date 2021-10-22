@@ -4,8 +4,7 @@
     <div class="document">
         <div class="header">
             <!-- HEADER CONTENT-->
-            <apex:image
-                url="{!URLFOR($Resource.stoLogos,
+            <apex:image url="{!URLFOR($Resource.stoLogos,
                 'navLogo.png')}"
             />
         </div>
@@ -18,14 +17,14 @@
             <span>
                 <b>Mottatt/Sendt: </b>
                 <apex:outputText value=" {0, date, dd/MM/yyy - HH:mm}">
-                    <apex:param value="{!conversation_note__c.CRM_Date_Time_Registered__c}" />
+                    <apex:param value="{!Conversation_Note__c.CRM_Date_Time_Registered__c}" />
                 </apex:outputText>
                 <br />
             </span>
-            <apex:outputPanel rendered="{!conversation_note__c.CRM_Communication_Channel__c == 'Meeting'}">
+            <apex:outputPanel rendered="{!Conversation_Note__c.CRM_Communication_Channel__c == 'Meeting'}">
                 <span> <b>Type: </b>Samtalereferat (oppmøte) <br /> </span>
             </apex:outputPanel>
-            <apex:outputPanel rendered="{!conversation_note__c.CRM_Communication_Channel__c == 'Phone'}">
+            <apex:outputPanel rendered="{!Conversation_Note__c.CRM_Communication_Channel__c == 'Phone'}">
                 <span> <b>Type: </b>Samtalereferat (telefon) <br /> </span>
             </apex:outputPanel>
             <br />

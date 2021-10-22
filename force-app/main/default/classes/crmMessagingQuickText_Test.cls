@@ -1,8 +1,7 @@
 @isTest
 public class crmMessagingQuickText_Test {
-
     @TestSetup
-    static void makeData(){
+    static void makeData() {
         QuickText text = new QuickText();
         text.Message = 'Text Message';
         text.Name = 'Sample Name';
@@ -11,14 +10,16 @@ public class crmMessagingQuickText_Test {
         insert text;
     }
     @isTest
-    static void searchTest(){
-        List<CRM_HenvendelseQuicktextController.QuickTextMessage> resultList = CRM_HenvendelseQuicktextController.searchRecords('sample');
+    static void searchTest() {
+        List<CRM_HenvendelseQuicktextController.QuickTextMessage> resultList = CRM_HenvendelseQuicktextController.searchRecords(
+            'sample'
+        );
         System.assertEquals(1, resultList.size());
     }
     @isTest
-    static void getQuickTextsTest(){
+    static void getQuickTextsTest() {
         List<QuickText> quicktextgs = CRM_HenvendelseQuicktextController.getQuicktexts();
-        //Test assert ommitied to avoid packaging conflicts 
+        //Test assert ommitied to avoid packaging conflicts
         //TODO: Move NKSAbbreviationKey to another package
     }
 }

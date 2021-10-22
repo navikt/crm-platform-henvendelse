@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata" fqn="recordComponent">
     <apiVersion>47.0</apiVersion>
     <isExposed>true</isExposed>
@@ -10,14 +10,10 @@
     <targetConfigs>
         <targetConfig targets="lightningCommunity__Default">
             <property name="recordId" type="String" label="Record ID" description="Should be set to {!recordId}" default="{!recordId}"/>
-            <property name="header" type="String" label="Header text"  />
-            <property name="secondheader" type="String" label="Secondary header text" />
-            <property name="alerttext" type="String" label="Alert text when closed" 
-            description="Alert text shown when the thread is closed. HTML formatted"
-            default="Dialogen er lukket" />
-            <property name="alertopen" type="String" label="Alert text when still open" 
-            description="Alert text shown when the thread is closed. HTML formatted"
-            default="" />
+            <property name="header" type="String" label="Header text"/>
+            <property name="secondheader" type="String" label="Secondary header text"/>
+            <property name="alerttext" type="String" label="Alert text when closed" description="Alert text shown when the thread is closed. HTML formatted" default="Dialogen er lukket"/>
+            <property name="alertopen" type="String" label="Alert text when still open" description="Alert text shown when the thread is closed. HTML formatted" default=""/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

@@ -109,8 +109,7 @@ export default class nksQuickText extends LightningElement {
     @api isopen() {
         if (this.template.querySelector('[data-id="modal"]').className == 'modalShow') {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -184,14 +183,12 @@ export default class nksQuickText extends LightningElement {
             return { isValid: true };
         }
     }
-    setheader() {
-
-    }
+    setheader() {}
     @api clear(event) {
         let inputField = this.template.querySelector('.conversationNoteTextArea');
         inputField.value = '';
     }
     handlePaste() {
-        handleChange()
+        handleChange();
     }
 }

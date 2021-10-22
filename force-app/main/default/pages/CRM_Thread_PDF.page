@@ -4,8 +4,7 @@
     <div class="document">
         <div class="header">
             <!-- HEADER CONTENT-->
-            <apex:image
-                url="{!URLFOR($Resource.stoLogos,
+            <apex:image url="{!URLFOR($Resource.stoLogos,
                 'navLogo.png')}"
             />
         </div>
@@ -18,7 +17,7 @@
             <span>
                 <b>Mottatt/Sendt: </b>
                 <apex:outputText value=" {0, date, dd/MM/yyy - HH:mm}">
-                    <apex:param value="{!thread__c.CRM_Registered_Datetime_Formula__c}" />
+                    <apex:param value="{!Thread__c.CRM_Registered_Datetime_Formula__c}" />
                 </apex:outputText>
                 <br />
             </span>
