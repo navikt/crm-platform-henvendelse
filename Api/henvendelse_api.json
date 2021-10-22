@@ -649,6 +649,11 @@
                         "description": "Definerer om henvendelsen er markert som kontorsperret. Markeringsinformasjon finnes i listen av markeringer",
                         "example": false
                     },
+                    "sladding": {
+                        "type": "boolean",
+                        "description": "Definerer om henvendelsen skal vurderes for sladding. Dette sender henvendelsen til en sladdekø",
+                        "example": false
+                    },
                     "feilsendt": {
                         "type": "boolean",
                         "description": "Definerer om henvendelsen er markert som feilsendt. Markeringsinformasjon finnes i listen av markeringer",
