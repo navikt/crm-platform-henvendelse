@@ -40,7 +40,15 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
             logger.publish();
         } catch (Exception ex) {
             errorResponse(500, 'Unknown error: ' + ex.getMessage());
-            logger.error('Unknown error: ' + ex.getMessage(), null, CRM_ApplicationDomain.Domain.NKS, correlationId);
+            logger.error(
+                'Unknown error: ' +
+                ex.getMessage() +
+                '\n' +
+                ex.getStackTraceString(),
+                null,
+                CRM_ApplicationDomain.Domain.NKS,
+                correlationId
+            );
         } finally {
             logger.publish();
         }

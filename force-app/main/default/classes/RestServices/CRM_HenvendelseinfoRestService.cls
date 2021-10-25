@@ -34,7 +34,15 @@ global without sharing class CRM_HenvendelseinfoRestService extends CRM_Henvende
             logger.publish();
         } catch (Exception ex) {
             errorResponse(500, 'Exception: ' + ex.getMessage());
-            logger.error('Exception: ' + ex.getMessage(), null, CRM_ApplicationDomain.Domain.NKS, correlationId);
+            logger.error(
+                'Exception: ' +
+                ex.getMessage() +
+                '\n' +
+                ex.getStackTraceString(),
+                null,
+                CRM_ApplicationDomain.Domain.NKS,
+                correlationId
+            );
         } finally {
             logger.publish();
         }
