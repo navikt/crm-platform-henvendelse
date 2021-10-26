@@ -42,7 +42,9 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
         //Adds the Journal entry selector query as a relationship query to the Thread query
         new CRM_JournalEntrySelector().addQueryFactorySubselect(query, 'Journal_Entries__r');
         //Adds the Journal entry selector query as a relationship query to the Thread query
-        new CRM_MessageSelector().addQueryFactorySubselect(query, 'Messages__r');
+        query.subselectQuery('Messages__r')
+            .selectFields(new CRM_MessageSelector().getSObjectFieldList())
+            .setCondition('CRM_Type__c = \'Message\'');
         return (Thread__c) Database.query(query.toSOQL());
     }
 
@@ -52,7 +54,9 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
         //Adds the Journal entry selector query as a relationship query to the Thread query
         new CRM_JournalEntrySelector().addQueryFactorySubselect(query, 'Journal_Entries__r');
         //Adds the Journal entry selector query as a relationship query to the Thread query
-        new CRM_MessageSelector().addQueryFactorySubselect(query, 'Messages__r');
+        query.subselectQuery('Messages__r')
+            .selectFields(new CRM_MessageSelector().getSObjectFieldList())
+            .setCondition('CRM_Type__c = \'Message\'');
         return (Thread__c) Database.query(query.toSOQL());
     }
 
@@ -70,7 +74,9 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
         //Adds the Journal entry selector query as a relationship query to the Thread query
         new CRM_JournalEntrySelector().addQueryFactorySubselect(query, 'Journal_Entries__r');
         //Adds the Journal entry selector query as a relationship query to the Thread query
-        new CRM_MessageSelector().addQueryFactorySubselect(query, 'Messages__r');
+        query.subselectQuery('Messages__r')
+            .selectFields(new CRM_MessageSelector().getSObjectFieldList())
+            .setCondition('CRM_Type__c = \'Message\'');
         return (List<Thread__c>) Database.query(query.toSOQL());
     }
 }
