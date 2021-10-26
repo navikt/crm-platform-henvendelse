@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Thread_List_View</fullName>
+    <columns>NAME</columns>
+    <columns>CRM_Office_Restriction_Activated_By__c</columns>
+    <columns>CRM_Office_Restriction_Date__c</columns>
+    <columns>CRM_Office_Restriction_Unit__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>STO_Sensitive_Information__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <label>Sladdekø</label>
+</ListView>
