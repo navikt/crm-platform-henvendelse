@@ -54,10 +54,6 @@ public class CRM_HenvendelseinfoRestService_Test {
         RestContext.request = req;
         RestContext.response = resp;
 
-        List<Id> fixedSearchResults = new List<Id>();
-        fixedSearchResults.add(convNote.Id);
-        //Setting the SOSL fixed search results
-        Test.setFixedSearchResults(fixedSearchResults);
         Test.startTest();
         CRM_HenvendelseinfoRestService.getHenvendelse();
         Test.stopTest();
@@ -81,10 +77,6 @@ public class CRM_HenvendelseinfoRestService_Test {
         RestContext.request = req;
         RestContext.response = resp;
 
-        List<Id> fixedSearchResults = new List<Id>();
-        fixedSearchResults.add(thread.Id);
-        //Setting the SOSL fixed search results
-        Test.setFixedSearchResults(fixedSearchResults);
         Test.startTest();
         CRM_HenvendelseinfoRestService.getHenvendelse();
         Test.stopTest();
@@ -152,10 +144,6 @@ public class CRM_HenvendelseinfoRestService_Test {
         RestContext.request = req;
         RestContext.response = resp;
 
-        List<Id> fixedSearchResults = new List<Id>();
-        fixedSearchResults.add(thread.Id);
-        //Setting the SOSL fixed search results
-        Test.setFixedSearchResults(fixedSearchResults);
         Test.startTest();
         CRM_HenvendelseinfoRestService.simulateException(new QueryException('TEST'));
         CRM_HenvendelseinfoRestService.getHenvendelse();

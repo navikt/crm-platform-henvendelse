@@ -32,10 +32,6 @@ public class CRM_HenvendelseBehandlingService_Test {
         RestContext.request = req;
         RestContext.response = resp;
 
-        List<Id> fixedSearchResults = new List<Id>();
-        fixedSearchResults.add(thread.Id);
-        //Setting the SOSL fixed search results
-        Test.setFixedSearchResults(fixedSearchResults);
         Test.startTest();
         CRM_HenvendelseBehandlingRestService.updateHenvendelse();
         Test.stopTest();
@@ -72,10 +68,6 @@ public class CRM_HenvendelseBehandlingService_Test {
         RestContext.request = req;
         RestContext.response = resp;
 
-        List<Id> fixedSearchResults = new List<Id>();
-        fixedSearchResults.add(thread.Id);
-        //Setting the SOSL fixed search results
-        Test.setFixedSearchResults(fixedSearchResults);
         Test.startTest();
         CRM_HenvendelseBehandlingRestService.updateHenvendelse();
         Test.stopTest();
@@ -138,10 +130,6 @@ public class CRM_HenvendelseBehandlingService_Test {
         RestContext.request = req;
         RestContext.response = resp;
 
-        List<Id> fixedSearchResults = new List<Id>();
-        fixedSearchResults.add(thread.Id);
-        //Setting the SOSL fixed search results
-        Test.setFixedSearchResults(fixedSearchResults);
         Test.startTest();
         CRM_HenvendelseBehandlingRestService.simulateException(new DmlException('Something failed'));
         CRM_HenvendelseBehandlingRestService.updateHenvendelse();
@@ -172,10 +160,6 @@ public class CRM_HenvendelseBehandlingService_Test {
         RestContext.request = req;
         RestContext.response = resp;
 
-        List<Id> fixedSearchResults = new List<Id>();
-        fixedSearchResults.add(thread.Id);
-        //Setting the SOSL fixed search results
-        Test.setFixedSearchResults(fixedSearchResults);
         Test.startTest();
         CRM_HenvendelseBehandlingRestService.simulateException(new CalloutException('Something failed'));
         CRM_HenvendelseBehandlingRestService.updateHenvendelse();
@@ -234,10 +218,6 @@ public class CRM_HenvendelseBehandlingService_Test {
         RestContext.request = req;
         RestContext.response = resp;
 
-        List<Id> fixedSearchResults = new List<Id>();
-        fixedSearchResults.add(convNote.Id);
-        //Setting the SOSL fixed search results
-        Test.setFixedSearchResults(fixedSearchResults);
         Test.startTest();
         CRM_HenvendelseBehandlingRestService.updateHenvendelse();
         Test.stopTest();

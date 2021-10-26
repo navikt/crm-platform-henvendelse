@@ -130,18 +130,26 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
      **/
     public static Id getObjectId(String apiReference) {
         Id objectId;
-
-        List<List<sObject>> soslResults = [
-            FIND :apiReference
-            RETURNING
-                Conversation_Note__c(Id, CRM_API_Reference__c WHERE CRM_API_Reference__c = :apiReference),
-                Thread__c(Id, CRM_API_Reference__c WHERE CRM_API_Reference__c = :apiReference)
+        //Changed due to delay in SOSL indexing. Perform query to the separate tables instead
+        List<Conversation_Note__c> convList = [
+            SELECT Id
+            FROM Conversation_Note__c
+            WHERE CRM_API_Reference__c = :apiReference
+            ORDER BY Id
+            LIMIT 1
         ];
-        for (List<sObject> sobjectList : soslResults) {
-            if (sobjectList.size() > 0) {
-                objectId = (Id) sobjectList[0].get('Id');
-                break;
-            }
+        List<Thread__c> threadList = [
+            SELECT Id
+            FROM Thread__c
+            WHERE CRM_API_Reference__c = :apiReference
+            ORDER BY Id
+            LIMIT 1
+        ];
+
+        if (convList.size() > 0) {
+            objectId = convList[0].Id;
+        } else if (threadList.size() > 0) {
+            objectId = threadList[0].Id;
         }
 
         return objectId;
