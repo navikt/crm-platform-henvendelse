@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>52.0</apiVersion>
-    <description>[DEPRECATED] Record triggered flow to automatically populate the original GT to the GT of the person on the time of creation.</description>
-    <interviewLabel>Conversation Note Set GT {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Conversation Note Set GT</label>
+    <apiVersion>53.0</apiVersion>
+    <assignments>
+        <name>Assign_person_values</name>
+        <label>Assign person values</label>
+        <locationX>176</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.INT_ActorId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Person.INT_ActorId__c</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <description>If account is changed on a conversation note, update the actor id</description>
+    <interviewLabel>Conversation Note - Before Update - On Account Change {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Conversation Note - Before Update - On Account Change</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -24,57 +37,43 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <name>Get_Account_Record</name>
-        <label>Get Account Record</label>
+        <name>Person</name>
+        <label>Person</label>
         <locationX>176</locationX>
         <locationY>311</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Update_Conversation_Note_GT</targetReference>
+            <targetReference>Assign_person_values</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Id</field>
+            <field>CRM_Account__c</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>$Record.CRM_Account__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Account</object>
+        <object>Person__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordUpdates>
-        <description>Sets the GT of the conversation note the the person GT at the time of creation.</description>
-        <name>Update_Conversation_Note_GT</name>
-        <label>Update Conversation Note GT</label>
-        <locationX>176</locationX>
-        <locationY>431</locationY>
-        <inputAssignments>
-            <field>CRM_Original_Person_GT__c</field>
-            <value>
-                <elementReference>Get_Account_Record.CRM_Person__r.CRM_GT__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Account_Record</targetReference>
+            <targetReference>Person</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>CRM_Account__c</field>
-            <operator>IsNull</operator>
+            <operator>IsChanged</operator>
             <value>
-                <booleanValue>false</booleanValue>
+                <booleanValue>true</booleanValue>
             </value>
         </filters>
         <object>Conversation_Note__c</object>
-        <recordTriggerType>Create</recordTriggerType>
+        <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
 </Flow>

@@ -15,7 +15,7 @@ public class CRM_HenvendelseJournalRestService_Test {
 
         CRM_HenvendelseJournalRestService.HenvendelseJournalRequest journalReq = new CRM_HenvendelseJournalRestService.HenvendelseJournalRequest();
         journalReq.journalforendeEnhet = '4100';
-        journalReq.saksId = '123CASE';
+        journalReq.fagsakId = '123CASE';
         journalReq.temakode = 'DAG;';
         journalReq.kjedeId = convNote.CRM_API_Reference__c;
 
@@ -27,6 +27,10 @@ public class CRM_HenvendelseJournalRestService_Test {
         RestContext.request = restReq;
         RestContext.response = new RestResponse();
 
+        List<Id> fixedSearchResults = new List<Id>();
+        fixedSearchResults.add(convNote.Id);
+        //Setting the SOSL fixed search results
+        Test.setFixedSearchResults(fixedSearchResults);
         Test.startTest();
         CRM_HenvendelseJournalRestService.createJournalPost();
         Test.stopTest();
@@ -47,7 +51,7 @@ public class CRM_HenvendelseJournalRestService_Test {
 
         CRM_HenvendelseJournalRestService.HenvendelseJournalRequest journalReq = new CRM_HenvendelseJournalRestService.HenvendelseJournalRequest();
         journalReq.journalforendeEnhet = '4100';
-        journalReq.saksId = '123CASE';
+        journalReq.fagsakId = '123CASE';
         journalReq.temakode = 'DAG;';
         journalReq.kjedeId = thread.CRM_API_Reference__c;
 
@@ -73,7 +77,7 @@ public class CRM_HenvendelseJournalRestService_Test {
 
         CRM_HenvendelseJournalRestService.HenvendelseJournalRequest journalReq = new CRM_HenvendelseJournalRestService.HenvendelseJournalRequest();
         journalReq.journalforendeEnhet = '4100';
-        journalReq.saksId = '123CASE';
+        journalReq.fagsakId = '123CASE';
         journalReq.temakode = 'DAG;';
         journalReq.kjedeId = (String) CRM_HENV_TestDataFactory.createRecord(new Case()).get('Id');
 
@@ -98,7 +102,7 @@ public class CRM_HenvendelseJournalRestService_Test {
 
         CRM_HenvendelseJournalRestService.HenvendelseJournalRequest journalReq = new CRM_HenvendelseJournalRestService.HenvendelseJournalRequest();
         journalReq.journalforendeEnhet = '4100';
-        journalReq.saksId = '123CASE';
+        journalReq.fagsakId = '123CASE';
         journalReq.temakode = 'DAG;';
         journalReq.kjedeId = '123INVALIDID';
 
@@ -123,7 +127,7 @@ public class CRM_HenvendelseJournalRestService_Test {
 
         CRM_HenvendelseJournalRestService.HenvendelseJournalRequest journalReq = new CRM_HenvendelseJournalRestService.HenvendelseJournalRequest();
         journalReq.journalforendeEnhet = '4100';
-        journalReq.saksId = '123CASE';
+        journalReq.fagsakId = '123CASE';
         journalReq.temakode = 'DAG;';
         journalReq.kjedeId = '123INVALIDID';
 

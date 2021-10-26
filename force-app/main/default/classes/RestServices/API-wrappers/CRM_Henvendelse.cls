@@ -5,6 +5,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
     global String avsluttetDato;
     global String opprettetDato;
     global Boolean kontorsperre;
+    global Boolean sladding;
     global Boolean feilsendt;
     global String kjedeId;
     global String opprinneligGT;
@@ -52,10 +53,11 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         this.gjeldendeTema = convNote.CRM_Theme_Code__c;
         this.opprinneligGT = convNote.CRM_Original_Person_GT__c;
         this.opprinneligEnhet = convNote.CRM_Original_Person_NAV_Unit__c;
-        this.opprettetDato = formatDateTime(convNote.CRM_Registered_Datetime_Formula__c);
+        this.opprettetDato = formatDateTime(convNote.CRM_Date_Time_Registered__c);
         this.avsluttetDato = this.opprettetDato;
         this.kjedeId = convNote.CRM_Henvendelse_BehandlingskjedeId__c;
         this.henvendelseType = HENVENDELSE_TYPE.SAMTALEREFERAT.name();
+        this.sladding = convNote.STO_Sensitive_Information__c;
 
         this.meldinger = new List<CRM_Melding>();
         this.meldinger.add(new CRM_Melding(convNote));
@@ -75,9 +77,24 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
             officeRest.markertDato = formatDateTime(convNote.CRM_Office_Restriction_Date__c);
             officeRest.kontorsperreGT = String.isNotBlank(this.opprinneligGT) ? this.opprinneligGT : null;
             officeRest.kontorsperreEnhet = String.isNotBlank(this.opprinneligEnhet) ? this.opprinneligEnhet : null;
-            this.markeringer = new List<CRM_Markering>();
-            this.markeringer.add(officeRest);
+            addMarkering(officeRest);
         }
+        if (convNote.CRM_Incorrectly_Sent__c == true) {
+            CRM_Markering incSent = new CRM_Markering();
+            this.feilsendt = true;
+            incSent.markeringstype = CRM_Markering.MARKING_TYPES.FEILSENDT.name();
+            incSent.markertAv = convNote.CRM_Incorrectly_Sent_Activated_By__c;
+            incSent.markertDato = formatDateTime(convNote.CRM_Incorrectly_Sent_Date__c);
+            addMarkering(incSent);
+        }
+    }
+
+    private void addMarkering(CRM_Markering markering) {
+        if (this.markeringer == null) {
+            this.markeringer = new List<CRM_Markering>();
+        }
+
+        this.markeringer.add(markering);
     }
 
     /**
@@ -105,12 +122,13 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         this.opprinneligGT = thread.CRM_Original_Person_GT__c;
         this.opprinneligEnhet = thread.CRM_Original_Person_NAV_Unit__c;
         this.kasseringsDato = formatDateTime(thread.CRM_Disposal_Datetime__c);
-        this.opprettetDato = formatDateTime(thread.CRM_Registered_Datetime_Formula__c);
+        this.opprettetDato = formatDateTime(thread.CRM_Date_Time_Registered__c);
         this.avsluttetDato = formatDateTime(thread.CRM_Closed_Date__c);
         this.meldinger = new List<CRM_Melding>();
         this.henvendelseType = HENVENDELSE_TYPE.MELDINGSKJEDE.name();
         this.gjeldendeTemagruppe = thread.CRM_Theme_Group_Code__c;
         this.gjeldendeTema = thread.CRM_Theme_Code__c;
+        this.sladding = thread.STO_Sensitive_Information__c;
 
         for (Message__c message : messages) {
             this.meldinger.add(new CRM_Melding(message));
@@ -131,8 +149,15 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
             officeRest.markertDato = formatDateTime(thread.CRM_Office_Restriction_Date__c);
             officeRest.kontorsperreGT = String.isNotBlank(this.opprinneligGT) ? this.opprinneligGT : null;
             officeRest.kontorsperreEnhet = String.isNotBlank(this.opprinneligEnhet) ? this.opprinneligEnhet : null;
-            this.markeringer = new List<CRM_Markering>();
-            this.markeringer.add(officeRest);
+            addMarkering(officeRest);
+        }
+        if (thread.CRM_Incorrectly_Sent__c == true) {
+            CRM_Markering incSent = new CRM_Markering();
+            this.feilsendt = true;
+            incSent.markeringstype = CRM_Markering.MARKING_TYPES.FEILSENDT.name();
+            incSent.markertAv = thread.CRM_Incorrectly_Sent_Activated_By__c;
+            incSent.markertDato = formatDateTime(thread.CRM_Incorrectly_Sent_Date__c);
+            addMarkering(incSent);
         }
     }
 

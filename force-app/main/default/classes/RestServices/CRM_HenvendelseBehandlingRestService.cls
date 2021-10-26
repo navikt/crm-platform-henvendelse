@@ -17,13 +17,13 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
                 CRM_Henvendelse.class
             );
             String apiReference = getLastPathParameter();
-            String objectName = CRM_ReferenceUtil.getObjectNameFromIdPrefix(apiReference.substring(0, 3));
+            Id objectId = getObjectId(apiReference);
+            String objectName = objectId != null ? objectId.getSobjectType().getDescribe().getName() : null;
 
             switch on objectName {
                 when 'Thread__c' {
-                    Thread__c threadFromDb = new CRM_ThreadSelector().selectByApiReference(apiReference);
                     Thread__c thread = convertToThread(req);
-                    thread.Id = threadFromDb.Id;
+                    thread.Id = objectId;
                     thread.CRM_Last_Edited_By__c = navIdent; //Removes the fields that the calling part do not have access to update
                     SObjectAccessDecision decision = Security.stripInaccessible(
                         AccessType.UPDATABLE,
@@ -47,10 +47,8 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
                     );
                 }
                 when 'Conversation_Note__c' {
-                    Conversation_Note__c convNoteFromDb = new CRM_ConversationNoteSelector()
-                        .selectByApiReference(apiReference);
                     Conversation_Note__c convNote = convertToConvNote(req);
-                    convNote.Id = convNoteFromDb.Id;
+                    convNote.Id = objectId;
                     convNote.CRM_Last_Edited_By__c = navIdent;
                     SObjectAccessDecision decision = Security.stripInaccessible(
                         AccessType.UPDATABLE,
@@ -88,7 +86,15 @@ global without sharing class CRM_HenvendelseBehandlingRestService extends CRM_He
             errorResponse(400, conversionEx.getMessage());
         } catch (Exception ex) {
             errorResponse(500, 'Failed to update: ' + ex.getMessage());
-            logger.error('Failed to update: ' + ex.getMessage(), null, CRM_ApplicationDomain.Domain.NKS, correlationId);
+            logger.error(
+                'Failed to update: ' +
+                ex.getMessage() +
+                '\n' +
+                ex.getStackTraceString(),
+                null,
+                CRM_ApplicationDomain.Domain.NKS,
+                correlationId
+            );
         } finally {
             logger.publish();
         }

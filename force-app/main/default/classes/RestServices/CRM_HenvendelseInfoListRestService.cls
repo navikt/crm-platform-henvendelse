@@ -47,7 +47,15 @@ global without sharing class CRM_HenvendelseInfoListRestService extends ApexRest
         } catch (Exception ex) {
             System.debug(ex.getStackTraceString());
             errorResponse(500, 'Exception: ' + ex.getMessage());
-            logger.error('Exception: ' + ex.getMessage(), null, CRM_ApplicationDomain.Domain.NKS, correlationId);
+            logger.error(
+                'Exception: ' +
+                ex.getMessage() +
+                '\n' +
+                ex.getStackTraceString(),
+                null,
+                CRM_ApplicationDomain.Domain.NKS,
+                correlationId
+            );
         } finally {
             logger.publish();
         }

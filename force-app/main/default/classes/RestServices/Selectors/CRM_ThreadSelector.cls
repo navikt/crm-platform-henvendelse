@@ -6,7 +6,7 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
     public List<Schema.SObjectField> getSObjectFieldList() {
         return new List<Schema.SObjectField>{
             Thread__c.CRM_isActive__c,
-            Thread__c.CRM_Registered_Datetime_Formula__c,
+            Thread__c.CRM_Date_Time_Registered__c,
             Thread__c.CRM_Office_Restriction__c,
             Thread__c.Id,
             Thread__c.CRM_HenvendelseId__c,
@@ -15,6 +15,9 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
             Thread__c.OwnerId,
             Thread__c.CRM_Office_Restriction_Activated_By__c,
             Thread__c.CRM_Office_Restriction_Date__c,
+            Thread__c.CRM_Incorrectly_Sent_Activated_By__c,
+            Thread__c.CRM_Incorrectly_Sent_Date__c,
+            Thread__c.CRM_Incorrectly_Sent__c,
             Thread__c.CRM_Disposal_Datetime__c,
             Thread__c.CRM_Created_By_Ident__c,
             Thread__c.CRM_Closed_Date__c,
@@ -24,7 +27,8 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
             Thread__c.CRM_External_Person_Ident__c,
             Thread__c.CRM_Original_Person_GT__c,
             Thread__c.CRM_Original_Person_NAV_Unit__c,
-            Thread__c.CRM_API_Reference__c
+            Thread__c.CRM_API_Reference__c,
+            Thread__c.STO_Sensitive_Information__c
         };
     }
 
@@ -38,7 +42,9 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
         //Adds the Journal entry selector query as a relationship query to the Thread query
         new CRM_JournalEntrySelector().addQueryFactorySubselect(query, 'Journal_Entries__r');
         //Adds the Journal entry selector query as a relationship query to the Thread query
-        new CRM_MessageSelector().addQueryFactorySubselect(query, 'Messages__r');
+        query.subselectQuery('Messages__r')
+            .selectFields(new CRM_MessageSelector().getSObjectFieldList())
+            .setCondition('CRM_Type__c = \'Message\'');
         return (Thread__c) Database.query(query.toSOQL());
     }
 
@@ -48,7 +54,9 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
         //Adds the Journal entry selector query as a relationship query to the Thread query
         new CRM_JournalEntrySelector().addQueryFactorySubselect(query, 'Journal_Entries__r');
         //Adds the Journal entry selector query as a relationship query to the Thread query
-        new CRM_MessageSelector().addQueryFactorySubselect(query, 'Messages__r');
+        query.subselectQuery('Messages__r')
+            .selectFields(new CRM_MessageSelector().getSObjectFieldList())
+            .setCondition('CRM_Type__c = \'Message\'');
         return (Thread__c) Database.query(query.toSOQL());
     }
 
@@ -60,11 +68,15 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
 
     public List<Thread__c> selectByActorId(Set<String> actorIds) {
         fflib_QueryFactory query = newQueryFactory();
-        query.setCondition('(CRM_External_ActorId__c in :actorIds)');
+        query.setCondition(
+            '(CRM_External_ActorId__c in :actorIds AND (CRM_Type__c = \'STO\' OR CRM_Type__c = \'STB\'))'
+        );
         //Adds the Journal entry selector query as a relationship query to the Thread query
         new CRM_JournalEntrySelector().addQueryFactorySubselect(query, 'Journal_Entries__r');
         //Adds the Journal entry selector query as a relationship query to the Thread query
-        new CRM_MessageSelector().addQueryFactorySubselect(query, 'Messages__r');
+        query.subselectQuery('Messages__r')
+            .selectFields(new CRM_MessageSelector().getSObjectFieldList())
+            .setCondition('CRM_Type__c = \'Message\'');
         return (List<Thread__c>) Database.query(query.toSOQL());
     }
 }

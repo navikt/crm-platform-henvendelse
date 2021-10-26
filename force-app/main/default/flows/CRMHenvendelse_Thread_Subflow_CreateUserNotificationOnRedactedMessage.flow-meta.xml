@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Create_Innboks_Notification</name>
-        <label>Create Innboks Notification</label>
+        <name>Create_Redacted_Innboks_notification</name>
+        <label>Create Redacted Innboks notification</label>
         <locationX>176</locationX>
         <locationY>158</locationY>
         <actionName>UN_InnboksProducerLegacy</actionName>
@@ -11,7 +11,7 @@
         <inputParameters>
             <name>accountId</name>
             <value>
-                <elementReference>ConversationNote.CRM_Account__c</elementReference>
+                <elementReference>thread.CRM_Account__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -23,25 +23,19 @@
         <inputParameters>
             <name>fodselsnummer</name>
             <value>
-                <elementReference>ConversationNote.INT_PersonIdent__c</elementReference>
+                <elementReference>thread.INT_PersonIdent__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>grupperingsId</name>
             <value>
-                <elementReference>ConversationNote.CRM_API_Reference__c</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>link</name>
-            <value>
-                <elementReference>varLinkURL</elementReference>
+                <elementReference>thread.CRM_API_Reference__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>relatedRecordSfId</name>
             <value>
-                <elementReference>ConversationNote.Id</elementReference>
+                <elementReference>thread.Id</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -59,26 +53,25 @@
         <inputParameters>
             <name>tekst</name>
             <value>
-                <elementReference>$Label.CRMHenvendelse_NewConversationNoteNotification</elementReference>
+                <elementReference>$Label.CRMHenvendelse_RedactedMessageNotificationText</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>tidspunkt</name>
             <value>
-                <elementReference>ConversationNote.CRM_Date_Time_Registered__c</elementReference>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
-    <apiVersion>52.0</apiVersion>
-    <description>Subflow creating inbox user notification from Conversation Note</description>
+    <apiVersion>53.0</apiVersion>
     <formulas>
-        <name>varLinkURL</name>
+        <name>url</name>
         <dataType>String</dataType>
-        <expression>{!$Label.CRMHenvendelse_InnboksBaseURL}+{!$Label.CRMHenvendelse_SamtalereferatURL}+&apos;/&apos;+{!ConversationNote.Id}+&apos;/&apos;+{!ConversationNote.CRM_Henvendelse_BehandlingskjedeId__c}</expression>
+        <expression>{!$Label.CRMHenvendelse_InnboksBaseURL}+{!$Label.CRMHenvendelse_NewMessageNotification}+&quot;/&quot;+{!thread.Id}</expression>
     </formulas>
-    <interviewLabel>Conversation Note - Create Innboks User Notification {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Conversation Note - Create Innboks User Notification</label>
+    <interviewLabel>Thread - Subflow - Create User Notification On Redacted Message {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Thread - Subflow - Create User Notification On Redacted Message</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -102,16 +95,16 @@
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Create_Innboks_Notification</targetReference>
+            <targetReference>Create_Redacted_Innboks_notification</targetReference>
         </connector>
     </start>
     <status>Draft</status>
     <variables>
-        <name>ConversationNote</name>
+        <name>thread</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
-        <objectType>Conversation_Note__c</objectType>
+        <objectType>Thread__c</objectType>
     </variables>
 </Flow>

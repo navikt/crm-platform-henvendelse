@@ -4,8 +4,8 @@
     <assignments>
         <name>Assign_Values</name>
         <label>Assign Values</label>
-        <locationX>176</locationX>
-        <locationY>431</locationY>
+        <locationX>308</locationX>
+        <locationY>551</locationY>
         <assignmentItems>
             <assignToReference>$Record.CRM_External_ActorId__c</assignToReference>
             <operator>Assign</operator>
@@ -14,6 +14,28 @@
             </value>
         </assignmentItems>
     </assignments>
+    <decisions>
+        <name>Is_Person</name>
+        <label>Is Person</label>
+        <locationX>176</locationX>
+        <locationY>431</locationY>
+        <defaultConnector>
+            <targetReference>Assign_Values</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Yes</defaultConnectorLabel>
+        <rules>
+            <name>Is_Person_No</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Person</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>No</label>
+        </rules>
+    </decisions>
     <description>If CRM_Account__c is changed, find the person related to the new Account and update the thread with the new Actor Id</description>
     <interviewLabel>Thread - Before Update - On Account Change {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Thread - Before Update - On Account Change</label>
@@ -43,7 +65,7 @@
         <locationY>311</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Assign_Values</targetReference>
+            <targetReference>Is_Person</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>

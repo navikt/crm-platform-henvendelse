@@ -11,7 +11,8 @@ global without sharing class CRM_HenvendelseinfoRestService extends CRM_Henvende
         logger.apiTransaction(correlationId, RestContext.request, CRM_ApplicationDomain.Domain.NKS);
         try {
             String apiReference = getLastPathParameter();
-            String objectName = CRM_ReferenceUtil.getObjectNameFromIdPrefix(apiReference.substring(0, 3));
+            Id objectId = getObjectId(apiReference);
+            String objectName = objectId != null ? objectId.getSobjectType().getDescribe().getName() : null;
 
             switch on objectName {
                 when 'Thread__c' {
@@ -33,7 +34,15 @@ global without sharing class CRM_HenvendelseinfoRestService extends CRM_Henvende
             logger.publish();
         } catch (Exception ex) {
             errorResponse(500, 'Exception: ' + ex.getMessage());
-            logger.error('Exception: ' + ex.getMessage(), null, CRM_ApplicationDomain.Domain.NKS, correlationId);
+            logger.error(
+                'Exception: ' +
+                ex.getMessage() +
+                '\n' +
+                ex.getStackTraceString(),
+                null,
+                CRM_ApplicationDomain.Domain.NKS,
+                correlationId
+            );
         } finally {
             logger.publish();
         }

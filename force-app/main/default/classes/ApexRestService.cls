@@ -28,8 +28,6 @@ global virtual class ApexRestService {
         RestResponse response = RestContext.response;
         response.statusCode = responseCode;
         response.addHeader('Content-Type', 'application/json');
-        if (DEFAULT_RESPONSE_MAP.containsKey(responseCode))
-            response.responseBody = Blob.valueOf(DEFAULT_RESPONSE_MAP.get(responseCode));
     }
 
     /**
