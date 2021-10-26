@@ -4,10 +4,10 @@
     <decisions>
         <name>Is_Updated</name>
         <label>Is Updated</label>
-        <locationX>768</locationX>
-        <locationY>785</locationY>
+        <locationX>182</locationX>
+        <locationY>854</locationY>
         <defaultConnector>
-            <targetReference>Fail</targetReference>
+            <targetReference>Failed</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -31,8 +31,8 @@
     <loops>
         <name>Loop_Through_Messages</name>
         <label>Loop Through Messages</label>
-        <locationX>584</locationX>
-        <locationY>446</locationY>
+        <locationX>182</locationX>
+        <locationY>398</locationY>
         <collectionReference>Get_Messages</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -51,7 +51,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -64,8 +64,8 @@
     <recordLookups>
         <name>Get_Messages</name>
         <label>Get Messages</label>
-        <locationX>584</locationX>
-        <locationY>326</locationY>
+        <locationX>182</locationX>
+        <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_Through_Messages</targetReference>
@@ -87,8 +87,8 @@
     <recordLookups>
         <name>Get_Thread</name>
         <label>Get Thread</label>
-        <locationX>584</locationX>
-        <locationY>206</locationY>
+        <locationX>182</locationX>
+        <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Messages</targetReference>
@@ -108,8 +108,8 @@
     <recordUpdates>
         <name>Update_Message</name>
         <label>Update Message</label>
-        <locationX>672</locationX>
-        <locationY>566</locationY>
+        <locationX>270</locationX>
+        <locationY>518</locationY>
         <connector>
             <targetReference>Loop_Through_Messages</targetReference>
         </connector>
@@ -132,8 +132,8 @@
     <recordUpdates>
         <name>Update_Thread</name>
         <label>Update Thread</label>
-        <locationX>584</locationX>
-        <locationY>782</locationY>
+        <locationX>182</locationX>
+        <locationY>734</locationY>
         <connector>
             <targetReference>Is_Updated</targetReference>
         </connector>
@@ -153,11 +153,12 @@
         </inputAssignments>
         <object>Thread__c</object>
     </recordUpdates>
+    <runInMode>DefaultMode</runInMode>
     <screens>
-        <name>Fail</name>
-        <label>Fail</label>
-        <locationX>1012</locationX>
-        <locationY>908</locationY>
+        <name>Failed</name>
+        <label>Failed</label>
+        <locationX>314</locationX>
+        <locationY>974</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -173,8 +174,8 @@
     <screens>
         <name>Successful</name>
         <label>Successful</label>
-        <locationX>1012</locationX>
-        <locationY>750</locationY>
+        <locationX>50</locationX>
+        <locationY>974</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -188,8 +189,8 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>458</locationX>
-        <locationY>48</locationY>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Get_Thread</targetReference>
         </connector>

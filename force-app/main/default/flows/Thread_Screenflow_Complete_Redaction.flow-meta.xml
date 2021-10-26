@@ -4,8 +4,8 @@
     <assignments>
         <name>Set_Value</name>
         <label>Set Value</label>
-        <locationX>584</locationX>
-        <locationY>326</locationY>
+        <locationX>182</locationX>
+        <locationY>278</locationY>
         <assignmentItems>
             <assignToReference>Get_Thread.STO_Sensitive_Information__c</assignToReference>
             <operator>Assign</operator>
@@ -27,10 +27,10 @@
     <decisions>
         <name>Is_Assigned</name>
         <label>Is Assigned</label>
-        <locationX>558</locationX>
-        <locationY>539</locationY>
+        <locationX>182</locationX>
+        <locationY>398</locationY>
         <defaultConnector>
-            <targetReference>Fail</targetReference>
+            <targetReference>Failed</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -67,7 +67,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -80,8 +80,8 @@
     <recordLookups>
         <name>Get_Thread</name>
         <label>Get Thread</label>
-        <locationX>584</locationX>
-        <locationY>206</locationY>
+        <locationX>182</locationX>
+        <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Set_Value</targetReference>
@@ -101,17 +101,17 @@
     <recordUpdates>
         <name>Update_Thread</name>
         <label>Update Thread</label>
-        <locationX>580</locationX>
-        <locationY>967</locationY>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
         <inputReference>Get_Thread</inputReference>
     </recordUpdates>
     <runInMode>DefaultMode</runInMode>
     <screens>
         <description>Failed!</description>
-        <name>Fail</name>
-        <label>Fail</label>
-        <locationX>297</locationX>
-        <locationY>715</locationY>
+        <name>Failed</name>
+        <label>Failed</label>
+        <locationX>314</locationX>
+        <locationY>518</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -128,8 +128,8 @@
         <description>Successful!</description>
         <name>Successful</name>
         <label>Successful</label>
-        <locationX>582</locationX>
-        <locationY>749</locationY>
+        <locationX>50</locationX>
+        <locationY>518</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -146,8 +146,8 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>458</locationX>
-        <locationY>48</locationY>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Get_Thread</targetReference>
         </connector>

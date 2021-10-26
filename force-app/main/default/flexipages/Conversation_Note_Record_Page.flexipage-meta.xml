@@ -8,57 +8,19 @@
                     <valueList>
                         <valueListItems>
                             <value>Conversation_Note__c.Discard_Conversation</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>FeedItem.TextPost</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>FeedItem.ContentPost</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>FeedItem.RypplePost</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>FeedItem.LinkPost</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>FeedItem.PollPost</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Submit</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>ChangeOwnerOne</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Edit</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>PrintableView</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Share</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Delete</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>ChangeRecordType</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>IsotopeSubscription</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Clone</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>RecordShareHierarchy</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Redaction_Custom_Permission}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>collapsed</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsConfiguration</name>
@@ -70,14 +32,14 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideChatterActions</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>numVisibleActions</name>
-                    <value>2</value>
+                    <value>3</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
-                <identifier>force_highlightsPanel</identifier>
+                <identifier>force_highlightsPanel1</identifier>
             </componentInstance>
         </itemInstances>
         <name>header</name>
