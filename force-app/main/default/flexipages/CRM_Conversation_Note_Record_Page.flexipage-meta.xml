@@ -193,7 +193,7 @@
         <name>rightcol</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>Conversation Note Record Page</masterLabel>
+    <masterLabel>Redaction Conversation Note Record Page</masterLabel>
     <sobjectType>Conversation_Note__c</sobjectType>
     <template>
         <name>flexipage:recordHomeTwoColEqualHeaderTemplateDesktop</name>
