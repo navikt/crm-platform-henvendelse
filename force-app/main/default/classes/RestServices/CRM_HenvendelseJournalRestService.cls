@@ -94,8 +94,15 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
                 'CRM_Journal_Conversation_Note',
                 JSON.serialize(flowInputs)
             );
-            notesToUpdate.add((Conversation_Note__c) convNoteJournalFlow.getVariableValue('JOURNALED_CONV_NOTE'));
-            jEntriesToCreate.add((Journal_Entry__c) convNoteJournalFlow.getVariableValue('Journal_Entry_SF'));
+
+            Conversation_Note__c journaledNote = (Conversation_Note__c) convNoteJournalFlow.getVariableValue(
+                'JOURNALED_CONV_NOTE'
+            );
+            Journal_Entry__c newEntry = (Journal_Entry__c) convNoteJournalFlow.getVariableValue('Journal_Entry_SF');
+            if (journaledNote != null)
+                notesToUpdate.add(journaledNote);
+            if (newEntry != null)
+                jEntriesToCreate.add(newEntry);
         }
 
         update notesToUpdate;
