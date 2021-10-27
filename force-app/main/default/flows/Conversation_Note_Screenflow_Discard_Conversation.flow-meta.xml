@@ -116,7 +116,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Fail</name>
-            <fieldText>&lt;p&gt;Something went wrong!&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Noe gikk galt!&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <nextOrFinishButtonLabel>Finish</nextOrFinishButtonLabel>
@@ -136,7 +136,7 @@
         </connector>
         <fields>
             <name>Done</name>
-            <fieldText>&lt;p&gt;All done!&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Samtalereferatet er kassert.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <nextOrFinishButtonLabel>Finish</nextOrFinishButtonLabel>
