@@ -48,56 +48,14 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.CRM_Conversation_Note__c</fieldItem>
-                <identifier>RecordCRM_Conversation_Note_cField1</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-367bd219-086f-4f64-86bf-c63b65a35f3b</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-367bd219-086f-4f64-86bf-c63b65a35f3b</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column3</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-104e9ba6-e5b0-4756-a81f-a1765bdbaf5e</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>columns</name>
-                    <value>Facet-104e9ba6-e5b0-4756-a81f-a1765bdbaf5e</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>label</name>
-                    <value>Referat</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:fieldSection</componentName>
-                <identifier>flexipage_fieldSection2</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>leftcol</name>
-        <type>Region</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.Name</fieldItem>
-                <identifier>RecordNameField1</identifier>
+                <fieldItem>Record.STO_Sensitive_Information_Activated_By__c</fieldItem>
+                <identifier>RecordSTO_Sensitive_Information_Activated_By_cField1</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.CRM_Date_Time_Registered__c</fieldItem>
-                <identifier>RecordCRM_Date_Time_Registered_cField1</identifier>
+                <fieldItem>Record.STO_Sensitive_Information_Date__c</fieldItem>
+                <identifier>RecordSTO_Sensitive_Information_Date_cField1</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-0d361998-2246-4d0e-8040-393c64104f57</name>
@@ -106,8 +64,8 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.CRM_Account__c</fieldItem>
-                <identifier>RecordCRM_Account_cField1</identifier>
+                <fieldItem>Record.STO_Sensitive_Information_Unit__c</fieldItem>
+                <identifier>RecordSTO_Sensitive_Information_Unit_cField1</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-e438758e-607c-4546-9e2c-bf518355aee0</name>
@@ -150,6 +108,48 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection1</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>leftcol</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.CRM_Conversation_Note__c</fieldItem>
+                <identifier>RecordCRM_Conversation_Note_cField1</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-367bd219-086f-4f64-86bf-c63b65a35f3b</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-367bd219-086f-4f64-86bf-c63b65a35f3b</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column3</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-104e9ba6-e5b0-4756-a81f-a1765bdbaf5e</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-104e9ba6-e5b0-4756-a81f-a1765bdbaf5e</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Referat</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection2</identifier>
             </componentInstance>
         </itemInstances>
         <name>rightcol</name>
