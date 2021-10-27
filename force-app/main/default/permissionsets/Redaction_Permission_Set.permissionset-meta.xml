@@ -25,6 +25,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Message__c.CRM_Sent_Datetime_Formula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Thread__c.CRM_Conversation_Summary__c</field>
         <readable>true</readable>
     </fieldPermissions>

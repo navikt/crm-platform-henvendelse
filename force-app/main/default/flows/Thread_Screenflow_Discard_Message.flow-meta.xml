@@ -166,7 +166,7 @@
             <fieldText>&lt;p&gt;Noe gikk galt!&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <nextOrFinishButtonLabel>Finish</nextOrFinishButtonLabel>
+        <nextOrFinishButtonLabel>Ferdigstill</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -186,7 +186,7 @@
             <fieldText>&lt;p&gt;Meldinger er kassert.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <nextOrFinishButtonLabel>Finish</nextOrFinishButtonLabel>
+        <nextOrFinishButtonLabel>Ferdigstill</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
