@@ -4,7 +4,8 @@
             <div class="slds-col slds-size_12-of-12">
                 <div class="slds-chat-message__body">
                     <div class="slds-chat-message__text slds-chat-message__text_inbound">
-                        <span>{message.CRM_Message_Text__c}</span>
+                        <!--<span>{message.CRM_Message_Text__c}</span>-->
+                        <lightning-formatted-rich-text value={message.CRM_Message_Text__c}></lightning-formatted-rich-text>
                     </div>
                 </div>
                 <div class="slds-chat-message__meta">
