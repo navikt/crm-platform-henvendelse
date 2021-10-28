@@ -3,12 +3,12 @@
     <apiVersion>52.0</apiVersion>
     <decisions>
         <description>Checks which user that activated the office restriction</description>
-        <name>Check_Office_Restriction_Activated_By</name>
-        <label>Check Office Restriction Activated By</label>
+        <name>Check_Sensitive_Information_Activated_By</name>
+        <label>Check Sensitive Information Activated By</label>
         <locationX>182</locationX>
         <locationY>311</locationY>
         <defaultConnector>
-            <targetReference>Updated_office_restriction_info_0</targetReference>
+            <targetReference>Updated_Sensitive_Information_Info_1</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Activated in Salesforce</defaultConnectorLabel>
         <rules>
@@ -29,7 +29,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Updated_office_restriction_info</targetReference>
+                <targetReference>Updated_Sensitive_Information_Info_0</targetReference>
             </connector>
             <label>Activated Through API</label>
         </rules>
@@ -56,8 +56,8 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordUpdates>
-        <name>Updated_office_restriction_info</name>
-        <label>Updated office restriction info</label>
+        <name>Updated_Sensitive_Information_Info_0</name>
+        <label>Updated Sensitive Information Info</label>
         <locationX>50</locationX>
         <locationY>431</locationY>
         <inputAssignments>
@@ -81,8 +81,8 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <recordUpdates>
-        <name>Updated_office_restriction_info_0</name>
-        <label>Updated office restriction info</label>
+        <name>Updated_Sensitive_Information_Info_1</name>
+        <label>Updated Sensitive Information Info</label>
         <locationX>314</locationX>
         <locationY>431</locationY>
         <inputAssignments>
@@ -109,7 +109,7 @@
         <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Check_Office_Restriction_Activated_By</targetReference>
+            <targetReference>Check_Sensitive_Information_Activated_By</targetReference>
         </connector>
         <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>and</filterLogic>
