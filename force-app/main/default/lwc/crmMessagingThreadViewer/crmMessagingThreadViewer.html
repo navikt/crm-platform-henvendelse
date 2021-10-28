@@ -20,74 +20,81 @@
     </div>
     <!-- Header Stop-->
     <!-- Messages Start-->
-    <section role="log" id="scroller" class="slds-box scroller slds-scrollable_y" style="height: 30em">
+    <section role="log" id="scroller" class="slds-box scroller slds-scrollable_y" style="">
         <template for:each={messages} for:item="message">
             <c-crm-messaging-Message-Container message={message} key={message.Id}></c-crm-messaging-Message-Container>
         </template>
     </section>
     <!-- Messages End-->
     <!-- Reply Box Start-->
-    <lightning-record-edit-form object-api-name="Message__c" onsuccess={handlesuccess} onsubmit={handlesubmit}>
-        <lightning-layout multiple-rows="true">
-            <lightning-layout-item padding="horizontalSmall" size="12">
-                <div
-                    role="toolbar"
-                    class="slds-rich-text-editor__toolbar slds-shrink-none"
-                    style="display: block; border-radius: 0"
-                >
-                    <lightning-layout>
-                        <!-- Toolbar -->
-                        <lightning-layout-item size="8">
-                            <lightning-layout horizontal-align="start">
-                                <lightning-button-group ontoolbaraction={handleToolbarAction}>
-                                    <lightning-button-icon-stateful
-                                        icon-name="utility:quick_text"
-                                        alternative-text="Hurtigtekst"
-                                        onclick={showQuickText}
-                                    >
-                                    </lightning-button-icon-stateful>
-                                    <slot name="toolbar"></slot>
-                                </lightning-button-group>
-                            </lightning-layout>
-                        </lightning-layout-item>
-                        <!-- Avslutt samtalen -->
-                        <lightning-layout-item size="4"> </lightning-layout-item>
-                    </lightning-layout>
-                </div>
-                <h2>{showspinnner}</h2>
-                <template if:true={showspinner}>
-                    <div class="spinnerholder">
-                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    <div slot="footer">
+        <lightning-record-edit-form object-api-name="Message__c" onsuccess={handlesuccess} onsubmit={handlesubmit}>
+            <lightning-layout multiple-rows="true" class="stickyfooter">
+                <lightning-layout-item padding="horizontalSmall" size="12">
+                    <div
+                        role="toolbar"
+                        class="slds-rich-text-editor__toolbar slds-shrink-none"
+                        style="display: block; border-radius: 0"
+                    >
+                        <lightning-layout>
+                            <!-- Toolbar -->
+                            <lightning-layout-item size="8">
+                                <lightning-layout horizontal-align="start">
+                                    <lightning-button-group ontoolbaraction={handleToolbarAction}>
+                                        <lightning-button-icon-stateful
+                                            icon-name="utility:quick_text"
+                                            alternative-text="Hurtigtekst"
+                                            onclick={showQuickText}
+                                        >
+                                        </lightning-button-icon-stateful>
+                                        <slot name="toolbar"></slot>
+                                    </lightning-button-group>
+                                </lightning-layout>
+                            </lightning-layout-item>
+                            <!-- Avslutt samtalen -->
+                            <lightning-layout-item size="4"> </lightning-layout-item>
+                        </lightning-layout>
                     </div>
-                </template>
-                <c-crm-messaging-quick-text
-                    oncommentschange={handleConversationNoteChange}
-                    conversation-note={conversationNote}
-                >
-                </c-crm-messaging-quick-text>
-            </lightning-layout-item>
-            <br />
-            <lightning-layout-item size="12" padding="horizontalSmall">
-                <lightning-button
-                    type="submit"
-                    name="submit"
-                    label="Send"
-                    disabled={closedThread}
-                    variant="brand"
-                    style="min-height: 3rem"
-                    class="slds-float_right"
-                >
-                </lightning-button>
-            </lightning-layout-item>
-        </lightning-layout>
-        <!--</div> -->
-        <lightning-input-field field-name="CRM_From_User__c" value={userid} class="slds-hide"></lightning-input-field>
-        <lightning-input-field
-            class="msgText slds-hide"
-            value={text}
-            field-name="CRM_Message_Text__c"
-        ></lightning-input-field>
-    </lightning-record-edit-form>
+                    <h2>{showspinnner}</h2>
+                    <template if:true={showspinner}>
+                        <div class="spinnerholder">
+                            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                        </div>
+                    </template>
+                    <c-crm-messaging-quick-text
+                        oncommentschange={handleConversationNoteChange}
+                        conversation-note={conversationNote}
+                    >
+                    </c-crm-messaging-quick-text>
+                </lightning-layout-item>
+                <br />
+                <lightning-layout-item size="12" padding="horizontalSmall">
+                    <lightning-button
+                        type="submit"
+                        name="submit"
+                        label="Send"
+                        disabled={closedThread}
+                        variant="brand"
+                        style="min-height: 3rem"
+                        class="slds-float_right"
+                    >
+                    </lightning-button>
+                </lightning-layout-item>
+            </lightning-layout>
+
+            <!--</div> -->
+            <lightning-input-field
+                field-name="CRM_From_User__c"
+                value={userid}
+                class="slds-hide"
+            ></lightning-input-field>
+            <lightning-input-field
+                class="msgText slds-hide"
+                value={text}
+                field-name="CRM_Message_Text__c"
+            ></lightning-input-field>
+        </lightning-record-edit-form>
+    </div>
 
     <!-- POSSIBLE DISPLAY OF JOURNAL ENTRIES RELATED TO THE THREAD
     <div if:true={journalEntries}>
