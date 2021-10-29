@@ -1,31 +1,36 @@
 <template>
-    <div class="body-wrapper">
-        <div class="snakkeboble snakkeboble--hoyre">
-            <lightning-layout class="slds-m-top_x-small slds-p-top_small" multiple-rows="false">
-                <lightning-layout-item padding="horizontalSmall" size="11">
-                    <div class="panel snakkeboble-panel">
-                        <div class="snakkeboble-panel__tekst">
-                            <div class="datewrapper">
-                                <lightning-formatted-date-time
-                                    value={message.CreatedDate}
-                                    day="numeric"
-                                    month="long"
-                                    hour="2-digit"
-                                    minute="2-digit"
-                                    class="timestamp"
-                                >
-                                </lightning-formatted-date-time>
+    <article role="article">
+        <div class="body-wrapper">
+            <div class="snakkeboble snakkeboble--hoyre">
+                <lightning-layout class="slds-m-top_x-small slds-p-top_small" multiple-rows="false">
+                    <lightning-layout-item padding="horizontalSmall" size="11">
+                        <div class="panel snakkeboble-panel">
+                            <div class="snakkeboble-panel__tekst" aria-label="Du sendte">
+                                <h2 class="hide-element">Du sendte</h2>
+                                <div class="datewrapper">
+                                    <lightning-formatted-date-time
+                                        value={message.CreatedDate}
+                                        day="numeric"
+                                        month="long"
+                                        hour="2-digit"
+                                        minute="2-digit"
+                                        class="timestamp"
+                                    >
+                                    </lightning-formatted-date-time>
+                                </div>
                             </div>
+                            <!--<div class="message-text">{message.CRM_Message_Text__c}</div>-->
+                            <lightning-formatted-rich-text
+                                value={message.CRM_Message_Text__c}
+                            ></lightning-formatted-rich-text>
                         </div>
-                        <!--<div class="message-text">{message.CRM_Message_Text__c}</div>-->
-                        <lightning-formatted-rich-text value={message.CRM_Message_Text__c}></lightning-formatted-rich-text>
-                    </div>
-                </lightning-layout-item>
+                    </lightning-layout-item>
 
-                <lightning-layout-item padding="horizontalSmall" size="1" class="iconholder">
-                    <img src={navlogo} alt="Person-Icon" class="Person-Icon slds-show_small" />
-                </lightning-layout-item>
-            </lightning-layout>
+                    <lightning-layout-item padding="horizontalSmall" size="1" class="iconholder">
+                        <img src={navlogo} alt="Fra deg" class="Person-Icon slds-show_small" />
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
         </div>
-    </div>
+    </article>
 </template>
