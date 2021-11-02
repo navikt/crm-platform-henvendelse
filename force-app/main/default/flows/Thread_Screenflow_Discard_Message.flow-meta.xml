@@ -150,6 +150,9 @@
         <label>Update Thread</label>
         <locationX>50</locationX>
         <locationY>1094</locationY>
+        <connector>
+            <targetReference>Send_Inbox_Notification</targetReference>
+        </connector>
         <inputReference>Get_Thread</inputReference>
     </recordUpdates>
     <runInMode>DefaultMode</runInMode>
@@ -198,6 +201,19 @@
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Send_Inbox_Notification</name>
+        <label>Send Inbox Notification</label>
+        <locationX>50</locationX>
+        <locationY>1214</locationY>
+        <flowName>CRMHenvendelse_Thread_Subflow_CreateUserNotificationOnRedactedMessage</flowName>
+        <inputAssignments>
+            <name>thread</name>
+            <value>
+                <elementReference>Get_Thread</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>
