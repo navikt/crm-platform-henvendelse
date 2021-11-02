@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Create_Redacted_Inbox_notification</name>
-        <label>Create Redacted Inbox notification</label>
+        <name>Create_Discarded_Inbox_notification</name>
+        <label>Create Discarded Inbox notification</label>
         <locationX>176</locationX>
         <locationY>158</locationY>
         <actionName>UN_InnboksProducerLegacy</actionName>
@@ -11,7 +11,7 @@
         <inputParameters>
             <name>accountId</name>
             <value>
-                <elementReference>thread.CRM_Account__c</elementReference>
+                <elementReference>conversation_note.CRM_Account__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -23,19 +23,19 @@
         <inputParameters>
             <name>fodselsnummer</name>
             <value>
-                <elementReference>thread.INT_PersonIdent__c</elementReference>
+                <elementReference>conversation_note.INT_PersonIdent__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>grupperingsId</name>
             <value>
-                <elementReference>thread.CRM_API_Reference__c</elementReference>
+                <elementReference>conversation_note.CRM_API_Reference__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>relatedRecordSfId</name>
             <value>
-                <elementReference>thread.Id</elementReference>
+                <elementReference>conversation_note.Id</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -68,10 +68,10 @@
     <formulas>
         <name>url</name>
         <dataType>String</dataType>
-        <expression>{!$Label.CRMHenvendelse_InnboksBaseURL}+{!$Label.CRMHenvendelse_NewMessageNotification}+&quot;/&quot;+{!thread.Id}</expression>
+        <expression>{!$Label.CRMHenvendelse_InnboksBaseURL}+{!$Label.CRMHenvendelse_NewMessageNotification}+&quot;/&quot;+{!conversation_note.Id}</expression>
     </formulas>
-    <interviewLabel>Thread - Subflow - Create User Notification On Redacted Message {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Thread - Subflow - Create User Notification On Redacted Message</label>
+    <interviewLabel>Conversation Note - Subflow - Create User Notification On Discarded Conversation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Conversation Note - Subflow - Create User Notification On Discarded Conversation</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -91,20 +91,21 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <runInMode>DefaultMode</runInMode>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Create_Redacted_Inbox_notification</targetReference>
+            <targetReference>Create_Discarded_Inbox_notification</targetReference>
         </connector>
     </start>
     <status>Draft</status>
     <variables>
-        <name>thread</name>
+        <name>conversation_note</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
-        <objectType>Thread__c</objectType>
+        <objectType>Conversation_Note__c</objectType>
     </variables>
 </Flow>

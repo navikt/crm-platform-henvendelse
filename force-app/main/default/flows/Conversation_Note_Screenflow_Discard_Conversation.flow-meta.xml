@@ -103,6 +103,9 @@
         <label>Update Conversation Note</label>
         <locationX>50</locationX>
         <locationY>638</locationY>
+        <connector>
+            <targetReference>Send_Inbox_Notification</targetReference>
+        </connector>
         <inputReference>Get_Conversation_Note</inputReference>
     </recordUpdates>
     <runInMode>DefaultMode</runInMode>
@@ -151,6 +154,19 @@
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Send_Inbox_Notification</name>
+        <label>Send Inbox Notification</label>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
+        <flowName>Conversation_Note_Subflow_Create_User_Notification_On_Discarded_Conversation</flowName>
+        <inputAssignments>
+            <name>conversation_note</name>
+            <value>
+                <elementReference>Get_Conversation_Note</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>
