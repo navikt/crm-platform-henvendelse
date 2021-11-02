@@ -5,12 +5,12 @@ public with sharing class ArchiveHandler{
         description='Sends all the data of a query to the archive server.'
     )
     public static List<String> postToArchive(List<ArchivePostWrapper> inputs) {
-        List<String> test = new List<String>();
+        List<String> returnList = new List<String>();
         for(ArchivePostWrapper input : inputs){
             ArchiveService service = new ArchiveService();
             List<Id> idList = (List<Id>) input.ids;
-            String testString = input.query + ' WHERE Id IN :idList';
-            List<SObject> archiveObjects = Database.query(testString);
+            String queryString = input.query + ' WHERE Id IN :idList';
+            List<SObject> archiveObjects = Database.query(queryString);
             ArchiveService.ArchiveInputWrapper inputWrapper = new ArchiveService.ArchiveInputWrapper(input.opprettetAv,
             input.aktoerid,
             input.fnr,
@@ -18,9 +18,9 @@ public with sharing class ArchiveHandler{
             input.tema,
             input.konfidentiellt);
             List<ArchiveService.ArchiveResponseWrapper> resp =  service.postToArchive(archiveObjects, inputWrapper);
-            test.add(JSON.serialize(resp));
+            returnList.add(JSON.serialize(resp));
         }
-        return test;
+        return returnList;
     }
 
     public class ArchivePostWrapper {
