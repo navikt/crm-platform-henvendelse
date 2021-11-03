@@ -1,5 +1,9 @@
 public with sharing class ArchiveHandler{
     
+    public static String checkNull(String value) {
+        return String.isBlank(value) ? '' : value;
+    }
+
     @InvocableMethod(
         label='Post data to archive server'
         description='Sends all the data of a query to the archive server.'
@@ -7,6 +11,10 @@ public with sharing class ArchiveHandler{
     public static List<String> postToArchive(List<ArchivePostWrapper> inputs) {
         List<String> returnList = new List<String>();
         for(ArchivePostWrapper input : inputs){
+            input.aktoerid += checkNull(input.aktoerid);
+            input.fnr += checkNull(input.fnr);
+            input.orgnr += checkNull(input.orgnr);
+            input.tema += checkNull(input.tema);
             ArchiveService service = new ArchiveService();
             List<Id> idList = (List<Id>) input.ids;
             String queryString = input.query + ' WHERE Id IN :idList';
