@@ -1,6 +1,7 @@
 .message-from {
     margin-right: 0.5em;
     font-weight: bolder;
+    display: inline;
 }
 
 .message-text {
@@ -17,4 +18,6 @@
     min-width: 25px;
 }
 .timestamp {
+}
+.h3 {
 }
