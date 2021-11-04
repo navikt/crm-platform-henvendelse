@@ -4,7 +4,7 @@
     <assignments>
         <name>Discard_Conversation</name>
         <label>Discard Conversation</label>
-        <locationX>182</locationX>
+        <locationX>248</locationX>
         <locationY>278</locationY>
         <assignmentItems>
             <assignToReference>Get_Conversation_Note.CRM_Conversation_Note__c</assignToReference>
@@ -27,7 +27,7 @@
     <decisions>
         <name>Is_Discarded</name>
         <label>Is Discarded</label>
-        <locationX>182</locationX>
+        <locationX>248</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Failed</targetReference>
@@ -56,6 +56,28 @@
             <label>Yes</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>isSent</name>
+        <label>isSent</label>
+        <locationX>50</locationX>
+        <locationY>878</locationY>
+        <defaultConnector>
+            <targetReference>Roll_Back</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Sent</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Send_Inbox_Notification</leftValueReference>
+                <operator>WasVisited</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Sent</label>
+        </rules>
+    </decisions>
     <interviewLabel>Conversation Note Screenflow Discard Conversation {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Conversation Note Screenflow Discard Conversation</label>
     <processMetadataValues>
@@ -80,7 +102,7 @@
     <recordLookups>
         <name>Get_Conversation_Note</name>
         <label>Get Conversation Note</label>
-        <locationX>182</locationX>
+        <locationX>248</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -98,6 +120,12 @@
         <object>Conversation_Note__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordRollbacks>
+        <name>Roll_Back</name>
+        <label>Roll Back</label>
+        <locationX>182</locationX>
+        <locationY>998</locationY>
+    </recordRollbacks>
     <recordUpdates>
         <name>Update_Conversation_Note</name>
         <label>Update Conversation Note</label>
@@ -112,7 +140,7 @@
     <screens>
         <name>Failed</name>
         <label>Failed</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>518</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -147,18 +175,21 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>122</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Conversation_Note</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Send_Inbox_Notification</name>
         <label>Send Inbox Notification</label>
         <locationX>50</locationX>
         <locationY>758</locationY>
+        <connector>
+            <targetReference>isSent</targetReference>
+        </connector>
         <flowName>Conversation_Note_Subflow_Create_User_Notification_On_Discarded_Conversation</flowName>
         <inputAssignments>
             <name>conversation_note</name>

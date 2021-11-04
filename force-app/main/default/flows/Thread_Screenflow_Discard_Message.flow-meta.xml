@@ -4,7 +4,7 @@
     <assignments>
         <name>Set_Value</name>
         <label>Set Value</label>
-        <locationX>182</locationX>
+        <locationX>248</locationX>
         <locationY>734</locationY>
         <assignmentItems>
             <assignToReference>Get_Thread.STO_Sensitive_Information__c</assignToReference>
@@ -20,7 +20,7 @@
     <decisions>
         <name>Is_Updated</name>
         <label>Is Updated</label>
-        <locationX>182</locationX>
+        <locationX>248</locationX>
         <locationY>854</locationY>
         <defaultConnector>
             <targetReference>Failed</targetReference>
@@ -42,12 +42,34 @@
             <label>Yes</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>isSent</name>
+        <label>isSent</label>
+        <locationX>50</locationX>
+        <locationY>1334</locationY>
+        <defaultConnector>
+            <targetReference>rollBack</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Sent</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Send_Inbox_Notification</leftValueReference>
+                <operator>WasVisited</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Sent</label>
+        </rules>
+    </decisions>
     <interviewLabel>Thread Screenflow Discard Message {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Thread Screenflow Discard Message</label>
     <loops>
         <name>Loop_Through_Messages</name>
         <label>Loop Through Messages</label>
-        <locationX>182</locationX>
+        <locationX>248</locationX>
         <locationY>398</locationY>
         <collectionReference>Get_Messages</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -80,7 +102,7 @@
     <recordLookups>
         <name>Get_Messages</name>
         <label>Get Messages</label>
-        <locationX>182</locationX>
+        <locationX>248</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -103,7 +125,7 @@
     <recordLookups>
         <name>Get_Thread</name>
         <label>Get Thread</label>
-        <locationX>182</locationX>
+        <locationX>248</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -121,10 +143,16 @@
         <object>Thread__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordRollbacks>
+        <name>rollBack</name>
+        <label>rollBack</label>
+        <locationX>182</locationX>
+        <locationY>1454</locationY>
+    </recordRollbacks>
     <recordUpdates>
         <name>Update_Message</name>
         <label>Update Message</label>
-        <locationX>270</locationX>
+        <locationX>336</locationX>
         <locationY>518</locationY>
         <connector>
             <targetReference>Loop_Through_Messages</targetReference>
@@ -159,7 +187,7 @@
     <screens>
         <name>Failed</name>
         <label>Failed</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>974</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -194,18 +222,21 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>122</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Thread</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Send_Inbox_Notification</name>
         <label>Send Inbox Notification</label>
         <locationX>50</locationX>
         <locationY>1214</locationY>
+        <connector>
+            <targetReference>isSent</targetReference>
+        </connector>
         <flowName>CRMHenvendelse_Thread_Subflow_CreateUserNotificationOnRedactedMessage</flowName>
         <inputAssignments>
             <name>thread</name>
