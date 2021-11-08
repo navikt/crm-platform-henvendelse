@@ -17,6 +17,11 @@
                 <label>Not Journaled</label>
             </value>
             <value>
+                <fullName>Journal Started</fullName>
+                <default>false</default>
+                <label>Journal Started</label>
+            </value>
+            <value>
                 <fullName>Journal Error</fullName>
                 <default>false</default>
                 <label>Journal Error</label>
