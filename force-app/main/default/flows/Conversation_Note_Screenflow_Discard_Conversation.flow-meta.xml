@@ -60,7 +60,7 @@
         <name>isSent</name>
         <label>isSent</label>
         <locationX>50</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <defaultConnector>
             <targetReference>Roll_Back</targetReference>
         </defaultConnector>
@@ -124,7 +124,7 @@
         <name>Roll_Back</name>
         <label>Roll Back</label>
         <locationX>182</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
     </recordRollbacks>
     <recordUpdates>
         <name>Update_Conversation_Note</name>
@@ -132,7 +132,7 @@
         <locationX>50</locationX>
         <locationY>638</locationY>
         <connector>
-            <targetReference>Send_Inbox_Notification</targetReference>
+            <targetReference>Send_Email_Alert</targetReference>
         </connector>
         <inputReference>Get_Conversation_Note</inputReference>
     </recordUpdates>
@@ -181,12 +181,28 @@
             <targetReference>Get_Conversation_Note</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Obsolete</status>
+    <subflows>
+        <name>Send_Email_Alert</name>
+        <label>Send Email Alert</label>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
+        <connector>
+            <targetReference>Send_Inbox_Notification</targetReference>
+        </connector>
+        <flowName>Discarding_Email_Alert</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>Get_Conversation_Note.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <subflows>
         <name>Send_Inbox_Notification</name>
         <label>Send Inbox Notification</label>
         <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <connector>
             <targetReference>isSent</targetReference>
         </connector>
