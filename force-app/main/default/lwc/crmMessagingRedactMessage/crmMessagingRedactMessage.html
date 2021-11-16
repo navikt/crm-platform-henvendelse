@@ -1,13 +1,13 @@
 <template>
     <template if:false={isEvent}>
-        <li if:true={isRedacting} class={liClasses}>
+        <li class={liClasses}>
             <div class="slds-chat-message">
                 <div class="slds-chat-message__body">
                     <div class={divClasses}>
-                        <!-- <lightning-formatted-rich-text
+                        <lightning-formatted-rich-text
                             if:false={isRedacting}
                             value={message.CRM_Message_Text__c}
-                        ></lightning-formatted-rich-text> -->
+                        ></lightning-formatted-rich-text>
                         <lightning-record-edit-form
                             if:true={isRedacting}
                             object-api-name="Message__c"
@@ -63,42 +63,9 @@
                         {message.CRM_From_First_Name__c} &nbsp;
                         <lightning-formatted-date-time
                             value={message.CreatedDate}
+                            year="numeric"
                             month="numeric"
                             day="numeric"
-                            year="numeric"
-                            hour="2-digit"
-                            minute="2-digit"
-                        >
-                        </lightning-formatted-date-time>
-                        <lightning-button-stateful
-                            class="slds-chat-message__action slds-float_right"
-                            icon-name-when-off="utility:edit"
-                            icon-name-when-on="utility:edit"
-                            selected={isRedacting}
-                            onclick={toggleRedacting}
-                            label-when-off="Start sladding"
-                            label-when-on="Avbryt sladding"
-                        ></lightning-button-stateful>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li class={liClasses} if:false={isRedacting}>
-            <div class="slds-chat-message">
-                <div class="slds-chat-message__body">
-                    <div class={divClasses}>
-                        <lightning-formatted-rich-text
-                            value={message.CRM_Message_Text__c}
-                        ></lightning-formatted-rich-text>
-                    </div>
-
-                    <div class="slds-chat-message__meta">
-                        {message.CRM_From_First_Name__c} &nbsp;
-                        <lightning-formatted-date-time
-                            value={message.CreatedDate}
-                            month="numeric"
-                            day="numeric"
-                            year="numeric"
                             hour="2-digit"
                             minute="2-digit"
                         >
@@ -121,13 +88,20 @@
         <li class="slds-chat-listitem slds-chat-listitem_event">
             <div class="slds-chat-event">
                 <div class="slds-chat-event__body">
+                    <lightning-icon
+                        icon-name="utility:events"
+                        alternative-text="Hendelse"
+                        title="Hendelse"
+                        size="small"
+                        class="slds-var-p-right_small"
+                    ></lightning-icon>
                     <p>
                         {message.CRM_Message_Text__c} •
                         <lightning-formatted-date-time
                             value={message.CreatedDate}
+                            year="numeric"
                             month="numeric"
                             day="numeric"
-                            year="numeric"
                             hour="2-digit"
                             minute="2-digit"
                         >
