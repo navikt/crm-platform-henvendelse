@@ -1,15 +1,13 @@
-/* :host textarea {
-    width: 25rem;
-} */
-/* :host {
-} */
-
-/* :host(.xx-small-width) {
-    width:SIZE_LARGE;
-} */
-
 textarea {
-    width: var(--lwc-sizeMedium);
+    width: 100%; /*var(--lwc-sizeMedium);*/
+}
+
+:host(.width_xx-large) textarea {
+    width: var(--lwc-sizeXLarge);
+}
+
+:host(.width_x-large) textarea {
+    width: var(--lwc-sizeXxLarge);
 }
 
 :host(.width_large) textarea {

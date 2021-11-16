@@ -6,7 +6,8 @@ export default class CrmMessagingRedactMessage extends LightningElement {
     messageText;
     redactedText;
     _isRedacting = false;
-    falseValue = false;
+    trueValue = true;
+    showSpinner = false;
 
     @api get message() {
         return this._message;
@@ -18,7 +19,7 @@ export default class CrmMessagingRedactMessage extends LightningElement {
 
     set isRedacting(value) {
         if (false === value) {
-            this.revertRedacting();
+            this.redactTextComponent.reset(); //this.revertRedacting();
         }
         this._isRedacting = value;
     }
@@ -34,28 +35,18 @@ export default class CrmMessagingRedactMessage extends LightningElement {
         this.messageId = this.message.Id;
     }
 
-    revertRedacting() {
-        this.redactTextComponent.reset();
-    }
-
-    undoRedacting() {
-        this.redactTextComponent.undoChanges();
-    }
-
-    redoRedacting() {
-        this.redactTextComponent.redoChanges();
-    }
-
-    handleSuccess(event) {
-        const payload = event.detail;
-        console.log(JSON.stringify(payload));
+    handleSuccess() {
+        this.showSpinner = false;
         this.isRedacting = false;
     }
 
-    handleError(event) {
-        const payload = event.detail;
-        console.log(JSON.stringify(payload));
+    handleError() {
+        this.showSpinner = false;
         this.isRedacting = false;
+    }
+
+    handleSubmit() {
+        this.showSpinner = true;
     }
 
     get liClasses() {
@@ -76,16 +67,10 @@ export default class CrmMessagingRedactMessage extends LightningElement {
         return this.template.querySelector('c-crm-redact-text');
     }
 
-    get canRevertDisabled() {
-        return this.canUndoDisabled && this.canRedoDisabled;
-    }
-
-    get canUndoDisabled() {
-        return this.redactTextComponent ? !this.redactTextComponent.canUndo : true;
-    }
-
-    get canRedoDisabled() {
-        return this.redactTextComponent ? !this.redactTextComponent.canRedo : true;
+    get canSaveDisabled() {
+        return this.template.querySelector('c-crm-redact-text')
+            ? !this.template.querySelector('c-crm-redact-text').hasChanges
+            : false;
     }
 
     toggleRedacting() {

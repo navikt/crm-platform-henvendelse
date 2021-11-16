@@ -14,34 +14,25 @@
                             record-id={messageId}
                             onsuccess={handleSuccess}
                             onerror={handleError}
+                            onsubmit={handleSubmit}
                             style="display: flex"
-                            class="slds-text-color_default"
+                            class="slds-text-color_default slds-is-relative"
                         >
+                            <lightning-spinner
+                                if:true={showSpinner}
+                                alternative-text="Lagrer"
+                                size="small"
+                            ></lightning-spinner>
                             <c-crm-redact-text
                                 text-to-redact={messageText}
                                 ontext_redacted={handleRedactEvent}
                                 class="width_large"
                             >
-                                <lightning-button-group slot="toolbar">
-                                    <lightning-button-icon
-                                        icon-name="utility:undo"
-                                        disabled={canUndoDisabled}
-                                        alternative-text="Angre"
-                                        onclick={undoRedacting}
-                                    ></lightning-button-icon>
-                                    <lightning-button-icon
-                                        icon-name="utility:redo"
-                                        disabled={canRedoDisabled}
-                                        alternative-text="Gjør om"
-                                        onclick={redoRedacting}
-                                    ></lightning-button-icon>
-                                </lightning-button-group>
                                 <lightning-button
-                                    slot="toolbar"
+                                    slot="toolbarEnd"
                                     label="Lagre"
                                     icon-name="utility:save"
-                                    disabled={canUndoDisabled}
-                                    onclick={saveMessage}
+                                    disabled={canSaveDisabled}
                                     variant="brand"
                                     type="submit"
                                     class="slds-p-left_large"
@@ -54,7 +45,7 @@
                             ></lightning-input-field>
                             <lightning-input-field
                                 class="slds-hide"
-                                value={falseValue}
+                                value={trueValue}
                                 field-name="CRM_Is_Redacted__c"
                             ></lightning-input-field>
                         </lightning-record-edit-form>

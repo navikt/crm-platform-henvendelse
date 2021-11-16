@@ -56,12 +56,24 @@ export default class CrmRedactText extends LightningElement {
         this.resetTextToRedact(this._originalValue);
     }
 
+    get canUndoDisabled() {
+        return !this.canUndo;
+    }
+
+    get canRedoDisabled() {
+        return !this.canRedo;
+    }
+
     @api get canUndo() {
         return this._changesPosition > 0;
     }
 
     @api get canRedo() {
         return this._changesPosition < this._changes.length - 1;
+    }
+
+    @api get hasChanges() {
+        return this.canUndo;
     }
 
     addRedactedValue(value) {
