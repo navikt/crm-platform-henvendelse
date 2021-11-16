@@ -5,28 +5,6 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>actionNames</name>
-                    <valueList>
-                        <valueListItems>
-                            <value>Thread__c.Complete_Redaction</value>
-                            <visibilityRule>
-                                <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.Redaction_Custom_Permission}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>true</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Thread__c.Discard_Messages</value>
-                            <visibilityRule>
-                                <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.Redaction_Custom_Permission}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>true</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                    </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>collapsed</name>
@@ -58,44 +36,12 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>crmMessagingRedactThreadViewer</componentName>
-                <identifier>c_crmMessagingRedactThreadViewer1</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.STO_Sensitive_Information__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Redaction_Custom_Permission}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
                 <componentInstanceProperties>
                     <name>singleThread</name>
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>crmMessagingMessageComponent</componentName>
                 <identifier>c_crmMessagingMessageComponent1</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.STO_Sensitive_Information__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>false</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Redaction_Custom_Permission}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>false</rightValue>
-                    </criteria>
-                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>leftcol</name>
@@ -104,17 +50,27 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.STO_Sensitive_Information_Activated_By__c</fieldItem>
-                <identifier>RecordSTO_Sensitive_Information_Activated_By_cField1</identifier>
+                <fieldItem>Record.CRM_Number_of_unread_Messages__c</fieldItem>
+                <identifier>RecordCRM_Number_of_unread_Messages_cField1</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.STO_Sensitive_Information_Date__c</fieldItem>
-                <identifier>RecordSTO_Sensitive_Information_Date_cField1</identifier>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.STO_Sensitive_Information__c</fieldItem>
+                <identifier>RecordSTO_Sensitive_Information_cField1</identifier>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-8cdc0891-de6b-4de0-b93d-e047cf2db74e</name>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.CRM_Thread_Type__c</fieldItem>
+                <identifier>RecordCRM_Thread_Type_cField1</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-3e506bee-ab8b-46a9-a822-97f93278ad66</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -124,17 +80,31 @@
                     <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.STO_Sensitive_Information_Unit__c</fieldItem>
-                <identifier>RecordSTO_Sensitive_Information_Unit_cField1</identifier>
+                <fieldItem>Record.CRM_Theme_Group__c</fieldItem>
+                <identifier>RecordCRM_Theme_Group_cField1</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.Redaction_Cause__c</fieldItem>
-                <identifier>RecordRedaction_Cause_cField1</identifier>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.CRM_Theme__c</fieldItem>
+                <identifier>RecordCRM_Theme_cField1</identifier>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-50358f90-0ed6-4e15-958e-68a975076db2</name>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.CRM_Subtheme__c</fieldItem>
+                <identifier>RecordCRM_Subtheme_cField1</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-1ed3d52c-30e9-4c5e-a8c4-bf018b082d92</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -142,7 +112,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-8cdc0891-de6b-4de0-b93d-e047cf2db74e</value>
+                    <value>Facet-3e506bee-ab8b-46a9-a822-97f93278ad66</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
                 <identifier>flexipage_column1</identifier>
@@ -152,13 +122,13 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-50358f90-0ed6-4e15-958e-68a975076db2</value>
+                    <value>Facet-1ed3d52c-30e9-4c5e-a8c4-bf018b082d92</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
                 <identifier>flexipage_column2</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-aac2eca0-fc44-4415-8a68-ed2b26bbbc29</name>
+        <name>Facet-c5cf4272-edbc-4997-956a-6213b89feaea</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -166,11 +136,11 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
-                    <value>Facet-aac2eca0-fc44-4415-8a68-ed2b26bbbc29</value>
+                    <value>Facet-c5cf4272-edbc-4997-956a-6213b89feaea</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
-                    <value>Detaljer</value>
+                    <value>Information</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection1</identifier>
@@ -205,10 +175,14 @@
         <name>rightcol</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>Redaction Thread Record Page</masterLabel>
+    <masterLabel>Henvendelse - Thread</masterLabel>
     <sobjectType>Thread__c</sobjectType>
     <template>
         <name>flexipage:recordHomeTwoColEqualHeaderTemplateDesktop</name>
+        <properties>
+            <name>enablePageActionConfig</name>
+            <value>false</value>
+        </properties>
     </template>
     <type>RecordPage</type>
 </FlexiPage>
