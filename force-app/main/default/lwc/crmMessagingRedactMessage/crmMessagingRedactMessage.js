@@ -6,6 +6,7 @@ export default class CrmMessagingRedactMessage extends LightningElement {
     messageText;
     redactedText;
     _isRedacting = false;
+    falseValue = false;
 
     @api get message() {
         return this._message;
