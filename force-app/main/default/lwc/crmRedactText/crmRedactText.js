@@ -5,7 +5,7 @@ export default class CrmRedactText extends LightningElement {
     _changes = [];
     _changesPosition = -1;
     _textAreaclass = 'redactTextArea slds-textarea slds-text-color_default';
-    _textAreaStyle = 'resize: none; overflow: hidden; overflow:hidden;';
+    _textAreaStyle = 'resize: none; overflow: hidden; overflow:hidden; ';
     hasRendered = false;
 
     @api get textToRedact() {

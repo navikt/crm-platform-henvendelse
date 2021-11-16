@@ -1,0 +1,25 @@
+/* :host textarea {
+    width: 25rem;
+} */
+/* :host {
+} */
+
+/* :host(.xx-small-width) {
+    width:SIZE_LARGE;
+} */
+
+textarea {
+    width: var(--lwc-sizeMedium);
+}
+
+:host(.width_large) textarea {
+    width: var(--lwc-sizeLarge);
+}
+
+:host(.width_medium) textarea {
+    width: var(--lwc-sizeMedium);
+}
+
+:host(.width_small) textarea {
+    width: var(--lwc-sizeSmall);
+}
