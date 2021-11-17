@@ -109,8 +109,7 @@ export default class nksQuickText extends LightningElement {
     @api isopen() {
         if (this.template.querySelector('[data-id="modal"]').className == 'modalShow') {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -151,12 +150,20 @@ export default class nksQuickText extends LightningElement {
                 .replace(/(\r\n|\n|\r)/g, ' ')
                 .trim()
                 .split(' ')
-                .pop()
-                .toUpperCase();
+                .pop();
+            const abbreviation = lastItem.toUpperCase();
+            const quickText = this.qmap.get(abbreviation);
 
-            if (this.qmap.has(lastItem)) {
+            if (this.qmap.has(abbreviation)) {
                 const startindex = carretPositionEnd - lastItem.length - 1;
-                editor.setRangeText(this.qmap.get(lastItem) + ' ', startindex, carretPositionEnd, 'end');
+
+                if (lastItem.charAt(0) === lastItem.charAt(0).toLowerCase()) {
+                    const lowerCaseQuickText = quickText.toLowerCase();
+                    editor.setRangeText(lowerCaseQuickText + ' ', startindex, carretPositionEnd, 'end');
+                } else {
+                    const upperCaseQuickText = quickText.charAt(0).toUpperCase() + quickText.slice(1);
+                    editor.setRangeText(upperCaseQuickText + ' ', startindex, carretPositionEnd, 'end');
+                }
             }
         }
     }
@@ -184,14 +191,12 @@ export default class nksQuickText extends LightningElement {
             return { isValid: true };
         }
     }
-    setheader() {
-
-    }
+    setheader() {}
     @api clear(event) {
         let inputField = this.template.querySelector('.conversationNoteTextArea');
         inputField.value = '';
     }
     handlePaste() {
-        handleChange()
+        handleChange();
     }
 }

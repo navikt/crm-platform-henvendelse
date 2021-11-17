@@ -5,7 +5,7 @@
         <name>Assign_Common_Thread_Values</name>
         <label>Assign Common Thread Values</label>
         <locationX>182</locationX>
-        <locationY>311</locationY>
+        <locationY>431</locationY>
         <assignmentItems>
             <assignToReference>$Record.CRM_Type__c</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +21,7 @@
         <name>Assign_Person_Values_To_Thread</name>
         <label>Assign Person Values To Thread</label>
         <locationX>50</locationX>
-        <locationY>1007</locationY>
+        <locationY>1127</locationY>
         <assignmentItems>
             <assignToReference>$Record.CRM_External_ActorId__c</assignToReference>
             <operator>Assign</operator>
@@ -41,7 +41,7 @@
         <name>Set_Registered_Datetime</name>
         <label>Set Registered Datetime</label>
         <locationX>270</locationX>
-        <locationY>671</locationY>
+        <locationY>791</locationY>
         <assignmentItems>
             <assignToReference>$Record.CRM_Date_Time_Registered__c</assignToReference>
             <operator>Assign</operator>
@@ -57,7 +57,7 @@
         <name>Check_Date_Time_Registered</name>
         <label>Check Date Time Registered</label>
         <locationX>182</locationX>
-        <locationY>551</locationY>
+        <locationY>671</locationY>
         <defaultConnector>
             <targetReference>Set_Registered_Datetime</targetReference>
         </defaultConnector>
@@ -79,10 +79,32 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_if_account_exist</name>
+        <label>Check if account exist</label>
+        <locationX>380</locationX>
+        <locationY>311</locationY>
+        <defaultConnectorLabel>No account found</defaultConnectorLabel>
+        <rules>
+            <name>Account_exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CRM_Account__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Common_Thread_Values</targetReference>
+            </connector>
+            <label>Account exist</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Has_Person</name>
         <label>Has Person and need details</label>
         <locationX>182</locationX>
-        <locationY>887</locationY>
+        <locationY>1007</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Has_Person_Yes</name>
@@ -133,7 +155,7 @@
         <name>Person</name>
         <label>Person</label>
         <locationX>182</locationX>
-        <locationY>431</locationY>
+        <locationY>551</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Date_Time_Registered</targetReference>
@@ -151,10 +173,10 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>56</locationX>
+        <locationX>254</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Assign_Common_Thread_Values</targetReference>
+            <targetReference>Check_if_account_exist</targetReference>
         </connector>
         <object>Thread__c</object>
         <recordTriggerType>Create</recordTriggerType>

@@ -8,6 +8,7 @@
     "permsets_to_assign": [
         "Messaging_Read_and_Write_Messages_and_Threads",
         "Henvendelse_API_Permission",
-        "Henvendelse_Scratch_Permissions"
+        "Henvendelse_Scratch_Permissions",
+        "Redaction_Permission_Set"
     ]
 }
