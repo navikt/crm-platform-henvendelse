@@ -24,3 +24,7 @@
     max-width: 80em;
     margin: auto;
 }
+
+.largePadding {
+    padding-bottom: 5.5em;
+}
