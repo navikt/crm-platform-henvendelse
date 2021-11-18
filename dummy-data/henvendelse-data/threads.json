@@ -5,7 +5,12 @@
                 "type": "Thread__c",
                 "referenceId": "ThreadRef1"
             },
-            "CRM_isActive__c": true
+            "CRM_isActive__c": true,
+            "Name": "Skriv til oss - Arbeid",
+            "CRM_Thread_Type__c": "STO",
+            "CRM_Theme_Group__c": "@ArbeidRef",
+            "CRM_Theme__c": "@DAGRef",
+            "Account__c": "@AccountRef1"
         }
     ]
 }
