@@ -20,7 +20,7 @@
         {
             "attributes": {
                 "type": "Message__c",
-                "referenceId": "MessageRef2"
+                "referenceId": "MessageRef3"
             },
             "CRM_Thread__c": "@ThreadRef1",
             "CRM_External_Message__c": false,
@@ -29,7 +29,7 @@
         {
             "attributes": {
                 "type": "Message__c",
-                "referenceId": "MessageRef3"
+                "referenceId": "MessageRef4"
             },
             "CRM_Thread__c": "@ThreadRef1",
             "CRM_External_Message__c": false,
@@ -38,7 +38,7 @@
         {
             "attributes": {
                 "type": "Message__c",
-                "referenceId": "MessageRef4"
+                "referenceId": "MessageRef5"
             },
             "CRM_Thread__c": "@ThreadRef1",
             "CRM_External_Message__c": true,
@@ -47,7 +47,7 @@
         {
             "attributes": {
                 "type": "Message__c",
-                "referenceId": "MessageRef5"
+                "referenceId": "MessageRef6"
             },
             "CRM_Thread__c": "@ThreadRef1",
             "CRM_External_Message__c": false,
@@ -56,7 +56,7 @@
         {
             "attributes": {
                 "type": "Message__c",
-                "referenceId": "MessageRef6"
+                "referenceId": "MessageRef7"
             },
             "CRM_Thread__c": "@ThreadRef1",
             "CRM_External_Message__c": true,
