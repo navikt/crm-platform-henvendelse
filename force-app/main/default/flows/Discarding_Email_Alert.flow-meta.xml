@@ -8,6 +8,9 @@
         <locationY>158</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
+        <faultConnector>
+            <targetReference>Set_error</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailBody</name>
@@ -35,6 +38,26 @@
         </inputParameters>
     </actionCalls>
     <apiVersion>53.0</apiVersion>
+    <assignments>
+        <name>Set_error</name>
+        <label>Set error</label>
+        <locationX>440</locationX>
+        <locationY>278</locationY>
+        <assignmentItems>
+            <assignToReference>sucess</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
     <formulas>
         <name>URL</name>
         <dataType>String</dataType>
@@ -68,12 +91,29 @@
             <targetReference>Discarding_Email_Alert</targetReference>
         </connector>
     </start>
-    <status>Obsolete</status>
+    <status>Draft</status>
+    <variables>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>sucess</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>true</booleanValue>
+        </value>
     </variables>
 </Flow>
