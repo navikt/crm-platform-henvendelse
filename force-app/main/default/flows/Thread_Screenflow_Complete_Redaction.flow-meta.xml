@@ -1,81 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
-    <assignments>
-        <name>Set_Value</name>
-        <label>Set Value</label>
-        <locationX>248</locationX>
-        <locationY>278</locationY>
-        <assignmentItems>
-            <assignToReference>Get_Thread.STO_Sensitive_Information__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Thread.Cause__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue/>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Is_Assigned</targetReference>
-        </connector>
-    </assignments>
     <decisions>
-        <name>Is_Assigned</name>
-        <label>Is Assigned</label>
-        <locationX>248</locationX>
-        <locationY>398</locationY>
+        <name>isSent</name>
+        <label>isSent</label>
+        <locationX>314</locationX>
+        <locationY>638</locationY>
         <defaultConnector>
-            <targetReference>Failed</targetReference>
+            <targetReference>Successful</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>Sent</defaultConnectorLabel>
         <rules>
-            <name>Yes</name>
+            <name>Failed_to_create_user_notification</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Thread.Cause__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>Send_Inbox_Notification.newUserNotification</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <stringValue/>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>No_user_notification</targetReference>
+            </connector>
+            <label>Failed to create user notification</label>
+        </rules>
+        <rules>
+            <name>Failed_to_send_user_notification</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Send_Inbox_Notification.newUserNotification</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_Thread.STO_Sensitive_Information__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>Send_Inbox_Notification.newUserNotification.CRM_NotificationError__c</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Successful</targetReference>
+                <targetReference>partialSuccess</targetReference>
             </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>isSent</name>
-        <label>isSent</label>
-        <locationX>50</locationX>
-        <locationY>878</locationY>
-        <defaultConnector>
-            <targetReference>Roll_Back</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Sent</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Send_Inbox_Notification</leftValueReference>
-                <operator>WasVisited</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <label>Sent</label>
+            <label>Failed to send user notification</label>
         </rules>
     </decisions>
     <interviewLabel>Thread Screenflow Complete Redaction {!$Flow.CurrentDateTime}</interviewLabel>
@@ -99,15 +69,51 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordCreates>
+        <name>Create_thread_is_redacted_event</name>
+        <label>Create thread is redacted event</label>
+        <locationX>314</locationX>
+        <locationY>158</locationY>
+        <connector>
+            <targetReference>Set_tread_to_redacted</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Exception_Screen</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>CRM_Message_Text__c</field>
+            <value>
+                <elementReference>$Label.CRMHenvendelse_RedactedMessageNotificationText</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CRM_Thread__c</field>
+            <value>
+                <elementReference>Get_Thread.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CRM_Type__c</field>
+            <value>
+                <stringValue>Event</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Message__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
     <recordLookups>
         <name>Get_Thread</name>
         <label>Get Thread</label>
-        <locationX>248</locationX>
-        <locationY>158</locationY>
+        <locationX>314</locationX>
+        <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Set_Value</targetReference>
+            <targetReference>Send_Inbox_Notification</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Exception_Screen</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -121,37 +127,95 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordRollbacks>
-        <name>Roll_Back</name>
-        <label>Roll Back</label>
-        <locationX>182</locationX>
-        <locationY>998</locationY>
+        <name>Rollback</name>
+        <label>Rollback</label>
+        <locationX>842</locationX>
+        <locationY>638</locationY>
     </recordRollbacks>
     <recordUpdates>
-        <name>Update_Thread</name>
-        <label>Update Thread</label>
-        <locationX>50</locationX>
-        <locationY>638</locationY>
+        <name>Set_tread_to_redacted</name>
+        <label>Set tread to redacted</label>
+        <locationX>314</locationX>
+        <locationY>278</locationY>
         <connector>
-            <targetReference>Send_Inbox_Notification</targetReference>
+            <targetReference>Get_Thread</targetReference>
         </connector>
-        <inputReference>Get_Thread</inputReference>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Exception_Screen</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Cause__c</field>
+            <value>
+                <stringValue/>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>STO_Sensitive_Information__c</field>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+        <object>Thread__c</object>
     </recordUpdates>
     <runInMode>DefaultMode</runInMode>
     <screens>
-        <description>Failed!</description>
-        <name>Failed</name>
-        <label>Failed</label>
-        <locationX>446</locationX>
+        <name>Exception_Screen</name>
+        <label>Exception Screen</label>
+        <locationX>842</locationX>
         <locationY>518</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Rollback</targetReference>
+        </connector>
         <fields>
-            <name>Not_Complete</name>
-            <fieldText>&lt;p&gt;Noe gikk galt!&lt;/p&gt;</fieldText>
+            <name>exceptionMessage</name>
+            <fieldText>&lt;p&gt;Noe gikk galt&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Feilmelding:&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <nextOrFinishButtonLabel>Ferdigstill</nextOrFinishButtonLabel>
+        <nextOrFinishButtonLabel>Lukk</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>No_user_notification</name>
+        <label>No user notification</label>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>userNotificationError</name>
+            <fieldText>&lt;p&gt;Tråden er sladdet, men &lt;b&gt;klarte ikke&lt;/b&gt; å lage en brukernotifikasjon for å varsle bruker.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>partialSuccess</name>
+        <label>Partial Success</label>
+        <locationX>314</locationX>
+        <locationY>758</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>partialSuccessMessage</name>
+            <fieldText>&lt;p&gt;Tråden er sladdet, men bruker har &lt;b&gt;ikke&lt;/b&gt; fått notifikasjon på grunn av en feil.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Feilmelding:&lt;/p&gt;&lt;p&gt;{!Send_Inbox_Notification.newUserNotification.CRM_NotificationError__c}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -159,14 +223,11 @@
         <description>Successful!</description>
         <name>Successful</name>
         <label>Successful</label>
-        <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationX>578</locationX>
+        <locationY>758</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Update_Thread</targetReference>
-        </connector>
         <fields>
             <name>Done</name>
             <fieldText>&lt;p&gt;Tråden er sladdet.&lt;/p&gt;</fieldText>
@@ -177,18 +238,18 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>122</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Thread</targetReference>
+            <targetReference>Create_thread_is_redacted_event</targetReference>
         </connector>
     </start>
-    <status>Obsolete</status>
+    <status>Draft</status>
     <subflows>
         <name>Send_Inbox_Notification</name>
         <label>Send Inbox Notification</label>
-        <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationX>314</locationX>
+        <locationY>518</locationY>
         <connector>
             <targetReference>isSent</targetReference>
         </connector>
@@ -199,6 +260,7 @@
                 <elementReference>Get_Thread</elementReference>
             </value>
         </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <variables>
         <name>recordId</name>
