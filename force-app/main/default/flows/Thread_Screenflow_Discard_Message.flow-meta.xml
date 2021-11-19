@@ -4,7 +4,7 @@
         <name>Log_email_not_sent</name>
         <label>Log email not sent</label>
         <locationX>50</locationX>
-        <locationY>1214</locationY>
+        <locationY>1334</locationY>
         <actionName>LoggerUtility</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -39,7 +39,7 @@
         <name>Is_Success</name>
         <label>Is Success</label>
         <locationX>182</locationX>
-        <locationY>1430</locationY>
+        <locationY>1550</locationY>
         <defaultConnector>
             <targetReference>Successful</targetReference>
         </defaultConnector>
@@ -78,7 +78,7 @@
         <name>Send_Email_result</name>
         <label>Send Email result</label>
         <locationX>182</locationX>
-        <locationY>1094</locationY>
+        <locationY>1214</locationY>
         <defaultConnector>
             <targetReference>Is_Success</targetReference>
         </defaultConnector>
@@ -103,7 +103,7 @@
         <name>User_notification_result</name>
         <label>User notification result</label>
         <locationX>182</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <defaultConnector>
             <targetReference>Send_Email_result</targetReference>
         </defaultConnector>
@@ -204,7 +204,7 @@
         <name>Get_Thread</name>
         <label>Get Thread</label>
         <locationX>182</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Send_Inbox_Notification</targetReference>
@@ -228,7 +228,7 @@
         <name>rollBack</name>
         <label>rollBack</label>
         <locationX>578</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Failed</targetReference>
         </connector>
@@ -280,7 +280,7 @@
         <locationX>182</locationX>
         <locationY>398</locationY>
         <connector>
-            <targetReference>Get_Thread</targetReference>
+            <targetReference>Trigger_sync</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -307,7 +307,7 @@
         <name>Failed</name>
         <label>Failed</label>
         <locationX>578</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -324,7 +324,7 @@
         <name>Something_is_not_OK</name>
         <label>Something is not OK</label>
         <locationX>50</locationX>
-        <locationY>1550</locationY>
+        <locationY>1670</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -376,7 +376,7 @@
         <name>Successful</name>
         <label>Successful</label>
         <locationX>314</locationX>
-        <locationY>1550</locationY>
+        <locationY>1670</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -404,6 +404,28 @@
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Trigger_sync</name>
+        <label>Trigger sync</label>
+        <locationX>182</locationX>
+        <locationY>518</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Get_Thread</targetReference>
+        </connector>
+        <fields>
+            <name>sync</name>
+            <extensionName>c:crmFlowNextScreenNavigator</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
         <locationX>56</locationX>
         <locationY>0</locationY>
@@ -416,7 +438,7 @@
         <name>Send_Email_Alert</name>
         <label>Send Email Alert</label>
         <locationX>182</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <connector>
             <targetReference>User_notification_result</targetReference>
         </connector>
@@ -433,7 +455,7 @@
         <name>Send_Inbox_Notification</name>
         <label>Send Inbox Notification</label>
         <locationX>182</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Send_Email_Alert</targetReference>
         </connector>
