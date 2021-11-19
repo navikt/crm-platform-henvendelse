@@ -90,7 +90,7 @@
     <formulas>
         <name>url</name>
         <dataType>String</dataType>
-        <expression>{!$Label.CRMHenvendelse_InnboksBaseURL}+{!$Label.CRMHenvendelse_NewMessageNotification}+&quot;/&quot;+{!thread.Id}</expression>
+        <expression>{!$Label.CRMHenvendelse_InnboksBaseURL}+{!$Label.CRMHenvendelse_ThreadURL}+&apos;/&apos;+{!thread.Id}+&apos;/&apos;+{!thread.CRM_API_Reference__c}</expression>
     </formulas>
     <interviewLabel>Thread - Subflow - Create User Notification On Redacted Message {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Thread - Subflow - Create User Notification On Redacted Message</label>

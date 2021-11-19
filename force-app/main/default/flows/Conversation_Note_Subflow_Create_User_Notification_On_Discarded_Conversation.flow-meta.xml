@@ -68,7 +68,7 @@
     <formulas>
         <name>url</name>
         <dataType>String</dataType>
-        <expression>{!$Label.CRMHenvendelse_InnboksBaseURL}+{!$Label.CRMHenvendelse_NewMessageNotification}+&quot;/&quot;+{!conversation_note.Id}</expression>
+        <expression>{!$Label.CRMHenvendelse_InnboksBaseURL}+{!$Label.CRMHenvendelse_SamtalereferatURL}+&apos;/&apos;+{!conversation_note.Id}+&apos;/&apos;+{!conversation_note.CRM_Henvendelse_BehandlingskjedeId__c}</expression>
     </formulas>
     <interviewLabel>Conversation Note - Subflow - Create User Notification On Discarded Conversation {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Conversation Note - Subflow - Create User Notification On Discarded Conversation</label>
