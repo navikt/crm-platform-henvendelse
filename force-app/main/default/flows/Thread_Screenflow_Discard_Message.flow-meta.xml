@@ -112,7 +112,7 @@
             <name>User_notification_not_created</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Send_Inbox_Notification.newUserNotification</leftValueReference>
+                <leftValueReference>newUserNotification</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -127,17 +127,17 @@
             <name>User_notification_created_but_not_sent</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Send_Inbox_Notification.newUserNotification</leftValueReference>
+                <leftValueReference>newUserNotification</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Send_Inbox_Notification.newUserNotification.CRM_NotificationError__c</leftValueReference>
-                <operator>NotEqualTo</operator>
+                <leftValueReference>newUserNotification.CRM_NotificationError__c</leftValueReference>
+                <operator>WasSet</operator>
                 <rightValue>
-                    <stringValue/>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -365,7 +365,7 @@
         </fields>
         <fields>
             <name>usernotificationCreatedButNotSent</name>
-            <fieldText>&lt;p&gt;Brukernotoifikasjonen ble ikke sendt til bruker.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Feilmelding:&lt;/p&gt;&lt;p&gt;{!Send_Inbox_Notification.newUserNotification.CRM_NotificationError__c}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Brukernotoifikasjonen ble ikke sendt til bruker.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Feilmelding:&lt;/p&gt;&lt;p&gt;{!newUserNotification.CRM_NotificationError__c}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <nextOrFinishButtonLabel>Ok</nextOrFinishButtonLabel>
@@ -381,9 +381,24 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <fields>
-            <name>Done</name>
-            <fieldText>&lt;p&gt;Meldinger er kassert.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
+            <name>navigateToThread</name>
+            <extensionName>c:crmFlowRecordNavigator</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>objectApiName</name>
+                <value>
+                    <stringValue>Thread__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>recordId</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <nextOrFinishButtonLabel>Ferdigstill</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
@@ -429,8 +444,19 @@
                 <elementReference>Get_Thread</elementReference>
             </value>
         </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputAssignments>
+            <assignToReference>newUserNotification</assignToReference>
+            <name>newUserNotification</name>
+        </outputAssignments>
     </subflows>
+    <variables>
+        <name>newUserNotification</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>UserNotification__c</objectType>
+    </variables>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>
