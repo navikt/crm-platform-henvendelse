@@ -10,7 +10,7 @@
             "CRM_Thread_Type__c": "STO",
             "CRM_Theme_Group__c": "@ArbeidRef",
             "CRM_Theme__c": "@DAGRef",
-            "Account__c": "@AccountRef1"
+            "CRM_Account__c": "@AccountRef1"
         }
     ]
 }
