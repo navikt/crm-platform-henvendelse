@@ -110,12 +110,13 @@
         <name>Get_Conversation_Note</name>
         <label>Get Conversation Note</label>
         <locationX>314</locationX>
-        <locationY>398</locationY>
+        <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Send_Inbox_Notification</targetReference>
+            <targetReference>Trigger_sync</targetReference>
         </connector>
         <faultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>Rollback</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
@@ -143,12 +144,11 @@
         <name>Set_conversation_note_to_redacted</name>
         <label>Set conversation note to redacted</label>
         <locationX>314</locationX>
-        <locationY>158</locationY>
+        <locationY>398</locationY>
         <connector>
-            <targetReference>Trigger_sync</targetReference>
+            <targetReference>Send_Inbox_Notification</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>Rollback</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
@@ -160,15 +160,15 @@
             </value>
         </filters>
         <inputAssignments>
-            <field>CRM_Is_Redacted__c</field>
+            <field>CRM_Conversation_Note__c</field>
             <value>
-                <booleanValue>true</booleanValue>
+                <stringValue>{!Update_Conversation_Note} </stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>CRM_Redaction_History__c</field>
+            <field>CRM_Is_Redacted__c</field>
             <value>
-                <stringValue>{!Update_Redaction_History} </stringValue>
+                <booleanValue>true</booleanValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -277,7 +277,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Get_Conversation_Note</targetReference>
+            <targetReference>Set_conversation_note_to_redacted</targetReference>
         </connector>
         <fields>
             <name>next</name>
@@ -294,7 +294,7 @@
         <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Set_conversation_note_to_redacted</targetReference>
+            <targetReference>Get_Conversation_Note</targetReference>
         </connector>
     </start>
     <status>Draft</status>
@@ -319,9 +319,11 @@
         </outputAssignments>
     </subflows>
     <textTemplates>
-        <name>Update_Redaction_History</name>
+        <name>Update_Conversation_Note</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>{!$Label.CRMHenvendelse_RedactedMessageNotificationText} {!$Flow.CurrentDateTime}</text>
+        <text>{!Get_Conversation_Note.CRM_Conversation_Note__c} 
+
+{!$Label.CRMHenvendelse_RedactedMessageNotificationText} {!$Flow.CurrentDateTime}</text>
     </textTemplates>
     <variables>
         <name>newUserNotification</name>
