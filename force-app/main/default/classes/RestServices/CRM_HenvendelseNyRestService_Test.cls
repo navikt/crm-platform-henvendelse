@@ -7,6 +7,9 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
     static void makeData() {
         CRM_HENV_TestDataFactory.createRecord(new Person__c(INT_ActorId__c = '123456789101112'));
         CRM_HENV_TestDataFactory.createRecord(new Thread__c());
+        CRM_HENV_TestDataFactory.createRecord(
+            new Common_Code__c(CRM_Code__c = 'ARBD', CRM_Code_Set__c = 'Temagrupper')
+        );
     }
 
     @isTest
@@ -255,6 +258,63 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
     }
 
     @isTest
+    static void testNewThreadInvalidThemeGroup() {
+        RestRequest req = new RestRequest();
+        RestResponse resp = new RestResponse();
+
+        Thread__c thread = [SELECT Id FROM Thread__c LIMIT 1];
+
+        CRM_HenvendelseNyRestService.NewMessageRequest messageReq = new CRM_HenvendelseNyRestService.NewMessageRequest();
+        messageReq.aktorId = '123456789101112';
+        messageReq.enhet = '4100';
+        messageReq.fritekst = 'MELDING';
+        messageReq.temagruppe = 'INVALID';
+
+        req.requestURI = Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/melding';
+        req.httpMethod = 'POST';
+        req.headers.put('X-Correlation-ID', '123RANDOM');
+        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.requestBody = Blob.valueOf(JSON.serialize(messageReq));
+        RestContext.request = req;
+        RestContext.response = resp;
+
+        Test.startTest();
+        CRM_HenvendelseNyRestService.createHenvendelse();
+        Test.stopTest();
+
+        System.assertEquals(400, RestContext.response.statusCode);
+    }
+
+    @isTest
+    static void testNewThreadInvalidTheme() {
+        RestRequest req = new RestRequest();
+        RestResponse resp = new RestResponse();
+
+        Thread__c thread = [SELECT Id FROM Thread__c LIMIT 1];
+
+        CRM_HenvendelseNyRestService.NewMessageRequest messageReq = new CRM_HenvendelseNyRestService.NewMessageRequest();
+        messageReq.aktorId = '123456789101112';
+        messageReq.enhet = '4100';
+        messageReq.fritekst = 'MELDING';
+        messageReq.temagruppe = 'ARBD';
+        messageReq.tema = 'INVALID';
+
+        req.requestURI = Url.getSalesforceBaseUrl().toExternalForm() + '/services/apexrest/henvendelse/ny/melding';
+        req.httpMethod = 'POST';
+        req.headers.put('X-Correlation-ID', '123RANDOM');
+        req.headers.put('X-ACTING-NAV-IDENT', 'Z999999');
+        req.requestBody = Blob.valueOf(JSON.serialize(messageReq));
+        RestContext.request = req;
+        RestContext.response = resp;
+
+        Test.startTest();
+        CRM_HenvendelseNyRestService.createHenvendelse();
+        Test.stopTest();
+
+        System.assertEquals(400, RestContext.response.statusCode);
+    }
+
+    @isTest
     static void testNewMessageOnClosedThread() {
         RestRequest req = new RestRequest();
         RestResponse resp = new RestResponse();
@@ -282,7 +342,7 @@ public class CRM_HenvendelseNyRestService_Test extends CRM_HenvendelseApiUtils {
         CRM_HenvendelseNyRestService.createHenvendelse();
         Test.stopTest();
 
-        System.assertEquals(403, RestContext.response.statusCode);
+        System.assertEquals(400, RestContext.response.statusCode);
     }
 
     @isTest
