@@ -112,7 +112,7 @@
         <locationX>314</locationX>
         <locationY>158</locationY>
         <connector>
-            <targetReference>Set_tread_to_redacted</targetReference>
+            <targetReference>Set_thread_to_redacted</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -173,8 +173,8 @@
         </connector>
     </recordRollbacks>
     <recordUpdates>
-        <name>Set_tread_to_redacted</name>
-        <label>Set tread to redacted</label>
+        <name>Set_thread_to_redacted</name>
+        <label>Set thread to redacted</label>
         <locationX>314</locationX>
         <locationY>278</locationY>
         <connector>
@@ -195,7 +195,7 @@
         <inputAssignments>
             <field>Cause__c</field>
             <value>
-                <stringValue/>
+                <stringValue />
             </value>
         </inputAssignments>
         <inputAssignments>

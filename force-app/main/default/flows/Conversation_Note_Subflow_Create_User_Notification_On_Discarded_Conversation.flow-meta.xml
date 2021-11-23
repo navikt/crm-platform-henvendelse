@@ -7,6 +7,9 @@
         <locationY>158</locationY>
         <actionName>UN_InnboksProducerLegacy</actionName>
         <actionType>apex</actionType>
+        <connector>
+            <targetReference>Set_Outbound_Value</targetReference>
+        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>accountId</name>
@@ -30,6 +33,12 @@
             <name>grupperingsId</name>
             <value>
                 <elementReference>conversation_note.CRM_API_Reference__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>link</name>
+            <value>
+                <elementReference>url</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -65,10 +74,23 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>53.0</apiVersion>
+    <assignments>
+        <name>Set_Outbound_Value</name>
+        <label>Set Outbound Value</label>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
+        <assignmentItems>
+            <assignToReference>newUserNotification</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Create_Discarded_Inbox_notification</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
     <formulas>
         <name>url</name>
         <dataType>String</dataType>
-        <expression>{!$Label.CRMHenvendelse_InnboksBaseURL}+{!$Label.CRMHenvendelse_SamtalereferatURL}+&apos;/&apos;+{!conversation_note.Id}+&apos;/&apos;+{!conversation_note.CRM_Henvendelse_BehandlingskjedeId__c}</expression>
+        <expression>{!$Label.CRMHenvendelse_InnboksBaseURL}+{!$Label.CRMHenvendelse_SamtalereferatURL}+&apos;/&apos;+{!conversation_note.Id}+&apos;/&apos;+{!conversation_note.CRM_API_Reference__c}</expression>
     </formulas>
     <interviewLabel>Conversation Note - Subflow - Create User Notification On Discarded Conversation {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Conversation Note - Subflow - Create User Notification On Discarded Conversation</label>
@@ -107,5 +129,13 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>Conversation_Note__c</objectType>
+    </variables>
+    <variables>
+        <name>newUserNotification</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <objectType>UserNotification__c</objectType>
     </variables>
 </Flow>
