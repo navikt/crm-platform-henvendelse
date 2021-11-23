@@ -134,7 +134,7 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
         List<Conversation_Note__c> convList = [
             SELECT Id
             FROM Conversation_Note__c
-            WHERE CRM_API_Reference__c = :apiReference
+            WHERE CRM_Henvendelse_BehandlingskjedeId__c = :apiReference
             ORDER BY Id
             LIMIT 1
         ];
