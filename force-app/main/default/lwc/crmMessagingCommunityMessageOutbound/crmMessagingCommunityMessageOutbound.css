@@ -38,3 +38,7 @@
     position: absolute;
     width: 1px;
 }
+
+.linebreaks {
+    white-space: pre-wrap;
+}
