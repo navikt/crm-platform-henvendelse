@@ -182,7 +182,7 @@
         <inputAssignments>
             <field>CRM_Message_Text__c</field>
             <value>
-                <elementReference>$Label.CRMHenvendelse_RedactedMessageNotificationText</elementReference>
+                <elementReference>Redacted_Message_Notification_Text</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -194,7 +194,7 @@
         <inputAssignments>
             <field>CRM_Type__c</field>
             <value>
-                <stringValue>Event</stringValue>
+                <stringValue>Message</stringValue>
             </value>
         </inputAssignments>
         <object>Message__c</object>
@@ -477,6 +477,11 @@
             <name>newUserNotification</name>
         </outputAssignments>
     </subflows>
+    <textTemplates>
+        <name>Redacted_Message_Notification_Text</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{!$Label.CRMHenvendelse_RedactedMessageNotificationText}</text>
+    </textTemplates>
     <variables>
         <name>newUserNotification</name>
         <dataType>SObject</dataType>

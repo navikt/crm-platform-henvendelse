@@ -323,9 +323,9 @@
     <textTemplates>
         <name>Update_Conversation_Note</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>{!Get_Conversation_Note.CRM_Conversation_Note__c} 
+        <text>{!$Label.CRMHenvendelse_ConversationNote_RedactedMessageNotificationText} {!$Flow.CurrentDateTime}
 
-{!$Label.CRMHenvendelse_RedactedMessageNotificationText} {!$Flow.CurrentDateTime}</text>
+{!Get_Conversation_Note.CRM_Conversation_Note__c}</text>
     </textTemplates>
     <variables>
         <name>newUserNotification</name>

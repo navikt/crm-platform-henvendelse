@@ -15,7 +15,7 @@
         <inputParameters>
             <name>emailBody</name>
             <value>
-                <stringValue>Et samtalereferat/en samtaletråd er kassert. {!URL}{!recordId}</stringValue>
+                <stringValue>Et samtalereferat/en samtaletråd skal kasseres. {!URL}{!recordId}</stringValue>
             </value>
         </inputParameters>
         <inputParameters>

@@ -417,8 +417,10 @@
     </subflows>
     <textTemplates>
         <name>Update_Conversation_Note_After_Discarding</name>
-        <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;{!Get_Conversation_Note.CRM_Conversation_Note__c}&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!$Label.CRMHenvendelse_RedactedMessageNotificationText} {!$Flow.CurrentDateTime}&lt;/p&gt;</text>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{!$Label.CRMHenvendelse_ConversationNote_RedactedMessageNotificationText} {!$Flow.CurrentDateTime}
+
+{!Get_Conversation_Note.CRM_Conversation_Note__c}</text>
     </textTemplates>
     <variables>
         <name>newUserNotification</name>

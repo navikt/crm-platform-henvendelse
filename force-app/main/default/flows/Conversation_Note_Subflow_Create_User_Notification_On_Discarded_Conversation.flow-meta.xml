@@ -62,7 +62,7 @@
         <inputParameters>
             <name>tekst</name>
             <value>
-                <elementReference>$Label.CRMHenvendelse_RedactedMessageNotificationText</elementReference>
+                <elementReference>$Label.CRMHenvendelse_NewMessageNotification</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
