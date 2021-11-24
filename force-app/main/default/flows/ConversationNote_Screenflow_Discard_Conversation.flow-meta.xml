@@ -171,12 +171,13 @@
         <name>Get_Conversation_Note</name>
         <label>Get Conversation Note</label>
         <locationX>182</locationX>
-        <locationY>398</locationY>
+        <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Send_Inbox_Notification</targetReference>
+            <targetReference>Trigger_sync</targetReference>
         </connector>
         <faultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>rollBack</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
@@ -204,12 +205,11 @@
         <name>Update_Conversation_Note</name>
         <label>Update Conversation Note</label>
         <locationX>182</locationX>
-        <locationY>158</locationY>
+        <locationY>398</locationY>
         <connector>
-            <targetReference>Trigger_sync</targetReference>
+            <targetReference>Send_Inbox_Notification</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>rollBack</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
@@ -223,7 +223,7 @@
         <inputAssignments>
             <field>CRM_Conversation_Note__c</field>
             <value>
-                <stringValue />
+                <elementReference>Update_Conversation_Note_After_Discarding</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -345,7 +345,7 @@
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <nextOrFinishButtonLabel>Ferdigstill</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
+        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
@@ -357,7 +357,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Get_Conversation_Note</targetReference>
+            <targetReference>Update_Conversation_Note</targetReference>
         </connector>
         <fields>
             <name>sync</name>
@@ -374,7 +374,7 @@
         <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Update_Conversation_Note</targetReference>
+            <targetReference>Get_Conversation_Note</targetReference>
         </connector>
     </start>
     <status>Draft</status>
@@ -415,6 +415,11 @@
             <name>newUserNotification</name>
         </outputAssignments>
     </subflows>
+    <textTemplates>
+        <name>Update_Conversation_Note_After_Discarding</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;{!Get_Conversation_Note.CRM_Conversation_Note__c}&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!$Label.CRMHenvendelse_RedactedMessageNotificationText} {!$Flow.CurrentDateTime}&lt;/p&gt;</text>
+    </textTemplates>
     <variables>
         <name>newUserNotification</name>
         <dataType>SObject</dataType>

@@ -406,8 +406,8 @@
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
-        <nextOrFinishButtonLabel>Ferdigstill</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
+        <nextOrFinishButtonLabel>Ferdig</nextOrFinishButtonLabel>
+        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>

@@ -237,6 +237,7 @@
             <fieldText>&lt;p&gt;Tråden er sladdet, men &lt;b&gt;klarte ikke&lt;/b&gt; å lage en brukernotifikasjon for å varsle bruker.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <nextOrFinishButtonLabel>Ferdig</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -253,6 +254,7 @@
             <fieldText>&lt;p&gt;Tråden er sladdet, men bruker har &lt;b&gt;ikke&lt;/b&gt; fått notifikasjon på grunn av en feil.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Feilmelding:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!newUserNotification.CRM_NotificationError__c}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <nextOrFinishButtonLabel>Ferdig</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
