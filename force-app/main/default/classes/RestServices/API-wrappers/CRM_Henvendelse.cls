@@ -117,8 +117,8 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
     global CRM_Henvendelse(Thread__c thread, List<Message__c> messages, List<Journal_Entry__c> jeList) {
         this.kjedeId = thread.CRM_API_Reference__c;
         this.henvendelseId = thread.CRM_HenvendelseId__c;
-        this.fnr = thread.CRM_External_Person_Ident__c;
-        this.aktorId = thread.CRM_External_ActorId__c;
+        this.fnr = thread.CRM_External_Person_Ident_Formula__c;
+        this.aktorId = thread.CRM_External_ActorId_Formula__c;
         this.opprinneligGT = thread.CRM_Original_Person_GT__c;
         this.opprinneligEnhet = thread.CRM_Original_Person_NAV_Unit__c;
         this.kasseringsDato = formatDateTime(thread.CRM_Disposal_Datetime__c);
