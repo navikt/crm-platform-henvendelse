@@ -125,7 +125,7 @@ Set the Latest Message Date Time based on the latest message</description>
     <textTemplates>
         <name>MessageSummaryText</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>&lt;p&gt;&lt;b&gt;{!Message.CRM_From_First_Name__c} ({!Message.CRM_From_Ident_Formula__c}) - {!Message.CRM_Sent_Datetime_Formula__c}&lt;/b&gt;&lt;br&gt;{!Message.CRM_Message_Text__c}&lt;/p&gt;</text>
+        <text>&lt;p&gt;&lt;b&gt;{!Message.CRM_Sent_Datetime_Formula__c}&lt;/b&gt;&lt;br&gt;{!Message.CRM_Message_Text__c}&lt;br&gt;{!Message.CRM_From_First_Name__c} ({!Message.CRM_From_Ident_Formula__c}) &lt;/p&gt;&lt;br&gt;</text>
     </textTemplates>
     <variables>
         <name>lastMessageDate</name>
