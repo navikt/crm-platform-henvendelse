@@ -25,7 +25,7 @@ public class CRM_HenvThreadCloseRestService_Test {
         CRM_HenvThreadCloseRestService.closeThread();
         Test.stopTest();
 
-        System.assertEquals(200, RestContext.response.statusCode);
+        System.assertEquals(204, RestContext.response.statusCode);
     }
 
     @isTest
