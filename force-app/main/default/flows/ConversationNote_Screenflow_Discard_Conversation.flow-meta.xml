@@ -4,7 +4,7 @@
         <name>Log_email_not_sent</name>
         <label>Log email not sent</label>
         <locationX>50</locationX>
-        <locationY>1334</locationY>
+        <locationY>1094</locationY>
         <actionName>LoggerUtility</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -30,7 +30,7 @@
         <inputParameters>
             <name>source</name>
             <value>
-                <stringValue>Thread Screen Flow Discard Message</stringValue>
+                <stringValue>ConversationNote Screenflow Discard Conversation</stringValue>
             </value>
         </inputParameters>
     </actionCalls>
@@ -39,7 +39,7 @@
         <name>Is_Success</name>
         <label>Is Success</label>
         <locationX>182</locationX>
-        <locationY>1550</locationY>
+        <locationY>1310</locationY>
         <defaultConnector>
             <targetReference>Successful</targetReference>
         </defaultConnector>
@@ -78,7 +78,7 @@
         <name>Send_Email_result</name>
         <label>Send Email result</label>
         <locationX>182</locationX>
-        <locationY>1214</locationY>
+        <locationY>974</locationY>
         <defaultConnector>
             <targetReference>Is_Success</targetReference>
         </defaultConnector>
@@ -103,7 +103,7 @@
         <name>User_notification_result</name>
         <label>User notification result</label>
         <locationX>182</locationX>
-        <locationY>998</locationY>
+        <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Send_Email_result</targetReference>
         </defaultConnector>
@@ -146,8 +146,8 @@
             <label>User notification created, but not sent</label>
         </rules>
     </decisions>
-    <interviewLabel>Thread Screenflow Discard Message {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Thread Screenflow Discard Message</label>
+    <interviewLabel>ConversationNote Screenflow Discard Conversation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>ConversationNote Screenflow Discard Conversation</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -167,118 +167,12 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordCreates>
-        <name>Create_Redacted_Event</name>
-        <label>Create Redacted Event</label>
+    <recordLookups>
+        <name>Get_Conversation_Note</name>
+        <label>Get Conversation Note</label>
         <locationX>182</locationX>
         <locationY>158</locationY>
-        <connector>
-            <targetReference>Update_Messages</targetReference>
-        </connector>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>rollBack</targetReference>
-        </faultConnector>
-        <inputAssignments>
-            <field>CRM_Message_Text__c</field>
-            <value>
-                <elementReference>Redacted_Message_Notification_Text</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>CRM_Thread__c</field>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>CRM_Type__c</field>
-            <value>
-                <stringValue>Message</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Message__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
-    <recordLookups>
-        <name>Get_Thread</name>
-        <label>Get Thread</label>
-        <locationX>182</locationX>
-        <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Send_Inbox_Notification</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>rollBack</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Thread__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordRollbacks>
-        <name>rollBack</name>
-        <label>rollBack</label>
-        <locationX>578</locationX>
-        <locationY>758</locationY>
-        <connector>
-            <targetReference>Failed</targetReference>
-        </connector>
-    </recordRollbacks>
-    <recordUpdates>
-        <name>Update_Messages</name>
-        <label>Update Messages</label>
-        <locationX>182</locationX>
-        <locationY>278</locationY>
-        <connector>
-            <targetReference>Update_Thread_0</targetReference>
-        </connector>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>rollBack</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>CRM_Thread__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>CRM_Type__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Message</stringValue>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>CRM_Is_Redacted__c</field>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>CRM_Message_Text__c</field>
-            <value>
-                <stringValue />
-            </value>
-        </inputAssignments>
-        <object>Message__c</object>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_Thread_0</name>
-        <label>Update Thread</label>
-        <locationX>182</locationX>
-        <locationY>398</locationY>
         <connector>
             <targetReference>Trigger_sync</targetReference>
         </connector>
@@ -294,6 +188,50 @@
                 <elementReference>recordId</elementReference>
             </value>
         </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Conversation_Note__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordRollbacks>
+        <name>rollBack</name>
+        <label>rollBack</label>
+        <locationX>578</locationX>
+        <locationY>518</locationY>
+        <connector>
+            <targetReference>Failed</targetReference>
+        </connector>
+    </recordRollbacks>
+    <recordUpdates>
+        <name>Update_Conversation_Note</name>
+        <label>Update Conversation Note</label>
+        <locationX>182</locationX>
+        <locationY>398</locationY>
+        <connector>
+            <targetReference>Send_Inbox_Notification</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>rollBack</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>CRM_Conversation_Note__c</field>
+            <value>
+                <elementReference>Update_Conversation_Note_After_Discarding</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CRM_Is_Redacted__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>Cause__c</field>
             <value>
@@ -306,20 +244,20 @@
                 <booleanValue>false</booleanValue>
             </value>
         </inputAssignments>
-        <object>Thread__c</object>
+        <object>Conversation_Note__c</object>
     </recordUpdates>
     <runInMode>DefaultMode</runInMode>
     <screens>
         <name>Failed</name>
         <label>Failed</label>
         <locationX>578</locationX>
-        <locationY>878</locationY>
+        <locationY>638</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <fields>
             <name>Not_Complete</name>
-            <fieldText>&lt;p&gt;Kunne ikke kassere meldingene og endringene har blitt rullet tilbake. Prøv på nytt, om det ikke fungerer meld en fagsak.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Feilmelding:&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Kunne ikke kassere samtalereferatet og endringene har blitt rullet tilbake. Prøv på nytt, om det ikke fungerer meld en fagsak.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Feilmelding:&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <nextOrFinishButtonLabel>OK</nextOrFinishButtonLabel>
@@ -330,7 +268,7 @@
         <name>Something_is_not_OK</name>
         <label>Something is not OK</label>
         <locationX>50</locationX>
-        <locationY>1670</locationY>
+        <locationY>1430</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -341,7 +279,7 @@
         </fields>
         <fields>
             <name>email_not_sent_text</name>
-            <fieldText>&lt;p&gt;Epost ble ikke sent til brukerstøtte. Du må varsle brukerstøtte om at denne meldingen er kassert.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Epost ble ikke sent til brukerstøtte. Du må varsle brukerstøtte om at dette samtalereferatet er kassert.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -382,18 +320,18 @@
         <name>Successful</name>
         <label>Successful</label>
         <locationX>314</locationX>
-        <locationY>1670</locationY>
+        <locationY>1430</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <fields>
-            <name>navigateToThread</name>
+            <name>navigateToConversationNote</name>
             <extensionName>c:crmFlowRecordNavigator</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>objectApiName</name>
                 <value>
-                    <stringValue>Thread__c</stringValue>
+                    <stringValue>Conversation_Note__c</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -406,7 +344,7 @@
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
-        <nextOrFinishButtonLabel>Ferdig</nextOrFinishButtonLabel>
+        <nextOrFinishButtonLabel>Ferdigstill</nextOrFinishButtonLabel>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -414,12 +352,12 @@
         <name>Trigger_sync</name>
         <label>Trigger sync</label>
         <locationX>182</locationX>
-        <locationY>518</locationY>
+        <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Get_Thread</targetReference>
+            <targetReference>Update_Conversation_Note</targetReference>
         </connector>
         <fields>
             <name>sync</name>
@@ -436,7 +374,7 @@
         <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Create_Redacted_Event</targetReference>
+            <targetReference>Get_Conversation_Note</targetReference>
         </connector>
     </start>
     <status>Draft</status>
@@ -444,7 +382,7 @@
         <name>Send_Email_Alert</name>
         <label>Send Email Alert</label>
         <locationX>182</locationX>
-        <locationY>878</locationY>
+        <locationY>638</locationY>
         <connector>
             <targetReference>User_notification_result</targetReference>
         </connector>
@@ -452,7 +390,7 @@
         <inputAssignments>
             <name>recordId</name>
             <value>
-                <elementReference>Get_Thread.Id</elementReference>
+                <elementReference>Get_Conversation_Note.Id</elementReference>
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -461,15 +399,15 @@
         <name>Send_Inbox_Notification</name>
         <label>Send Inbox Notification</label>
         <locationX>182</locationX>
-        <locationY>758</locationY>
+        <locationY>518</locationY>
         <connector>
             <targetReference>Send_Email_Alert</targetReference>
         </connector>
-        <flowName>CRMHenvendelse_Thread_Subflow_CreateUserNotificationOnRedactedMessage</flowName>
+        <flowName>Conversation_Note_Subflow_Create_User_Notification_On_Discarded_Conversation</flowName>
         <inputAssignments>
-            <name>thread</name>
+            <name>conversation_note</name>
             <value>
-                <elementReference>Get_Thread</elementReference>
+                <elementReference>Get_Conversation_Note</elementReference>
             </value>
         </inputAssignments>
         <outputAssignments>
@@ -478,9 +416,11 @@
         </outputAssignments>
     </subflows>
     <textTemplates>
-        <name>Redacted_Message_Notification_Text</name>
+        <name>Update_Conversation_Note_After_Discarding</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>{!$Label.CRMHenvendelse_RedactedMessageNotificationText}</text>
+        <text>{!$Label.CRMHenvendelse_ConversationNote_RedactedMessageNotificationText} {!$Flow.CurrentDateTime}
+
+{!Get_Conversation_Note.CRM_Conversation_Note__c}</text>
     </textTemplates>
     <variables>
         <name>newUserNotification</name>
