@@ -612,6 +612,7 @@
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Common_Code__c</object>
         <queriedFields>Id</queriedFields>
+        <queriedFields>CRM_Parent_Code__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
