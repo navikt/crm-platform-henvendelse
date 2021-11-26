@@ -38,6 +38,9 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
                 }
             }
             logger.publish();
+        } catch (ValidationException valEx) {
+            //Validation exception is thrown internally
+            errorResponse(400, valEx.getMessage());
         } catch (Exception ex) {
             errorResponse(500, 'Unknown error: ' + ex.getMessage());
             logger.error(
@@ -127,12 +130,17 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
     private static Conversation_Note__c validateNewConversationNote(String req, String kjedeId) {
         NewConversationNoteRequest convRequest;
         Conversation_Note__c newNote = new Conversation_Note__c();
+        String themeGroupId, themeId;
+
         try {
             convRequest = (NewConversationNoteRequest) JSON.deserializeStrict(req, NewConversationNoteRequest.class);
         } catch (JSONException jsonEx) {
             errorResponse(400, 'Invalid request body: ' + jsonEx.getMessage());
             return null;
         }
+
+        themeGroupId = validateThemeGroup(convRequest.temagruppe);
+        themeId = validateTheme(convRequest.tema);
 
         if (String.isNotBlank(kjedeId)) {
             //Validate if the conversation note chain exists
@@ -158,8 +166,8 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
         newNote.CRM_Conversation_Note__c = convRequest.fritekst;
         newNote.CRM_Created_By_Ident__c = actingNavIdent;
         newNote.CRM_Created_By_NAV_Unit__c = convRequest.enhet;
-        newNote.CRM_Theme_Group__c = getThemeGroup(convRequest.temagruppe);
-        newNote.CRM_Theme__c = getTheme(convRequest.tema);
+        newNote.CRM_Theme_Group__c = themeGroupId;
+        newNote.CRM_Theme__c = themeId;
         return newNote;
     }
 
@@ -194,8 +202,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
             try {
                 Thread__c thread = new CRM_ThreadSelector().selectByApiReference(apiRef);
                 if (thread.CRM_isActive__c == false) {
-                    errorResponse(403, 'Cannot insert new message on closed thread');
-                    return null;
+                    throw new ValidationException('Cannot insert new message on closed thread');
                 } else {
                     newMessage.CRM_Thread__c = thread.Id;
                 }
@@ -206,13 +213,17 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
             }
         } else {
             try {
+                String themeGroupId, themeId;
+                themeGroupId = validateThemeGroup(messageRequest.temagruppe);
+                themeId = validateTheme(messageRequest.tema);
+
                 Thread__c newThread = new Thread__c(
                     Name = 'Skriv til bruker',
                     CRM_Account__c = accountId,
                     CRM_Created_By_Ident__c = actingNavIdent,
                     CRM_Created_By_NAV_Unit__c = messageRequest.enhet,
-                    CRM_Theme_Group__c = getThemeGroup(messageRequest.temagruppe),
-                    CRM_Theme__c = getTheme(messageRequest.tema),
+                    CRM_Theme_Group__c = themeGroupId,
+                    CRM_Theme__c = themeId,
                     CRM_Thread_Type__c = 'STB'
                 );
                 insert newThread;
@@ -234,6 +245,45 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
         newMessage.CRM_From_Ident__c = actingNavIdent;
 
         return newMessage;
+    }
+
+    /**
+     * @description: Validate an input theme group code. This is required and must validate in common code
+     * @author Stian Ruud Schikora | 11-23-2021
+     * @param themeGroupCode
+     * @return String
+     **/
+    private static String validateThemeGroup(String themeGroupCode) {
+        String themeGroupId;
+        if (String.isBlank(themeGroupCode)) {
+            throw new ValidationException('Missing required parameter: temagruppe');
+        } else {
+            themeGroupId = getThemeGroup(themeGroupCode);
+            if (String.isBlank(themeGroupId)) {
+                throw new ValidationException('Invalid code for theme group: ' + themeGroupCode);
+            }
+        }
+        return themeGroupId;
+    }
+
+    /**
+     * @description: Validates an input theme code. Theme is not required in request, so if blank it is valid, else it must validate in common code
+     * @author Stian Ruud Schikora | 11-23-2021
+     * @param themeCode
+     * @return String
+     **/
+    private static String validateTheme(String themeCode) {
+        String themeId;
+        if (String.isNotBlank(themeCode)) {
+            themeId = getTheme(themeCode);
+            if (String.isBlank(themeId)) {
+                throw new ValidationException('Invalid code for theme: ' + themeCode);
+            }
+        }
+        return themeId;
+    }
+
+    private class ValidationException extends Exception {
     }
 
     global class NewMessageRequest {

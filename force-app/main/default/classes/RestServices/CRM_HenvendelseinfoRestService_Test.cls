@@ -40,7 +40,11 @@ public class CRM_HenvendelseinfoRestService_Test {
 
     @isTest
     static void testGetConversationNote() {
-        Conversation_Note__c convNote = [SELECT Id, CRM_API_Reference__c FROM Conversation_Note__c LIMIT 1];
+        Conversation_Note__c convNote = [
+            SELECT Id, CRM_Henvendelse_BehandlingskjedeId__c
+            FROM Conversation_Note__c
+            LIMIT 1
+        ];
 
         RestRequest req = new RestRequest();
         RestResponse resp = new RestResponse();
@@ -48,7 +52,7 @@ public class CRM_HenvendelseinfoRestService_Test {
         req.requestURI =
             Url.getSalesforceBaseUrl().toExternalForm() +
             '/services/apexrest/henvendelseinfo/henvendelse/' +
-            convNote.CRM_API_Reference__c;
+            convNote.CRM_Henvendelse_BehandlingskjedeId__c;
         req.headers.put('X-Correlation-ID', '123TEST');
         req.httpMethod = 'GET';
         RestContext.request = req;

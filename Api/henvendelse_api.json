@@ -787,7 +787,7 @@
                             },
                             "ClosedThread": {
                                 "value": {
-                                    "statusCode": 403,
+                                    "statusCode": 400,
                                     "message": "Cannot insert new message on closed thread"
                                 }
                             }

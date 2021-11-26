@@ -25,6 +25,11 @@
 .inline-block {
     display: inline-block;
 }
+
+.linebreaks {
+    white-space: pre-wrap;
+}
+
 .datewrapper {
     width: fit-content;
     font-size: 0.8em;
