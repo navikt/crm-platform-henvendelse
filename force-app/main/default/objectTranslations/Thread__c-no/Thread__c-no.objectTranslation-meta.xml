@@ -1,43 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
     <caseValues>
-        <article>None</article>
+        <article>Definite</article>
         <plural>false</plural>
-        <value><!-- Thread --></value>
+        <value>Tråden</value>
     </caseValues>
     <caseValues>
         <article>Indefinite</article>
         <plural>false</plural>
-        <value><!-- Thread --></value>
-    </caseValues>
-    <caseValues>
-        <article>Definite</article>
-        <plural>false</plural>
-        <value><!-- Thread --></value>
+        <value>Tråd</value>
     </caseValues>
     <caseValues>
         <article>None</article>
+        <plural>false</plural>
+        <value>Tråd</value>
+    </caseValues>
+    <caseValues>
+        <article>Definite</article>
         <plural>true</plural>
-        <value><!-- Thread --></value>
+        <value>Trådene</value>
     </caseValues>
     <caseValues>
         <article>Indefinite</article>
         <plural>true</plural>
-        <value><!-- Thread --></value>
+        <value>Tråder</value>
     </caseValues>
     <caseValues>
-        <article>Definite</article>
+        <article>None</article>
         <plural>true</plural>
-        <value><!-- Thread --></value>
+        <value>Tråder</value>
     </caseValues>
-    <gender><!-- Neuter --></gender>
-    <nameFieldLabel><!-- Thread Name --></nameFieldLabel>
+    <gender>Masculine</gender>
+    <nameFieldLabel>Tråd</nameFieldLabel>
     <quickActions>
-        <label><!-- Complete Redaction --></label>
+        <aspect>Master</aspect>
+        <label>Fullfør sladding</label>
         <name>Complete_Redaction</name>
     </quickActions>
     <quickActions>
-        <label><!-- Discard Messages --></label>
+        <aspect>Master</aspect>
+        <label>Kasser</label>
         <name>Discard_Messages</name>
     </quickActions>
 </CustomObjectTranslation>
