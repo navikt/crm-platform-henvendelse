@@ -11,6 +11,7 @@
     <targetConfigs>
         <targetConfig targets="lightning__HomePage,lightning__RecordPage">
             <property name="singleThread" type="Boolean" default="true" label="Single Thread Mode enabled" />
+            <property name="showClose" type="Boolean" default="false" label="Display the 'Close thread' button" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
