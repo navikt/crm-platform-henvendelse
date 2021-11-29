@@ -9,6 +9,14 @@
         <value>Conversation Note Blank Error</value>
     </labels>
     <labels>
+        <fullName>CRMHenvendelse_ConversationNote_RedactedMessageNotificationText</fullName>
+        <categories>Henvendelse, User Notification, Sladding, Samtalereferat</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Conversation Note Redacted Message Notification Text</shortDescription>
+        <value>Deler av meldingen din har blitt sladdet fordi den inneholdt informasjon som ikke kan behandles, forvaltes eller lagres av denne tjenesten. Opplysninger som gjelder andre og som ikke har betydning i saken din slettes derfor, og vises som sladdet i referatene.</value>
+    </labels>
+    <labels>
         <fullName>CRMHenvendelse_InnboksBaseURL</fullName>
         <categories>Henvendelse, STO, User Notification, Nav.no</categories>
         <language>en_US</language>
