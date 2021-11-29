@@ -25,6 +25,7 @@ export default class messagingThreadViewer extends LightningElement {
     messages = [];
     text;
     showspinner = false;
+    @api showClose;
     //Constructor, called onload
     connectedCallback() {
         if (this.thread) {
