@@ -43,14 +43,12 @@ export default class CrmRedactText extends LightningElement {
     @api undoChanges() {
         if (this.canUndo) {
             this._changesPosition--;
-            this.dispatchRedactedEvent();
         }
     }
 
     @api redoChanges() {
         if (this.canRedo) {
             this._changesPosition++;
-            this.dispatchRedactedEvent();
         }
     }
 

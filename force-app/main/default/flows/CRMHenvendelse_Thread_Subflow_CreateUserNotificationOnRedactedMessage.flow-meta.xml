@@ -7,9 +7,6 @@
         <locationY>158</locationY>
         <actionName>UN_InnboksProducerLegacy</actionName>
         <actionType>apex</actionType>
-        <connector>
-            <targetReference>Set_outbound_value</targetReference>
-        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>accountId</name>
@@ -26,19 +23,13 @@
         <inputParameters>
             <name>fodselsnummer</name>
             <value>
-                <elementReference>thread.CRM_External_Person_Ident__c</elementReference>
+                <elementReference>thread.INT_PersonIdent__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>grupperingsId</name>
             <value>
                 <elementReference>thread.CRM_API_Reference__c</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>link</name>
-            <value>
-                <elementReference>url</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -62,7 +53,7 @@
         <inputParameters>
             <name>tekst</name>
             <value>
-                <elementReference>$Label.CRMHenvendelse_NewMessageNotification</elementReference>
+                <elementReference>$Label.CRMHenvendelse_RedactedMessageNotificationText</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -74,23 +65,10 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>53.0</apiVersion>
-    <assignments>
-        <name>Set_outbound_value</name>
-        <label>Set outbound value</label>
-        <locationX>176</locationX>
-        <locationY>278</locationY>
-        <assignmentItems>
-            <assignToReference>newUserNotification</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Create_Redacted_Inbox_notification</elementReference>
-            </value>
-        </assignmentItems>
-    </assignments>
     <formulas>
         <name>url</name>
         <dataType>String</dataType>
-        <expression>{!$Label.CRMHenvendelse_InnboksBaseURL}+{!$Label.CRMHenvendelse_ThreadURL}+&apos;/&apos;+{!thread.Id}+&apos;/&apos;+{!thread.CRM_API_Reference__c}</expression>
+        <expression>{!$Label.CRMHenvendelse_InnboksBaseURL}+{!$Label.CRMHenvendelse_NewMessageNotification}+&quot;/&quot;+{!thread.Id}</expression>
     </formulas>
     <interviewLabel>Thread - Subflow - Create User Notification On Redacted Message {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Thread - Subflow - Create User Notification On Redacted Message</label>
@@ -121,14 +99,6 @@
         </connector>
     </start>
     <status>Draft</status>
-    <variables>
-        <name>newUserNotification</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
-        <objectType>UserNotification__c</objectType>
-    </variables>
     <variables>
         <name>thread</name>
         <dataType>SObject</dataType>

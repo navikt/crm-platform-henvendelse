@@ -6,61 +6,7 @@
                 "referenceId": "MessageRef1"
             },
             "CRM_Thread__c": "@ThreadRef1",
-            "CRM_External_Message__c": true,
             "CRM_Message_Text__c": "This is a test message"
-        },
-        {
-            "attributes": {
-                "type": "Message__c",
-                "referenceId": "MessageRef2"
-            },
-            "CRM_Thread__c": "@ThreadRef1",
-            "CRM_Message_Text__c": "Is it really"
-        },
-        {
-            "attributes": {
-                "type": "Message__c",
-                "referenceId": "MessageRef3"
-            },
-            "CRM_Thread__c": "@ThreadRef1",
-            "CRM_External_Message__c": false,
-            "CRM_Message_Text__c": "Yes, it is"
-        },
-        {
-            "attributes": {
-                "type": "Message__c",
-                "referenceId": "MessageRef4"
-            },
-            "CRM_Thread__c": "@ThreadRef1",
-            "CRM_External_Message__c": false,
-            "CRM_Message_Text__c": "This is a very long message\r\nAnd it contains alot of different stuff!\r\nNot that much stuff, but some."
-        },
-        {
-            "attributes": {
-                "type": "Message__c",
-                "referenceId": "MessageRef5"
-            },
-            "CRM_Thread__c": "@ThreadRef1",
-            "CRM_External_Message__c": true,
-            "CRM_Message_Text__c": "Wooow."
-        },
-        {
-            "attributes": {
-                "type": "Message__c",
-                "referenceId": "MessageRef6"
-            },
-            "CRM_Thread__c": "@ThreadRef1",
-            "CRM_External_Message__c": false,
-            "CRM_Message_Text__c": "Yup"
-        },
-        {
-            "attributes": {
-                "type": "Message__c",
-                "referenceId": "MessageRef7"
-            },
-            "CRM_Thread__c": "@ThreadRef1",
-            "CRM_External_Message__c": true,
-            "CRM_Message_Text__c": "OK"
         }
     ]
 }

@@ -26,7 +26,7 @@ export default class CommityThreadViewer extends LightningElement {
     @api alertopen;
 
     connectedCallback() {
-
+        markasread({ threadId: this.recordId });
         getContactId({})
             .then((contactId) => {
                 this.userContactId = contactId;

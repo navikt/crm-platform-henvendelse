@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <label>Melding</label>
-    <name>CRM_Message_Text__c</name>
+    <label>Lest dato</label>
+    <name>CRM_Read_Date__c</name>
 </CustomFieldTranslation>
