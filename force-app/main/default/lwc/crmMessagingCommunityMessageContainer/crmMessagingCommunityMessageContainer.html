@@ -5,14 +5,10 @@
         </template>
         <template if:false={isevent}>
             <template if:false={isoutbound}>
-                <c-crm-messaging-community-message-inbound
-                    message={message}
-                ></c-crm-messaging-community-message-inbound>
+                <c-crm-messaging-community-message-inbound message={message}></c-crm-messaging-community-message-inbound>
             </template>
             <template if:true={isoutbound}>
-                <c-crm-messaging-community-message-outbound
-                    message={message}
-                ></c-crm-messaging-community-message-outbound>
+                <c-crm-messaging-community-message-outbound message={message}></c-crm-messaging-community-message-outbound>
             </template>
         </template>
     </div>
