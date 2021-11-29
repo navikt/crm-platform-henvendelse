@@ -94,16 +94,6 @@
                 <identifier>RecordCRM_Theme_cField1</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.CRM_Subtheme__c</fieldItem>
-                <identifier>RecordCRM_Subtheme_cField1</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-1ed3d52c-30e9-4c5e-a8c4-bf018b082d92</name>
         <type>Facet</type>
     </flexiPageRegions>
