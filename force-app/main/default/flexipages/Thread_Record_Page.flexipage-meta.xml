@@ -114,10 +114,6 @@
                 <identifier>RecordSTO_Sensitive_Information_Date_cField1</identifier>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-8cdc0891-de6b-4de0-b93d-e047cf2db74e</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -128,10 +124,20 @@
                 <identifier>RecordSTO_Sensitive_Information_Unit_cField1</identifier>
             </fieldInstance>
         </itemInstances>
+        <name>Facet-8cdc0891-de6b-4de0-b93d-e047cf2db74e</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.Redaction_Cause__c</fieldItem>
+                <fieldItem>Record.Cause__c</fieldItem>
                 <identifier>RecordRedaction_Cause_cField1</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Journaled__c</fieldItem>
+                <identifier>RecordJournaled_cField1</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-50358f90-0ed6-4e15-958e-68a975076db2</name>

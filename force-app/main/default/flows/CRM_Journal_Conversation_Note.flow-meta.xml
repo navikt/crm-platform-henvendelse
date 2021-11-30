@@ -140,7 +140,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_Conversation_Note_Categorization</targetReference>
+            <targetReference>DML_Check</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -359,30 +359,6 @@
             <targetReference>Get_SF_Theme_Common_Code</targetReference>
         </connector>
     </assignments>
-    <assignments>
-        <description>Updates theme group and theme for conversation note to match the newest journal entry.</description>
-        <name>Update_Conversation_Note_Categorization</name>
-        <label>Update Conversation Note Categorization</label>
-        <locationX>182</locationX>
-        <locationY>1934</locationY>
-        <assignmentItems>
-            <assignToReference>JOURNALED_CONV_NOTE.CRM_Theme_Group__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_SF_Theme_Common_Code.CRM_Parent_Code__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>JOURNALED_CONV_NOTE.CRM_Theme__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_SF_Theme_Common_Code.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>DML_Check</targetReference>
-        </connector>
-    </assignments>
     <decisions>
         <description>Verify if a journal entry already exists for the inputs</description>
         <name>Check_Journal_Entries</name>
@@ -436,7 +412,7 @@
         <name>DML_Check</name>
         <label>DML Check</label>
         <locationX>182</locationX>
-        <locationY>2054</locationY>
+        <locationY>1934</locationY>
         <defaultConnectorLabel>No DML</defaultConnectorLabel>
         <rules>
             <name>Do_DML</name>
@@ -498,7 +474,7 @@
         <name>Create_Journal_Entry</name>
         <label>Create Journal Entry</label>
         <locationX>50</locationX>
-        <locationY>2174</locationY>
+        <locationY>2054</locationY>
         <connector>
             <targetReference>Update_Conversation_Note</targetReference>
         </connector>
@@ -612,7 +588,6 @@
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Common_Code__c</object>
         <queriedFields>Id</queriedFields>
-        <queriedFields>CRM_Parent_Code__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
@@ -620,7 +595,7 @@
         <name>Update_Conversation_Note</name>
         <label>Update Conversation Note</label>
         <locationX>50</locationX>
-        <locationY>2294</locationY>
+        <locationY>2174</locationY>
         <inputReference>JOURNALED_CONV_NOTE</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>

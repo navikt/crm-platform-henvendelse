@@ -18,7 +18,7 @@ global without sharing class CRM_HenvThreadCloseRestService extends CRM_Henvende
             if (thread != null) {
                 thread.CRM_isActive__c = false;
                 update thread;
-                setResponse(204);
+                setResponse(200);
             } else {
                 errorResponse(404, 'No thread found with reference: ' + apiReference);
             }

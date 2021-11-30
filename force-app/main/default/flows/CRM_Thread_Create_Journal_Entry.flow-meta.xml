@@ -92,9 +92,6 @@
         <label>Create Journal Entry</label>
         <locationX>314</locationX>
         <locationY>1094</locationY>
-        <connector>
-            <targetReference>Update_Thread_Categorization</targetReference>
-        </connector>
         <inputAssignments>
             <field>CRM_Created_By_Ident__c</field>
             <value>
@@ -234,34 +231,6 @@
         <queriedFields>CRM_Journal_Status__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordUpdates>
-        <description>Updated the thread theme group and theme to match the created journal entry</description>
-        <name>Update_Thread_Categorization</name>
-        <label>Update Thread Categorization</label>
-        <locationX>314</locationX>
-        <locationY>1214</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>CRM_Theme_Group__c</field>
-            <value>
-                <elementReference>Get_Theme_Common_Code.CRM_Parent_Code__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>CRM_Theme__c</field>
-            <value>
-                <elementReference>Get_Theme_Common_Code.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Thread__c</object>
-    </recordUpdates>
     <recordUpdates>
         <name>Update_thread_status</name>
         <label>Update thread status</label>

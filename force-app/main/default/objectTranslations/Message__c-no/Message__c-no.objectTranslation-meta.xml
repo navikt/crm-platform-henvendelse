@@ -3,43 +3,33 @@
     <caseValues>
         <article>Definite</article>
         <plural>false</plural>
-        <value>Tråden</value>
+        <value>Meldingen</value>
     </caseValues>
     <caseValues>
         <article>Indefinite</article>
         <plural>false</plural>
-        <value>Tråd</value>
+        <value>Melding</value>
     </caseValues>
     <caseValues>
         <article>None</article>
         <plural>false</plural>
-        <value>Tråd</value>
+        <value>Melding</value>
     </caseValues>
     <caseValues>
         <article>Definite</article>
         <plural>true</plural>
-        <value>Trådene</value>
+        <value>Meldingene</value>
     </caseValues>
     <caseValues>
         <article>Indefinite</article>
         <plural>true</plural>
-        <value>Tråder</value>
+        <value>Meldinger</value>
     </caseValues>
     <caseValues>
         <article>None</article>
         <plural>true</plural>
-        <value>Tråder</value>
+        <value>Meldinger</value>
     </caseValues>
     <gender>Masculine</gender>
-    <nameFieldLabel>Tråd</nameFieldLabel>
-    <quickActions>
-        <aspect>Master</aspect>
-        <label>Fullfør sladding</label>
-        <name>Complete_Redaction</name>
-    </quickActions>
-    <quickActions>
-        <aspect>Master</aspect>
-        <label>Kasser</label>
-        <name>Discard_Messages</name>
-    </quickActions>
+    <nameFieldLabel>Meldings id</nameFieldLabel>
 </CustomObjectTranslation>
