@@ -204,7 +204,7 @@
         <inputAssignments>
             <field>Cause__c</field>
             <value>
-                <stringValue/>
+                <stringValue />
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -276,7 +276,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Get_Thread</targetReference>
+            <targetReference>Create_thread_is_redacted_event</targetReference>
         </connector>
         <fields>
             <name>next</name>

@@ -276,9 +276,15 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>CRM_Is_Redacted__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>CRM_Message_Text__c</field>
             <value>
-                <stringValue/>
+                <stringValue />
             </value>
         </inputAssignments>
         <object>Message__c</object>
@@ -306,7 +312,7 @@
         <inputAssignments>
             <field>Cause__c</field>
             <value>
-                <stringValue/>
+                <stringValue />
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -396,7 +402,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Get_Thread</targetReference>
+            <targetReference>Create_Redacted_Event</targetReference>
         </connector>
         <fields>
             <name>next</name>
