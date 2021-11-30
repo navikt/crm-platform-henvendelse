@@ -110,7 +110,8 @@ public with sharing class CRM_MessageHelper {
                     CRM_From_First_Name__c,
                     CRM_From_Last_Name__c,
                     CRM_External_Message__c,
-                    CRM_From_Label__c
+                    CRM_From_Label__c,
+                    CreatedBy.CRM_Integration_User__c
                 FROM Message__c
                 WHERE CRM_Thread__c = :threadId
                 ORDER BY CRM_Sent_Datetime_Formula__c ASC

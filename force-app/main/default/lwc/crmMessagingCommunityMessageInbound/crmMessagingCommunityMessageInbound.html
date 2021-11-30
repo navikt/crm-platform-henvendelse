@@ -14,22 +14,22 @@
                     >
                         <div class="panel snakkeboble-panel">
                             <div class="snakkeboble-panel__tekst">
-                                <h2 class="message-from inline-block">{message.CRM_From_Label__c}</h2>
+                                <h2 class="message-from inline-block">{senderName}</h2>
                                 <div class="datewrapper inline-block">
                                     <lightning-formatted-date-time
-                                    value={message.CreatedDate}
-                                    year="numeric"
-                                    day="numeric"
-                                    month="long"
-                                    hour="2-digit"
-                                    minute="2-digit"
-                                    class="timestamp inline-block"
+                                        value={message.CreatedDate}
+                                        year="numeric"
+                                        day="numeric"
+                                        month="long"
+                                        hour="2-digit"
+                                        minute="2-digit"
+                                        class="timestamp inline-block"
                                     >
                                     </lightning-formatted-date-time>
                                 </div>
                             </div>
                             <lightning-formatted-rich-text
-                                value={message.CRM_Message_Text__c} class="linebreaks"
+                                value={message.CRM_Message_Text__c} class="linebreaks typo-normal"
                             ></lightning-formatted-rich-text>
                         </div>
                     </lightning-layout-item>
