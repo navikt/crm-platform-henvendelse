@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
+        <name>Close_tab</name>
+        <label>Close tab</label>
+        <locationX>578</locationX>
+        <locationY>758</locationY>
+        <actionName>c:fcTabCloser</actionName>
+        <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+    </actionCalls>
+    <actionCalls>
         <name>Log_exception</name>
         <label>Log exception</label>
         <locationX>842</locationX>
@@ -44,7 +53,7 @@
         <locationX>314</locationX>
         <locationY>638</locationY>
         <defaultConnector>
-            <targetReference>Successful</targetReference>
+            <targetReference>Close_tab</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Sent</defaultConnectorLabel>
         <rules>
@@ -174,7 +183,7 @@
         <inputAssignments>
             <field>Cause__c</field>
             <value>
-                <stringValue />
+                <stringValue/>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -238,39 +247,6 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <description>Successful!</description>
-        <name>Successful</name>
-        <label>Successful</label>
-        <locationX>578</locationX>
-        <locationY>758</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>goToConversationNote</name>
-            <extensionName>c:crmFlowRecordNavigator</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>objectApiName</name>
-                <value>
-                    <stringValue>Conversation_Note__c</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>recordId</elementReference>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <nextOrFinishButtonLabel>Ferdigstill</nextOrFinishButtonLabel>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <name>Trigger_sync</name>
         <label>Trigger sync</label>
         <locationX>314</locationX>
@@ -283,7 +259,7 @@
         </connector>
         <fields>
             <name>next</name>
-            <extensionName>c:crmFlowNextScreenNavigator</extensionName>
+            <extensionName>c:fcFlowNextScreenNavigator</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>

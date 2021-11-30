@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
+        <name>Close_Tab</name>
+        <label>Close Tab</label>
+        <locationX>314</locationX>
+        <locationY>1670</locationY>
+        <actionName>c:fcTabCloser</actionName>
+        <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+    </actionCalls>
+    <actionCalls>
         <name>Log_email_not_sent</name>
         <label>Log email not sent</label>
         <locationX>50</locationX>
@@ -41,7 +50,7 @@
         <locationX>182</locationX>
         <locationY>1550</locationY>
         <defaultConnector>
-            <targetReference>Successful</targetReference>
+            <targetReference>Close_Tab</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Yes</defaultConnectorLabel>
         <rules>
@@ -269,7 +278,7 @@
         <inputAssignments>
             <field>CRM_Message_Text__c</field>
             <value>
-                <stringValue />
+                <stringValue/>
             </value>
         </inputAssignments>
         <object>Message__c</object>
@@ -297,7 +306,7 @@
         <inputAssignments>
             <field>Cause__c</field>
             <value>
-                <stringValue />
+                <stringValue/>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -379,38 +388,6 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Successful</name>
-        <label>Successful</label>
-        <locationX>314</locationX>
-        <locationY>1670</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>navigateToThread</name>
-            <extensionName>c:crmFlowRecordNavigator</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>objectApiName</name>
-                <value>
-                    <stringValue>Thread__c</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>recordId</elementReference>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <nextOrFinishButtonLabel>Ferdig</nextOrFinishButtonLabel>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <name>Trigger_sync</name>
         <label>Trigger sync</label>
         <locationX>182</locationX>
@@ -422,8 +399,8 @@
             <targetReference>Get_Thread</targetReference>
         </connector>
         <fields>
-            <name>sync</name>
-            <extensionName>c:crmFlowNextScreenNavigator</extensionName>
+            <name>next</name>
+            <extensionName>c:fcFlowNextScreenNavigator</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
