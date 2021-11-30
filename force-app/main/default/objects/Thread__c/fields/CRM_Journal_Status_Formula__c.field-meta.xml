@@ -4,10 +4,10 @@
     <description>Displays and icon depending on the journal status of the conversation note.</description>
     <externalId>false</externalId>
     <formula>CASE(CRM_Journal_Status__c,
-					&apos;Journal Completed&apos;, IMAGE(&apos;/logos/Custom/Circle_Green/logo.png&apos;, &apos;Journalført&apos;, 20,20)+ &apos; Journalført&apos;,
-					&apos;Journal Error&apos;, IMAGE(&apos;/logos/Custom/Circle_Red/logo.png&apos;, &apos;Journalføring feilet&apos;, 20, 20)+ &apos; Journalføring feilet&apos;,
-					&apos;Journal Started&apos;, IMAGE(&apos;/logos/Custom/Circle_Primary/logo.png&apos;, &apos;Journalføring registrert&apos;, 20, 20)+ &apos; Journalføring registrert&apos;,
-					IMAGE(&apos;/logos/Custom/Circle_Grey/logo.png&apos;, &apos;Ikke journalført&apos;, 20, 20) + &apos; Ikke journalført&apos;
+					&apos;Journal Completed&apos;, IMAGE(&apos;/logos/Custom/Circle_Green/logo.png&apos;, &apos;Journalført&apos;, 24,24)+ &apos; Journalført&apos;,
+					&apos;Journal Error&apos;, IMAGE(&apos;/logos/Custom/Circle_Red/logo.png&apos;, &apos;Journalføring feilet&apos;, 24, 24)+ &apos; Journalføring feilet&apos;,
+					&apos;Journal Started&apos;, IMAGE(&apos;/logos/Custom/Circle_Primary/logo.png&apos;, &apos;Journalføring registrert&apos;, 24, 24)+ &apos; Journalføring registrert&apos;,
+					IMAGE(&apos;/logos/Custom/Circle_Grey/logo.png&apos;, &apos;Ikke journalført&apos;, 24, 24) + &apos; Ikke journalført&apos;
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Journal Status</label>

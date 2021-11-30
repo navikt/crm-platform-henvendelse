@@ -1,5 +1,4 @@
-public with sharing class ArchiveHandler{
-    
+public with sharing class ArchiveHandler {
     public static String checkNull(String value) {
         return String.isBlank(value) ? '' : value;
     }
@@ -11,7 +10,7 @@ public with sharing class ArchiveHandler{
     public static List<String> postToArchive(List<ArchivePostWrapper> inputs) {
         List<String> returnList = new List<String>();
         System.debug('Running');
-        for(ArchivePostWrapper input : inputs){
+        for (ArchivePostWrapper input : inputs) {
             System.debug(input);
             input.aktoerid += checkNull(input.aktoerid);
             input.fnr += checkNull(input.fnr);
@@ -24,12 +23,14 @@ public with sharing class ArchiveHandler{
             String queryString = input.query + ' WHERE Id IN :idList';
             List<SObject> archiveObjects = Database.query(queryString);
             System.debug('Thing is ');
-            ArchiveService.ArchiveInputWrapper inputWrapper = new ArchiveService.ArchiveInputWrapper(input.opprettetAv,
-            input.aktoerid,
-            input.fnr,
-            input.orgnr,
-            input.tema,
-            input.konfidentiellt);
+            ArchiveService.ArchiveInputWrapper inputWrapper = new ArchiveService.ArchiveInputWrapper(
+                input.opprettetAv,
+                input.aktoerid,
+                input.fnr,
+                input.orgnr,
+                input.tema,
+                input.konfidentiellt
+            );
             List<ArchiveService.ArchiveResponseWrapper> resp = service.postToArchive(archiveObjects, inputWrapper);
             returnList.add(JSON.serialize(resp));
         }
@@ -55,7 +56,15 @@ public with sharing class ArchiveHandler{
         public Boolean konfidentiellt;
 
         @TestVisible
-        public ArchivePostWrapper(String query, List<String> ids, String opprettetAv, String aktoerid, String fnr, String orgnr, String tema, Boolean konfidentiellt
+        public ArchivePostWrapper(
+            String query,
+            List<String> ids,
+            String opprettetAv,
+            String aktoerid,
+            String fnr,
+            String orgnr,
+            String tema,
+            Boolean konfidentiellt
         ) {
             this.query = query;
             this.ids = ids;
@@ -65,6 +74,6 @@ public with sharing class ArchiveHandler{
             this.orgnr = orgnr;
             this.tema = tema;
             this.konfidentiellt = konfidentiellt;
-    }
+        }
     }
 }
