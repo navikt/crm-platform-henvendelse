@@ -146,7 +146,7 @@
         <inputAssignments>
             <field>Cause__c</field>
             <value>
-                <stringValue />
+                <stringValue/>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -213,38 +213,6 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Successful</name>
-        <label>Successful</label>
-        <locationX>314</locationX>
-        <locationY>1430</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>navigateToConversationNote</name>
-            <extensionName>c:crmFlowRecordNavigator</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>objectApiName</name>
-                <value>
-                    <stringValue>Conversation_Note__c</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>recordId</elementReference>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <nextOrFinishButtonLabel>Ferdigstill</nextOrFinishButtonLabel>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <name>Trigger_sync</name>
         <label>Trigger sync</label>
         <locationX>176</locationX>
@@ -256,8 +224,8 @@
             <targetReference>Update_Conversation_Note</targetReference>
         </connector>
         <fields>
-            <name>sync</name>
-            <extensionName>c:crmFlowNextScreenNavigator</extensionName>
+            <name>next</name>
+            <extensionName>c:fcFlowNextScreenNavigator</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
