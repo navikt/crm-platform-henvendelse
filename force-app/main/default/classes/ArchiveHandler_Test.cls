@@ -21,7 +21,8 @@ public with sharing class ArchiveHandler_Test {
             null,
             null,
             'DAG',
-            false
+            false,
+            null
         );
 
         testList.add(testInput);
