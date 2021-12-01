@@ -4,7 +4,7 @@
         <name>close_tab</name>
         <label>close tab</label>
         <locationX>578</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <actionName>c:fcTabCloser</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -51,7 +51,7 @@
         <name>isSent</name>
         <label>isSent</label>
         <locationX>314</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <defaultConnector>
             <targetReference>close_tab</targetReference>
         </defaultConnector>
@@ -155,7 +155,7 @@
         <locationX>314</locationX>
         <locationY>398</locationY>
         <connector>
-            <targetReference>Send_Inbox_Notification</targetReference>
+            <targetReference>Trigger_sync_0</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Rollback</targetReference>
@@ -216,7 +216,7 @@
         <name>No_user_notification</name>
         <label>No user notification</label>
         <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -233,7 +233,7 @@
         <name>partialSuccess</name>
         <label>Partial Success</label>
         <locationX>314</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -268,6 +268,28 @@
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Trigger_sync_0</name>
+        <label>Trigger sync</label>
+        <locationX>314</locationX>
+        <locationY>518</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Send_Inbox_Notification</targetReference>
+        </connector>
+        <fields>
+            <name>next_0</name>
+            <extensionName>c:fcFlowNextScreenNavigator</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
         <locationX>188</locationX>
         <locationY>0</locationY>
@@ -280,7 +302,7 @@
         <name>Send_Inbox_Notification</name>
         <label>Send Inbox Notification</label>
         <locationX>314</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <connector>
             <targetReference>isSent</targetReference>
         </connector>
