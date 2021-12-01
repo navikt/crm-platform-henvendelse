@@ -11,8 +11,4 @@ export default class CommunityMessageInbound extends LightningElement {
             this.showNavlogo = true;
         }
     }
-
-    get senderName() {
-        return this.message.CreatedBy.CRM_Integration_User__c ? 'NAV' : this.message.CRM_From_Label__c;
-    }
 }
