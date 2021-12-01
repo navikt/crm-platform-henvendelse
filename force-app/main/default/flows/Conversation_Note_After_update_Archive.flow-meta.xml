@@ -9,7 +9,7 @@
         <actionType>apex</actionType>
         <dataTypeMappings>
             <typeName>T__archiveObject</typeName>
-            <typeValue>Thread__c</typeValue>
+            <typeValue>Conversation_Note__c</typeValue>
         </dataTypeMappings>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -58,8 +58,8 @@
             <stringValue>NKS</stringValue>
         </value>
     </constants>
-    <interviewLabel>Thread - After update - Archive {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Thread - After update - Archive</label>
+    <interviewLabel>Conversation Note - After update - Archive {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Conversation Note - After update - Archive</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -91,7 +91,7 @@
                 <booleanValue>true</booleanValue>
             </value>
         </filters>
-        <object>Thread__c</object>
+        <object>Conversation_Note__c</object>
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
