@@ -21,10 +21,11 @@ public with sharing class ArchiveHandler {
                 ];
                 archiveObject = (SObject) threadWithMessage[0];
             }
-            input.aktoerid += checkNull(input.aktoerid);
-            input.fnr += checkNull(input.fnr);
-            input.orgnr += checkNull(input.orgnr);
-            input.tema += checkNull(input.tema);
+            input.aktoerid = checkNull(input.aktoerid);
+            input.fnr = checkNull(input.fnr);
+            input.orgnr = checkNull(input.orgnr);
+            input.tema = checkNull(input.tema);
+            input.dokumentasjonId = checkNull(input.dokumentasjonId);
             ArchiveService service = new ArchiveService();
             ArchiveService.ArchiveInputWrapper inputWrapper = new ArchiveService.ArchiveInputWrapper(
                 input.opprettetAv,
