@@ -303,7 +303,7 @@
             <targetReference>Create_Redacted_Event</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Send_Inbox_Notification</name>
         <label>Send Inbox Notification</label>
