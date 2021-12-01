@@ -22,7 +22,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Henvendelse - Innboks Base URL</shortDescription>
-        <value>https://innboks.nav.no</value>
+        <value>https://innboks.nav.no/s</value>
     </labels>
     <labels>
         <fullName>CRMHenvendelse_NewConversationNoteNotification</fullName>
