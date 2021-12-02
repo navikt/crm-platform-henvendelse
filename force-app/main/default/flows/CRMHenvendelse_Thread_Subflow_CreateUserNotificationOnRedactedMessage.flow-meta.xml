@@ -103,7 +103,7 @@
                 <leftValueReference>Open_User_Notifications</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <label>Yes</label>
