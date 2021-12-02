@@ -1,111 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Log_email_not_sent</name>
-        <label>Log email not sent</label>
-        <locationX>50</locationX>
-        <locationY>1334</locationY>
-        <actionName>LoggerUtility</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Is_Success</targetReference>
-        </connector>
-        <dataTypeMappings>
-            <typeName>T__refRecord</typeName>
-            <typeValue>EmailMessage</typeValue>
-        </dataTypeMappings>
-        <flowTransactionModel>Automatic</flowTransactionModel>
-        <inputParameters>
-            <name>logLevel</name>
-            <value>
-                <stringValue>CRITICAL</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>logMessage</name>
-            <value>
-                <elementReference>Send_Email_Alert.errorMessage</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>source</name>
-            <value>
-                <stringValue>Thread Screen Flow Discard Message</stringValue>
-            </value>
-        </inputParameters>
+        <name>Close_Tab</name>
+        <label>Close Tab</label>
+        <locationX>352</locationX>
+        <locationY>998</locationY>
+        <actionName>c:fcTabCloser</actionName>
+        <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
     </actionCalls>
     <apiVersion>53.0</apiVersion>
     <decisions>
-        <name>Is_Success</name>
-        <label>Is Success</label>
-        <locationX>182</locationX>
-        <locationY>1550</locationY>
-        <defaultConnector>
-            <targetReference>Successful</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Yes</defaultConnectorLabel>
-        <rules>
-            <name>No</name>
-            <conditionLogic>or</conditionLogic>
-            <conditions>
-                <leftValueReference>Email_not_sent</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>User_notification_created_but_not_sent</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>User_notification_not_created</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Something_is_not_OK</targetReference>
-            </connector>
-            <label>No</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Send_Email_result</name>
-        <label>Send Email result</label>
-        <locationX>182</locationX>
-        <locationY>1214</locationY>
-        <defaultConnector>
-            <targetReference>Is_Success</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Email sent</defaultConnectorLabel>
-        <rules>
-            <name>Email_not_sent</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Send_Email_Alert.sucess</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Log_email_not_sent</targetReference>
-            </connector>
-            <label>Email not sent</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>User_notification_result</name>
         <label>User notification result</label>
-        <locationX>182</locationX>
-        <locationY>998</locationY>
+        <locationX>176</locationX>
+        <locationY>878</locationY>
         <defaultConnector>
-            <targetReference>Send_Email_result</targetReference>
+            <targetReference>Close_Tab</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Sent</defaultConnectorLabel>
         <rules>
@@ -119,7 +30,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Send_Email_result</targetReference>
+                <targetReference>Something_is_not_OK</targetReference>
             </connector>
             <label>User notification not created</label>
         </rules>
@@ -141,7 +52,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Send_Email_result</targetReference>
+                <targetReference>Something_is_not_OK</targetReference>
             </connector>
             <label>User notification created, but not sent</label>
         </rules>
@@ -170,7 +81,7 @@
     <recordCreates>
         <name>Create_Redacted_Event</name>
         <label>Create Redacted Event</label>
-        <locationX>182</locationX>
+        <locationX>176</locationX>
         <locationY>158</locationY>
         <connector>
             <targetReference>Update_Messages</targetReference>
@@ -203,7 +114,7 @@
     <recordLookups>
         <name>Get_Thread</name>
         <label>Get Thread</label>
-        <locationX>182</locationX>
+        <locationX>176</locationX>
         <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -227,7 +138,7 @@
     <recordRollbacks>
         <name>rollBack</name>
         <label>rollBack</label>
-        <locationX>578</locationX>
+        <locationX>616</locationX>
         <locationY>758</locationY>
         <connector>
             <targetReference>Failed</targetReference>
@@ -236,7 +147,7 @@
     <recordUpdates>
         <name>Update_Messages</name>
         <label>Update Messages</label>
-        <locationX>182</locationX>
+        <locationX>176</locationX>
         <locationY>278</locationY>
         <connector>
             <targetReference>Update_Thread_0</targetReference>
@@ -269,7 +180,7 @@
         <inputAssignments>
             <field>CRM_Message_Text__c</field>
             <value>
-                <stringValue />
+                <stringValue/>
             </value>
         </inputAssignments>
         <object>Message__c</object>
@@ -277,7 +188,7 @@
     <recordUpdates>
         <name>Update_Thread_0</name>
         <label>Update Thread</label>
-        <locationX>182</locationX>
+        <locationX>176</locationX>
         <locationY>398</locationY>
         <connector>
             <targetReference>Trigger_sync</targetReference>
@@ -297,7 +208,7 @@
         <inputAssignments>
             <field>Cause__c</field>
             <value>
-                <stringValue />
+                <stringValue/>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -312,7 +223,7 @@
     <screens>
         <name>Failed</name>
         <label>Failed</label>
-        <locationX>578</locationX>
+        <locationX>616</locationX>
         <locationY>878</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -329,8 +240,8 @@
     <screens>
         <name>Something_is_not_OK</name>
         <label>Something is not OK</label>
-        <locationX>50</locationX>
-        <locationY>1670</locationY>
+        <locationX>176</locationX>
+        <locationY>1334</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -338,21 +249,6 @@
             <name>somethingWnetWrongText</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;Noe har gått galt under kassering, se meldingene under.&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>email_not_sent_text</name>
-            <fieldText>&lt;p&gt;Epost ble ikke sent til brukerstøtte. Du må varsle brukerstøtte om at denne meldingen er kassert.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Email_not_sent</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>userNotificationNotCreated</name>
@@ -379,41 +275,9 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Successful</name>
-        <label>Successful</label>
-        <locationX>314</locationX>
-        <locationY>1670</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>navigateToThread</name>
-            <extensionName>c:crmFlowRecordNavigator</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>objectApiName</name>
-                <value>
-                    <stringValue>Thread__c</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>recordId</elementReference>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <nextOrFinishButtonLabel>Ferdig</nextOrFinishButtonLabel>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <name>Trigger_sync</name>
         <label>Trigger sync</label>
-        <locationX>182</locationX>
+        <locationX>176</locationX>
         <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -422,8 +286,8 @@
             <targetReference>Get_Thread</targetReference>
         </connector>
         <fields>
-            <name>sync</name>
-            <extensionName>c:crmFlowNextScreenNavigator</extensionName>
+            <name>next</name>
+            <extensionName>c:fcFlowNextScreenNavigator</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
@@ -433,37 +297,20 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Create_Redacted_Event</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
-    <subflows>
-        <name>Send_Email_Alert</name>
-        <label>Send Email Alert</label>
-        <locationX>182</locationX>
-        <locationY>878</locationY>
-        <connector>
-            <targetReference>User_notification_result</targetReference>
-        </connector>
-        <flowName>Discarding_Email_Alert</flowName>
-        <inputAssignments>
-            <name>recordId</name>
-            <value>
-                <elementReference>Get_Thread.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </subflows>
+    <status>Active</status>
     <subflows>
         <name>Send_Inbox_Notification</name>
         <label>Send Inbox Notification</label>
-        <locationX>182</locationX>
+        <locationX>176</locationX>
         <locationY>758</locationY>
         <connector>
-            <targetReference>Send_Email_Alert</targetReference>
+            <targetReference>User_notification_result</targetReference>
         </connector>
         <flowName>CRMHenvendelse_Thread_Subflow_CreateUserNotificationOnRedactedMessage</flowName>
         <inputAssignments>

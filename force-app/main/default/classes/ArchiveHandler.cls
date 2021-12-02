@@ -9,29 +9,34 @@ public with sharing class ArchiveHandler {
     )
     public static List<String> postToArchive(List<ArchivePostWrapper> inputs) {
         List<String> returnList = new List<String>();
-        System.debug('Running');
         for (ArchivePostWrapper input : inputs) {
-            System.debug(input);
-            input.aktoerid += checkNull(input.aktoerid);
-            input.fnr += checkNull(input.fnr);
-            input.orgnr += checkNull(input.orgnr);
-            input.tema += checkNull(input.tema);
-            System.debug('Paul');
+            SObject archiveObject = input.archiveObject;
+            if(input.archiveObject.getSObjectType().getDescribe().getName() == 'Thread__c'){
+                List<Thread__c> threadWithMessage = [
+                SELECT Id,
+                    (SELECT Id, Name, CRM_Message_Text__c, CRM_Thread_Type__c, CRM_Read_Datetime__c, CRM_Sent_date__c, CRM_Henvendelse_BehandlingsId__c 
+                    FROM Messages__r) 
+                FROM Thread__c
+                WHERE Id=:input.archiveObject.Id
+                ];
+                archiveObject = (SObject) threadWithMessage[0];
+            }
+            input.aktoerid = checkNull(input.aktoerid);
+            input.fnr = checkNull(input.fnr);
+            input.orgnr = checkNull(input.orgnr);
+            input.tema = checkNull(input.tema);
+            input.dokumentasjonId = checkNull(input.dokumentasjonId);
             ArchiveService service = new ArchiveService();
-            List<Id> idList = (List<Id>) input.ids;
-            System.debug(idList);
-            String queryString = input.query + ' WHERE Id IN :idList';
-            List<SObject> archiveObjects = Database.query(queryString);
-            System.debug('Thing is ');
             ArchiveService.ArchiveInputWrapper inputWrapper = new ArchiveService.ArchiveInputWrapper(
                 input.opprettetAv,
                 input.aktoerid,
                 input.fnr,
                 input.orgnr,
                 input.tema,
-                input.konfidentiellt
+                input.konfidentiellt,
+                input.dokumentasjonId
             );
-            List<ArchiveService.ArchiveResponseWrapper> resp = service.postToArchive(archiveObjects, inputWrapper);
+            List<ArchiveService.ArchiveResponseWrapper> resp = service.postToArchive(archiveObject, inputWrapper);
             returnList.add(JSON.serialize(resp));
         }
         return returnList;
@@ -39,9 +44,7 @@ public with sharing class ArchiveHandler {
 
     public class ArchivePostWrapper {
         @invocableVariable(required=true)
-        public String query;
-        @invocableVariable(required=true)
-        public List<String> ids;
+        public Sobject archiveObject;
         @invocableVariable(required=true)
         public String opprettetAv;
         @invocableVariable
@@ -54,26 +57,29 @@ public with sharing class ArchiveHandler {
         public String tema;
         @invocableVariable(required=true)
         public Boolean konfidentiellt;
+        @invocableVariable
+        public String dokumentasjonId;
 
+        public ArchivePostWrapper(){}
         @TestVisible
         public ArchivePostWrapper(
-            String query,
-            List<String> ids,
+            SObject archiveObject,
             String opprettetAv,
             String aktoerid,
             String fnr,
             String orgnr,
             String tema,
-            Boolean konfidentiellt
+            Boolean konfidentiellt,
+            String dokumentasjonId
         ) {
-            this.query = query;
-            this.ids = ids;
+            this.archiveObject = archiveObject;
             this.opprettetAv = opprettetAv;
             this.aktoerid = aktoerid;
             this.fnr = fnr;
             this.orgnr = orgnr;
             this.tema = tema;
             this.konfidentiellt = konfidentiellt;
+            this.dokumentasjonId = dokumentasjonId;
         }
     }
 }
