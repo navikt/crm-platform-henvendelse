@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Thread_List_View</fullName>
+    <fullName>thread_list_view_NKS</fullName>
     <columns>NAME</columns>
     <columns>STO_Sensitive_Information_Activated_By__c</columns>
     <columns>STO_Sensitive_Information_Date__c</columns>
+    <columns>STO_Sensitive_Information_Unit__c</columns>
     <columns>Cause__c</columns>
     <columns>Journaled__c</columns>
     <filterScope>Everything</filterScope>
@@ -14,7 +15,7 @@
     </filters>
     <filters>
         <field>STO_Sensitive_Information_Unit__c</field>
-        <operation>equals</operation>
+        <operation>notEqual</operation>
     </filters>
-    <label>Samtaletråder BrukerStøtte</label>
+    <label>Samtaletråder NKS</label>
 </ListView>
