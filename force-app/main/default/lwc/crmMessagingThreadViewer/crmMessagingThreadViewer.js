@@ -77,7 +77,10 @@ export default class messagingThreadViewer extends LightningElement {
     @wire(getJournalInfo, { threadId: '$threadid' })
     wiredJournalEntries;
 
-    @wire(getRecord, { recordId: '$threadid', fields: [ACTIVE_FIELD, CREATED_BY_FIELD, FIRSTNAME_FIELD, LASTNAME_FIELD, CREATED_DATE] })
+    @wire(getRecord, {
+        recordId: '$threadid',
+        fields: [ACTIVE_FIELD, CREATED_BY_FIELD, FIRSTNAME_FIELD, LASTNAME_FIELD, CREATED_DATE]
+    })
     wiredThread;
 
     get firstname() {
@@ -98,12 +101,10 @@ export default class messagingThreadViewer extends LightningElement {
         } else if (result.data) {
             this.messages = result.data;
             this.showspinner = false;
-
         }
     }
     //If empty, stop submitting.
     handlesubmit(event) {
-
         event.preventDefault();
         this.showspinner = true;
         if (!this.template.querySelector('c-crm-messaging-quick-text').isopen()) {
@@ -142,7 +143,7 @@ export default class messagingThreadViewer extends LightningElement {
         const threadInput = { fields };
 
         updateRecord(threadInput)
-            .then(() => { })
+            .then(() => {})
             .catch((error) => {
                 console.log(JSON.stringify(error, null, 2));
             });
@@ -169,12 +170,9 @@ export default class messagingThreadViewer extends LightningElement {
         if (element) {
             element.scrollTop = element.scrollHeight;
         }
-
-
     }
     refreshMessages() {
         return refreshApex(this._mySendForSplitting);
-
     }
 
     get journalEntries() {
@@ -194,6 +192,5 @@ export default class messagingThreadViewer extends LightningElement {
     }
     handleConversationNoteChange(event) {
         this.text = event.detail;
-
     }
 }
