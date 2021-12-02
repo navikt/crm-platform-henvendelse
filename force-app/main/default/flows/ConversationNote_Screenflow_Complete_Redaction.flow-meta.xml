@@ -175,6 +175,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>CRM_Is_Read__c</field>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>CRM_Is_Redacted__c</field>
             <value>
                 <booleanValue>true</booleanValue>
