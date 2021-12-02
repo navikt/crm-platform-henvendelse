@@ -4,7 +4,7 @@
         <name>Create_new_Innboks_Notification</name>
         <label>Create new Innboks Notification</label>
         <locationX>308</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <actionName>UN_InnboksProducerLegacy</actionName>
         <actionType>apex</actionType>
         <faultConnector>
@@ -26,7 +26,7 @@
         <inputParameters>
             <name>fodselsnummer</name>
             <value>
-                <elementReference>Thread.CRM_External_Person_Ident__c</elementReference>
+                <elementReference>Get_Person.Name</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -77,7 +77,7 @@
         <name>Log_error_from_subflow</name>
         <label>Log error from subflow</label>
         <locationX>572</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <actionName>LoggerUtility</actionName>
         <actionType>apex</actionType>
         <dataTypeMappings>
@@ -117,7 +117,7 @@
         <locationX>176</locationX>
         <locationY>398</locationY>
         <defaultConnector>
-            <targetReference>Create_new_Innboks_Notification</targetReference>
+            <targetReference>Get_Person</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -159,6 +159,27 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Person</name>
+        <label>Get Person</label>
+        <locationX>308</locationX>
+        <locationY>518</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Create_new_Innboks_Notification</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CRM_Account__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Thread.CRM_Account__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Person__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordLookups>
         <name>Thread</name>
         <label>Thread</label>

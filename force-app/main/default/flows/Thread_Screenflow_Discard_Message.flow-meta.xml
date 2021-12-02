@@ -206,6 +206,12 @@
             </value>
         </filters>
         <inputAssignments>
+            <field>CRM_Disposal_Datetime__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cause__c</field>
             <value>
                 <stringValue/>
