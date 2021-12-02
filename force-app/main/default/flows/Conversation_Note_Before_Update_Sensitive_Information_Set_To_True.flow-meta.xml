@@ -94,7 +94,7 @@
         <inputAssignments>
             <field>STO_Sensitive_Information_Unit__c</field>
             <value>
-                <elementReference>$Record.CreatedBy.Department</elementReference>
+                <elementReference>$Record.LastModifiedBy.Department</elementReference>
             </value>
         </inputAssignments>
         <inputReference>$Record</inputReference>
