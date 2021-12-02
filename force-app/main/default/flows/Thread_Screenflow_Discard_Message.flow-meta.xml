@@ -82,7 +82,7 @@
         <name>Create_Redacted_Event</name>
         <label>Create Redacted Event</label>
         <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationY>518</locationY>
         <connector>
             <targetReference>Update_Messages</targetReference>
         </connector>
@@ -115,12 +115,13 @@
         <name>Get_Thread</name>
         <label>Get Thread</label>
         <locationX>176</locationX>
-        <locationY>638</locationY>
+        <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Send_Inbox_Notification</targetReference>
         </connector>
         <faultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>rollBack</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
@@ -139,7 +140,7 @@
         <name>rollBack</name>
         <label>rollBack</label>
         <locationX>616</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <connector>
             <targetReference>Failed</targetReference>
         </connector>
@@ -148,7 +149,7 @@
         <name>Update_Messages</name>
         <label>Update Messages</label>
         <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationY>638</locationY>
         <connector>
             <targetReference>Update_Thread_0</targetReference>
         </connector>
@@ -189,12 +190,11 @@
         <name>Update_Thread_0</name>
         <label>Update Thread</label>
         <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationY>758</locationY>
         <connector>
-            <targetReference>Trigger_sync</targetReference>
+            <targetReference>User_notification_result</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>rollBack</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
@@ -230,7 +230,7 @@
         <name>Failed</name>
         <label>Failed</label>
         <locationX>616</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -284,12 +284,12 @@
         <name>Trigger_sync</name>
         <label>Trigger sync</label>
         <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Get_Thread</targetReference>
+            <targetReference>Create_Redacted_Event</targetReference>
         </connector>
         <fields>
             <name>next</name>
@@ -306,7 +306,7 @@
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Create_Redacted_Event</targetReference>
+            <targetReference>Get_Thread</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -314,9 +314,9 @@
         <name>Send_Inbox_Notification</name>
         <label>Send Inbox Notification</label>
         <locationX>176</locationX>
-        <locationY>758</locationY>
+        <locationY>278</locationY>
         <connector>
-            <targetReference>User_notification_result</targetReference>
+            <targetReference>Trigger_sync</targetReference>
         </connector>
         <flowName>CRMHenvendelse_Thread_Subflow_CreateUserNotificationOnRedactedMessage</flowName>
         <inputAssignments>
