@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Create_Redacted_Inbox_notification</name>
         <label>Create Redacted Inbox notification</label>
-        <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationX>308</locationX>
+        <locationY>518</locationY>
         <actionName>UN_InnboksProducerLegacy</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -77,8 +77,8 @@
     <assignments>
         <name>Set_outbound_value</name>
         <label>Set outbound value</label>
-        <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationX>308</locationX>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>newUserNotification</assignToReference>
             <operator>Assign</operator>
@@ -87,6 +87,28 @@
             </value>
         </assignmentItems>
     </assignments>
+    <decisions>
+        <name>Has_Open_User_Notification</name>
+        <label>Has Open User Notification</label>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
+        <defaultConnector>
+            <targetReference>Get_Person</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Open_User_Notifications</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Yes</label>
+        </rules>
+    </decisions>
     <formulas>
         <name>url</name>
         <dataType>String</dataType>
@@ -116,8 +138,8 @@
     <recordLookups>
         <name>Get_Person</name>
         <label>Get Person</label>
-        <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationX>308</locationX>
+        <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Create_Redacted_Inbox_notification</targetReference>
@@ -134,14 +156,56 @@
         <object>Person__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Open_User_Notifications</name>
+        <label>Open User Notifications</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Has_Open_User_Notification</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>INT_GroupingId__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>thread.CRM_API_Reference__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>INT_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>INNBOKS</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>INT_SystemUser__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Label.CRMHenvendelse_SystemUser</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>CRM_Done__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>UserNotification__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Person</targetReference>
+            <targetReference>Open_User_Notifications</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>newUserNotification</name>
         <dataType>SObject</dataType>
