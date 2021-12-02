@@ -4,7 +4,7 @@
         <name>Create_Innboks_Notification</name>
         <label>Create Innboks Notification</label>
         <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationY>278</locationY>
         <actionName>UN_InnboksProducerLegacy</actionName>
         <actionType>apex</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -23,7 +23,7 @@
         <inputParameters>
             <name>fodselsnummer</name>
             <value>
-                <elementReference>ConversationNote.INT_PersonIdent__c</elementReference>
+                <elementReference>Get_Person.Name</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -98,11 +98,32 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Person</name>
+        <label>Get Person</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Create_Innboks_Notification</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CRM_Account__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>ConversationNote.CRM_Account__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Person__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Create_Innboks_Notification</targetReference>
+            <targetReference>Get_Person</targetReference>
         </connector>
     </start>
     <status>Draft</status>
