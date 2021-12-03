@@ -47,6 +47,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>navIdent</name>
+            <value>
+                <elementReference>Journal_Entry_NAV_Ident</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>referenceId</name>
             <value>
                 <elementReference>recordId</elementReference>
@@ -79,6 +85,20 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Document_Title</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Documents.dokumentkategori</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>FORVALTNINGSNOTAT</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Documents.brevkode</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>CRM_SAMTALEREFERAT</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -205,7 +225,7 @@
             <assignToReference>Journal_Request.journalpostType</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>UTGAAENDE</stringValue>
+                <stringValue>NOTAT</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -234,27 +254,6 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Account_Info.INT_PersonIdent__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Journal_Request.avsenderMottaker.idType</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>FNR</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Journal_Request.avsenderMottaker.id</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Account_Info.INT_PersonIdent__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Journal_Request.avsenderMottaker.navn</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Person_Full_Name</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -299,7 +298,7 @@
             <assignToReference>Journal_Sak.fagsaksystem</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Journal_Case_Legacy_System</elementReference>
+                <elementReference>Journal_Case_Legacy_System_Formula</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -459,6 +458,12 @@
         <name>Document_Title</name>
         <dataType>String</dataType>
         <expression>&apos;Samtale med NAV - &apos; + LPAD(TEXT(DAY(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c}))),2,&apos;0&apos;) + &apos;.&apos; + LPAD(TEXT(MONTH(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c}))),2,&apos;0&apos;) + &apos;.&apos; + TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))</expression>
+    </formulas>
+    <formulas>
+        <description>Better null/blank handling for passing this value to apex</description>
+        <name>Journal_Case_Legacy_System_Formula</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!Journal_Case_Legacy_System}), null, {!Journal_Case_Legacy_System})</expression>
     </formulas>
     <formulas>
         <description>Formula to define the journal case type (Sakstype). If no Journal Case ID has been input, default is GENERELL_SAK</description>

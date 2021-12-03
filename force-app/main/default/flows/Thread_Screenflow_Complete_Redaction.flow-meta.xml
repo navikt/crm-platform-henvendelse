@@ -13,7 +13,7 @@
         <name>Log_exception</name>
         <label>Log exception</label>
         <locationX>842</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <actionName>LoggerUtility</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -119,7 +119,7 @@
         <name>Create_thread_is_redacted_event</name>
         <label>Create thread is redacted event</label>
         <locationX>314</locationX>
-        <locationY>158</locationY>
+        <locationY>518</locationY>
         <connector>
             <targetReference>Set_thread_to_redacted</targetReference>
         </connector>
@@ -152,12 +152,13 @@
         <name>Get_Thread</name>
         <label>Get Thread</label>
         <locationX>314</locationX>
-        <locationY>518</locationY>
+        <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Send_Inbox_Notification</targetReference>
         </connector>
         <faultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>Rollback</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
@@ -176,7 +177,7 @@
         <name>Rollback</name>
         <label>Rollback</label>
         <locationX>842</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Log_exception</targetReference>
         </connector>
@@ -185,12 +186,11 @@
         <name>Set_thread_to_redacted</name>
         <label>Set thread to redacted</label>
         <locationX>314</locationX>
-        <locationY>278</locationY>
+        <locationY>638</locationY>
         <connector>
-            <targetReference>Trigger_sync</targetReference>
+            <targetReference>isSent</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>Rollback</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
@@ -220,7 +220,7 @@
         <name>Exception_Screen</name>
         <label>Exception Screen</label>
         <locationX>842</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -276,7 +276,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Get_Thread</targetReference>
+            <targetReference>Create_thread_is_redacted_event</targetReference>
         </connector>
         <fields>
             <name>next</name>
@@ -293,7 +293,7 @@
         <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Create_thread_is_redacted_event</targetReference>
+            <targetReference>Get_Thread</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -301,9 +301,9 @@
         <name>Send_Inbox_Notification</name>
         <label>Send Inbox Notification</label>
         <locationX>314</locationX>
-        <locationY>638</locationY>
+        <locationY>278</locationY>
         <connector>
-            <targetReference>isSent</targetReference>
+            <targetReference>Trigger_sync</targetReference>
         </connector>
         <flowName>CRMHenvendelse_Thread_Subflow_CreateUserNotificationOnRedactedMessage</flowName>
         <inputAssignments>
