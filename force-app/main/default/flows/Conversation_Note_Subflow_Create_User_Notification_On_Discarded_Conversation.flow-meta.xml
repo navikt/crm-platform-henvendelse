@@ -4,7 +4,7 @@
         <name>Create_Discarded_Inbox_notification</name>
         <label>Create Discarded Inbox notification</label>
         <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationY>278</locationY>
         <actionName>UN_InnboksProducerLegacy</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -26,7 +26,7 @@
         <inputParameters>
             <name>fodselsnummer</name>
             <value>
-                <elementReference>conversation_note.INT_PersonIdent__c</elementReference>
+                <elementReference>Get_Person.Name</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -78,7 +78,7 @@
         <name>Set_Outbound_Value</name>
         <label>Set Outbound Value</label>
         <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>newUserNotification</assignToReference>
             <operator>Assign</operator>
@@ -113,15 +113,36 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Person</name>
+        <label>Get Person</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Create_Discarded_Inbox_notification</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CRM_Account__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>conversation_note.CRM_Account__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Person__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <runInMode>DefaultMode</runInMode>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Create_Discarded_Inbox_notification</targetReference>
+            <targetReference>Get_Person</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>conversation_note</name>
         <dataType>SObject</dataType>
