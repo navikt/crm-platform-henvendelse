@@ -81,6 +81,13 @@
                 <elementReference>Document_Title</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Documents.brevkode</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>CRM_MELDINGSKJEDE</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Journal_Sak_Assignment</targetReference>
         </connector>
