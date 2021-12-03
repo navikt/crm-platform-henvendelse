@@ -132,7 +132,7 @@
             <targetReference>Get_Person</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>ConversationNote</name>
         <dataType>SObject</dataType>
