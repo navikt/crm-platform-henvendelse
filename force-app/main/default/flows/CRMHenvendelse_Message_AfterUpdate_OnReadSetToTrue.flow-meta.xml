@@ -73,7 +73,7 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Create_DONE_Event</name>
         <label>Create DONE Event</label>
