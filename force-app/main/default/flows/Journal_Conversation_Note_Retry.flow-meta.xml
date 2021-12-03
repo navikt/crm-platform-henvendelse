@@ -47,6 +47,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>navIdent</name>
+            <value>
+                <elementReference>Journal_Entry_SF.CRM_Created_By_Ident__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>referenceId</name>
             <value>
                 <elementReference>Journal_Entry_SF.CRM_Conversation_Note__c</elementReference>
@@ -78,7 +84,21 @@
             <assignToReference>Journal_Documents.tittel</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>TITLE OF JOURNALED DOCUMENT</stringValue>
+                <elementReference>Document_Title</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Documents.brevkode</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>CRM_SAMTALEREFERAT</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Documents.dokumentkategori</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>FORVALTNINGSNOTAT</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -184,7 +204,7 @@
             <assignToReference>Journal_Request.journalpostType</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>UTGAAENDE</stringValue>
+                <stringValue>NOTAT</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -213,27 +233,6 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Account_Info.INT_PersonIdent__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Journal_Request.avsenderMottaker.idType</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>FNR</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Journal_Request.avsenderMottaker.id</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Account_Info.INT_PersonIdent__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Journal_Request.avsenderMottaker.navn</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Person_Full_Name</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -272,6 +271,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Journal_Case_Type</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Sak.fagsaksystem</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Journal_Case_Legacy_System_Formula</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -357,6 +363,17 @@
         </rules>
     </decisions>
     <description>Flow for automated retry functionality for failed journal attempts</description>
+    <formulas>
+        <name>Document_Title</name>
+        <dataType>String</dataType>
+        <expression>&apos;Samtale med NAV - &apos; + LPAD(TEXT(DAY(DATEVALUE({!Get_Necessary_Record_Info.CRM_Registered_Datetime_Formula__c}))),2,&apos;0&apos;) + &apos;.&apos; + LPAD(TEXT(MONTH(DATEVALUE({!Get_Necessary_Record_Info.CRM_Registered_Datetime_Formula__c}))),2,&apos;0&apos;) + &apos;.&apos; + TEXT(YEAR(DATEVALUE({!Get_Necessary_Record_Info.CRM_Registered_Datetime_Formula__c})))</expression>
+    </formulas>
+    <formulas>
+        <description>Better null/blank handling for passing this value to apex</description>
+        <name>Journal_Case_Legacy_System_Formula</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!Journal_Case_Legacy_System}), null, {!Journal_Case_Legacy_System})</expression>
+    </formulas>
     <formulas>
         <description>Formula to define the journal case type (Sakstype). If no Journal Case ID has been input, default is GENERELL_SAK</description>
         <name>Journal_Case_Type</name>
@@ -502,6 +519,14 @@
     <variables>
         <description>Unique reference to the case in NAVs fagsystem that the journal post should relate to.</description>
         <name>Journal_Case_ID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Required variable for journal post in the Dokarkiv API.</description>
+        <name>Journal_Case_Legacy_System</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
