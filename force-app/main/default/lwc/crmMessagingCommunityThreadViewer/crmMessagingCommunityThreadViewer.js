@@ -9,8 +9,9 @@ import createmsg from '@salesforce/apex/CRM_MessageHelper.createMessage';
 
 import THREADNAME_FIELD from '@salesforce/schema/Thread__c.Name';
 import THREADCLOSEDDATE_FIELD from '@salesforce/schema/Thread__c.CRM_Closed_Date__c';
+import THREADCLOSED_FIELD from '@salesforce/schema/Thread__c.CRM_Is_Closed__c';
 
-const fields = [THREADNAME_FIELD, THREADCLOSEDDATE_FIELD]; //Extract the name of the thread record
+const fields = [THREADNAME_FIELD, THREADCLOSEDDATE_FIELD, THREADCLOSED_FIELD]; //Extract the name of the thread record
 
 export default class CommityThreadViewer extends LightningElement {
     _mySendForSplitting;
@@ -65,12 +66,7 @@ export default class CommityThreadViewer extends LightningElement {
         }
     }
     get isclosed() {
-        if (getFieldValue(this.thread.data, THREADCLOSEDDATE_FIELD)) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return getFieldValue(this.thread.data, THREADCLOSED_FIELD); 
     }
     /**
      * Blanks out all text fields, and enables the submit-button again.
