@@ -58,7 +58,7 @@
                 <leftValueReference>$Record.LastModifiedBy.CRM_NAV_Ident__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue/>
+                    <stringValue />
                 </rightValue>
             </conditions>
             <conditions>
@@ -115,5 +115,5 @@
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
 </Flow>
