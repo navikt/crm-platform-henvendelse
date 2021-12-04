@@ -200,7 +200,7 @@
         </inputAssignments>
         <object>Conversation_Note__c</object>
     </recordUpdates>
-    <runInMode>DefaultMode</runInMode>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>Exception_Screen</name>
         <label>Exception Screen</label>
