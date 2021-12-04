@@ -151,7 +151,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Conversation_Note__c.CRM_Office_Restriction__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -432,7 +432,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Thread__c.CRM_Office_Restriction__c</field>
         <readable>true</readable>
     </fieldPermissions>
