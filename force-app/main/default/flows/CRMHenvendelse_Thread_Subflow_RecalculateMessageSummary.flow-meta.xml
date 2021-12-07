@@ -52,7 +52,13 @@ Set the Latest Message Date Time based on the latest message</description>
     <formulas>
         <name>SenderNameFormula</name>
         <dataType>String</dataType>
-        <expression>IF(ISBLANK({!Message.CRM_From_Ident_Formula__c}), &apos;&apos;, {!Message.CRM_From_First_Name__c} +&apos;(&apos; + {!Message.CRM_From_Ident_Formula__c} + &apos;)&apos;)</expression>
+        <expression>IF({!Message.CRM_External_Message__c},
+{!Message.CRM_From_First_Name__c},
+IF(ISBLANK({!Message.CRM_From_Ident_Formula__c}),
+&apos;&apos;,
+{!Message.CRM_From_First_Name__c} +&apos;(&apos; + {!Message.CRM_From_Ident_Formula__c} + &apos;)&apos;
+)
+)</expression>
     </formulas>
     <interviewLabel>Thread - Sub Flow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Thread - Subflow - Recalculate Message Summary</label>
