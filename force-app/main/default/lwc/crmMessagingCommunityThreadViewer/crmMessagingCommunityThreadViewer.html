@@ -1,7 +1,7 @@
 <template>
     <div class="decorator-wrapper">
         <div class="header" style="text-align: center">
-            <h1 class="navds-heading navds-heading--2xlarge">{name}</h1>
+            <h1 class="typo-sidetittel">{name}</h1>
         </div>
         <div class="contentholder">
             <template for:each={messages} for:item="message">
@@ -27,7 +27,7 @@
                         ></lightning-input-field>
                         <div class="body-wrapper" style="">
                             <div class="example__inner">
-                                <div class="flexBox">
+                                <div class="">
                                     <lightning-textarea
                                         data-name="messagearea"
                                         class="messagearea typo-normal"
@@ -42,8 +42,7 @@
                                     <button
                                         disabled={buttonisdisabled}
                                         type="submit"
-                                        class="navds-button navds-button--primary navds-button--medium flex-end"
-                                        style="padding: calc(0.475rem - 1px) 2.5rem calc(0.525rem - 1px) 2.5rem"
+                                        class="knapp knapp--hoved .slds-float_right"
                                         name="submit"
                                         label="Send"
                                         onclick={createMessage}
