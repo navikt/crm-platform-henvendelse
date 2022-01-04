@@ -94,8 +94,8 @@ export default class messagingThreadViewer extends LightningElement {
     }
     get createdDateString(){
         if(!this.createddate) return '';
-        let createdDate = new Date(this.createddate); //new Date('2015-06-17T22:17:58.000Z');
-        let formatter = new Intl.DateTimeFormat('no',{day: 'numeric', month: 'long', year: 'numeric'}); //, hour: 'numeric', minute: 'numeric'});
+        let createdDate = new Date(this.createddate);
+        let formatter = new Intl.DateTimeFormat('no',{day: 'numeric', month: 'long', year: 'numeric'});
         let date = formatter.format(createdDate);
         formatter = new Intl.DateTimeFormat('no',{hour: 'numeric', minute: 'numeric'});
         let timeParts = formatter.formatToParts(createdDate);
