@@ -32,7 +32,7 @@ export default class MessageEvent extends LightningElement {
         return false;
     }
     get isOtherEvent(){
-        if( this.isEndChatEvent && this.isTransferEvent) return false;
+        if( this.isEndChatEvent || this.isTransferEvent) return false;
         return true;
     }
 }
