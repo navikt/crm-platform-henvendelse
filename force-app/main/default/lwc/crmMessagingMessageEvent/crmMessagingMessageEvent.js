@@ -3,8 +3,8 @@ import { LightningElement, api } from 'lwc';
 export default class MessageEvent extends LightningElement {
     @api message;
     get createdDateString(){
-        if(!message.CreatedDate) return '';
-        let createdDate = new Date(message.CreatedDate);
+        if(!this.message.CreatedDate) return '';
+        let createdDate = new Date(this.message.CreatedDate);
         let formatter = new Intl.DateTimeFormat('no',{day: 'numeric', month: 'long', year: 'numeric'});
         let date = formatter.format(createdDate);
         formatter = new Intl.DateTimeFormat('no',{hour: 'numeric', minute: 'numeric'});
