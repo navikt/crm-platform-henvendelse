@@ -104,6 +104,7 @@ public with sharing class CRM_MessageHelper {
                 Id,
                 CRM_Message_Text__c,
                 CRM_Type__c,
+                CRM_Event_Type__c,
                 CreatedDate,
                 CRM_From_User__c,
                 CRM_From_Contact__c,
