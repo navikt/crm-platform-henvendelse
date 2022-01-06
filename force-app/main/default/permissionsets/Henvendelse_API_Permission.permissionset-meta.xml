@@ -52,6 +52,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.INT_PersonIdent__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Conversation_Note__c.CRM_API_Reference__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -151,7 +156,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Conversation_Note__c.CRM_Office_Restriction__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -432,7 +437,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Thread__c.CRM_Office_Restriction__c</field>
         <readable>true</readable>
     </fieldPermissions>

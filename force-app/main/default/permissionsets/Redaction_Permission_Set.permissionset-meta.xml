@@ -5,6 +5,10 @@
         <visible>true</visible>
     </applicationVisibilities>
     <classAccesses>
+        <apexClass>LoggerUtility</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>UN_InnboksProducerLegacy</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -25,6 +29,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Conversation_Note__c.CRM_Conversation_Note__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Conversation_Note__c.CRM_Is_Read__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

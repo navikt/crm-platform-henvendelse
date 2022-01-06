@@ -225,7 +225,7 @@
         </inputAssignments>
         <object>Thread__c</object>
     </recordUpdates>
-    <runInMode>DefaultMode</runInMode>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>Failed</name>
         <label>Failed</label>

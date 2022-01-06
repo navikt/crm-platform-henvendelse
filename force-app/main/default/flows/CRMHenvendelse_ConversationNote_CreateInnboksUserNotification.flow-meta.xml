@@ -41,7 +41,7 @@
         <inputParameters>
             <name>prefererteKanaler</name>
             <value>
-                <stringValue>SMS,EPOST</stringValue>
+                <stringValue>EPOST</stringValue>
             </value>
         </inputParameters>
         <inputParameters>

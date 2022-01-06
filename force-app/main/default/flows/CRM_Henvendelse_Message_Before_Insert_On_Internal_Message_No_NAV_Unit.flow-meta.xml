@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
-    <description>If Thread type = STO/STB and Type = message and External = false call the subflow &quot;Thread - Subflow - Create Innboks User Notification&quot;</description>
-    <interviewLabel>Message - After Insert - On Internal Message {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Message - After Insert - On Internal Message</label>
+    <assignments>
+        <description>Populates the NAV Unit with the unit of the running user</description>
+        <name>Set_NAV_Unit</name>
+        <label>Set NAV Unit</label>
+        <locationX>176</locationX>
+        <locationY>311</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.CRM_From_NAV_Unit__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Department</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <description>Flow populating the NAV unit field of the running users when messages is not created via API.</description>
+    <interviewLabel>Message - Before Insert - On Internal Message No NAV Unit {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Message - Before Insert - On Internal Message No NAV Unit</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -26,7 +40,10 @@
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <filterLogic>1 AND 2 AND (3 OR 4)</filterLogic>
+        <connector>
+            <targetReference>Set_NAV_Unit</targetReference>
+        </connector>
+        <filterLogic>1 AND 2 AND (3 OR 4) AND 5</filterLogic>
         <filters>
             <field>CRM_External_Message__c</field>
             <operator>EqualTo</operator>
@@ -55,34 +72,16 @@
                 <stringValue>STB</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>CRM_From_NAV_Unit__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
         <object>Message__c</object>
         <recordTriggerType>Create</recordTriggerType>
-        <scheduledPaths>
-            <connector>
-                <targetReference>Create_Innboks_Event</targetReference>
-            </connector>
-            <pathType>AsyncAfterCommit</pathType>
-        </scheduledPaths>
-        <triggerType>RecordAfterSave</triggerType>
+        <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Draft</status>
-    <subflows>
-        <name>Create_Innboks_Event</name>
-        <label>Create Innboks Event</label>
-        <locationX>308</locationX>
-        <locationY>288</locationY>
-        <flowName>CRMHenvendelse_Thread_Subflow_CreateInnboksUserNotification</flowName>
-        <inputAssignments>
-            <name>MessageDateTime</name>
-            <value>
-                <elementReference>$Record.CRM_Sent_date__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>threadId</name>
-            <value>
-                <elementReference>$Record.CRM_Thread__c</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
+    <status>Active</status>
 </Flow>
