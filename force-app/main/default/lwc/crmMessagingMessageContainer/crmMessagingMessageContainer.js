@@ -14,11 +14,7 @@ export default class messagingMessageContainer extends LightningElement {
         this.userid = Id;
         //Indicate if the message is inbound or outbound, i.e left or right hand of the screen. tea
 
-        if (this.userid == this.message.CRM_From_User__c) {
-            this.isoutbound = true;
-        } else {
-            this.isoutbound = false;
-        }
+        this.isoutbound = !this.message.CRM_External_Message__c;
 
         if (this.message.CRM_Type__c == 'Event') {
             this.isevent = true;

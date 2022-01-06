@@ -28,3 +28,12 @@
 .largePadding {
     padding-bottom: 5.5em;
 }
+
+.flexBox {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-end {
+    align-self: flex-end;
+}

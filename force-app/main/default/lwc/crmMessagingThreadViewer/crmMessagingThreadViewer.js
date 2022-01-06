@@ -92,7 +92,6 @@ export default class messagingThreadViewer extends LightningElement {
     get createddate() {
         return getFieldValue(this.wiredThread.data, CREATED_DATE);
     }
-
     @wire(getmessages, { threadId: '$threadid' }) //Calls apex and extracts messages related to this record
     wiremessages(result) {
         this._mySendForSplitting = result;
