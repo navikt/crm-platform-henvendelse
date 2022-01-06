@@ -92,17 +92,6 @@ export default class messagingThreadViewer extends LightningElement {
     get createddate() {
         return getFieldValue(this.wiredThread.data, CREATED_DATE);
     }
-    get createdDateString(){
-        if(!this.createddate) return '';
-        let createdDate = new Date(this.createddate);
-        let formatter = new Intl.DateTimeFormat('no',{day: 'numeric', month: 'long', year: 'numeric'});
-        let date = formatter.format(createdDate);
-        formatter = new Intl.DateTimeFormat('no',{hour: 'numeric', minute: 'numeric'});
-        let timeParts = formatter.formatToParts(createdDate);
-        let hour = timeParts.find( e => e.type === 'hour').value;
-        let minute = timeParts.find( e => e.type === 'minute').value;
-        return date + ', kl. ' + hour+ '.' + minute;
-    }
     @wire(getmessages, { threadId: '$threadid' }) //Calls apex and extracts messages related to this record
     wiremessages(result) {
         this._mySendForSplitting = result;

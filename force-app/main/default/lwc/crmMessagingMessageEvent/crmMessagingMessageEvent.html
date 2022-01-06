@@ -10,7 +10,7 @@
                     class="slds-var-p-right_small"
                 ></lightning-icon>
                 <p>
-                    <b>{message.CRM_From_Integration_Name__c}</b>&nbsp;{message.CRM_Message_Text__c}&nbsp;{createdDateString}
+                    <b>{message.CRM_From_Integration_Name__c}</b>&nbsp;{message.CRM_Message_Text__c}&nbsp;<c-crm-nav-formated-date date={message.CreatedDate}></c-crm-nav-formated-date>
                 </p>
             </template>
             <template if:true={isTransferEvent}>
@@ -22,7 +22,7 @@
                     class="slds-var-p-right_small"
                 ></lightning-icon>
                 <p>
-                    {message.CRM_Message_Text__c}&nbsp;{createdDateString}
+                    {message.CRM_Message_Text__c}&nbsp;<c-crm-nav-formated-date date={message.CreatedDate}></c-crm-nav-formated-date>
                 </p>
             </template>
             <template if:true={isOtherEvent}>
@@ -34,7 +34,7 @@
                     class="slds-var-p-right_small"
                 ></lightning-icon>
                 <p>
-                    {message.CRM_Message_Text__c}&nbsp;{createdDateString}
+                    {message.CRM_Message_Text__c}&nbsp;<c-crm-nav-formated-date date={message.CreatedDate}></c-crm-nav-formated-date>
                 </p>
             </template>
         </div>
