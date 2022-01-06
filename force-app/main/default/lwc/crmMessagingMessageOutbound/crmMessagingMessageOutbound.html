@@ -2,21 +2,19 @@
     <li class="slds-chat-listitem slds-chat-listitem_outbound">
         <div class="slds-chat-message">
             <div class="slds-chat-message__body">
-                <div class="slds-chat-message__text slds-chat-message__text_outbound">
-                    <!--<span>{message.CRM_Message_Text__c} </span>-->
-                    <lightning-formatted-rich-text value={message.CRM_Message_Text__c}></lightning-formatted-rich-text>
-                </div>
+                <template if:true={isOwner}>
+                    <div class="slds-chat-message__text slds-chat-message__text_outbound">
+                        <lightning-formatted-rich-text value={message.CRM_Message_Text__c}></lightning-formatted-rich-text>
+                    </div>
+                </template>
+                <template if:false={isOwner}>
+                    <div class="slds-chat-message__text slds-chat-message__text_outbound-agent">
+                        <lightning-formatted-rich-text value={message.CRM_Message_Text__c}></lightning-formatted-rich-text>
+                    </div>
+                </template>
                 <div class="slds-chat-message__meta">
                     {message.CRM_From_First_Name__c} &nbsp;
-                    <lightning-formatted-date-time
-                        value={message.CreatedDate}
-                        year="numeric"
-                        month="numeric"
-                        day="numeric"
-                        hour="2-digit"
-                        minute="2-digit"
-                    >
-                    </lightning-formatted-date-time>
+                    <c-crm-nav-formated-date date={message.CreatedDate}></c-crm-nav-formated-date>
                 </div>
             </div>
         </div>

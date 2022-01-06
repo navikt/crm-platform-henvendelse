@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CRM_Event_Type__c</fullName>
+    <description>If message is an event, this field describe the type of event</description>
+    <externalId>false</externalId>
+    <label>Event Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>CRM_Type__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>END_OF_CHAT</fullName>
+                <default>false</default>
+                <label>END_OF_CHAT</label>
+            </value>
+            <value>
+                <fullName>UNIT_TRANSFER</fullName>
+                <default>false</default>
+                <label>UNIT_TRANSFER</label>
+            </value>
+            <value>
+                <fullName>QUEUE_TRANSFER</fullName>
+                <default>false</default>
+                <label>QUEUE_TRANSFER</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Event</controllingFieldValue>
+            <valueName>END_OF_CHAT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Event</controllingFieldValue>
+            <valueName>UNIT_TRANSFER</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Event</controllingFieldValue>
+            <valueName>QUEUE_TRANSFER</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>
