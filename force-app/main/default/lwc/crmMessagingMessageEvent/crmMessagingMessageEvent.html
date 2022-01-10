@@ -25,6 +25,18 @@
                     {transferMessage}&nbsp;<c-crm-nav-formated-date date={message.CreatedDate}></c-crm-nav-formated-date>
                 </p>
             </template>
+            <template if:true={isJournalEvent}>
+                <lightning-icon
+                    icon-name="utility:event"
+                    alternative-text="Hendelse"
+                    title="Hendelse"
+                    size="x-small"
+                    class="slds-var-p-right_small"
+                ></lightning-icon>
+                <p>
+                    {journalMessage}&nbsp;<c-crm-nav-formated-date date={message.CreatedDate}></c-crm-nav-formated-date>
+                </p>
+            </template>
             <template if:true={isOtherEvent}>
                 <lightning-icon
                     icon-name="utility:event"
