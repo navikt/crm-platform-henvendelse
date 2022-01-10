@@ -7,9 +7,7 @@
             size="x-small"
             title="Dialog"
         ></lightning-icon>
-        <p>
-            &nbsp;Henvendelse startet&nbsp;<c-crm-nav-formated-date date={createddate}></c-crm-nav-formated-date>
-        </p>
+        <p>&nbsp;Henvendelse startet&nbsp;<c-crm-nav-formated-date date={createddate}></c-crm-nav-formated-date></p>
     </div>
     <!-- Header Stop-->
     <!-- Messages Start-->
@@ -34,12 +32,11 @@
                             <lightning-layout-item size="8">
                                 <lightning-layout horizontal-align="start">
                                     <lightning-button-group ontoolbaraction={handleToolbarAction}>
-                                        <lightning-button-icon-stateful
+                                        <lightning-button-icon
                                             icon-name="utility:quick_text"
                                             alternative-text="Hurtigtekst"
                                             onclick={showQuickText}
-                                        >
-                                        </lightning-button-icon-stateful>
+                                        ></lightning-button-icon>
                                         <slot name="toolbar"></slot>
                                     </lightning-button-group>
                                 </lightning-layout>
