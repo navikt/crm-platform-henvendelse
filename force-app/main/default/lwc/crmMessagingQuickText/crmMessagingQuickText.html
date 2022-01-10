@@ -42,7 +42,7 @@
                         if:true={loadingData}
                         alternative-text="Loading..."
                     ></lightning-spinner>
-                    <div if:true={data} class="slds-text-title_caps">{numberOfRows} resultater</div>
+                    <div if:true={data} class="slds-text-title_caps" aria-live="polite">{numberOfRows} resultater</div>
                     <ul>
                         <lightning-layout multiple-rows="true" pull-to-boundary="small">
                             <template if:true={data} for:each={data} for:item="record" for:index="index">
