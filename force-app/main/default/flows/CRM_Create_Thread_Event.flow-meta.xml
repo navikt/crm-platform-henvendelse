@@ -29,6 +29,12 @@
         <locationX>176</locationX>
         <locationY>158</locationY>
         <inputAssignments>
+            <field>CRM_Event_Type__c</field>
+            <value>
+                <elementReference>Event_Type</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>CRM_Message_Text__c</field>
             <value>
                 <elementReference>Event_Message</elementReference>
@@ -61,6 +67,14 @@
     <variables>
         <description>Message to be displayed in the event.</description>
         <name>Event_Message</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Event type</description>
+        <name>Event_Type</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
