@@ -2,6 +2,12 @@ import { LightningElement, api } from 'lwc';
 
 export default class MessageEvent extends LightningElement {
     @api message;
+    get endOfChatMessage(){
+        return 'avsluttet samtalen';
+    }
+    get transferMessage(){
+        return this.message.CRM_Message_Text__c;
+    }
     get isEndChatEvent(){
         /* 
         *   return value should be depended on Message__c object Event Type, 
@@ -20,7 +26,7 @@ export default class MessageEvent extends LightningElement {
         */
        if(this.message.CRM_Event_Type__c === 'UNIT_TRANSFER' ||
             this.message.CRM_Event_Type__c === 'QUEUE_TRANSFER' ||
-            this.message.CRM_Message_Text__c.startsWith('overført')) return true;
+            this.message.CRM_Message_Text__c.includes('overført')) return true;
         return false;
     }
     get isOtherEvent(){
