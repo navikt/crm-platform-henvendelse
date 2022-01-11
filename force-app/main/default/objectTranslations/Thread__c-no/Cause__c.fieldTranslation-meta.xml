@@ -4,18 +4,20 @@
     <name>Cause__c</name>
     <picklistValues>
         <masterLabel>Andre årsaker</masterLabel>
-        <translation><!-- Andre årsaker --></translation>
-    </picklistValues>
-    <picklistValues>
-        <masterLabel>Sikkerhetshendelse</masterLabel>
-        <translation><!-- Sikkerhetshendelse --></translation>
+        <translation>
+            <!-- Andre årsaker -->
+        </translation>
     </picklistValues>
     <picklistValues>
         <masterLabel>Utenfor NAVs behandlingsområde</masterLabel>
-        <translation><!-- Utenfor NAVs behandlingsområde --></translation>
+        <translation>
+            <!-- Utenfor NAVs behandlingsområde -->
+        </translation>
     </picklistValues>
     <picklistValues>
         <masterLabel>Økonomisk sosialhjelp</masterLabel>
-        <translation><!-- Økonomisk sosialhjelp --></translation>
+        <translation>
+            <!-- Økonomisk sosialhjelp -->
+        </translation>
     </picklistValues>
 </CustomFieldTranslation>
