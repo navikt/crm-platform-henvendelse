@@ -3,31 +3,38 @@ import { LightningElement, api } from 'lwc';
 export default class MessageEvent extends LightningElement {
     @api message;
     get endOfChatMessage() {
-        return 'avsluttet samtalen';
+        return 'avsluttet samtalen - ';
     }
     get transferMessage() {
+        if (this.message.CRM_Event_Type__c === 'UNIT_TRANSFER' || this.message.CRM_Event_Type__c === 'QUEUE_TRANSFER')
+            return 'Samtalen din er overført til avdeling' + this.message.CRM_Message_Text__c + ' - ';
+        return this.message.CRM_Message_Text__c;
+    }
+    get journalMessage() {
+        if (this.message.CRM_Event_Type__c === 'JOURNAL') return 'Tråden ble journalført.';
         return this.message.CRM_Message_Text__c;
     }
     get isEndChatEvent() {
-        /*
-         *   return value should be depended on Message__c object Event Type,
-         *   but for now (04.01.22) it is not available in data model
-         *   So this method shouold be changed as soon as Event Type is available
-         */
-        if (this.message.CRM_Event_Type__c === 'END_OF_CHAT' || this.message.CRM_Message_Text__c.includes('avslutt'))
+        if (
+            this.message.CRM_Event_Type__c === 'END_OF_CHAT' ||
+            this.message.CRM_Message_Text__c.includes('avslutt') /*deprecated*/
+        )
             return true;
         return false;
     }
     get isTransferEvent() {
-        /*
-         *   return value should be depended on Message__c object Event Type,
-         *   but for now (04.01.22) it is not available in data model
-         *   So this method shouold be changed as soon as Event Type is available
-         */
         if (
             this.message.CRM_Event_Type__c === 'UNIT_TRANSFER' ||
             this.message.CRM_Event_Type__c === 'QUEUE_TRANSFER' ||
-            this.message.CRM_Message_Text__c.includes('overført')
+            this.message.CRM_Message_Text__c.includes('overført') /*deprecated*/
+        )
+            return true;
+        return false;
+    }
+    get isJournalEvent() {
+        if (
+            this.message.CRM_Event_Type__c === 'JOURNAL' ||
+            this.message.CRM_Event_Type__c.includes('journalført') /*deprecated*/
         )
             return true;
         return false;
