@@ -36,4 +36,8 @@ export default class MessageEvent extends LightningElement {
         if( this.isEndChatEvent || this.isTransferEvent) return false;
         return true;
     }
+
+    get sender() {
+        return this.message.CRM_External_Message__c === true ? 'NAV' : this.message.CRM_From_Label__c;
+    }
 }
