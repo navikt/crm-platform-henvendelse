@@ -8,12 +8,12 @@ export default class MessageEvent extends LightningElement {
     get transferMessage(){
         if(this.message.CRM_Event_Type__c === 'UNIT_TRANSFER' ||
         this.message.CRM_Event_Type__c === 'QUEUE_TRANSFER')
-            return 'Samtalen din er overført til avdeling' + this.message.CRM_Message_Text__c + ' - ';
+            return 'Samtalen din er overført til avdeling ' + this.message.CRM_Message_Text__c + ' - ';
         return this.message.CRM_Message_Text__c;
     }
     get journalMessage(){
         if(this.message.CRM_Event_Type__c === 'JOURNAL')
-            return 'Tråden ble journalført.'
+            return 'Tråden ble journalført. '
         return this.message.CRM_Message_Text__c;
     }
     get isEndChatEvent(){
