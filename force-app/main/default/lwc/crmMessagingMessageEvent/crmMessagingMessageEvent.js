@@ -2,38 +2,49 @@ import { LightningElement, api } from 'lwc';
 
 export default class MessageEvent extends LightningElement {
     @api message;
-    get endOfChatMessage(){
+    get endOfChatMessage() {
         return 'avsluttet samtalen - ';
     }
-    get transferMessage(){
-        if(this.message.CRM_Event_Type__c === 'UNIT_TRANSFER' ||
-        this.message.CRM_Event_Type__c === 'QUEUE_TRANSFER')
+    get transferMessage() {
+        if (this.message.CRM_Event_Type__c === 'UNIT_TRANSFER' || this.message.CRM_Event_Type__c === 'QUEUE_TRANSFER')
             return 'Samtalen din er overført til avdeling' + this.message.CRM_Message_Text__c + ' - ';
         return this.message.CRM_Message_Text__c;
     }
-    get journalMessage(){
-        if(this.message.CRM_Event_Type__c === 'JOURNAL')
-            return 'Tråden ble journalført.'
+    get journalMessage() {
+        if (this.message.CRM_Event_Type__c === 'JOURNAL') return 'Tråden ble journalført.';
         return this.message.CRM_Message_Text__c;
     }
-    get isEndChatEvent(){
-        if(this.message.CRM_Event_Type__c === 'END_OF_CHAT' ||
-            this.message.CRM_Message_Text__c.includes('avslutt')/*deprecated*/) return true;
+    get isEndChatEvent() {
+        if (
+            this.message.CRM_Event_Type__c === 'END_OF_CHAT' ||
+            this.message.CRM_Message_Text__c.includes('avslutt') /*deprecated*/
+        )
+            return true;
         return false;
     }
-    get isTransferEvent(){
-       if(this.message.CRM_Event_Type__c === 'UNIT_TRANSFER' ||
+    get isTransferEvent() {
+        if (
+            this.message.CRM_Event_Type__c === 'UNIT_TRANSFER' ||
             this.message.CRM_Event_Type__c === 'QUEUE_TRANSFER' ||
-            this.message.CRM_Message_Text__c.includes('overført')/*deprecated*/) return true;
+            this.message.CRM_Message_Text__c.includes('overført') /*deprecated*/
+        )
+            return true;
         return false;
     }
-    get isJournalEvent(){
-        if(this.message.CRM_Event_Type__c === 'JOURNAL' ||
-            this.message.CRM_Event_Type__c.includes('journalført')/*deprecated*/) return true;
+    get isJournalEvent() {
+        if (
+            this.message.CRM_Event_Type__c === 'JOURNAL' ||
+            this.message.CRM_Event_Type__c.includes('journalført') /*deprecated*/
+        )
+            return true;
         return false;
     }
-    get isOtherEvent(){
-        if( this.isEndChatEvent || this.isTransferEvent) return false;
+    get isOtherEvent() {
+        if (this.isEndChatEvent || this.isTransferEvent) return false;
         return true;
+    }
+
+    get sender() {
+        return this.message.CRM_External_Message__c === true ? 'NAV' : this.message.CRM_From_Label__c;
     }
 }
