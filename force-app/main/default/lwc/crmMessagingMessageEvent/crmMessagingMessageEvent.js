@@ -29,7 +29,7 @@ export default class MessageEvent extends LightningElement {
     }
     get isJournalEvent(){
         if(this.message.CRM_Event_Type__c === 'JOURNAL' ||
-            String(this.message.CRM_Event_Type__c).includes('journalført')/*deprecated*/) return true;
+            String(this.message.CRM_Message_Text__c).includes('journalført')/*deprecated*/) return true;
         return false;
     }
     get isOtherEvent(){
