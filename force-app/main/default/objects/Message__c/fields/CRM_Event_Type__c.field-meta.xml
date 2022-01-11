@@ -28,7 +28,30 @@
                 <default>false</default>
                 <label>QUEUE_TRANSFER</label>
             </value>
+            <value>
+                <fullName>JOURNAL</fullName>
+                <default>false</default>
+                <label>JOURNAL</label>
+            </value>
+            <value>
+                <fullName>INTERNAL_MESSAGE</fullName>
+                <default>false</default>
+                <label>INTERNAL_MESSAGE</label>
+            </value>
+            <value>
+                <fullName>EXTERNAL_MESSAGE</fullName>
+                <default>false</default>
+                <label>EXTERNAL_MESSAGE</label>
+            </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Message</controllingFieldValue>
+            <valueName>INTERNAL_MESSAGE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Message</controllingFieldValue>
+            <valueName>EXTERNAL_MESSAGE</valueName>
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Event</controllingFieldValue>
             <valueName>END_OF_CHAT</valueName>
@@ -40,6 +63,10 @@
         <valueSettings>
             <controllingFieldValue>Event</controllingFieldValue>
             <valueName>QUEUE_TRANSFER</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Event</controllingFieldValue>
+            <valueName>JOURNAL</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
