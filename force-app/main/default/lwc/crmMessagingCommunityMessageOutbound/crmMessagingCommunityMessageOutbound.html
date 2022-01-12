@@ -8,16 +8,7 @@
                             <div class="snakkeboble-panel__tekst" aria-label="Du sendte">
                                 <h2 class="hide-element">Du sendte</h2>
                                 <div class="datewrapper">
-                                    <lightning-formatted-date-time
-                                        value={message.CreatedDate}
-                                        year="numeric"
-                                        day="numeric"
-                                        month="long"
-                                        hour="2-digit"
-                                        minute="2-digit"
-                                        class="timestamp"
-                                    >
-                                    </lightning-formatted-date-time>
+                                    <c-crm-nav-formatted-date date={message.CreatedDate} class="timestamp"></c-crm-nav-formatted-date>
                                 </div>
                             </div>
                             <lightning-formatted-rich-text
