@@ -7,8 +7,12 @@ export default class CommunityMessageInbound extends LightningElement {
     navlogo = logos + '/navLogoRed.svg';
 
     connectedCallback() {
-        if (this.message.CRM_From_User__c && this.message.CRM_From_User__c != '') {
+        if (this.message.CRM_From_User__c && this.message.CRM_From_User__c !== '') {
             this.showNavlogo = true;
         }
+    }
+
+    get sender() {
+        return this.message.CRM_External_Message__c === true ? 'NAV' : this.message.CRM_From_Label__c;
     }
 }
