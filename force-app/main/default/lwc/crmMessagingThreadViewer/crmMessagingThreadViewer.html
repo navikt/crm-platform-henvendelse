@@ -7,16 +7,8 @@
             size="x-small"
             title="Dialog"
         ></lightning-icon>
-        <p>
-            Henvendelse startet&nbsp; 
-            <lightning-formatted-date-time
-                value={createddate}
-                year="numeric"
-                month="numeric"
-                day="numeric"
-                hour="2-digit"
-                minute="2-digit"
-            ></lightning-formatted-date-time>
+        <p style="text-align:center">
+            &nbsp;Henvendelse startet&nbsp;<c-crm-nav-formated-date date={createddate}></c-crm-nav-formated-date>
         </p>
     </div>
     <!-- Header Stop-->
@@ -31,7 +23,7 @@
     <div slot="footer">
         <lightning-record-edit-form object-api-name="Message__c" onsuccess={handlesuccess} onsubmit={handlesubmit}>
             <lightning-layout multiple-rows="true" class="stickyfooter">
-                <lightning-layout-item padding="horizontalSmall" size="12">
+                <lightning-layout-item size="12">
                     <div
                         role="toolbar"
                         class="slds-rich-text-editor__toolbar slds-shrink-none"
@@ -41,13 +33,13 @@
                             <!-- Toolbar -->
                             <lightning-layout-item size="8">
                                 <lightning-layout horizontal-align="start">
-                                    <lightning-button-group ontoolbaraction={handleToolbarAction}>
-                                        <lightning-button-icon-stateful
+                                    <lightning-button-icon
                                             icon-name="utility:quick_text"
                                             alternative-text="Hurtigtekst"
                                             onclick={showQuickText}
                                         >
-                                        </lightning-button-icon-stateful>
+                                    </lightning-button-icon>
+                                    <lightning-button-group ontoolbaraction={handleToolbarAction}>
                                         <slot name="toolbar"></slot>
                                     </lightning-button-group>
                                 </lightning-layout>
@@ -83,18 +75,27 @@
                     </c-crm-messaging-quick-text>
                 </lightning-layout-item>
                 <br />
-                <lightning-layout-item size="12" padding="horizontalSmall">
-                    <lightning-button
-                        type="submit"
-                        name="submit"
-                        label="Send"
-                        disabled={closedThread}
-                        variant="brand"
-                        style="min-height: 3rem"
-                        class="slds-float_right"
-                    >
-                    </lightning-button>
-                </lightning-layout-item>
+                    <lightning-layout-item size="12">
+                        <div
+                        class="slds-rich-text-editor__toolbar slds-shrink-none"
+                        style="display: block; border-radius: 0"
+                        >
+                            <lightning-layout>
+                                <lightning-layout-item size="12">
+                                    <lightning-button
+                                        type="submit"
+                                        name="submit"
+                                        label="Send"
+                                        disabled={closedThread}
+                                        variant="brand"
+                                        style="min-height: 1rem"
+                                        class="slds-float_right"
+                                    >
+                                    </lightning-button>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </div>
+                    </lightning-layout-item>
             </lightning-layout>
 
             <!--</div> -->

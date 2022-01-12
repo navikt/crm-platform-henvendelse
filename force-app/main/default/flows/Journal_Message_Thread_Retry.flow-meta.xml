@@ -421,7 +421,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Necessary_Record_Info.CRM_External_Actor_Account_ID__c</elementReference>
+                <elementReference>Get_Necessary_Record_Info.CRM_Account__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
