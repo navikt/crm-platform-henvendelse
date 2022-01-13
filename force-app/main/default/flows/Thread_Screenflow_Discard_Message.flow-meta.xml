@@ -4,17 +4,33 @@
         <name>Close_Tab</name>
         <label>Close Tab</label>
         <locationX>352</locationX>
-        <locationY>998</locationY>
+        <locationY>1358</locationY>
         <actionName>c:fcTabCloser</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
     </actionCalls>
     <apiVersion>53.0</apiVersion>
+    <assignments>
+        <name>Se_Message_Sender_Label</name>
+        <label>Se Message Sender Label</label>
+        <locationX>176</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Info_Message.CRM_From_Label__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>NAV</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Updated_Info_Message</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>User_notification_result</name>
         <label>User notification result</label>
         <locationX>176</locationX>
-        <locationY>878</locationY>
+        <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>Close_Tab</targetReference>
         </defaultConnector>
@@ -79,12 +95,12 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordCreates>
-        <name>Create_Redacted_Event</name>
-        <label>Create Redacted Event</label>
+        <name>Create_Info_Message_on_Discarding</name>
+        <label>Create Info Message on Discarding</label>
         <locationX>176</locationX>
         <locationY>518</locationY>
         <connector>
-            <targetReference>Update_Messages</targetReference>
+            <targetReference>Get_Info_Message</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -111,6 +127,27 @@
         <object>Message__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
+    <recordLookups>
+        <name>Get_Info_Message</name>
+        <label>Get Info Message</label>
+        <locationX>176</locationX>
+        <locationY>638</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Se_Message_Sender_Label</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Create_Info_Message_on_Discarding</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Message__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordLookups>
         <name>Get_Thread</name>
         <label>Get Thread</label>
@@ -140,7 +177,7 @@
         <name>rollBack</name>
         <label>rollBack</label>
         <locationX>616</locationX>
-        <locationY>878</locationY>
+        <locationY>1238</locationY>
         <connector>
             <targetReference>Failed</targetReference>
         </connector>
@@ -149,7 +186,7 @@
         <name>Update_Messages</name>
         <label>Update Messages</label>
         <locationX>176</locationX>
-        <locationY>638</locationY>
+        <locationY>998</locationY>
         <connector>
             <targetReference>Update_Thread_0</targetReference>
         </connector>
@@ -190,7 +227,7 @@
         <name>Update_Thread_0</name>
         <label>Update Thread</label>
         <locationX>176</locationX>
-        <locationY>758</locationY>
+        <locationY>1118</locationY>
         <connector>
             <targetReference>User_notification_result</targetReference>
         </connector>
@@ -225,12 +262,22 @@
         </inputAssignments>
         <object>Thread__c</object>
     </recordUpdates>
+    <recordUpdates>
+        <name>Updated_Info_Message</name>
+        <label>Updated Info Message</label>
+        <locationX>176</locationX>
+        <locationY>878</locationY>
+        <connector>
+            <targetReference>Update_Messages</targetReference>
+        </connector>
+        <inputReference>Get_Info_Message</inputReference>
+    </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>Failed</name>
         <label>Failed</label>
         <locationX>616</locationX>
-        <locationY>998</locationY>
+        <locationY>1358</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -247,7 +294,7 @@
         <name>Something_is_not_OK</name>
         <label>Something is not OK</label>
         <locationX>176</locationX>
-        <locationY>1334</locationY>
+        <locationY>1694</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -289,7 +336,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Create_Redacted_Event</targetReference>
+            <targetReference>Create_Info_Message_on_Discarding</targetReference>
         </connector>
         <fields>
             <name>next</name>
