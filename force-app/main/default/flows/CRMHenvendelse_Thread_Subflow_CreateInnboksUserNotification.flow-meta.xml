@@ -77,7 +77,10 @@
                 <elementReference>MessageDateTime</elementReference>
             </value>
         </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputParameters>
+            <assignToReference>newInnboksNotification</assignToReference>
+            <name>output</name>
+        </outputParameters>
     </actionCalls>
     <actionCalls>
         <name>Log_error_from_subflow</name>
@@ -256,10 +259,43 @@
             <targetReference>Thread</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
+    <variables>
+        <name>ExternalNotification</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
     <variables>
         <name>MessageDateTime</name>
         <dataType>DateTime</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>newInnboksNotification</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <objectType>UserNotification__c</objectType>
+    </variables>
+    <variables>
+        <name>NotificationMessageText</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Valid values are &quot;SMS&quot; and &quot;EPOST&quot; can be &quot;SMS,EPOST&quot;</description>
+        <name>PreferredChannels</name>
+        <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
