@@ -73,9 +73,27 @@
         <locationY>288</locationY>
         <flowName>CRMHenvendelse_Thread_Subflow_CreateInnboksUserNotification</flowName>
         <inputAssignments>
+            <name>ExternalNotification</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>MessageDateTime</name>
             <value>
                 <elementReference>$Record.CRM_Sent_date__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>NotificationMessageText</name>
+            <value>
+                <elementReference>$Label.CRMHenvendelse_NewMessageNotification</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>PreferredChannels</name>
+            <value>
+                <stringValue>SMS,EPOST</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
