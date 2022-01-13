@@ -7,6 +7,9 @@
         <locationY>278</locationY>
         <actionName>UN_InnboksProducerLegacy</actionName>
         <actionType>apex</actionType>
+        <faultConnector>
+            <targetReference>Log_error</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>accountId</name>
@@ -17,7 +20,7 @@
         <inputParameters>
             <name>eksternVarsling</name>
             <value>
-                <booleanValue>true</booleanValue>
+                <elementReference>SendExternalNotification</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -41,7 +44,7 @@
         <inputParameters>
             <name>prefererteKanaler</name>
             <value>
-                <stringValue>EPOST</stringValue>
+                <elementReference>PreferredChannel</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -65,7 +68,7 @@
         <inputParameters>
             <name>tekst</name>
             <value>
-                <elementReference>$Label.CRMHenvendelse_NewConversationNoteNotification</elementReference>
+                <elementReference>NotificationMessageText</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -74,7 +77,47 @@
                 <elementReference>ConversationNote.CRM_Date_Time_Registered__c</elementReference>
             </value>
         </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputParameters>
+            <assignToReference>newInnboksNotification</assignToReference>
+            <name>output</name>
+        </outputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>Log_error</name>
+        <label>Log error</label>
+        <locationX>440</locationX>
+        <locationY>398</locationY>
+        <actionName>LoggerUtility</actionName>
+        <actionType>apex</actionType>
+        <dataTypeMappings>
+            <typeName>T__refRecord</typeName>
+            <typeValue>Conversation_Note__c</typeValue>
+        </dataTypeMappings>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>logLevel</name>
+            <value>
+                <stringValue>ERROR</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>refRecord</name>
+            <value>
+                <elementReference>ConversationNote</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>source</name>
+            <value>
+                <stringValue>Conversation Note - Create Innboks User Notification</stringValue>
+            </value>
+        </inputParameters>
     </actionCalls>
     <apiVersion>52.0</apiVersion>
     <description>Subflow creating inbox user notification from Conversation Note</description>
@@ -140,5 +183,41 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>Conversation_Note__c</objectType>
+    </variables>
+    <variables>
+        <name>newInnboksNotification</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <objectType>UserNotification__c</objectType>
+    </variables>
+    <variables>
+        <description>Notification Message Text</description>
+        <name>NotificationMessageText</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>The preferred channel on if external notification
+Values: &quot;EPOST&quot; &quot;SMS&quot;</description>
+        <name>PreferredChannel</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Send SMS/Email notification. Default value is false</description>
+        <name>SendExternalNotification</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
 </Flow>
