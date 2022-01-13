@@ -17,6 +17,10 @@ export default class CrmMessagingRedactMessage extends LightningElement {
         return this.message.CRM_Type__c === 'Event' ? true : false;
     }
 
+    get isInfo () {
+        return this.message.CRM_Type__c === 'Info' ? true : false;
+    }
+
     set isRedacting(value) {
         if (false === value) {
             this.redactTextComponent.reset(); //this.revertRedacting();
