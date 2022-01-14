@@ -1,14 +1,14 @@
 import { LightningElement, api} from 'lwc';
 
 
-export default class navFormatedDate extends LightningElement {
+export default class navFormattedDate extends LightningElement {
     @api date;
 
-    get formatedDate(){
+    get formattedDate(){
         if(!this.date) return '';
         let createdDate = new Date(this.date);
         if((createdDate == "Invalid Date") || isNaN(createdDate)){
-            console.log('navFormatedDate: Bad date format.');
+            console.log('navFormattedDate: Bad date format.');
             return '';
         }
         let formatter = new Intl.DateTimeFormat('no',{day: 'numeric', month: 'long', year: 'numeric'});
