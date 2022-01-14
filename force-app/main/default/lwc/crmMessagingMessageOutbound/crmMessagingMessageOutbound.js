@@ -10,4 +10,8 @@ export default class MessagingMessageOutbound extends LightningElement {
         }
         return false;
     }
+
+    get isInfo () {
+        return this.message.CRM_Type__c === 'Info' ? true : false;
+    }
 }
