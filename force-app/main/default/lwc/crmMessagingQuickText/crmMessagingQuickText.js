@@ -47,7 +47,7 @@ export default class nksQuickText extends LightningElement {
     showModal (event) {
         let modal = this.template.querySelector('[data-id="modal"]');
         modal.className = 'modalShow';
-        //this.template.querySelector('lightning-input').focus();
+        this.template.querySelector('lightning-input').focus();
         document.addEventListener('focusin', this.handleModalFocus, true);
         this.focusModal();
     }
