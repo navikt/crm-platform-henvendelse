@@ -32,7 +32,7 @@ export default class nksQuickText extends LightningElement {
     }
 
     disconnectedCallback() {
-        document.addEventListener('focus', this.handleModalFocus, true);
+        document.removeEventListener('focusin', this.handleModalFocus, true);
     }
 
     modalOnEscape (evt) {
@@ -48,14 +48,14 @@ export default class nksQuickText extends LightningElement {
         let modal = this.template.querySelector('[data-id="modal"]');
         modal.className = 'modalShow';
         //this.template.querySelector('lightning-input').focus();
-        document.addEventListener('focus', this.handleModalFocus, true);
+        document.addEventListener('focusin', this.handleModalFocus, true);
         this.focusModal();
     }
 
     hideModal (event) {
         let modal = this.template.querySelector('[data-id="modal"]');
         modal.className = 'modalHide';
-        document.removeEventListener('focus', this.handleModalFocus, true);
+        document.removeEventListener('focusin', this.handleModalFocus, true);
     }
 
     focusModal() {
