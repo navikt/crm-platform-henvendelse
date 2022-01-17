@@ -16,6 +16,7 @@ export default class nksQuickText extends LightningElement {
     qmap;
     initialRender = true;
     bufferFocus = false;
+    numberOfRows = 0; 
 
     renderedCallback () {
         if (this.initialRender === true) {
@@ -69,11 +70,7 @@ export default class nksQuickText extends LightningElement {
 
     @api 
     isOpen () {
-        if (this.template.querySelector('[data-id="modal"]').className == 'modalShow') {
-            return true;
-        } else {
-            return false;
-        }
+        return this.template.querySelector('[data-id="modal"]').className == 'modalShow' ? true : false;
     }
 
     handleModalFocus = (event) => {
@@ -82,7 +79,6 @@ export default class nksQuickText extends LightningElement {
             event.path.forEach((pathItem) => {
                 if (pathItem.ariaModal) {
                     modal = true;
-                    return;
                 }
             }); 
             
