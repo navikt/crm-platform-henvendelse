@@ -18,7 +18,6 @@ export default class nksQuickText extends LightningElement {
     bufferFocus = false;
 
     renderedCallback () {
-        
         if (this.initialRender === true) {
             let inputField = this.template.querySelector('.conversationNoteTextArea');
             inputField.focus();
