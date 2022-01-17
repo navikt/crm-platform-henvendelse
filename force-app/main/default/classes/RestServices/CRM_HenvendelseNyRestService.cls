@@ -41,6 +41,12 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
         } catch (ValidationException valEx) {
             //Validation exception is thrown internally
             errorResponse(400, valEx.getMessage());
+        } catch (NotFoundException nfEx) {
+            // Exception is thrown internally
+            errorResponse(404, nfEx.getMessage());
+        } catch (InvalidBodyException bodyEx) {
+            // Exception is thrown internally
+            errorResponse(400, bodyEx.getMessage());
         } catch (Exception ex) {
             errorResponse(500, 'Unknown error: ' + ex.getMessage());
             logger.error(
@@ -58,9 +64,8 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
     }
 
     private static void handleNewConversationNote(String req, String kjedeId) {
+        //Throws various exceptions if validation fails and handled at top level
         Conversation_Note__c newNote = validateNewConversationNote(req, kjedeId);
-        if (newNote == null)
-            return; //Failed validation
 
         try {
             insert newNote;
@@ -81,13 +86,31 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
         }
     }
 
+    /**
+     * @description: JSON deserializationof incoming message request, returns null if the body is invalid
+     * @author Stian Ruud Schikora | 01-17-2022
+     * @param jsonReq
+     * @return NewMessageRequest
+     **/
+    private static NewMessageRequest deserializeMessageRequest(String jsonReq) {
+        try {
+            return (NewMessageRequest) JSON.deserializeStrict(jsonReq, NewMessageRequest.class);
+        } catch (JSONException jsonEx) {
+            throw new InvalidBodyException('Invalid request body: ' + jsonEx.getMessage());
+        }
+    }
+
     private static void handleNewMessage(String req, String threadId) {
-        Message__c newMessage = validateNewMessage(req, threadId);
+        NewMessageRequest messageReq = deserializeMessageRequest(req);
+        Message__c newMessage = validateNewMessage(messageReq, threadId);
         if (newMessage == null)
             return; //Failed validation
 
         try {
             insert newMessage;
+            //Updates the thread assignee if tildelMeg is set to true. Not returned as thread metadata in the API so the update in async
+            if (messageReq.tildelMeg == true)
+                updateThreadAssignee(newMessage.CRM_From_Ident__c, newMessage.CRM_Thread__c);
             Thread__c updatedThread = new CRM_ThreadSelector().selectById(newMessage.CRM_Thread__c);
             setResponse(
                 200,
@@ -135,8 +158,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
         try {
             convRequest = (NewConversationNoteRequest) JSON.deserializeStrict(req, NewConversationNoteRequest.class);
         } catch (JSONException jsonEx) {
-            errorResponse(400, 'Invalid request body: ' + jsonEx.getMessage());
-            return null;
+            throw new InvalidBodyException('Invalid request body: ' + jsonEx.getMessage());
         }
 
         themeGroupId = validateThemeGroup(convRequest.temagruppe);
@@ -147,8 +169,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
             List<Conversation_Note__c> convNoteChain = new CRM_ConversationNoteSelector()
                 .selectByBehandlingskjedeId(kjedeId);
             if (convNoteChain.size() == 0) {
-                errorResponse(404, 'Conversation note chain does not exists: ' + kjedeId);
-                return null;
+                throw new NotFoundException('Conversation note chain does not exists: ' + kjedeId);
             } else {
                 newNote.CRM_Henvendelse_BehandlingskjedeId__c = kjedeId;
             }
@@ -156,8 +177,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
 
         String accountId = getAccountId(convRequest.aktorId);
         if (String.isBlank(accountId)) {
-            errorResponse(404, 'No person with actor ID: ' + convRequest.aktorId);
-            return null;
+            throw new NotFoundException('No person with actor ID: ' + convRequest.aktorId);
         }
 
         //Method from CRM_HenvendelseApiUtils
@@ -179,22 +199,13 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
      * @param apiRef [Unique reference defined in CRM_API_Reference__c]
      * @return Message__c
      **/
-    private static Message__c validateNewMessage(String req, String apiRef) {
-        NewMessageRequest messageRequest;
+    private static Message__c validateNewMessage(NewMessageRequest messageRequest, String apiRef) {
         Message__c newMessage = new Message__c();
         String actingNavIdent = getActingNavIdent();
 
-        try {
-            messageRequest = (NewMessageRequest) JSON.deserializeStrict(req, NewMessageRequest.class);
-        } catch (JSONException jsonEx) {
-            errorResponse(400, 'Invalid request body: ' + jsonEx.getMessage());
-            return null;
-        }
-
         String accountId = getAccountId(messageRequest.aktorId);
         if (String.isBlank(accountId)) {
-            errorResponse(404, 'No person with actor ID: ' + messageRequest.aktorId);
-            return null;
+            throw new NotFoundException('No person with actor ID: ' + messageRequest.aktorId);
         }
 
         if (String.isNotBlank(apiRef)) {
@@ -208,8 +219,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
                 }
             } catch (QueryException queryEx) {
                 //The thread does not exist
-                errorResponse(404, 'Message thread does not exist: ' + queryEx.getMessage());
-                return null;
+                throw new NotFoundException('Message thread does not exist: ' + queryEx.getMessage());
             }
         } else {
             try {
@@ -226,6 +236,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
                     CRM_Theme__c = themeId,
                     CRM_Thread_Type__c = 'STB'
                 );
+
                 insert newThread;
                 newMessage.CRM_Thread__c = newThread.Id;
             } catch (DmlException dmlEx) {
@@ -245,6 +256,11 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
         newMessage.CRM_From_Ident__c = actingNavIdent;
 
         return newMessage;
+    }
+
+    @future
+    private static void updateThreadAssignee(String assignee, String threadId) {
+        update new Thread__c(Id = threadId, CRM_Assignee__c = assignee);
     }
 
     /**
@@ -285,6 +301,10 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
 
     private class ValidationException extends Exception {
     }
+    private class NotFoundException extends Exception {
+    }
+    private class InvalidBodyException extends Exception {
+    }
 
     global class NewMessageRequest {
         global String aktorId;
@@ -292,6 +312,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
         global String tema;
         global String enhet;
         global String fritekst;
+        global Boolean tildelMeg; //Setting this to true updates the assignee on the thread.
     }
 
     global class NewConversationNoteRequest {
