@@ -8,7 +8,7 @@ export default class MessageEvent extends LightningElement {
     get transferMessage(){
         if(this.message.CRM_Event_Type__c === 'UNIT_TRANSFER' ||
         this.message.CRM_Event_Type__c === 'QUEUE_TRANSFER')
-            return 'Samtalen din er overført til avdeling ' + this.message.CRM_Message_Text__c + ' - ';
+            return 'Samtalen din er overført til avdelingen ' + this.message.CRM_Message_Text__c + ' - ';
         return this.message.CRM_Message_Text__c;
     }
     get journalMessage(){
@@ -33,11 +33,7 @@ export default class MessageEvent extends LightningElement {
         return false;
     }
     get isOtherEvent(){
-        if( this.isEndChatEvent || this.isTransferEvent) return false;
+        if( this.isEndChatEvent || this.isTransferEvent || this.isJournalEvent) return false;
         return true;
-    }
-
-    get sender() {
-        return this.message.CRM_External_Message__c === true ? 'NAV' : this.message.CRM_From_Label__c;
     }
 }

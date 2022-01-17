@@ -255,7 +255,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Send_Inbox_Notification</targetReference>
+            <targetReference>Create_Innboks_User_Notification</targetReference>
         </connector>
         <fields>
             <name>next_0</name>
@@ -277,23 +277,29 @@
     </start>
     <status>Active</status>
     <subflows>
-        <name>Send_Inbox_Notification</name>
-        <label>Send Inbox Notification</label>
+        <name>Create_Innboks_User_Notification</name>
+        <label>Create Innboks User Notification</label>
         <locationX>176</locationX>
         <locationY>638</locationY>
         <connector>
             <targetReference>User_notification_result</targetReference>
         </connector>
-        <flowName>Conversation_Note_Subflow_Create_User_Notification_On_Discarded_Conversation</flowName>
+        <flowName>CRMHenvendelse_ConversationNote_CreateInnboksUserNotification</flowName>
         <inputAssignments>
-            <name>conversation_note</name>
+            <name>ConversationNote</name>
             <value>
                 <elementReference>Get_Conversation_Note</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <name>NotificationMessageText</name>
+            <value>
+                <elementReference>$Label.CRMHenvendelse_ConversationNote_RedactedMessageNotificationText</elementReference>
+            </value>
+        </inputAssignments>
         <outputAssignments>
             <assignToReference>newUserNotification</assignToReference>
-            <name>newUserNotification</name>
+            <name>newInnboksNotification</name>
         </outputAssignments>
     </subflows>
     <textTemplates>

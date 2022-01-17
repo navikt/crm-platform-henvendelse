@@ -50,6 +50,20 @@
     <description>Find all messages related to a thread and generate a new Conversation Summary
 Set the Latest Message Date Time based on the latest message</description>
     <formulas>
+        <description>generates text for events</description>
+        <name>Message_Text_Formula</name>
+        <dataType>String</dataType>
+        <expression>IF(ISPICKVAL({!Message.CRM_Type__c},&apos;Event&apos;),
+     IF(ISPICKVAL({!Message.CRM_Event_Type__c},&apos;END_OF_CHAT&apos;),
+        &apos;Samtalen ble avsluttet&apos;,
+        IF(OR(ISPICKVAL({!Message.CRM_Event_Type__c},&apos;QUEUE_TRANSFER&apos;),ISPICKVAL({!Message.CRM_Event_Type__c},&apos;UNIT_TRANSFER&apos;)),
+            &apos;Samtalen er overført til avdeling &apos; + {!Message.CRM_Message_Text__c},
+            {!Message.CRM_Message_Text__c}
+        )
+     ),
+{!Message.CRM_Message_Text__c})</expression>
+    </formulas>
+    <formulas>
         <name>SenderNameFormula</name>
         <dataType>String</dataType>
         <expression>IF({!Message.CRM_External_Message__c},
@@ -136,7 +150,7 @@ IF(ISBLANK({!Message.CRM_From_Ident_Formula__c}),
     <textTemplates>
         <name>MessageSummaryText</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>&lt;p&gt;&lt;b&gt;{!Message.CRM_Sent_Datetime_Formula__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;{!Message.CRM_Message_Text__c}&lt;/p&gt;&lt;p&gt;{!SenderNameFormula} &lt;/p&gt;&lt;br&gt;</text>
+        <text>&lt;p&gt;&lt;b&gt;{!Message.CRM_Sent_Datetime_Formula__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;{!Message_Text_Formula}&lt;/p&gt;&lt;p&gt;{!SenderNameFormula} &lt;/p&gt;&lt;br&gt;</text>
     </textTemplates>
     <variables>
         <name>lastMessageDate</name>
