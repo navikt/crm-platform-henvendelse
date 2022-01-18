@@ -21,8 +21,8 @@
         <description>Checks if there was returned an existing journal entry.</description>
         <name>Check_Journal_Entries</name>
         <label>Check Journal Entries</label>
-        <locationX>182</locationX>
-        <locationY>854</locationY>
+        <locationX>314</locationX>
+        <locationY>890</locationY>
         <defaultConnector>
             <targetReference>Get_Theme_Common_Code</targetReference>
         </defaultConnector>
@@ -43,7 +43,7 @@
     <decisions>
         <name>Checks_journal_status</name>
         <label>Checks journal status</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Check_Journal_Entries</targetReference>
@@ -90,11 +90,14 @@
     <recordCreates>
         <name>Create_Journal_Entry</name>
         <label>Create Journal Entry</label>
-        <locationX>314</locationX>
-        <locationY>1094</locationY>
+        <locationX>446</locationX>
+        <locationY>1130</locationY>
         <connector>
             <targetReference>Update_Thread_Categorization</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Log_Error</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>CRM_Created_By_Ident__c</field>
             <value>
@@ -149,7 +152,7 @@
     <recordLookups>
         <name>Get_Existing_Journal_Entries</name>
         <label>Get Existing Journal Entries</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -185,8 +188,8 @@
         <description>Query the SF id to the common code to be journaled.</description>
         <name>Get_Theme_Common_Code</name>
         <label>Get Theme Common Code</label>
-        <locationX>314</locationX>
-        <locationY>974</locationY>
+        <locationX>446</locationX>
+        <locationY>1010</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Create_Journal_Entry</targetReference>
@@ -214,7 +217,7 @@
         <description>Gets the relevant thread</description>
         <name>Get_thread</name>
         <label>Get thread</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -238,8 +241,12 @@
         <description>Updated the thread theme group and theme to match the created journal entry</description>
         <name>Update_Thread_Categorization</name>
         <label>Update Thread Categorization</label>
-        <locationX>314</locationX>
-        <locationY>1214</locationY>
+        <locationX>446</locationX>
+        <locationY>1250</locationY>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Log_Error</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -270,17 +277,76 @@
         <connector>
             <targetReference>Check_Journal_Entries</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Log_Error</targetReference>
+        </faultConnector>
         <inputReference>Get_thread</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
-        <locationX>56</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Existing_Journal_Entries</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Log_Error</name>
+        <label>Log Error</label>
+        <locationX>974</locationX>
+        <locationY>1250</locationY>
+        <flowName>Flow_Create_Application_Log</flowName>
+        <inputAssignments>
+            <name>Application_Domain</name>
+            <value>
+                <stringValue>NKS</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Error_Payload</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Error_Source</name>
+            <value>
+                <stringValue>Flow - Thread Create Journal Entry</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Log_Category</name>
+            <value>
+                <stringValue>Journal</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Log_Level</name>
+            <value>
+                <stringValue>Error</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Log_Message</name>
+            <value>
+                <stringValue>Error encountered in thread journal entry creation</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Reference_Object</name>
+            <value>
+                <stringValue>Thread__c</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ReferenceID</name>
+            <value>
+                <elementReference>Get_thread.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <description>Variable set if the flow finds an existing journal entry for the matching theme + case reference</description>
         <name>Existing_Journal_Entry</name>

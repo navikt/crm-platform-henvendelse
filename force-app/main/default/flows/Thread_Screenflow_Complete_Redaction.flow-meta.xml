@@ -116,8 +116,9 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordCreates>
-        <name>Create_thread_is_redacted_event</name>
-        <label>Create thread is redacted event</label>
+        <description>Create a message to inform the user about redaction.</description>
+        <name>Create_Info_Message_On_Redaction</name>
+        <label>Create Info Message On Redaction</label>
         <locationX>314</locationX>
         <locationY>518</locationY>
         <connector>
@@ -142,7 +143,7 @@
         <inputAssignments>
             <field>CRM_Type__c</field>
             <value>
-                <stringValue>Message</stringValue>
+                <stringValue>Info</stringValue>
             </value>
         </inputAssignments>
         <object>Message__c</object>
@@ -155,7 +156,7 @@
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Send_Inbox_Notification</targetReference>
+            <targetReference>Create_Innboks_User_Notification</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -276,7 +277,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Create_thread_is_redacted_event</targetReference>
+            <targetReference>Create_Info_Message_On_Redaction</targetReference>
         </connector>
         <fields>
             <name>next</name>
@@ -298,23 +299,41 @@
     </start>
     <status>Active</status>
     <subflows>
-        <name>Send_Inbox_Notification</name>
-        <label>Send Inbox Notification</label>
+        <name>Create_Innboks_User_Notification</name>
+        <label>Create Innboks User Notification</label>
         <locationX>314</locationX>
         <locationY>278</locationY>
         <connector>
             <targetReference>Trigger_sync</targetReference>
         </connector>
-        <flowName>CRMHenvendelse_Thread_Subflow_CreateUserNotificationOnRedactedMessage</flowName>
+        <flowName>CRMHenvendelse_Thread_Subflow_CreateInnboksUserNotification</flowName>
         <inputAssignments>
-            <name>thread</name>
+            <name>ExternalNotification</name>
             <value>
-                <elementReference>Get_Thread</elementReference>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>MessageDateTime</name>
+            <value>
+                <elementReference>Get_Thread.LastModifiedDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>NotificationMessageText</name>
+            <value>
+                <elementReference>$Label.CRMHenvendelse_RedactedMessageNotificationText</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>threadId</name>
+            <value>
+                <elementReference>Get_Thread.Id</elementReference>
             </value>
         </inputAssignments>
         <outputAssignments>
             <assignToReference>newUserNotification</assignToReference>
-            <name>newUserNotification</name>
+            <name>newInnboksNotification</name>
         </outputAssignments>
     </subflows>
     <textTemplates>
