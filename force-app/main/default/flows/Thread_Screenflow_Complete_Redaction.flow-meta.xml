@@ -156,7 +156,7 @@
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Send_Inbox_Notification</targetReference>
+            <targetReference>Create_Innboks_User_Notification</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -299,23 +299,41 @@
     </start>
     <status>Active</status>
     <subflows>
-        <name>Send_Inbox_Notification</name>
-        <label>Send Inbox Notification</label>
+        <name>Create_Innboks_User_Notification</name>
+        <label>Create Innboks User Notification</label>
         <locationX>314</locationX>
         <locationY>278</locationY>
         <connector>
             <targetReference>Trigger_sync</targetReference>
         </connector>
-        <flowName>CRMHenvendelse_Thread_Subflow_CreateUserNotificationOnRedactedMessage</flowName>
+        <flowName>CRMHenvendelse_Thread_Subflow_CreateInnboksUserNotification</flowName>
         <inputAssignments>
-            <name>thread</name>
+            <name>ExternalNotification</name>
             <value>
-                <elementReference>Get_Thread</elementReference>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>MessageDateTime</name>
+            <value>
+                <elementReference>Get_Thread.LastModifiedDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>NotificationMessageText</name>
+            <value>
+                <elementReference>$Label.CRMHenvendelse_RedactedMessageNotificationText</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>threadId</name>
+            <value>
+                <elementReference>Get_Thread.Id</elementReference>
             </value>
         </inputAssignments>
         <outputAssignments>
             <assignToReference>newUserNotification</assignToReference>
-            <name>newUserNotification</name>
+            <name>newInnboksNotification</name>
         </outputAssignments>
     </subflows>
     <textTemplates>
