@@ -79,8 +79,8 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordCreates>
-        <name>Create_Redacted_Event</name>
-        <label>Create Redacted Event</label>
+        <name>Create_Info_Message_on_Discarding</name>
+        <label>Create Info Message on Discarding</label>
         <locationX>176</locationX>
         <locationY>518</locationY>
         <connector>
@@ -105,7 +105,7 @@
         <inputAssignments>
             <field>CRM_Type__c</field>
             <value>
-                <stringValue>Message</stringValue>
+                <stringValue>Info</stringValue>
             </value>
         </inputAssignments>
         <object>Message__c</object>
@@ -289,7 +289,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Create_Redacted_Event</targetReference>
+            <targetReference>Create_Info_Message_on_Discarding</targetReference>
         </connector>
         <fields>
             <name>next</name>
