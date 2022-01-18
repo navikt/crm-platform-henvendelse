@@ -4,23 +4,20 @@ import getQuicktexts from '@salesforce/apex/CRM_HenvendelseQuicktextController.g
 //LABEL IMPORTS
 import BLANK_ERROR from '@salesforce/label/c.CRMHenveldelse_Blank';
 export default class nksQuickText extends LightningElement {
-    labels = {
-        BLANK_ERROR
-    };
-
-    _conversationNote;
     @api comments;
-    @track data = [];
-    loadingData = false;
     @api required = false;
+
+    @track data = [];
+
+    labels = { BLANK_ERROR };
+    _conversationNote;
+    loadingData = false;
     quicktexts;
     qmap;
-    get inputFormats() {
-        return [''];
-    }
     initialRender = true;
+    bufferFocus = false;
+    numberOfRows = 0;
 
-    //Screen reader does not detect component as as input field until after the first focus
     renderedCallback() {
         if (this.initialRender === true) {
             let inputField = this.template.querySelector('.conversationNoteTextArea');
@@ -28,41 +25,14 @@ export default class nksQuickText extends LightningElement {
             inputField.blur();
             this.initialRender = false;
         }
-    }
 
-    @wire(getQuicktexts, {})
-    wiredQuicktexts(value) {
-        if (value.data) {
-            this.quicktexts = value.data;
-            this.qmap = new Map(value.data.map((key) => [key.nksAbbreviationKey__c.toUpperCase(), key.Message]));
+        if (this.bufferFocus) {
+            this.focusModal();
         }
     }
 
-    @api get conversationNote() {
-        return this._conversationNote;
-    }
-
-    set conversationNote(value) {
-        this._conversationNote = value;
-    }
-
-    @api get conversationNoteRich() {
-        return this._conversationNote;
-    }
-
-    set conversationNoteRich(value) {
-        this._conversationNote = value;
-    }
-
-    handlePaste(evt) {
-        const editor = this.template.querySelector('.conversationNoteTextArea');
-        editor.setRangeText(
-            this.toPlainText((evt.clipboardData || window.clipboardData).getData('text')),
-            editor.selectionStart,
-            editor.selectionEnd,
-            'end'
-        );
-        evt.preventDefault();
+    disconnectedCallback() {
+        document.removeEventListener('focusin', this.handleModalFocus, true);
     }
 
     modalOnEscape(evt) {
@@ -72,6 +42,52 @@ export default class nksQuickText extends LightningElement {
             evt.stopImmediatePropagation();
         }
     }
+
+    @api
+    showModal(event) {
+        let modal = this.template.querySelector('[data-id="modal"]');
+        modal.className = 'modalShow';
+        this.template.querySelector('lightning-input').focus();
+        document.addEventListener('focusin', this.handleModalFocus, true);
+        this.focusModal();
+    }
+
+    hideModal(event) {
+        let modal = this.template.querySelector('[data-id="modal"]');
+        modal.className = 'modalHide';
+        document.removeEventListener('focusin', this.handleModalFocus, true);
+    }
+
+    focusModal() {
+        const modal = this.template.querySelector('[data-id="modal"]');
+        if (modal) {
+            this.bufferFocus = false;
+            modal.focus();
+        } else {
+            this.bufferFocus = true;
+        }
+    }
+
+    @api
+    isOpen() {
+        return this.template.querySelector('[data-id="modal"]').className == 'modalShow' ? true : false;
+    }
+
+    handleModalFocus = (event) => {
+        if (this.isOpen()) {
+            let modal = false;
+            event.path.forEach((pathItem) => {
+                if (pathItem.ariaModal) {
+                    modal = true;
+                }
+            });
+
+            if (!modal) {
+                const modalFocusElement = this.template.querySelector('.slds-modal__close');
+                modalFocusElement.focus();
+            }
+        }
+    };
 
     handleKeyUp(evt) {
         const queryTerm = evt.target.value;
@@ -98,20 +114,45 @@ export default class nksQuickText extends LightningElement {
         }
     }
 
-    @api showModal(event) {
-        this.template.querySelector('[data-id="modal"]').className = 'modalShow';
-        this.template.querySelector('lightning-input').focus();
+    @wire(getQuicktexts, {})
+    wiredQuicktexts(value) {
+        if (value.data) {
+            this.quicktexts = value.data;
+            this.qmap = new Map(value.data.map((key) => [key.nksAbbreviationKey__c.toUpperCase(), key.Message]));
+        }
     }
 
-    hideModal(event) {
-        this.template.querySelector('[data-id="modal"]').className = 'modalHide';
+    get inputFormats() {
+        return [''];
     }
-    @api isopen() {
-        if (this.template.querySelector('[data-id="modal"]').className == 'modalShow') {
-            return true;
-        } else {
-            return false;
-        }
+
+    @api
+    get conversationNote() {
+        return this._conversationNote;
+    }
+
+    set conversationNote(value) {
+        this._conversationNote = value;
+    }
+
+    @api
+    get conversationNoteRich() {
+        return this._conversationNote;
+    }
+
+    set conversationNoteRich(value) {
+        this._conversationNote = value;
+    }
+
+    handlePaste(evt) {
+        const editor = this.template.querySelector('.conversationNoteTextArea');
+        editor.setRangeText(
+            this.toPlainText((evt.clipboardData || window.clipboardData).getData('text')),
+            editor.selectionStart,
+            editor.selectionEnd,
+            'end'
+        );
+        evt.preventDefault();
     }
 
     insertText(event) {
@@ -191,11 +232,13 @@ export default class nksQuickText extends LightningElement {
             return { isValid: true };
         }
     }
+
     setheader() {}
     @api clear(event) {
         let inputField = this.template.querySelector('.conversationNoteTextArea');
         inputField.value = '';
     }
+
     handlePaste() {
         handleChange();
     }
