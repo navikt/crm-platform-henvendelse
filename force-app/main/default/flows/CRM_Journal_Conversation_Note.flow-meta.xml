@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Generate_Document</name>
         <label>Generate Document</label>
-        <locationX>182</locationX>
+        <locationX>446</locationX>
         <locationY>638</locationY>
         <actionName>CRM_JournalUtilities</actionName>
         <actionType>apex</actionType>
@@ -32,7 +32,7 @@
         <description>Calls journal utils to perform the API post action</description>
         <name>Post_Journal_Request</name>
         <label>Post Journal Request</label>
-        <locationX>182</locationX>
+        <locationX>446</locationX>
         <locationY>1238</locationY>
         <actionName>CRM_JournalUtilities</actionName>
         <actionType>apex</actionType>
@@ -71,7 +71,7 @@
         <description>Add document variants to document list and assign document title</description>
         <name>Assign_Journal_Documents</name>
         <label>Assign Journal Documents</label>
-        <locationX>182</locationX>
+        <locationX>446</locationX>
         <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>Journal_Documents.dokumentvarianter</assignToReference>
@@ -108,7 +108,7 @@
     <assignments>
         <name>Assign_Journal_Entry_Default_data</name>
         <label>Assign Journal Entry Default data</label>
-        <locationX>182</locationX>
+        <locationX>446</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.CRM_Created_By_Ident__c</assignToReference>
@@ -167,7 +167,7 @@
         <description>Assigns needed values to document variant wrapper</description>
         <name>Document_Variant_Assignment</name>
         <label>Document Variant Assignment</label>
-        <locationX>182</locationX>
+        <locationX>446</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>Document_Variant_PDF.filtype</assignToReference>
@@ -198,7 +198,7 @@
         <description>Assigns needed values to the journal requests and adds the document list.</description>
         <name>Journal_Request_Assignment</name>
         <label>Journal Request Assignment</label>
-        <locationX>182</locationX>
+        <locationX>446</locationX>
         <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>Journal_Request.tittel</assignToReference>
@@ -278,7 +278,7 @@
         <description>Assigns necessary values to the Sak wrapper for journal entry.</description>
         <name>Journal_Sak_Assignment</name>
         <label>Journal Sak Assignment</label>
-        <locationX>182</locationX>
+        <locationX>446</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>Journal_Sak.fagsakId</assignToReference>
@@ -308,7 +308,7 @@
     <assignments>
         <name>Set_Post_Completed</name>
         <label>Set Post Completed</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>1478</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
@@ -338,7 +338,7 @@
     <assignments>
         <name>Set_Post_Failed</name>
         <label>Set Post Failed</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1478</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
@@ -362,7 +362,7 @@
         <description>Updates theme group and theme for conversation note to match the newest journal entry.</description>
         <name>Update_Conversation_Note_Categorization</name>
         <label>Update Conversation Note Categorization</label>
-        <locationX>182</locationX>
+        <locationX>446</locationX>
         <locationY>1934</locationY>
         <assignmentItems>
             <assignToReference>JOURNALED_CONV_NOTE.CRM_Theme_Group__c</assignToReference>
@@ -386,7 +386,7 @@
         <description>Verify if a journal entry already exists for the inputs</description>
         <name>Check_Journal_Entries</name>
         <label>Check Journal Entries</label>
-        <locationX>380</locationX>
+        <locationX>776</locationX>
         <locationY>278</locationY>
         <defaultConnectorLabel>Entry Exists</defaultConnectorLabel>
         <rules>
@@ -408,7 +408,7 @@
     <decisions>
         <name>Check_Post_State</name>
         <label>Check Post State</label>
-        <locationX>182</locationX>
+        <locationX>446</locationX>
         <locationY>1358</locationY>
         <defaultConnector>
             <targetReference>Set_Post_Failed</targetReference>
@@ -434,7 +434,7 @@
         <description>Decision to determine if the dml should be performed directly in the flow or handled by a parent calling this.</description>
         <name>DML_Check</name>
         <label>DML Check</label>
-        <locationX>182</locationX>
+        <locationX>446</locationX>
         <locationY>2054</locationY>
         <defaultConnectorLabel>No DML</defaultConnectorLabel>
         <rules>
@@ -507,13 +507,16 @@
         <connector>
             <targetReference>Update_Conversation_Note</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Log_Error</targetReference>
+        </faultConnector>
         <inputReference>Journal_Entry_SF</inputReference>
     </recordCreates>
     <recordLookups>
         <description>Get necessary account information to post a journal entry</description>
         <name>Get_Account_Info</name>
         <label>Get Account Info</label>
-        <locationX>182</locationX>
+        <locationX>446</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -534,7 +537,7 @@
     <recordLookups>
         <name>Get_Existing_Journal_Entries</name>
         <label>Get Existing Journal Entries</label>
-        <locationX>380</locationX>
+        <locationX>776</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -570,7 +573,7 @@
         <description>Query the info needed from record and relations to submit a journal entry</description>
         <name>Get_Necessary_Record_Info</name>
         <label>Get Necessary Record Info</label>
-        <locationX>182</locationX>
+        <locationX>446</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -593,7 +596,7 @@
     <recordLookups>
         <name>Get_SF_Theme_Common_Code</name>
         <label>Get SF Theme Common Code</label>
-        <locationX>182</locationX>
+        <locationX>446</locationX>
         <locationY>1694</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -626,17 +629,76 @@
         <label>Update Conversation Note</label>
         <locationX>50</locationX>
         <locationY>2294</locationY>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Log_Error</targetReference>
+        </faultConnector>
         <inputReference>JOURNALED_CONV_NOTE</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
-        <locationX>254</locationX>
+        <locationX>650</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Existing_Journal_Entries</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Log_Error</name>
+        <label>Log Error</label>
+        <locationX>578</locationX>
+        <locationY>2294</locationY>
+        <flowName>Flow_Create_Application_Log</flowName>
+        <inputAssignments>
+            <name>Application_Domain</name>
+            <value>
+                <stringValue>NKS</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Error_Payload</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Error_Source</name>
+            <value>
+                <stringValue>Flow - Journal Conversation Note</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Log_Category</name>
+            <value>
+                <stringValue>Journal</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Log_Level</name>
+            <value>
+                <stringValue>Error</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Log_Message</name>
+            <value>
+                <stringValue>Error encountered in conversation journal flow</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Reference_Object</name>
+            <value>
+                <stringValue>Conversation_Note__c</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ReferenceID</name>
+            <value>
+                <elementReference>JOURNALED_CONV_NOTE.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <description>Document variant wrapper for journal request</description>
         <name>Document_Variant_PDF</name>
