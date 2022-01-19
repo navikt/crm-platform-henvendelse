@@ -78,17 +78,4 @@ For henvendelser som gjelder kommunale tjenester som økonomisk sosialhjelp, bos
         <shortDescription>CRM Henvendelse - Thread URL</shortDescription>
         <value>/skriv-til-oss</value>
     </labels>
-    <labels>
-        <fullName>NKS_Template_Message</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Template Message</shortDescription>
-        <value>Hei [navn på bruker],
-
-
-
-        Med vennlig hilsen
-        [alias/fornavn etternavn på veileder]
-        NAV Kontaktsenter</value>
-    </labels>
 </CustomLabels>

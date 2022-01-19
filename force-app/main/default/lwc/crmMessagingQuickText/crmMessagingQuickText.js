@@ -13,6 +13,8 @@ export default class nksQuickText extends LightningElement {
     
     @api comments;
     @api required = false;
+    @api user;
+    @api supervisor;
 
     @track data = [];
 

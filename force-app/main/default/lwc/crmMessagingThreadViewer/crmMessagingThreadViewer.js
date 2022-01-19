@@ -10,11 +10,9 @@ import CREATED_BY_FIELD from '@salesforce/schema/Thread__c.CreatedById';
 import CREATED_DATE from '@salesforce/schema/Thread__c.CreatedDate';
 import FIRSTNAME_FIELD from '@salesforce/schema/Thread__c.CreatedBy.FirstName';
 import LASTNAME_FIELD from '@salesforce/schema/Thread__c.CreatedBy.LastName';
-import TEMPLATE_MESSAGE from '@salesforce/label/c.NKS_Template_Message';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
 export default class messagingThreadViewer extends LightningElement {
-    labels = {TEMPLATE_MESSAGE};
     createdbyid;
     usertype;
     otheruser;
@@ -45,9 +43,17 @@ export default class messagingThreadViewer extends LightningElement {
         this.scrolltobottom();
     }
 
-    setTemplateMessage () {
-        this.template.querySelector('c-crm-messaging-quick-text').textArea().value = this.labels.TEMPLATE_MESSAGE;
-    }
+    get userName () {
+        const externalMessages = [];
+        for (var m in this.messages) {
+            externalMessages = this.messages[m].filter(function (message) {
+                if (message.CRM_External_Message__c) {
+                  return message;
+                }
+            });  
+        }
+        return externalMessages.length > 0 ? externalMessages[0].CRM_From_First_Name__c : '';
+    } 
     
     //Handles subscription to streaming API for listening to changes to auth status
     handleSubscribe() {

@@ -21,7 +21,7 @@
     <!-- Messages End-->
     <!-- Reply Box Start-->
     <div slot="footer">
-        <lightning-record-edit-form object-api-name="Message__c" onsuccess={handlesuccess} onsubmit={handlesubmit} onload={setTemplateMessage}>
+        <lightning-record-edit-form object-api-name="Message__c" onsuccess={handlesuccess} onsubmit={handlesubmit}>
             <lightning-layout multiple-rows="true" class="stickyfooter">
                 <lightning-layout-item size="12">
                     <div
@@ -71,6 +71,8 @@
                     <c-crm-messaging-quick-text
                         oncommentschange={handleConversationNoteChange}
                         conversation-note={conversationNote}
+                        user={userName}
+                        supervisor={supervisorName}
                     >
                     </c-crm-messaging-quick-text>
                 </lightning-layout-item>
