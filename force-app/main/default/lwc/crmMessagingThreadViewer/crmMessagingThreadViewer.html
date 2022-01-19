@@ -13,7 +13,7 @@
     </div>
     <!-- Header Stop-->
     <!-- Messages Start-->
-    <section role="log" id="scroller" class="slds-box scroller slds-scrollable_y" style="">
+    <section role="log" id="scroller" class="slds-box scroller slds-scrollable_y">
         <template for:each={messages} for:item="message">
             <c-crm-messaging-Message-Container message={message} key={message.Id}></c-crm-messaging-Message-Container>
         </template>
@@ -21,7 +21,7 @@
     <!-- Messages End-->
     <!-- Reply Box Start-->
     <div slot="footer">
-        <lightning-record-edit-form object-api-name="Message__c" onsuccess={handlesuccess} onsubmit={handlesubmit}>
+        <lightning-record-edit-form object-api-name="Message__c" onsuccess={handlesuccess} onsubmit={handlesubmit} onload={setTemplateMessage}>
             <lightning-layout multiple-rows="true" class="stickyfooter">
                 <lightning-layout-item size="12">
                     <div

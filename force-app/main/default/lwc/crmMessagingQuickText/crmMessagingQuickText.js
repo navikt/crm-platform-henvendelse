@@ -1,24 +1,20 @@
 import { LightningElement, track, api, wire } from 'lwc';
 import searchRecords from '@salesforce/apex/CRM_HenvendelseQuicktextController.searchRecords';
 import getQuicktexts from '@salesforce/apex/CRM_HenvendelseQuicktextController.getQuicktexts';
-//LABEL IMPORTS
 import BLANK_ERROR from '@salesforce/label/c.CRMHenveldelse_Blank';
 export default class nksQuickText extends LightningElement {
-    labels = {
-        BLANK_ERROR
-    };
+    labels = {BLANK_ERROR};
 
     _conversationNote;
-    @api comments;
-    @track data = [];
     loadingData = false;
-    @api required = false;
     quicktexts;
     qmap;
-    get inputFormats() {
-        return [''];
-    }
     initialRender = true;
+    
+    @api comments;
+    @api required = false;
+
+    @track data = [];
 
     //Screen reader does not detect component as as input field until after the first focus
     renderedCallback() {
@@ -38,7 +34,17 @@ export default class nksQuickText extends LightningElement {
         }
     }
 
-    @api get conversationNote() {
+    @api
+    textArea () {
+        return this.template.querySelector('.conversationNoteTextArea');
+    }
+
+    get inputFormats() {
+        return [''];
+    }
+
+    @api 
+    get conversationNote() {
         return this._conversationNote;
     }
 
@@ -46,7 +52,8 @@ export default class nksQuickText extends LightningElement {
         this._conversationNote = value;
     }
 
-    @api get conversationNoteRich() {
+    @api 
+    get conversationNoteRich() {
         return this._conversationNote;
     }
 
@@ -98,7 +105,8 @@ export default class nksQuickText extends LightningElement {
         }
     }
 
-    @api showModal(event) {
+    @api 
+    showModal(event) {
         this.template.querySelector('[data-id="modal"]').className = 'modalShow';
         this.template.querySelector('lightning-input').focus();
     }
@@ -106,7 +114,8 @@ export default class nksQuickText extends LightningElement {
     hideModal(event) {
         this.template.querySelector('[data-id="modal"]').className = 'modalHide';
     }
-    @api isopen() {
+    @api 
+    isopen() {
         if (this.template.querySelector('[data-id="modal"]').className == 'modalShow') {
             return true;
         } else {
@@ -191,11 +200,15 @@ export default class nksQuickText extends LightningElement {
             return { isValid: true };
         }
     }
+
     setheader() {}
-    @api clear(event) {
+
+    @api 
+    clear(event) {
         let inputField = this.template.querySelector('.conversationNoteTextArea');
         inputField.value = '';
     }
+
     handlePaste() {
         handleChange();
     }

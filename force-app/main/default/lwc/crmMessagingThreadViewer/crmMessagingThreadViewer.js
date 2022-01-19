@@ -2,7 +2,6 @@ import { LightningElement, api, wire } from 'lwc';
 import getmessages from '@salesforce/apex/CRM_MessageHelper.getMessagesFromThread';
 import getJournalInfo from '@salesforce/apex/CRM_MessageHelper.getJournalEntries';
 import { subscribe, unsubscribe } from 'lightning/empApi';
-
 import userId from '@salesforce/user/Id';
 import { updateRecord, getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import ACTIVE_FIELD from '@salesforce/schema/Thread__c.CRM_isActive__c';
@@ -11,21 +10,24 @@ import CREATED_BY_FIELD from '@salesforce/schema/Thread__c.CreatedById';
 import CREATED_DATE from '@salesforce/schema/Thread__c.CreatedDate';
 import FIRSTNAME_FIELD from '@salesforce/schema/Thread__c.CreatedBy.FirstName';
 import LASTNAME_FIELD from '@salesforce/schema/Thread__c.CreatedBy.LastName';
+import TEMPLATE_MESSAGE from '@salesforce/label/c.NKS_Template_Message';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
-
 export default class messagingThreadViewer extends LightningElement {
+    labels = {TEMPLATE_MESSAGE};
     createdbyid;
     usertype;
     otheruser;
     _mySendForSplitting;
-    @api thread;
     threadheader;
     threadid;
     messages = [];
     text;
     showspinner = false;
+
     @api showClose;
+    @api thread;
+
     //Constructor, called onload
     connectedCallback() {
         if (this.thread) {
@@ -38,10 +40,15 @@ export default class messagingThreadViewer extends LightningElement {
     disconnectedCallback() {
         this.handleUnsubscribe();
     }
+
     renderedCallback() {
         this.scrolltobottom();
     }
 
+    setTemplateMessage () {
+        this.template.querySelector('c-crm-messaging-quick-text').textArea().value = this.labels.TEMPLATE_MESSAGE;
+    }
+    
     //Handles subscription to streaming API for listening to changes to auth status
     handleSubscribe() {
         let _this = this;
@@ -189,6 +196,7 @@ export default class messagingThreadViewer extends LightningElement {
     showQuickText(event) {
         this.template.querySelector('c-crm-messaging-quick-text').showModal(event);
     }
+
     handleConversationNoteChange(event) {
         this.text = event.detail;
     }
