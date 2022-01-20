@@ -16,6 +16,8 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     @api showClose;
     setCardTitle;
 
+    @api textTemplate; //Support for conditional text template
+
     handleToggleSection(event) {
         this.activeSectionMessage = 'Open section name:  ' + event.detail.openSections;
     }

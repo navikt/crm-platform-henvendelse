@@ -26,6 +26,8 @@ export default class messagingThreadViewer extends LightningElement {
     text;
     showspinner = false;
     @api showClose;
+
+    @api textTemplate; //Support for conditional text template as input
     //Constructor, called onload
     connectedCallback() {
         if (this.thread) {
@@ -106,7 +108,7 @@ export default class messagingThreadViewer extends LightningElement {
     handlesubmit(event) {
         event.preventDefault();
         this.showspinner = true;
-        if (!this.template.querySelector('c-crm-messaging-quick-text').isopen()) {
+        if (!this.template.querySelector('c-crm-messaging-quick-text').isOpen()) {
             const textInput = event.detail.fields;
             // If messagefield is empty, stop the submit
             textInput.CRM_Thread__c = this.thread.Id;
