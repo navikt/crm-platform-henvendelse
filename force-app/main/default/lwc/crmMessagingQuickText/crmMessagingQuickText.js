@@ -10,14 +10,16 @@ export default class crmQuickText extends LightningElement {
 
     _conversationNote;
     @api comments;
+    @api required = false;
+
     @track data = [];
     loadingData = false;
-    @api required = false;
     quicktexts;
     qmap;
     initialRender = true;
+    bufferFocus = false;
+    numberOfRows = 0;
 
-    //Screen reader does not detect component as as input field until after the first focus
     renderedCallback() {
         if (this.initialRender === true) {
             let inputField = this.template.querySelector('.conversationNoteTextArea');
@@ -25,30 +27,47 @@ export default class crmQuickText extends LightningElement {
             inputField.blur();
             this.initialRender = false;
         }
-    }
 
-    @wire(getQuicktexts, {})
-    wiredQuicktexts(value) {
-        if (value.data) {
-            this.quicktexts = value.data;
-            this.qmap = new Map(value.data.map((key) => [key.nksAbbreviationKey__c.toUpperCase(), key.Message]));
+        if (this.bufferFocus) {
+            this.focusModal();
         }
     }
 
-    @api get conversationNote() {
-        return this._conversationNote;
+    disconnectedCallback() {
+        document.removeEventListener('focusin', this.handleModalFocus, true);
     }
 
-    set conversationNote(value) {
-        this._conversationNote = value;
+    modalOnEscape(evt) {
+        if (evt.key === 'Escape') {
+            this.hideModal(evt);
+            evt.preventDefault();
+            evt.stopImmediatePropagation();
+        }
     }
 
-    @api get conversationNoteRich() {
-        return this._conversationNote;
+    @api
+    showModal() {
+        let modal = this.template.querySelector('[data-id="modal"]');
+        modal.className = 'modalShow';
+        this.template.querySelector('lightning-input').focus();
+        document.addEventListener('focusin', this.handleModalFocus, true);
+        this.focusModal();
     }
 
-    set conversationNoteRich(value) {
-        this._conversationNote = value;
+    hideModal() {
+        let modal = this.template.querySelector('[data-id="modal"]');
+        modal.className = 'modalHide';
+        document.removeEventListener('focusin', this.handleModalFocus, true);
+    }
+
+    focusModal() {
+        const modal = this.template.querySelector('[data-id="modal"]');
+        if (modal) {
+            this.bufferFocus = false;
+            modal.focus();
+        } else {
+            this.bufferFocus = true;
+        }
     }
 
     get textArea() {
@@ -66,13 +85,21 @@ export default class crmQuickText extends LightningElement {
         evt.preventDefault();
     }
 
-    modalOnEscape(evt) {
-        if (evt.key === 'Escape') {
-            this.hideModal(evt);
-            evt.preventDefault();
-            evt.stopImmediatePropagation();
+    handleModalFocus = (event) => {
+        if (this.isOpen()) {
+            let modal = false;
+            event.path.forEach((pathItem) => {
+                if (pathItem.ariaModal) {
+                    modal = true;
+                }
+            });
+
+            if (!modal) {
+                const modalFocusElement = this.template.querySelector('.slds-modal__close');
+                modalFocusElement.focus();
+            }
         }
-    }
+    };
 
     handleKeyUp(evt) {
         const queryTerm = evt.target.value;
@@ -99,15 +126,32 @@ export default class crmQuickText extends LightningElement {
         }
     }
 
-    @api
-    showModal() {
-        this.template.querySelector('[data-id="modal"]').className = 'modalShow';
-        this.template.querySelector('lightning-input').focus();
+    @wire(getQuicktexts, {})
+    wiredQuicktexts(value) {
+        if (value.data) {
+            this.quicktexts = value.data;
+            this.qmap = new Map(value.data.map((key) => [key.nksAbbreviationKey__c.toUpperCase(), key.Message]));
+        }
     }
 
-    hideModal() {
-        this.template.querySelector('[data-id="modal"]').className = 'modalHide';
+    @api
+    get conversationNote() {
+        return this._conversationNote;
     }
+
+    set conversationNote(value) {
+        this._conversationNote = value;
+    }
+
+    @api
+    get conversationNoteRich() {
+        return this._conversationNote;
+    }
+
+    set conversationNoteRich(value) {
+        this._conversationNote = value;
+    }
+
     @api
     isOpen() {
         return this.template.querySelector('[data-id="modal"]').className == 'modalShow';
@@ -189,12 +233,14 @@ export default class crmQuickText extends LightningElement {
             return { isValid: true };
         }
     }
+
     setheader() {}
     @api
     clear() {
         this._conversationNote = '';
         this.textArea.value = this._conversationNote;
     }
+
     handlePaste() {
         handleChange();
     }
