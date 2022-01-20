@@ -3,7 +3,12 @@ import searchRecords from '@salesforce/apex/CRM_HenvendelseQuicktextController.s
 import getQuicktexts from '@salesforce/apex/CRM_HenvendelseQuicktextController.getQuicktexts';
 //LABEL IMPORTS
 import BLANK_ERROR from '@salesforce/label/c.CRMHenveldelse_Blank';
-export default class nksQuickText extends LightningElement {
+export default class crmQuickText extends LightningElement {
+    labels = {
+        BLANK_ERROR
+    };
+
+    _conversationNote;
     @api comments;
     @api required = false;
 
@@ -44,7 +49,7 @@ export default class nksQuickText extends LightningElement {
     }
 
     @api
-    showModal(event) {
+    showModal() {
         let modal = this.template.querySelector('[data-id="modal"]');
         modal.className = 'modalShow';
         this.template.querySelector('lightning-input').focus();
@@ -52,7 +57,7 @@ export default class nksQuickText extends LightningElement {
         this.focusModal();
     }
 
-    hideModal(event) {
+    hideModal() {
         let modal = this.template.querySelector('[data-id="modal"]');
         modal.className = 'modalHide';
         document.removeEventListener('focusin', this.handleModalFocus, true);
@@ -68,9 +73,19 @@ export default class nksQuickText extends LightningElement {
         }
     }
 
-    @api
-    isOpen() {
-        return this.template.querySelector('[data-id="modal"]').className == 'modalShow' ? true : false;
+    get textArea() {
+        return this.template.querySelector('.conversationNoteTextArea');
+    }
+
+    handlePaste(evt) {
+        const editor = this.textArea;
+        editor.setRangeText(
+            this.toPlainText((evt.clipboardData || window.clipboardData).getData('text')),
+            editor.selectionStart,
+            editor.selectionEnd,
+            'end'
+        );
+        evt.preventDefault();
     }
 
     handleModalFocus = (event) => {
@@ -122,10 +137,6 @@ export default class nksQuickText extends LightningElement {
         }
     }
 
-    get inputFormats() {
-        return [''];
-    }
-
     @api
     get conversationNote() {
         return this._conversationNote;
@@ -144,19 +155,13 @@ export default class nksQuickText extends LightningElement {
         this._conversationNote = value;
     }
 
-    handlePaste(evt) {
-        const editor = this.template.querySelector('.conversationNoteTextArea');
-        editor.setRangeText(
-            this.toPlainText((evt.clipboardData || window.clipboardData).getData('text')),
-            editor.selectionStart,
-            editor.selectionEnd,
-            'end'
-        );
-        evt.preventDefault();
+    @api
+    isOpen() {
+        return this.template.querySelector('[data-id="modal"]').className == 'modalShow';
     }
 
     insertText(event) {
-        const editor = this.template.querySelector('.conversationNoteTextArea');
+        const editor = this.textArea;
         editor.focus();
         editor.setRangeText(
             this.toPlainText(event.currentTarget.dataset.message),
@@ -166,7 +171,7 @@ export default class nksQuickText extends LightningElement {
         );
 
         this.hideModal(undefined);
-        this.conversationNote = editor.value;
+        this._conversationNote = editor.value;
         const attributeChangeEvent = new CustomEvent('commentschange', {
             detail: this.conversationNote
         });
@@ -174,8 +179,7 @@ export default class nksQuickText extends LightningElement {
     }
 
     handleChange(event) {
-        this[event.target.name] = event.target.value;
-        this.conversationNote = event.target.value;
+        this._conversationNote = event.target.value;
         const attributeChangeEvent = new CustomEvent('commentschange', {
             detail: this.conversationNote
         });
@@ -234,9 +238,10 @@ export default class nksQuickText extends LightningElement {
     }
 
     setheader() {}
-    @api clear(event) {
-        let inputField = this.template.querySelector('.conversationNoteTextArea');
-        inputField.value = '';
+    @api
+    clear() {
+        this._conversationNote = '';
+        this.textArea.value = this._conversationNote;
     }
 
     handlePaste() {
