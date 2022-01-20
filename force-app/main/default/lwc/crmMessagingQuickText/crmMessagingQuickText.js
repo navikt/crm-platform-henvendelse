@@ -13,8 +13,6 @@ export default class nksQuickText extends LightningElement {
     
     @api comments;
     @api required = false;
-    @api user;
-    @api supervisor;
 
     @track data = [];
 
@@ -34,11 +32,6 @@ export default class nksQuickText extends LightningElement {
             this.quicktexts = value.data;
             this.qmap = new Map(value.data.map((key) => [key.nksAbbreviationKey__c.toUpperCase(), key.Message]));
         }
-    }
-
-    @api
-    textArea () {
-        return this.template.querySelector('.conversationNoteTextArea');
     }
 
     get inputFormats() {

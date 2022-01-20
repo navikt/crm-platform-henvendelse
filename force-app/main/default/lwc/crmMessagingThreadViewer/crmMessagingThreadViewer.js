@@ -42,18 +42,6 @@ export default class messagingThreadViewer extends LightningElement {
     renderedCallback() {
         this.scrolltobottom();
     }
-
-    get userName () {
-        const externalMessages = [];
-        for (var m in this.messages) {
-            externalMessages = this.messages[m].filter(function (message) {
-                if (message.CRM_External_Message__c) {
-                  return message;
-                }
-            });  
-        }
-        return externalMessages.length > 0 ? externalMessages[0].CRM_From_First_Name__c : '';
-    } 
     
     //Handles subscription to streaming API for listening to changes to auth status
     handleSubscribe() {
