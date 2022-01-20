@@ -23,7 +23,6 @@ export default class messagingThreadViewer extends LightningElement {
     threadheader;
     threadid;
     messages = [];
-    text;
     showspinner = false;
     @api showClose;
 
@@ -85,15 +84,6 @@ export default class messagingThreadViewer extends LightningElement {
     })
     wiredThread;
 
-    get firstname() {
-        return getFieldValue(this.wiredThread.data, FIRSTNAME_FIELD);
-    }
-    get lastname() {
-        return getFieldValue(this.wiredThread.data, LASTNAME_FIELD);
-    }
-    get createddate() {
-        return getFieldValue(this.wiredThread.data, CREATED_DATE);
-    }
     @wire(getmessages, { threadId: '$threadid' }) //Calls apex and extracts messages related to this record
     wiremessages(result) {
         this._mySendForSplitting = result;
@@ -108,7 +98,7 @@ export default class messagingThreadViewer extends LightningElement {
     handlesubmit(event) {
         event.preventDefault();
         this.showspinner = true;
-        if (!this.template.querySelector('c-crm-messaging-quick-text').isOpen()) {
+        if (!this.quickTextCmp.isOpen()) {
             const textInput = event.detail.fields;
             // If messagefield is empty, stop the submit
             textInput.CRM_Thread__c = this.thread.Id;
@@ -121,6 +111,7 @@ export default class messagingThreadViewer extends LightningElement {
                     variant: 'error'
                 });
                 this.dispatchEvent(event1);
+                this.showspinner = false;
             } else {
                 this.template.querySelector('lightning-record-edit-form').submit(textInput);
             }
@@ -153,7 +144,7 @@ export default class messagingThreadViewer extends LightningElement {
     handlesuccess(event) {
         this.recordId = event.detail;
 
-        this.template.querySelector('c-crm-messaging-quick-text').clear(event);
+        this.quickTextCmp.clear();
         const inputFields = this.template.querySelectorAll('.msgText');
 
         if (inputFields) {
@@ -176,6 +167,18 @@ export default class messagingThreadViewer extends LightningElement {
         return refreshApex(this._mySendForSplitting);
     }
 
+    showQuickText(event) {
+        this.quickTextCmp.showModal(event);
+    }
+
+    //##################################//
+    //#########    GETTERS    ##########//
+    //##################################//
+
+    get createddate() {
+        return getFieldValue(this.wiredThread.data, CREATED_DATE);
+    }
+
     get journalEntries() {
         if (this.wiredJournalEntries) {
             return this.wiredJournalEntries.data;
@@ -188,10 +191,11 @@ export default class messagingThreadViewer extends LightningElement {
         return !getFieldValue(this.wiredThread.data, ACTIVE_FIELD);
     }
 
-    showQuickText(event) {
-        this.template.querySelector('c-crm-messaging-quick-text').showModal(event);
+    get quickTextCmp() {
+        return this.template.querySelector('c-crm-messaging-quick-text');
     }
-    handleConversationNoteChange(event) {
-        this.text = event.detail;
+
+    get text() {
+        return this.quickTextCmp ? this.quickTextCmp.conversationNote : '';
     }
 }
