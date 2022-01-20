@@ -26,6 +26,8 @@ export default class messagingThreadViewer extends LightningElement {
     text;
     showspinner = false;
     @api showClose;
+
+    @api textTemplate; //Support for conditional text template as input
     //Constructor, called onload
     connectedCallback() {
         if (this.thread) {
