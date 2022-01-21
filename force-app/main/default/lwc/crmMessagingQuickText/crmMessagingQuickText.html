@@ -1,119 +1,6 @@
 <template>
-    <section aria-hidden={isOpen}>
-        <slot name="body"></slot>
-    </section>
-    <section
-        aria-describedby="modal-content-id-1"
-        aria-hidden={modalAriaHidden}
-        aria-labelledby="modal-heading-01"
-        aria-modal="true"
-        class={cssClass}
-        onkeyup={innerKeyUpHandler}
-        role="dialog"
-        tabindex="-1"
-    >
-        <div class="slds-modal__container">
-            <a href="javascript:void(0)" class="firstlink"></a>
-
-            <header class="slds-modal__header" onclick={innerClickHandler}>
-                <lightning-button-icon
-                    class="slds-modal__close"
-                    title="Lukk"
-                    icon-name="utility:close"
-                    icon-class="slds-button_icon-inverse"
-                    onclick={closeModal}
-                    variant="bare"
-                    alternative-text="Lukk"
-                >
-                </lightning-button-icon>
-
-                <div onkeyup={handleKeyUp}>
-                    <lightning-input
-                        name="enter-search"
-                        label="Søk her"
-                        placeholder="Søk i hurtigtekst..."
-                        type="search"
-                        variant="label-hidden"
-                    >
-                    </lightning-input>
-                </div>
-            </header>
-
-            <div
-                class="slds-modal__content slds-var-p-horizontal_small slds-is-relative slds-var-p-vertical_x-small"
-                id="modal-content-id-1"
-                tabindex="-1"
-                onclick={innerClickHandler}
-            >
-                <slot name="modalContent"></slot>
-                <lightning-spinner
-                    size="small"
-                    if:true={loadingData}
-                    alternative-text="Loading..."
-                ></lightning-spinner>
-
-                <div if:true={data} class="slds-text-title_caps" aria-live="polite">{numberOfRows} resultater</div>
-                <ul>
-                    <lightning-layout multiple-rows="true" pull-to-boundary="small">
-                        <template if:true={data} for:each={data} for:item="record" for:index="index">
-                            <lightning-layout-item
-                                key={record.RecordId}
-                                class="slds-size_1-of-1 quicktext-item"
-                                onclick={insertText}
-                                data-message={record.Message}
-                            >
-                                <li>
-                                    <div class="slds-var-p-horizontal_small slds-var-p-vertical_x-small">
-                                        <lightning-button
-                                            variant="base"
-                                            label={record.Name}
-                                            onclick={insertText}
-                                            class="slds-text-link"
-                                        ></lightning-button>
-                                        <p>{record.Summary}</p>
-                                    </div>
-                                </li>
-                            </lightning-layout-item>
-                        </template>
-                    </lightning-layout>
-                </ul>
-                <a href="javascript:void(0)" class="lastLink"></a>
-            </div>
-        </div>
-    </section>
-    <template if:true={isOpen}>
-        <div class="slds-backdrop slds-backdrop_open"></div>
-    </template>
-
-    <div class="slds-form-element">
-        <div class="slds-rich-text-editor slds-grid slds-grid_vertical slds-nowrap">
-            <textarea
-                onkeyup={insertquicktext}
-                onchange={handleChange}
-                onpaste={handlePaste}
-                class="slds-rich-text-editor__textarea slds-grid slds-textarea conversationNoteTextArea"
-                rows="15"
-                placeholder="Skriv svaret ditt her"
-                title="Skriv svaret ditt her"
-            >
-            {conversationNote}
-            </textarea>
-        </div>
-    </div>
-</template>
-
-
-<!--
-    <template>
     <div data-id="modal" class="modalHide" onkeydown={modalOnEscape}>
-        <section
-            role="dialog"
-            tabindex="-1"
-            aria-labelledby="modal-heading-01"
-            aria-modal="true"
-            aria-describedby="modal-content-id-1"
-            class="slds-modal slds-fade-in-open"
-        >
+        <div role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
             <div class="slds-modal__container">
                 <header class="slds-modal__header">
                     <lightning-button-icon
@@ -134,6 +21,7 @@
                             placeholder="Søk i hurtigtekst..."
                             type="search"
                             variant="label-hidden"
+                            tabindex="0"
                         >
                         </lightning-input>
                     </div>
@@ -175,7 +63,7 @@
                     </ul>
                 </div>
             </div>
-        </section>
+        </div>
         <div class="slds-backdrop slds-backdrop_open"></div>
     </div>
 
@@ -196,5 +84,3 @@
         </div>
     </div>
 </template>
-
--->
