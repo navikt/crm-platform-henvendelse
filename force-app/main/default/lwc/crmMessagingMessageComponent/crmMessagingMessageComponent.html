@@ -18,7 +18,12 @@
                 ></lightning-button>
             </template>
             <template for:each={threads} for:item="thread">
-                <c-crm-messaging-thread-Viewer key={thread.Id} thread={thread} show-close={showClose}>
+                <c-crm-messaging-thread-Viewer
+                    key={thread.Id}
+                    text-template={textTemplate}
+                    thread={thread}
+                    show-close={showClose}
+                >
                     <!--Ability to pass toolbar buttons thorugh slots to the toolbar-->
                     <div slot="toolbar">
                         <slot name="toolbar"></slot>
