@@ -43,3 +43,9 @@
     white-space: pre-wrap;
     word-break: break-word;
 }
+
+.message-from {
+    margin-right: 0.5em;
+    font-weight: bolder;
+    display: inline;
+}
