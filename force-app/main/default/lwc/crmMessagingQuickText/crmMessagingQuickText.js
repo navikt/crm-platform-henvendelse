@@ -1,34 +1,205 @@
 import { LightningElement, track, api, wire } from 'lwc';
 import searchRecords from '@salesforce/apex/CRM_HenvendelseQuicktextController.searchRecords';
 import getQuicktexts from '@salesforce/apex/CRM_HenvendelseQuicktextController.getQuicktexts';
-//LABEL IMPORTS
 import BLANK_ERROR from '@salesforce/label/c.CRMHenveldelse_Blank';
-export default class nksQuickText extends LightningElement {
-    labels = {
-        BLANK_ERROR
-    };
 
+const ESC_KEY_CODE = 27;
+const ESC_KEY_STRING = 'Escape';
+const TAB_KEY_CODE = 9;
+const TAB_KEY_STRING = 'Tab';
+const LIGHTNING_INPUT_FIELD = 'LIGHTNING-INPUT-FIELD';
+export default class nksQuickText extends LightningElement {
+
+    labels = {BLANK_ERROR};
     _conversationNote;
-    @api comments;
-    @track data = [];
     loadingData = false;
-    @api required = false;
     quicktexts;
     qmap;
-    get inputFormats() {
-        return [''];
-    }
     initialRender = true;
-
-    //Screen reader does not detect component as as input field until after the first focus
+    
+    @track data = [];
+   
+    @api required = false;
+    @api comments;
+    isOpen = false;
+    isFirstRender = true;
+    
     renderedCallback() {
         if (this.initialRender === true) {
             let inputField = this.template.querySelector('.conversationNoteTextArea');
             inputField.focus();
             inputField.blur();
             this.initialRender = false;
+        } 
+
+        this.focusGained = false;
+        if (this.isFirstRender) {
+            this.isFirstRender = false;
+            document.addEventListener('click', this.outsideClickListener);
+        } 
+    }
+
+    disconnectedCallback() {
+        document.removeEventListener('click', this.outsideClickListener);
+    }
+
+    outsideClickListener = (e) => {
+        e.stopPropagation();
+        if (!this.isOpen) {
+            return;
+        }
+        this.toggleModal();
+    };
+
+    @api
+    toggleModal() {
+        this.isOpen = !this.isOpen;
+        if (this.isOpen) {
+            this.focusFirstChild();
         }
     }
+
+    @api
+    get cssClass() {
+        const baseClasses = ['slds-modal'];
+        baseClasses.push([this.isOpen ? 'slds-visible slds-fade-in-open' : 'slds-hidden']);
+        return baseClasses.join(' ');
+    }
+
+    @api
+    get modalAriaHidden() {
+        return !this.isOpen;
+    }
+
+    @api 
+    checkIsOpen () {
+        return this.isOpen;
+    }
+
+    closeModal(event) {
+        event.stopPropagation();
+        this.toggleModal();
+    }
+
+    innerClickHandler(event) {
+        event.stopPropagation();
+    }
+
+    innerKeyUpHandler(event) {
+        if (event.keyCode === ESC_KEY_CODE || event.code === ESC_KEY_STRING) {
+            this.toggleModal();
+        } else if (event.keyCode === TAB_KEY_CODE || event.code === TAB_KEY_STRING) {
+            const el = this.template.activeElement;
+            let focusableElement;
+            if (event.shiftKey && el && el.classList.contains('firstlink')) {
+                focusableElement = this.modalSaveHandler
+                    ? this.template.querySelector('button.save')
+                    : this._getCloseButton();
+            } else if (el && el.classList.contains('lastLink')) {
+                focusableElement = this._getCloseButton();
+            }
+            if (focusableElement) {
+                focusableElement.focus();
+            }
+        }
+    }
+
+    _getCloseButton() {
+        let closeButton = this.template.querySelector('button[title="Close"]');
+        if (!closeButton) {
+            closeButton = this.template.querySelector('button');
+        }
+        return closeButton;
+    }
+
+    _getSlotName(element) {
+        let slotName = element.slot;
+        while (!slotName && element.parentElement) {
+            slotName = this._getSlotName(element.parentElement);
+        }
+        return slotName;
+    }
+
+    async focusFirstChild() {
+        const children = [...this.querySelectorAll('*')];
+        for (let child of children) {
+            let hasBeenFocused = false;
+            if (this._getSlotName(child) === 'body') {
+                continue;
+            }
+            await this.setFocus(child).then((res) => {
+                hasBeenFocused = res;
+            });
+            if (hasBeenFocused) {
+                return;
+            }
+        }
+        const closeButton = this._getCloseButton();
+        if (closeButton) {
+            closeButton.focus();
+        }
+    }
+
+    setFocus(el) {
+        return new Promise((resolve) => {
+            if (el.disabled || (el.tagName === LIGHTNING_INPUT_FIELD && el.required)) {
+                return resolve(false);
+            } else {
+                const promiseListener = () => resolve(true);
+                try {
+                    el.addEventListener('focus', promiseListener);
+                    el.focus && el.focus();
+                    el.removeEventListener('focus', promiseListener);
+
+                    setTimeout(() => resolve(false), 0);
+                } catch (ex) {
+                    return resolve(false);
+                }
+            }
+        });
+    }
+
+    handleKeyUp(evt) {
+        const queryTerm = evt.target.value;
+        if (evt.key.length > 1 && evt.key !== 'Enter' && evt.key !== 'Backspace') {
+            return;
+        }
+
+        if (evt.key === 'Enter' || (queryTerm.length > 2 && this.loadingData == false)) {
+            evt.stopPropagation();
+            this.loadingData = true;
+            searchRecords({
+                search: queryTerm
+            })
+                .then((result) => {
+                    this.numberOfRows = result.length;
+                    this.data = result;
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+                .finally(() => {
+                    this.loadingData = false;
+                });
+        }
+    }
+
+    @api 
+    showModal (event) {
+        this.isOpen = true;
+        //this.template.querySelector('lightning-input').focus();
+    }
+
+    hideModal (event) {
+        this.isOpen = false;
+    }
+
+
+
+
+/**
+ * Functions related to QuickText-component
+ */
 
     @wire(getQuicktexts, {})
     wiredQuicktexts(value) {
@@ -63,55 +234,6 @@ export default class nksQuickText extends LightningElement {
             'end'
         );
         evt.preventDefault();
-    }
-
-    modalOnEscape(evt) {
-        if (evt.key === 'Escape') {
-            this.hideModal(evt);
-            evt.preventDefault();
-            evt.stopImmediatePropagation();
-        }
-    }
-
-    handleKeyUp(evt) {
-        const queryTerm = evt.target.value;
-        if (evt.key.length > 1 && evt.key !== 'Enter' && evt.key !== 'Backspace') {
-            return;
-        }
-
-        if (evt.key === 'Enter' || (queryTerm.length > 2 && this.loadingData == false)) {
-            evt.stopPropagation();
-            this.loadingData = true;
-            searchRecords({
-                search: queryTerm
-            })
-                .then((result) => {
-                    this.numberOfRows = result.length;
-                    this.data = result;
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
-                .finally(() => {
-                    this.loadingData = false;
-                });
-        }
-    }
-
-    @api showModal(event) {
-        this.template.querySelector('[data-id="modal"]').className = 'modalShow';
-        this.template.querySelector('lightning-input').focus();
-    }
-
-    hideModal(event) {
-        this.template.querySelector('[data-id="modal"]').className = 'modalHide';
-    }
-    @api isopen() {
-        if (this.template.querySelector('[data-id="modal"]').className == 'modalShow') {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     insertText(event) {
@@ -191,11 +313,14 @@ export default class nksQuickText extends LightningElement {
             return { isValid: true };
         }
     }
+
     setheader() {}
+
     @api clear(event) {
         let inputField = this.template.querySelector('.conversationNoteTextArea');
         inputField.value = '';
     }
+
     handlePaste() {
         handleChange();
     }
