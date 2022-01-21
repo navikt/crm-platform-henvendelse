@@ -106,13 +106,13 @@ export default class messagingThreadViewer extends LightningElement {
     handlesubmit(event) {
         event.preventDefault();
         this.showspinner = true;
-        if (!this.template.querySelector('c-crm-messaging-quick-text').checkIsOpen()) {
+        if (!this.template.querySelector('c-crm-messaging-quick-text').isOpen()) {
             const textInput = event.detail.fields;
             // If messagefield is empty, stop the submit
             textInput.CRM_Thread__c = this.thread.Id;
             textInput.CRM_From_User__c = userId;
 
-            if (textInput.CRM_Message_Text__c == null || textInput.CRM_Message_Text__c == '') {
+            if (textInput.CRM_Message_Text__c == null || textInput.CRM_Message_Text__c === '') {
                 const event1 = new ShowToastEvent({
                     title: 'Message Body missing',
                     message: 'Make sure that you fill in the message text',
