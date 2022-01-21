@@ -38,7 +38,6 @@ export default class crmQuickText extends LightningElement {
     /**
      * Functions for handling modal focus
      */
-
     disconnectedCallback() {
         document.removeEventListener('click', this.outsideClickListener);
     }
@@ -55,14 +54,12 @@ export default class crmQuickText extends LightningElement {
         }
     }
 
-    @api
     get cssClass() {
         const baseClasses = ['slds-modal'];
         baseClasses.push([this.isOpen ? 'slds-visible slds-fade-in-open' : 'slds-hidden']);
         return baseClasses.join(' ');
     }
 
-    @api
     get modalAriaHidden() {
         return !this.isOpen;
     }
