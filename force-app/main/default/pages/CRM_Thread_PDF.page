@@ -35,7 +35,7 @@
                                     {!message.CRM_From_Contact__r.Name}
                                 </apex:outputPanel>
                                 <apex:outputPanel rendered="{!message.CRM_External_Message__c == false}">
-                                    NAV
+                                    NAV {!message.CRM_From_Ident__c}
                                 </apex:outputPanel>
                                 <apex:outputText value=" - {0, date, dd/MM/yyy ', ' HH:mm:ss}">
                                     <apex:param value="{!message.CRM_Sent_Datetime_Formula__c}" />
