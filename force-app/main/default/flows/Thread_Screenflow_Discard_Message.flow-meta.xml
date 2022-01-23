@@ -79,8 +79,8 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordCreates>
-        <name>Create_Redacted_Event</name>
-        <label>Create Redacted Event</label>
+        <name>Create_Info_Message_on_Discarding</name>
+        <label>Create Info Message on Discarding</label>
         <locationX>176</locationX>
         <locationY>518</locationY>
         <connector>
@@ -105,7 +105,7 @@
         <inputAssignments>
             <field>CRM_Type__c</field>
             <value>
-                <stringValue>Message</stringValue>
+                <stringValue>Info</stringValue>
             </value>
         </inputAssignments>
         <object>Message__c</object>
@@ -118,7 +118,7 @@
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Send_Inbox_Notification</targetReference>
+            <targetReference>Create_Innboks_User_Notification</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -289,7 +289,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Create_Redacted_Event</targetReference>
+            <targetReference>Create_Info_Message_on_Discarding</targetReference>
         </connector>
         <fields>
             <name>next</name>
@@ -311,23 +311,35 @@
     </start>
     <status>Active</status>
     <subflows>
-        <name>Send_Inbox_Notification</name>
-        <label>Send Inbox Notification</label>
+        <name>Create_Innboks_User_Notification</name>
+        <label>Create Innboks User Notification</label>
         <locationX>176</locationX>
         <locationY>278</locationY>
         <connector>
             <targetReference>Trigger_sync</targetReference>
         </connector>
-        <flowName>CRMHenvendelse_Thread_Subflow_CreateUserNotificationOnRedactedMessage</flowName>
+        <flowName>CRMHenvendelse_Thread_Subflow_CreateInnboksUserNotification</flowName>
         <inputAssignments>
-            <name>thread</name>
+            <name>MessageDateTime</name>
             <value>
-                <elementReference>Get_Thread</elementReference>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>NotificationMessageText</name>
+            <value>
+                <elementReference>$Label.CRMHenvendelse_NewMessageNotification</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>threadId</name>
+            <value>
+                <elementReference>Get_Thread.Id</elementReference>
             </value>
         </inputAssignments>
         <outputAssignments>
             <assignToReference>newUserNotification</assignToReference>
-            <name>newUserNotification</name>
+            <name>newInnboksNotification</name>
         </outputAssignments>
     </subflows>
     <textTemplates>

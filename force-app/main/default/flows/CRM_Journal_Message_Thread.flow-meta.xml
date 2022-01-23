@@ -473,7 +473,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>JOURNALED_THREAD.CRM_External_Actor_Account_ID__c</elementReference>
+                <elementReference>JOURNALED_THREAD.CRM_Account__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -501,7 +501,7 @@
         <object>Thread__c</object>
         <outputReference>JOURNALED_THREAD</outputReference>
         <queriedFields>Id</queriedFields>
-        <queriedFields>CRM_External_Actor_Account_ID__c</queriedFields>
+        <queriedFields>CRM_Account__c</queriedFields>
         <queriedFields>CRM_From_External__c</queriedFields>
         <queriedFields>CRM_Journal_Status__c</queriedFields>
         <queriedFields>CRM_Closed_Date__c</queriedFields>
