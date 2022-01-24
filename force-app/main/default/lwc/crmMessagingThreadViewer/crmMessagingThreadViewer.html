@@ -7,7 +7,7 @@
             size="x-small"
             title="Dialog"
         ></lightning-icon>
-        <p style="text-align:center">
+        <p style="text-align: center">
             &nbsp;Henvendelse startet&nbsp;<c-crm-nav-formatted-date date={createddate}></c-crm-nav-formatted-date>
         </p>
     </div>
@@ -34,10 +34,10 @@
                             <lightning-layout-item size="8">
                                 <lightning-layout horizontal-align="start">
                                     <lightning-button-icon
-                                            icon-name="utility:quick_text"
-                                            alternative-text="Hurtigtekst"
-                                            onclick={showQuickText}
-                                        >
+                                        icon-name="utility:quick_text"
+                                        alternative-text="Hurtigtekst"
+                                        onclick={showQuickText}
+                                    >
                                     </lightning-button-icon>
                                     <lightning-button-group ontoolbaraction={handleToolbarAction}>
                                         <slot name="toolbar"></slot>
@@ -68,34 +68,30 @@
                             <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
                         </div>
                     </template>
-                    <c-crm-messaging-quick-text
-                        oncommentschange={handleConversationNoteChange}
-                        conversation-note={conversationNote}
-                    >
-                    </c-crm-messaging-quick-text>
+                    <c-crm-messaging-quick-text conversation-note={textTemplate}> </c-crm-messaging-quick-text>
                 </lightning-layout-item>
                 <br />
-                    <lightning-layout-item size="12">
-                        <div
+                <lightning-layout-item size="12">
+                    <div
                         class="slds-rich-text-editor__toolbar slds-shrink-none"
                         style="display: block; border-radius: 0"
-                        >
-                            <lightning-layout>
-                                <lightning-layout-item size="12">
-                                    <lightning-button
-                                        type="submit"
-                                        name="submit"
-                                        label="Send"
-                                        disabled={closedThread}
-                                        variant="brand"
-                                        style="min-height: 1rem"
-                                        class="slds-float_right"
-                                    >
-                                    </lightning-button>
-                                </lightning-layout-item>
-                            </lightning-layout>
-                        </div>
-                    </lightning-layout-item>
+                    >
+                        <lightning-layout>
+                            <lightning-layout-item size="12">
+                                <lightning-button
+                                    type="submit"
+                                    name="submit"
+                                    label="Send"
+                                    disabled={closedThread}
+                                    variant="brand"
+                                    style="min-height: 1rem"
+                                    class="slds-float_right"
+                                >
+                                </lightning-button>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                </lightning-layout-item>
             </lightning-layout>
 
             <!--</div> -->

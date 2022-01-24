@@ -16,9 +16,7 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     @api showClose;
     setCardTitle;
 
-    handleToggleSection(event) {
-        this.activeSectionMessage = 'Open section name:  ' + event.detail.openSections;
-    }
+    @api textTemplate; //Support for conditional text template
 
     @wire(getThreads, { recordId: '$recordId', singleThread: '$singleThread' }) //Calls apex and extracts messages related to this record
     wiredThreads(result) {
