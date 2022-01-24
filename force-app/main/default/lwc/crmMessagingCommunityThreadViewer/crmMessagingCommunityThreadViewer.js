@@ -52,8 +52,6 @@ export default class CommityThreadViewer extends LightningElement {
         return getFieldValue(this.thread.data, THREADNAME_FIELD);
     }
 
-
-
     @wire(getmessages, { threadId: '$recordId' }) //Calls apex and extracts messages related to this record
     wiremessages(result) {
         this._mySendForSplitting = result;
@@ -65,7 +63,7 @@ export default class CommityThreadViewer extends LightningElement {
         }
     }
     get isclosed() {
-        return getFieldValue(this.thread.data, THREADCLOSED_FIELD); 
+        return getFieldValue(this.thread.data, THREADCLOSED_FIELD);
     }
     /**
      * Blanks out all text fields, and enables the submit-button again.
@@ -104,9 +102,10 @@ export default class CommityThreadViewer extends LightningElement {
         });
         console.log(this.userContactId);
         console.log(this.recordId);
-        createmsg({ threadId: this.recordId, messageText: this.textVal, fromContactId: this.userContactId })
-            .then((result) => {
+        createmsg({ threadId: this.recordId, messageText: this.textVal, fromContactId: this.userContactId }).then(
+            (result) => {
                 this.handlesuccess();
-            })
+            }
+        );
     }
 }

@@ -11,15 +11,14 @@
                     </div>
                 </div>
                 <div class="slds-chat-message__meta">
-                        <lightning-icon
-                            icon-name="utility:user"
-                            alternative-text="Sluttbruker"
-                            title="Sluttbruker"
-                            variant="error"
-                            size="x-small"
-                        ></lightning-icon>
-                        &nbsp;
-                    {message.CRM_From_First_Name__c} • &nbsp;
+                    <lightning-icon
+                        icon-name="utility:user"
+                        alternative-text="Sluttbruker"
+                        title="Sluttbruker"
+                        variant="error"
+                        size="x-small"
+                    ></lightning-icon>
+                    &nbsp; {message.CRM_From_First_Name__c} • &nbsp;
                     <c-crm-nav-formatted-date date={message.CreatedDate}></c-crm-nav-formatted-date>
                     &nbsp;
                 </div>

@@ -4,12 +4,16 @@
             <div class="slds-chat-message__body">
                 <template if:true={isOwner}>
                     <div class="slds-chat-message__text slds-chat-message__text_outbound">
-                        <lightning-formatted-rich-text value={message.CRM_Message_Text__c}></lightning-formatted-rich-text>
+                        <lightning-formatted-rich-text
+                            value={message.CRM_Message_Text__c}
+                        ></lightning-formatted-rich-text>
                     </div>
                 </template>
                 <template if:false={isOwner}>
                     <div class="slds-chat-message__text slds-chat-message__text_outbound-agent">
-                        <lightning-formatted-rich-text value={message.CRM_Message_Text__c}></lightning-formatted-rich-text>
+                        <lightning-formatted-rich-text
+                            value={message.CRM_Message_Text__c}
+                        ></lightning-formatted-rich-text>
                     </div>
                 </template>
                 <template if:false={isInfo}>
@@ -24,7 +28,6 @@
                         <c-crm-nav-formatted-date date={message.CreatedDate}></c-crm-nav-formatted-date>
                     </div>
                 </template>
-                
             </div>
         </div>
     </li>
