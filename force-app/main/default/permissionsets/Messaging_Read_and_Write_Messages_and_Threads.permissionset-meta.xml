@@ -38,7 +38,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Message__c.CRM_From_Ident__c</field>
+        <field>Message__c.CRM_From_Ident_Formula__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
