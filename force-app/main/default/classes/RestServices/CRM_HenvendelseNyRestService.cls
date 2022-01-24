@@ -110,7 +110,11 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
             insert newMessage;
             //Updates the thread assignee if tildelMeg is set to true. Not returned as thread metadata in the API so the update in async
             if (messageReq.tildelMeg == true)
-                updateThreadAssignee(newMessage.CRM_From_Ident__c, newMessage.CRM_Thread__c);
+                updateThreadAssignee(
+                    newMessage.CRM_From_Ident__c,
+                    newMessage.CRM_From_NAV_Unit__c,
+                    newMessage.CRM_Thread__c
+                );
             Thread__c updatedThread = new CRM_ThreadSelector().selectById(newMessage.CRM_Thread__c);
             setResponse(
                 200,
@@ -259,8 +263,8 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
     }
 
     @future
-    private static void updateThreadAssignee(String assignee, String threadId) {
-        update new Thread__c(Id = threadId, CRM_Assignee__c = assignee);
+    private static void updateThreadAssignee(String assignee, String assigneeUnit, String threadId) {
+        update new Thread__c(Id = threadId, CRM_Assignee__c = assignee, CRM_Assignee_NAV_Unit__c = assigneeUnit);
     }
 
     /**
