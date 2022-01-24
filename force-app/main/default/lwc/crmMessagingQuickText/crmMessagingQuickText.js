@@ -227,6 +227,10 @@ export default class crmQuickText extends LightningElement {
         );
         evt.preventDefault();
     }
+    
+    handlePaste() {
+        handleChange();
+    }
 
     handleKeyUp(evt) {
         const queryTerm = evt.target.value;
