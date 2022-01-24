@@ -38,7 +38,9 @@
                     class="slds-var-p-right_small"
                 ></lightning-icon>
                 <p>
-                    {journalMessage}&nbsp;<c-crm-nav-formatted-date date={message.CreatedDate}></c-crm-nav-formatted-date>
+                    {journalMessage}&nbsp;<c-crm-nav-formatted-date
+                        date={message.CreatedDate}
+                    ></c-crm-nav-formatted-date>
                 </p>
             </template>
             <template if:true={isOtherEvent}>

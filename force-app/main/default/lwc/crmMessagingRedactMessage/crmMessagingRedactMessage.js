@@ -17,7 +17,7 @@ export default class CrmMessagingRedactMessage extends LightningElement {
         return this.message.CRM_Type__c === 'Event' ? true : false;
     }
 
-    get isInfo () {
+    get isInfo() {
         return this.message.CRM_Type__c === 'Info' ? true : false;
     }
 
