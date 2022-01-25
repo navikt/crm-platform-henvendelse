@@ -18,6 +18,6 @@ public class CRM_ThreadRelationHandler_Test {
             FROM Thread__c
             WHERE ID = :thread.Id
         ];
-        System.assertEquals('Thread__c', thread.CRM_Related_Object_Type__c);
+        System.assertEquals('Thread__c', updatedThread.CRM_Related_Object_Type__c);
     }
 }
