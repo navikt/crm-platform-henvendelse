@@ -377,8 +377,8 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Thread__c.CRM_External_ActorId_Formula__c</field>
-      </fieldPermissions>
-      <fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <field>Thread__c.CRM_HenvendelseId__c</field>
         <readable>true</readable>
     </fieldPermissions>
