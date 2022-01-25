@@ -16,7 +16,10 @@
                             <div class="snakkeboble-panel__tekst" aria-label="Melding fra NAV ansatt">
                                 <h2 class="message-from inline-block">NAV</h2>
                                 <div class="datewrapper inline-block">
-                                    <c-crm-nav-formatted-date date={message.CreatedDate} class="timestamp inline-block"></c-crm-nav-formatted-date>
+                                    <c-crm-nav-formatted-date
+                                        date={message.CreatedDate}
+                                        class="timestamp inline-block"
+                                    ></c-crm-nav-formatted-date>
                                 </div>
                             </div>
                             <lightning-formatted-rich-text

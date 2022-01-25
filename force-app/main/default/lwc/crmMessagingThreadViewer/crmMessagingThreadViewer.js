@@ -104,7 +104,7 @@ export default class messagingThreadViewer extends LightningElement {
             textInput.CRM_Thread__c = this.thread.Id;
             textInput.CRM_From_User__c = userId;
 
-            if (textInput.CRM_Message_Text__c == null || textInput.CRM_Message_Text__c == '') {
+            if (textInput.CRM_Message_Text__c == null || textInput.CRM_Message_Text__c === '') {
                 const event1 = new ShowToastEvent({
                     title: 'Message Body missing',
                     message: 'Make sure that you fill in the message text',
