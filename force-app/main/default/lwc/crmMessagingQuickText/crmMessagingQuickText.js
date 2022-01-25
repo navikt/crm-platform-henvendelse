@@ -16,8 +16,6 @@ export default class crmQuickText extends LightningElement {
     quicktexts;
     qmap;
     initialRender = true;
-    bufferFocus = false;
-    numberOfRows = 0;
 
     @api comments;
     @api required = false;
@@ -34,10 +32,6 @@ export default class crmQuickText extends LightningElement {
             inputField.focus();
             inputField.blur();
             this.initialRender = false;
-        }
-
-        if (this.bufferFocus) {
-            this.focusModal();
         }
     }
 
@@ -232,6 +226,10 @@ export default class crmQuickText extends LightningElement {
             'end'
         );
         evt.preventDefault();
+    }
+    
+    handlePaste() {
+        handleChange();
     }
 
     handleKeyUp(evt) {
