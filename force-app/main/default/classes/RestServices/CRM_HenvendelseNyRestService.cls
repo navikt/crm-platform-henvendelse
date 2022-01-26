@@ -107,10 +107,20 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
             return; //Failed validation
 
         try {
+            //If tildelMeg is set to true the Assignee of the thread is set to the ident sending the message, else only the NAV unit is assigned
+            String threadAssignee = messageReq.tildelMeg == true ? newMessage.CRM_From_Ident__c : null;
+            if (String.isBlank(newMessage.CRM_Thread__c)) {
+                //New thread is returned in the CRM_Thread__r relation and needs to be inserted
+                Thread__c newThread = newMessage.CRM_Thread__r;
+                newThread.CRM_Assignee__c = threadAssignee;
+                newThread.CRM_Assignee_NAV_Unit__c = newMessage.CRM_From_NAV_Unit__c;
+                insert newThread;
+                newMessage.CRM_Thread__c = newThread.Id;
+            } else {
+                //Updates the thread assignee
+                updateThreadAssignee(threadAssignee, newMessage.CRM_From_NAV_Unit__c, newMessage.CRM_Thread__c);
+            }
             insert newMessage;
-            //Updates the thread assignee if tildelMeg is set to true. Not returned as thread metadata in the API so the update in async
-            if (messageReq.tildelMeg == true)
-                updateThreadAssignee(newMessage.CRM_From_Ident__c, newMessage.CRM_Thread__c);
             Thread__c updatedThread = new CRM_ThreadSelector().selectById(newMessage.CRM_Thread__c);
             setResponse(
                 200,
@@ -193,7 +203,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
 
     /**
      * @description: Validates an incoming request for insertion of a new message. If the request validates
-     * a valid Message__c record is returned, else null
+     * a valid Message__c record is returned, else null. If the message request creates a new thread, the new record is returned in the Message__c.CRM_Thread__r relation
      * @author Stian Ruud Schikora | 07-08-2021
      * @param req
      * @param apiRef [Unique reference defined in CRM_API_Reference__c]
@@ -227,7 +237,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
                 themeGroupId = validateThemeGroup(messageRequest.temagruppe);
                 themeId = validateTheme(messageRequest.tema);
 
-                Thread__c newThread = new Thread__c(
+                newMessage.CRM_Thread__r = new Thread__c(
                     Name = 'Skriv til bruker',
                     CRM_Account__c = accountId,
                     CRM_Created_By_Ident__c = actingNavIdent,
@@ -236,9 +246,6 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
                     CRM_Theme__c = themeId,
                     CRM_Thread_Type__c = 'STB'
                 );
-
-                insert newThread;
-                newMessage.CRM_Thread__c = newThread.Id;
             } catch (DmlException dmlEx) {
                 errorResponse(500, 'Unexpected error: ' + dmlEx.getMessage());
                 logger.error(
@@ -259,8 +266,8 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
     }
 
     @future
-    private static void updateThreadAssignee(String assignee, String threadId) {
-        update new Thread__c(Id = threadId, CRM_Assignee__c = assignee);
+    private static void updateThreadAssignee(String assignee, String assigneeUnit, String threadId) {
+        update new Thread__c(Id = threadId, CRM_Assignee__c = assignee, CRM_Assignee_NAV_Unit__c = assigneeUnit);
     }
 
     /**
