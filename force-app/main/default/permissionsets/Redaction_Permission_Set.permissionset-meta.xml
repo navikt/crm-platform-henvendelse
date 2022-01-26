@@ -117,11 +117,11 @@
         <field>Message__c.CRM_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
+    <!--  <fieldPermissions>
         <editable>true</editable>
         <field>Message__c.CRM_Thread__c</field>
         <readable>true</readable>
-    </fieldPermissions>
+    </fieldPermissions> -->
     <fieldPermissions>
         <editable>false</editable>
         <field>Thread__c.CRM_API_Reference__c</field>
