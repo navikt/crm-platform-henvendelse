@@ -15,14 +15,14 @@
             <name>Activated_Through_API</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.LastModifiedBy.CRM_NAV_Ident__c</leftValueReference>
+                <leftValueReference>$User.CRM_NAV_Ident__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue/>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.LastModifiedBy.CRM_NAV_Ident__c</leftValueReference>
+                <leftValueReference>$User.CRM_NAV_Ident__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -82,7 +82,7 @@
         <inputAssignments>
             <field>STO_Sensitive_Information_Activated_By__c</field>
             <value>
-                <elementReference>$Record.LastModifiedBy.CRM_NAV_Ident__c</elementReference>
+                <elementReference>$User.CRM_NAV_Ident__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -94,7 +94,7 @@
         <inputAssignments>
             <field>STO_Sensitive_Information_Unit__c</field>
             <value>
-                <elementReference>$Record.LastModifiedBy.Department</elementReference>
+                <elementReference>$User.Department</elementReference>
             </value>
         </inputAssignments>
         <inputReference>$Record</inputReference>
