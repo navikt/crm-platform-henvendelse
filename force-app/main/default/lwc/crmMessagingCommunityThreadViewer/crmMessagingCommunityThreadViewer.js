@@ -8,10 +8,9 @@ import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import createmsg from '@salesforce/apex/CRM_MessageHelper.createMessage';
 
 import THREADNAME_FIELD from '@salesforce/schema/Thread__c.STO_ExternalName__c';
-import THREADCLOSEDDATE_FIELD from '@salesforce/schema/Thread__c.CRM_Closed_Date__c';
 import THREADCLOSED_FIELD from '@salesforce/schema/Thread__c.CRM_Is_Closed__c';
 
-const fields = [THREADNAME_FIELD, THREADCLOSEDDATE_FIELD, THREADCLOSED_FIELD]; //Extract the name of the thread record
+const fields = [THREADNAME_FIELD, THREADCLOSED_FIELD]; //Extract the name of the thread record
 
 export default class CommityThreadViewer extends LightningElement {
     _mySendForSplitting;
