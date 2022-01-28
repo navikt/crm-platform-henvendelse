@@ -82,7 +82,7 @@
         <locationY>518</locationY>
         <inputReference>Get_Conversation_Note</inputReference>
     </recordUpdates>
-    <runInMode>DefaultMode</runInMode>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>Set_Conversation_Note_to_redaction</name>
         <label>Set Conversation Note to Redaction</label>
@@ -130,6 +130,9 @@
             <name>Cause</name>
             <choiceReferences>ConversationNote_Cause</choiceReferences>
             <dataType>String</dataType>
+            <defaultValue>
+                <stringValue>Sendt feil bruker</stringValue>
+            </defaultValue>
             <fieldText>Årsak</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
