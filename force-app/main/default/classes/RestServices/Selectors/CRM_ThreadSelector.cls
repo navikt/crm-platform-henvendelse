@@ -42,9 +42,7 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
         //Adds the Journal entry selector query as a relationship query to the Thread query
         new CRM_JournalEntrySelector().addQueryFactorySubselect(query, 'Journal_Entries__r');
         //Adds the Journal entry selector query as a relationship query to the Thread query
-        query.subselectQuery('Messages__r')
-            .selectFields(new CRM_MessageSelector().getSObjectFieldList())
-            .setCondition('CRM_Type__c = \'Message\'');
+        addMessageSubquery(query);
         return (Thread__c) Database.query(query.toSOQL());
     }
 
@@ -54,9 +52,7 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
         //Adds the Journal entry selector query as a relationship query to the Thread query
         new CRM_JournalEntrySelector().addQueryFactorySubselect(query, 'Journal_Entries__r');
         //Adds the Journal entry selector query as a relationship query to the Thread query
-        query.subselectQuery('Messages__r')
-            .selectFields(new CRM_MessageSelector().getSObjectFieldList())
-            .setCondition('CRM_Type__c = \'Message\'');
+        addMessageSubquery(query);
         return (Thread__c) Database.query(query.toSOQL());
     }
 
@@ -74,9 +70,19 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
         //Adds the Journal entry selector query as a relationship query to the Thread query
         new CRM_JournalEntrySelector().addQueryFactorySubselect(query, 'Journal_Entries__r');
         //Adds the Journal entry selector query as a relationship query to the Thread query
-        query.subselectQuery('Messages__r')
-            .selectFields(new CRM_MessageSelector().getSObjectFieldList())
-            .setCondition('CRM_Type__c = \'Message\'');
+        addMessageSubquery(query);
         return (List<Thread__c>) Database.query(query.toSOQL());
+    }
+
+    /**
+     * @description: Adds a filtered subselect for messages related to the thread
+     * @author Stian Ruud Schikora | 01-31-2022
+     * @param query
+     **/
+    private void addMessageSubquery(fflib_QueryFactory query) {
+        CRM_MessageSelector msgSelector = new CRM_MessageSelector();
+        query.subselectQuery('Messages__r')
+            .selectFields(msgSelector.getSObjectFieldList())
+            .setCondition(msgSelector.getApiConditions());
     }
 }

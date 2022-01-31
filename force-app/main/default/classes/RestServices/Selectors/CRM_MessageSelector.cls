@@ -3,6 +3,15 @@ public inherited sharing class CRM_MessageSelector extends CRM_ApiSelector {
         super(false);
     }
 
+    /**
+     * @description: Returns the default conditions for message to be returnned in the API
+     * @author Stian Ruud Schikora | 01-31-2022
+     * @return String
+     **/
+    public String getApiConditions() {
+        return 'CRM_Type__c IN (\'Message\',\'Info\')';
+    }
+
     public List<Schema.SObjectField> getSObjectFieldList() {
         return new List<Schema.SObjectField>{
             Message__c.CRM_Type__c,
@@ -25,7 +34,7 @@ public inherited sharing class CRM_MessageSelector extends CRM_ApiSelector {
 
     public List<Message__c> selectById(Set<Id> idSet) {
         fflib_QueryFactory query = newQueryFactory();
-        query.setCondition('Id in :idSet AND CRM_Type__c = \'Message\'');
+        query.setCondition('Id in :idSet AND ' + getApiConditions());
         return (List<Message__c>) Database.query(query.toSOQL());
     }
 }
