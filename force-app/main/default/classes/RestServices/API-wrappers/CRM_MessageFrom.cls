@@ -1,8 +1,7 @@
 global class CRM_MessageFrom {
     global enum IDENT_TYPES {
         NAVIDENT,
-        AKTORID,
-        FNR
+        AKTORID
     }
 
     global String identType;
