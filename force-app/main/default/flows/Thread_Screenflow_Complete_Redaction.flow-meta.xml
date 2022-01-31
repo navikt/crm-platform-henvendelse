@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Close_tab</name>
         <label>Close tab</label>
-        <locationX>578</locationX>
-        <locationY>878</locationY>
+        <locationX>314</locationX>
+        <locationY>1094</locationY>
         <actionName>c:fcTabCloser</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -12,7 +12,7 @@
     <actionCalls>
         <name>Log_exception</name>
         <label>Log exception</label>
-        <locationX>842</locationX>
+        <locationX>754</locationX>
         <locationY>878</locationY>
         <actionName>LoggerUtility</actionName>
         <actionType>apex</actionType>
@@ -177,7 +177,7 @@
     <recordRollbacks>
         <name>Rollback</name>
         <label>Rollback</label>
-        <locationX>842</locationX>
+        <locationX>754</locationX>
         <locationY>758</locationY>
         <connector>
             <targetReference>Log_exception</targetReference>
@@ -205,7 +205,7 @@
         <inputAssignments>
             <field>Cause__c</field>
             <value>
-                <stringValue/>
+                <stringValue />
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -220,7 +220,7 @@
     <screens>
         <name>Exception_Screen</name>
         <label>Exception Screen</label>
-        <locationX>842</locationX>
+        <locationX>754</locationX>
         <locationY>998</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -242,6 +242,9 @@
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Close_tab</targetReference>
+        </connector>
         <fields>
             <name>userNotificationError</name>
             <fieldText>&lt;p&gt;Tråden er sladdet, men &lt;b&gt;klarte ikke&lt;/b&gt; å lage en brukernotifikasjon for å varsle bruker.&lt;/p&gt;</fieldText>
@@ -259,6 +262,9 @@
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Close_tab</targetReference>
+        </connector>
         <fields>
             <name>partialSuccessMessage</name>
             <fieldText>&lt;p&gt;Tråden er sladdet, men bruker har &lt;b&gt;ikke&lt;/b&gt; fått notifikasjon på grunn av en feil.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Feilmelding:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!newUserNotification.CRM_NotificationError__c}&lt;/span&gt;&lt;/p&gt;</fieldText>

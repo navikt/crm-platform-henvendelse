@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Close_Tab</name>
         <label>Close Tab</label>
-        <locationX>352</locationX>
-        <locationY>998</locationY>
+        <locationX>176</locationX>
+        <locationY>1214</locationY>
         <actionName>c:fcTabCloser</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -30,6 +30,7 @@
                 </rightValue>
             </conditions>
             <connector>
+                <isGoTo>true</isGoTo>
                 <targetReference>Something_is_not_OK</targetReference>
             </connector>
             <label>User notification not created</label>
@@ -181,7 +182,7 @@
         <inputAssignments>
             <field>CRM_Message_Text__c</field>
             <value>
-                <stringValue/>
+                <stringValue />
             </value>
         </inputAssignments>
         <object>Message__c</object>
@@ -214,7 +215,7 @@
         <inputAssignments>
             <field>Cause__c</field>
             <value>
-                <stringValue/>
+                <stringValue />
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -247,10 +248,13 @@
         <name>Something_is_not_OK</name>
         <label>Something is not OK</label>
         <locationX>176</locationX>
-        <locationY>1334</locationY>
+        <locationY>998</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Close_Tab</targetReference>
+        </connector>
         <fields>
             <name>somethingWnetWrongText</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;Noe har gått galt under kassering, se meldingene under.&lt;/b&gt;&lt;/p&gt;</fieldText>
