@@ -3,15 +3,21 @@
     <label>Årsak</label>
     <name>Cause__c</name>
     <picklistValues>
-        <masterLabel>annen årsak</masterLabel>
-        <translation><!-- annen årsak --></translation>
+        <masterLabel>Annen årsak</masterLabel>
+        <translation>
+            <!-- Annen årsak -->
+        </translation>
     </picklistValues>
     <picklistValues>
-        <masterLabel>sendt feil bruker</masterLabel>
-        <translation><!-- sendt feil bruker --></translation>
+        <masterLabel>Sendt feil bruker</masterLabel>
+        <translation>
+            <!-- Sendt feil bruker -->
+        </translation>
     </picklistValues>
     <picklistValues>
         <masterLabel>Økonomisk sosialhjelp</masterLabel>
-        <translation><!-- Økonomisk sosialhjelp --></translation>
+        <translation>
+            <!-- Økonomisk sosialhjelp -->
+        </translation>
     </picklistValues>
 </CustomFieldTranslation>
