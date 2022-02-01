@@ -27,6 +27,11 @@
                 <label>STB</label>
             </value>
             <value>
+                <fullName>CHAT</fullName>
+                <default>false</default>
+                <label>CHAT</label>
+            </value>
+            <value>
                 <fullName>AAREG_EXP</fullName>
                 <default>false</default>
                 <label>AAREG_EXP</label>
