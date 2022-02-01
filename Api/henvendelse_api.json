@@ -564,8 +564,8 @@
                 "properties": {
                     "identType": {
                         "type": "string",
-                        "enum": ["NAVIDENT", "AKTORID"],
-                        "description": "Type ident for relatert avsender",
+                        "enum": ["NAVIDENT", "AKTORID", "SYSTEM"],
+                        "description": "Type ident for relatert avsender, avsendertype SYSTEM har hverken ident eller navEnhet",
                         "example": "NAVIDENT"
                     },
                     "ident": {
@@ -578,8 +578,7 @@
                         "description": "NAV enhet til avsender hvis identType = NAVIDENT",
                         "example": "4100"
                     }
-                },
-                "required": ["identType", "ident"]
+                }
             },
             "Melding": {
                 "type": "object",
