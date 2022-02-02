@@ -267,7 +267,11 @@ public class CRM_HENV_TestDataFactory {
             return getFieldDefaults(false);
         }
         public Map<String, Object> getFieldDefaults(Boolean bulkify) {
-            return new Map<String, Object>{ 'FirstName' => 'Test', 'LastName' => 'Testesen' };
+            return new Map<String, Object>{
+                'FirstName' => 'Test',
+                'LastName' => 'Testesen',
+                'TAG_Informed__c' => true
+            };
         }
         public Map<String, String> getDmlFields() {
             return new Map<String, String>{};
