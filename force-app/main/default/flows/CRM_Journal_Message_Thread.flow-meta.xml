@@ -47,6 +47,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>navIdent</name>
+            <value>
+                <elementReference>Journal_Entry_SF.CRM_Created_By_Ident__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>referenceId</name>
             <value>
                 <elementReference>Journal_Entry_SF.CRM_Thread__c</elementReference>
