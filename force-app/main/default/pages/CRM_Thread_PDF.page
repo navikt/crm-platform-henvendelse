@@ -1,4 +1,10 @@
-<apex:page standardController="Thread__c" applyBodyTag="false" standardStylesheets="false" renderAs="PDF">
+<apex:page
+    standardController="Thread__c"
+    extensions="CRM_ThreadPdfController"
+    applyBodyTag="false"
+    standardStylesheets="false"
+    renderAs="PDF"
+>
     <apex:stylesheet value="{!$Resource.Journal_PDF_Style}" />
 
     <div class="document">
@@ -13,8 +19,8 @@
         <div class="content">
             <h2>Journalført henvendelse</h2>
 
-            <span> <b>Navn: </b>{!thread__c.CRM_Account__r.Name} <br /> </span>
-            <span> <b>Fødselsnummer: </b>{!thread__c.CRM_Account__r.INT_PersonIdent__c} <br /> </span>
+            <span> <strong>Navn: </strong>{!thread__c.CRM_Account__r.Name} <br /> </span>
+            <span> <strong>Fødselsnummer: </strong>{!thread__c.CRM_Account__r.INT_PersonIdent__c} <br /> </span>
             <span>
                 <b>Mottatt/Sendt: </b>
                 <apex:outputText value=" {0, date, dd/MM/yyy - HH:mm}">
@@ -27,8 +33,8 @@
 
             <span style="font-weight: 400; font-size: 16pt">Innhold:</span>
             <div style="margin-top: 0.25em">
-                <apex:repeat value="{!Thread__c.Messages__r}" var="message">
-                    <apex:outputPanel rendered="{!message.CRM_Type__c == 'Message'}">
+                <apex:repeat value="{!threadMessages}" var="message">
+                    <apex:outputPanel rendered="{!message.CRM_Type__c == 'Message' || message.CRM_Type__c == 'Info'}">
                         <div style="padding-bottom: 0.75em">
                             <b>
                                 <apex:outputPanel rendered="{!message.CRM_External_Message__c == true}">
@@ -38,7 +44,7 @@
                                     NAV {!message.CRM_From_Ident_Formula__c}
                                 </apex:outputPanel>
                                 <apex:outputText value=" - {0, date, dd/MM/yyy ', ' HH:mm:ss}">
-                                    <apex:param value="{!message.CRM_Sent_Datetime_Formula__c}" />
+                                    <apex:param value="{!message.CRM_Sent_date__c}" />
                                 </apex:outputText>
                             </b>
                             <p style="margin-top: 0.5em">{!message.CRM_Message_Text__c}</p>
