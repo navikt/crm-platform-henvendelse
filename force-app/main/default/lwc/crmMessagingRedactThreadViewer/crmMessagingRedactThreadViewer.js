@@ -4,7 +4,7 @@ import { refreshApex } from '@salesforce/apex';
 import { subscribe, unsubscribe } from 'lightning/empApi';
 import ACTIVE_FIELD from '@salesforce/schema/Thread__c.CRM_isActive__c';
 import CREATED_BY_FIELD from '@salesforce/schema/Thread__c.CreatedById';
-import CREATED_DATE from '@salesforce/schema/Thread__c.CreatedDate';
+import REGISTERED_DATE from '@salesforce/schema/Thread__c.CRM_Date_Time_Registered__c';
 import FIRSTNAME_FIELD from '@salesforce/schema/Thread__c.CreatedBy.FirstName';
 import LASTNAME_FIELD from '@salesforce/schema/Thread__c.CreatedBy.LastName';
 
@@ -31,7 +31,7 @@ export default class CrmMessagingRedactThreadViewer extends LightningElement {
 
     @wire(getRecord, {
         recordId: '$recordId',
-        fields: [ACTIVE_FIELD, CREATED_BY_FIELD, FIRSTNAME_FIELD, LASTNAME_FIELD, CREATED_DATE]
+        fields: [ACTIVE_FIELD, CREATED_BY_FIELD, FIRSTNAME_FIELD, LASTNAME_FIELD, REGISTERED_DATE]
     })
     wiredThread;
 
@@ -41,8 +41,8 @@ export default class CrmMessagingRedactThreadViewer extends LightningElement {
     get lastname() {
         return getFieldValue(this.wiredThread.data, LASTNAME_FIELD);
     }
-    get createddate() {
-        return getFieldValue(this.wiredThread.data, CREATED_DATE);
+    get registereddate() {
+        return getFieldValue(this.wiredThread.data, REGISTERED_DATE);
     }
 
     refreshMessages() {
