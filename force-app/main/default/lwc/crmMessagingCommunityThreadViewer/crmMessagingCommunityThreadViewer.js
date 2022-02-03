@@ -6,6 +6,7 @@ import getContactId from '@salesforce/apex/CRM_MessageHelper.getUserContactId';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import createmsg from '@salesforce/apex/CRM_MessageHelper.createMessage';
+import getThreadId from '@salesforce/apex/CRM_MessageHelper.getThreadId';
 
 import THREADNAME_FIELD from '@salesforce/schema/Thread__c.STO_ExternalName__c';
 import THREADCLOSED_FIELD from '@salesforce/schema/Thread__c.CRM_Is_Closed__c';
@@ -19,11 +20,11 @@ export default class CommityThreadViewer extends LightningElement {
     @api recordId;
     @track msgVal;
     userContactId;
-    thread;
     @api alerttext;
     @api header;
     @api secondheader;
     @api alertopen;
+    threadId;
 
     connectedCallback() {
         markasread({ threadId: this.recordId });
@@ -36,10 +37,19 @@ export default class CommityThreadViewer extends LightningElement {
             });
     }
 
-    @wire(getRecord, { recordId: '$recordId', fields })
-    wirethread(result) {
-        this.thread = result;
+    @wire(getThreadId, { recordId: '$recordId' })
+    wirerelatedthread(result) {
+        if (result.error) {
+            console.log(result.error);
+        }
+        if (result.data) {
+            this.threadId = result.data;
+        }
     }
+
+    @wire(getRecord, { recordId: '$threadId', fields })
+    thread;
+
     get showopenwarning() {
         if (this.alertopen) {
             return true;

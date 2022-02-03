@@ -100,22 +100,11 @@ public with sharing class CRM_MessageHelper {
     public static List<Message__c> getMessagesFromThread(Id threadId) {
         try {
             List<Message__c> msgList = new List<Message__c>();
-            for (Message__c m : [
-                SELECT
-                    Id,
-                    CRM_Message_Text__c,
-                    CRM_Type__c,
-                    CRM_Event_Type__c,
-                    CRM_Sent_date__c,
-                    CRM_From_User__c,
-                    CRM_From_Contact__c,
-                    CRM_From_First_Name__c,
-                    CRM_External_Message__c,
-                    CRM_From_Label__c
-                FROM Message__c
-                WHERE CRM_Thread__c = :threadId
-                ORDER BY CRM_Sent_date__c ASC
-            ]) {
+            String query =
+                'SELECT Id, CRM_Message_Text__c, CRM_Type__c, CRM_Event_Type__c, crm_sent_date__c, CRM_From_User__c, CRM_From_Contact__c, CRM_From_First_Name__c, CRM_External_Message__c, CRM_From_Label__c FROM Message__c WHERE ' +
+                getThreadQuery(threadId) +
+                ' ORDER BY CRM_Sent_date__c ASC';
+            for (Message__c m : Database.query(query)) {
                 if (m.CRM_Message_Text__c != null) {
                     msgList.add(m);
                 }
@@ -141,12 +130,20 @@ public with sharing class CRM_MessageHelper {
      */
     @AuraEnabled
     public static void markAsRead(Id threadId) {
-        List<Message__c> msgList = [SELECT Id FROM Message__c WHERE CRM_Read__c = FALSE AND CRM_Thread__c = :threadId];
+        String query = 'SELECT Id FROM Message__c WHERE CRM_Read__c = FALSE AND ' + getThreadQuery(threadId);
+        List<Message__c> msgList = Database.query(query);
         for (Message__c msg : msgList) {
             msg.CRM_Read__c = true;
             msg.CRM_Read_Datetime__c = DateTime.now();
         }
         update msgList;
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static Id getThreadId(Id recordId) {
+        return (recordId.getSobjectType() == Thread__c.sObjectType
+            ? recordId
+            : [SELECT Id FROM Thread__c WHERE CRM_Related_Object__c = :recordId LIMIT 1].Id);
     }
 
     /**
@@ -166,6 +163,14 @@ public with sharing class CRM_MessageHelper {
             return true;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    private static String getThreadQuery(Id threadId) {
+        if (threadId.getSobjectType() == Thread__c.sObjectType) {
+            return 'CRM_Thread__c = :threadId';
+        } else {
+            return 'CRM_Thread__r.CRM_Related_Object__c = :threadId';
         }
     }
 }
