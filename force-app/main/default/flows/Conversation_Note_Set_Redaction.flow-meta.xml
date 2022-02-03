@@ -28,8 +28,8 @@
     <dynamicChoiceSets>
         <name>ConversationNote_Cause</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
+        <displayField xsi:nil="true" />
+        <object xsi:nil="true" />
         <picklistField>Cause__c</picklistField>
         <picklistObject>Conversation_Note__c</picklistObject>
     </dynamicChoiceSets>

@@ -17,13 +17,17 @@ global class CRM_Melding extends CRM_HenvendelseApiUtils {
         this.sendtDato = formatDateTime(message.CRM_Sent_Date__c);
         this.lestDato = formatDateTime(message.CRM_Read_Datetime__c);
         this.kanal = Communication_Channel.DIGITAL.name();
-
         this.fra = new CRM_MessageFrom();
-        this.fra.identType = message.CRM_External_Message__c == true
-            ? CRM_MessageFrom.IDENT_TYPES.AKTORID.name()
-            : CRM_MessageFrom.IDENT_TYPES.NAVIDENT.name();
-        this.fra.ident = message.CRM_From_Ident_Formula__c;
-        this.fra.navEnhet = message.CRM_From_NAV_Unit__c;
+
+        if (message.CRM_Type__c == 'Info') {
+            this.fra.identType = 'SYSTEM';
+        } else {
+            this.fra.identType = message.CRM_External_Message__c == true
+                ? CRM_MessageFrom.IDENT_TYPES.AKTORID.name()
+                : CRM_MessageFrom.IDENT_TYPES.NAVIDENT.name();
+            this.fra.ident = message.CRM_From_Ident_Formula__c;
+            this.fra.navEnhet = message.CRM_From_NAV_Unit__c;
+        }
     }
 
     global CRM_Melding(Conversation_Note__c convNote) {

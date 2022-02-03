@@ -182,7 +182,7 @@
         <inputAssignments>
             <field>CRM_Message_Text__c</field>
             <value>
-                <stringValue/>
+                <stringValue />
             </value>
         </inputAssignments>
         <object>Message__c</object>
@@ -215,7 +215,7 @@
         <inputAssignments>
             <field>Cause__c</field>
             <value>
-                <stringValue/>
+                <stringValue />
             </value>
         </inputAssignments>
         <inputAssignments>
