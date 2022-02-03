@@ -11,6 +11,19 @@
             "CRM_Theme_Group__c": "@ArbeidRef",
             "CRM_Theme__c": "@DAGRef",
             "CRM_Account__c": "@AccountRef1"
+        },
+        {
+            "attributes": {
+                "type": "Thread__c",
+                "referenceId": "ThreadRef2"
+            },
+            "CRM_isActive__c": false,
+            "Name": "Chat - Arbeid",
+            "CRM_Thread_Type__c": "CHAT",
+            "CRM_Theme_Group__c": "@ArbeidRef",
+            "CRM_Theme__c": "@DAGRef",
+            "CRM_Account__c": "@AccountRef2",
+            "CRM_Related_Object__c": "@ChatTranscriptRef1"
         }
     ]
 }
