@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Create_new_Innboks_Notification</name>
         <label>Create new Innboks Notification</label>
-        <locationX>308</locationX>
+        <locationX>314</locationX>
         <locationY>638</locationY>
         <actionName>UN_InnboksProducerLegacy</actionName>
         <actionType>apex</actionType>
@@ -85,7 +85,7 @@
     <actionCalls>
         <name>Log_error_from_subflow</name>
         <label>Log error from subflow</label>
-        <locationX>572</locationX>
+        <locationX>578</locationX>
         <locationY>758</locationY>
         <actionName>LoggerUtility</actionName>
         <actionType>apex</actionType>
@@ -94,6 +94,18 @@
             <typeValue>Thread__c</typeValue>
         </dataTypeMappings>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>category</name>
+            <value>
+                <stringValue>Henvendelse</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>domain</name>
+            <value>
+                <stringValue>NKS</stringValue>
+            </value>
+        </inputParameters>
         <inputParameters>
             <name>logLevel</name>
             <value>
@@ -120,10 +132,23 @@
         </inputParameters>
     </actionCalls>
     <apiVersion>53.0</apiVersion>
+    <assignments>
+        <name>Assign_existing_user_notification_to_return_parameter</name>
+        <label>Assign existing user notification to return parameter</label>
+        <locationX>50</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>newInnboksNotification</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>User_Notification</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
     <decisions>
         <name>Has_Open_User_Notification</name>
         <label>Has Open User Notification</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Get_Person</targetReference>
@@ -139,6 +164,9 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Assign_existing_user_notification_to_return_parameter</targetReference>
+            </connector>
             <label>Yes</label>
         </rules>
     </decisions>
@@ -171,7 +199,7 @@
     <recordLookups>
         <name>Get_Person</name>
         <label>Get Person</label>
-        <locationX>308</locationX>
+        <locationX>314</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -192,7 +220,7 @@
     <recordLookups>
         <name>Thread</name>
         <label>Thread</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -213,7 +241,7 @@
     <recordLookups>
         <name>User_Notification</name>
         <label>User Notification</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -253,7 +281,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Thread</targetReference>
