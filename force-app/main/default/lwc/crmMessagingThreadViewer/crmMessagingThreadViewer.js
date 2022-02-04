@@ -8,7 +8,7 @@ import { updateRecord, getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import ACTIVE_FIELD from '@salesforce/schema/Thread__c.CRM_isActive__c';
 import THREAD_ID_FIELD from '@salesforce/schema/Thread__c.Id';
 import CREATED_BY_FIELD from '@salesforce/schema/Thread__c.CreatedById';
-import CREATED_DATE from '@salesforce/schema/Thread__c.CreatedDate';
+import REGISTERED_DATE from '@salesforce/schema/Thread__c.CRM_Date_Time_Registered__c';
 import FIRSTNAME_FIELD from '@salesforce/schema/Thread__c.CreatedBy.FirstName';
 import LASTNAME_FIELD from '@salesforce/schema/Thread__c.CreatedBy.LastName';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -80,7 +80,7 @@ export default class messagingThreadViewer extends LightningElement {
 
     @wire(getRecord, {
         recordId: '$threadid',
-        fields: [ACTIVE_FIELD, CREATED_BY_FIELD, FIRSTNAME_FIELD, LASTNAME_FIELD, CREATED_DATE]
+        fields: [ACTIVE_FIELD, CREATED_BY_FIELD, FIRSTNAME_FIELD, LASTNAME_FIELD, REGISTERED_DATE]
     })
     wiredThread;
 
@@ -175,8 +175,8 @@ export default class messagingThreadViewer extends LightningElement {
     //#########    GETTERS    ##########//
     //##################################//
 
-    get createddate() {
-        return getFieldValue(this.wiredThread.data, CREATED_DATE);
+    get registereddate() {
+        return getFieldValue(this.wiredThread.data, REGISTERED_DATE);
     }
 
     get journalEntries() {
