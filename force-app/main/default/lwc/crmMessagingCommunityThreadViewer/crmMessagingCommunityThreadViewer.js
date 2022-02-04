@@ -24,6 +24,8 @@ export default class CommityThreadViewer extends LightningElement {
     @api header;
     @api secondheader;
     @api alertopen;
+    @api hidealert;
+    @api alwaysclosed;
     threadId;
 
     connectedCallback() {
@@ -51,10 +53,7 @@ export default class CommityThreadViewer extends LightningElement {
     thread;
 
     get showopenwarning() {
-        if (this.alertopen) {
-            return true;
-        }
-        return false;
+        return this.alertopen != null && !this.hidealert;
     }
 
     get name() {
@@ -72,7 +71,7 @@ export default class CommityThreadViewer extends LightningElement {
         }
     }
     get isclosed() {
-        return getFieldValue(this.thread.data, THREADCLOSED_FIELD);
+        return this.alwaysclosed || getFieldValue(this.thread.data, THREADCLOSED_FIELD);
     }
     /**
      * Blanks out all text fields, and enables the submit-button again.

@@ -2,6 +2,7 @@
     <div class="decorator-wrapper">
         <div class="header" style="text-align: center">
             <h1 class="typo-sidetittel">{name}</h1>
+            <p>Dette hadde vært en liten <a href="#">link</a></p>
         </div>
         <div class="contentholder">
             <template for:each={messages} for:item="message">
@@ -72,12 +73,14 @@
             </template>
         </div>
         <template if:true={isclosed}>
-            <div class="infocontainer slds-var-p-top_medium slds-var-p-horizontal_medium largePadding" >
-                <c-crm-community-alert-stripe
-                    class="alertbox"
-                    type="info"
-                    alerttext={alerttext}
-                ></c-crm-community-alert-stripe>
+            <div class="infocontainer slds-var-p-top_medium slds-var-p-horizontal_medium largePadding">
+                <template if:false={hidealert}>
+                    <c-crm-community-alert-stripe
+                        class="alertbox"
+                        type="info"
+                        alerttext={alerttext}
+                    ></c-crm-community-alert-stripe>
+                </template>
             </div>
         </template>
     </div>
