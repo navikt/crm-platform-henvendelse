@@ -25,6 +25,8 @@ export default class CommityThreadViewer extends LightningElement {
     @api secondheader;
     @api alertopen;
     threadId;
+    showTextboxEmptyWarning = false;
+    showTextboxFullWarning = false;
 
     connectedCallback() {
         markasread({ threadId: this.recordId });
@@ -85,36 +87,71 @@ export default class CommityThreadViewer extends LightningElement {
                 field.reset();
             });
         }
-        const i2 = this.template.querySelectorAll('lightning-textarea');
-        if (i2) {
-            i2.forEach((field) => {
-                field.value = '';
-            });
-        }
+        const textBoks = this.template.querySelector('c-community-textarea');
+        textBoks.clearText();
         this.buttonisdisabled = false;
         return refreshApex(this._mySendForSplitting);
-    }
-    //catches changes in the text
-    synchtext(event) {
-        this.msgVal = event.target.value;
     }
 
     /**
      * Creates a message through apex
      */
     createMessage() {
+        if (!this.valid()) {
+            return;
+        }
         this.buttonisdisabled = true;
-        const i2 = this.template.querySelectorAll('lightning-textarea');
-        var textVal;
-        i2.forEach((field) => {
-            this.textVal = field.value;
-        });
-        console.log(this.userContactId);
-        console.log(this.recordId);
-        createmsg({ threadId: this.recordId, messageText: this.textVal, fromContactId: this.userContactId }).then(
-            (result) => {
+        createmsg({ threadId: this.recordId, messageText: this.msgVal, fromContactId: this.userContactId })
+            .then((result) => {
                 this.handlesuccess();
-            }
-        );
+            })
+            .catch((error) => console.log(error));
+    }
+
+    valid() {
+        this.showTextboxEmptyWarning = false;
+        this.showTextboxFullWarning = false;
+        if (!this.msgVal || this.msgVal.length == null) {
+            this.showTextboxEmptyWarning = true;
+        } else if (this.msgVal.length >= this.maxLength) {
+            this.showTextboxFullWarning = true;
+        } else {
+            return true;
+        }
+        let errorSummary = this.template.querySelector('.errorSummary');
+        errorSummary.focusHeader();
+        return false;
+    }
+
+    handleTextChange(event) {
+        this.msgVal = event.detail;
+    }
+
+    get maxLength() {
+        return 1000;
+    }
+
+    get errors() {
+        let errorList = [];
+        if (this.showTextboxEmptyWarning) {
+            errorList.push({ Id: 1, EventItem: '.inputTextbox', Text: 'Tekstboksen kan ikke være tom.' });
+        }
+        if (this.showTextboxFullWarning) {
+            errorList.push({
+                Id: 2,
+                EventItem: '.inputTextbox',
+                Text: 'Det er for mange tegn i tekstboksen.'
+            });
+        }
+        return errorList;
+    }
+
+    get showWarnings() {
+        return this.showTextboxEmptyWarning || this.showTextboxFullWarning;
+    }
+
+    handleErrorClick(event) {
+        let item = this.template.querySelector(event.detail);
+        item.focus();
     }
 }
