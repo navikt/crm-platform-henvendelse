@@ -1,7 +1,7 @@
 <template>
     <div class={wrapperClass}>
         <div class="navds-textarea__wrapper">
-            <label for="textareaInput" class="sr-only">Tekstområde med plass til {maxLength} tegn.</label>
+            <label for="textareaInput" class="sr-only">{labelTekst}</label>
             <textarea
                 aria-invalid={errorState}
                 name="textbox"
@@ -15,7 +15,9 @@
                 value={message}
             ></textarea>
             <div aria-hidden="true" class="mirror" tabindex="-1" rows="6"></div>
-            <p aria-live="off" class={remainingCharacterClass}>{remainingCharacterText}</p>
+            <template if:true={limitCharacters}>
+                <p aria-live="off" class={remainingCharacterClass}>{remainingCharacterText}</p>
+            </template>
         </div>
         <div aria-relevant="additions removals" aria-live="polite">
             <template if:true={errorState}>
