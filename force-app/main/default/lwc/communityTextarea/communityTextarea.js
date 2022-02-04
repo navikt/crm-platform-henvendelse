@@ -1,4 +1,4 @@
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api } from 'lwc';
 
 export default class CommunityTextarea extends LightningElement {
     @api maxLength;
@@ -7,7 +7,7 @@ export default class CommunityTextarea extends LightningElement {
     errorState = false;
 
     renderedCallback() {
-        if (this.mirror.style.minHeight == '') {
+        if (this.mirror.style.minHeight === '') {
             this.mirror.style.minHeight = this.tekstboks.offsetHeight + 'px';
         }
     }
@@ -19,12 +19,17 @@ export default class CommunityTextarea extends LightningElement {
 
     handleMessage(event) {
         this.errorState = false;
-        let text = event.target.value;
-        this.message = text;
+        this.message = event.target.value;
+        this.processMessageStyling();
+    }
+
+    processMessageStyling() {
         this.mirror.textContent = this.message + '\n s';
         this.tekstboks.style.height = this.mirror.offsetHeight + 'px';
-        let counter = this.template.querySelector('.remainingCounter');
-        counter.ariaLive = this.remainingCharacters <= 20 ? 'polite' : 'off';
+        if (!this.limitCharacters) {
+            let counter = this.template.querySelector('.remainingCounter');
+            counter.ariaLive = this.remainingCharacters <= 20 ? 'polite' : 'off';
+        }
     }
 
     publishMessage() {
@@ -39,6 +44,7 @@ export default class CommunityTextarea extends LightningElement {
         this.message = '';
         this.tekstboks.value = this.message;
         this.publishMessage();
+        this.processMessageStyling();
     }
 
     get remainingCharacters() {
@@ -61,6 +67,14 @@ export default class CommunityTextarea extends LightningElement {
         );
     }
 
+    get labelText() {
+        return 'Tekstområde' + (this.limitCharacters ? ' med plass til ' + this.maxLength + ' tegn' : '');
+    }
+
+    get limitCharacters() {
+        return this.maxLength !== 0;
+    }
+
     get tekstboks() {
         return this.template.querySelector('.tekstboks');
     }
@@ -70,10 +84,10 @@ export default class CommunityTextarea extends LightningElement {
     }
 
     checkError() {
-        if (!this.message || this.message.length == 0) {
+        if (!this.message || this.message.length === 0) {
             this.errorState = true;
             this.errorMessage = 'Tekstfeltet kan ikke være tomt.';
-        } else if (this.message.length > this.maxLength) {
+        } else if (this.message.length > this.maxLength && this.maxLenght !== 0) {
             this.errorState = true;
             this.errorMessage = 'Tekstefeltet kan ikke ha for mange tegn.';
         } else {

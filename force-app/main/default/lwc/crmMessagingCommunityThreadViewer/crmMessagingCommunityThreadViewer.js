@@ -25,6 +25,7 @@ export default class CommityThreadViewer extends LightningElement {
     @api secondheader;
     @api alertopen;
     threadId;
+    @api maxLength;
     showTextboxEmptyWarning = false;
     showTextboxFullWarning = false;
 
@@ -113,7 +114,7 @@ export default class CommityThreadViewer extends LightningElement {
         this.showTextboxFullWarning = false;
         if (!this.msgVal || this.msgVal.length == null) {
             this.showTextboxEmptyWarning = true;
-        } else if (this.msgVal.length >= this.maxLength) {
+        } else if (this.maxLength !== 0 && this.msgVal.length >= this.maxLength) {
             this.showTextboxFullWarning = true;
         } else {
             return true;
@@ -125,10 +126,6 @@ export default class CommityThreadViewer extends LightningElement {
 
     handleTextChange(event) {
         this.msgVal = event.detail;
-    }
-
-    get maxLength() {
-        return 1000;
     }
 
     get errors() {
