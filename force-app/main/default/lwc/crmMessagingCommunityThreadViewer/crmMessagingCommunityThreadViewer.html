@@ -3,6 +3,13 @@
         <div class="header" style="text-align: center">
             <h1 class="typo-sidetittel">{name}</h1>
         </div>
+        <c-community-error-summary
+            error-list={errors}
+            show-warnings={showWarnings}
+            onclickedevent={handleErrorClick}
+            class="errorSummary"
+        >
+        </c-community-error-summary>
         <div class="contentholder">
             <template for:each={messages} for:item="message">
                 <c-crm-messaging-Community-Message-Container
@@ -28,17 +35,11 @@
                         <div class="body-wrapper" style="">
                             <div class="example__inner">
                                 <div class="">
-                                    <lightning-textarea
-                                        data-name="messagearea"
-                                        class="messagearea typo-normal"
-                                        name="message"
-                                        type="text"
-                                        label="Skriv her"
-                                        variant="label-hidden"
-                                        autocomplete="false"
-                                        onchange={synchtext}
-                                        maxlength="1000"
-                                    ></lightning-textarea>
+                                    <c-community-textarea
+                                        max-length={maxLength}
+                                        class="inputTextbox"
+                                        ontextchanged={handleTextChange}
+                                    ></c-community-textarea>
                                     <button
                                         disabled={buttonisdisabled}
                                         type="submit"
@@ -72,13 +73,11 @@
             </template>
         </div>
         <template if:true={isclosed}>
-            <div class="infocontainer slds-var-p-top_medium slds-var-p-horizontal_medium largePadding" >
+            <div class="infocontainer slds-var-p-top_medium slds-var-p-horizontal_medium largePadding">
                 <c-crm-community-alert-stripe
                     class="alertbox"
                     type="info"
                     alerttext={alerttext}
-                ></c-crm-community-alert-stripe>
-            </div>
-        </template>
-    </div>
-</template>
+                ></c-crm-community-alert-stripe></div
+        ></template></div
+></template>
