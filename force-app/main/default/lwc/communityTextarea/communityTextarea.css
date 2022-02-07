@@ -19,3 +19,7 @@
     left: -99999px;
     top: 0;
 }
+
+.minRow {
+    min-height: 12rem;
+}
