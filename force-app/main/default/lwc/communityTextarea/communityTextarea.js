@@ -66,7 +66,7 @@ export default class CommunityTextarea extends LightningElement {
     }
 
     get limitCharacters() {
-        return this.maxLength !== 0;
+        return this.maxLength !== 0 && this.maxLength != null;
     }
 
     get tekstboks() {
