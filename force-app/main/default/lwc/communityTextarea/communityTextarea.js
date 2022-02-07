@@ -6,12 +6,6 @@ export default class CommunityTextarea extends LightningElement {
     message;
     errorState = false;
 
-    renderedCallback() {
-        if (this.mirror.style.minHeight === '') {
-            this.mirror.style.minHeight = this.tekstboks.offsetHeight + 'px';
-        }
-    }
-
     handleChange(event) {
         this.message = event.target.value;
         this.publishMessage();
@@ -26,7 +20,7 @@ export default class CommunityTextarea extends LightningElement {
     processMessageStyling() {
         this.mirror.textContent = this.message + '\n s';
         this.tekstboks.style.height = this.mirror.offsetHeight + 'px';
-        if (!this.limitCharacters) {
+        if (this.limitCharacters) {
             let counter = this.template.querySelector('.remainingCounter');
             counter.ariaLive = this.remainingCharacters <= 20 ? 'polite' : 'off';
         }
@@ -87,7 +81,7 @@ export default class CommunityTextarea extends LightningElement {
         if (!this.message || this.message.length === 0) {
             this.errorState = true;
             this.errorMessage = 'Tekstfeltet kan ikke være tomt.';
-        } else if (this.message.length > this.maxLength && this.maxLenght !== 0) {
+        } else if (this.limitCharacters && this.message.length > this.maxLength) {
             this.errorState = true;
             this.errorMessage = 'Tekstefeltet kan ikke ha for mange tegn.';
         } else {
