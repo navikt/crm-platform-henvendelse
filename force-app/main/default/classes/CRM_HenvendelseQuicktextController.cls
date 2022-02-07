@@ -42,7 +42,7 @@ public with sharing class CRM_HenvendelseQuicktextController {
     @AuraEnabled(cacheable=true)
     public static List<QuickText> getQuicktexts() {
         try {
-            String query = 'SELECT Message, nksAbbreviationKey__c FROM QuickText WHERE nksType__c = \'Abbreviation\'';
+            String query = 'SELECT Message, nksAbbreviationKey__c, Case_sensitive__c FROM QuickText WHERE nksType__c = \'Abbreviation\'';
             List<QuickText> qTextList = Database.query(query);
             return qTextList;
         } catch (Exception e) {
