@@ -9,6 +9,13 @@
             "LastName": "Potter",
             "INT_PersonIdent__c": "12345678910",
             "CRM_Person__c": "@PersonRef1"
+        },
+        {
+            "attributes": {
+                "type": "Account",
+                "referenceId": "AccountRef2"
+            },
+            "Name": "Dummy Account"
         }
     ]
 }
