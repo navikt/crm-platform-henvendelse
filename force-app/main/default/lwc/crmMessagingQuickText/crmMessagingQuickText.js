@@ -72,7 +72,6 @@ export default class crmQuickText extends LightningElement {
     hideModal(event) {
         this.template.querySelector('[data-id="modal"]').className = 'modalHide';
         event.stopPropagation();
-        //this.toggleModal();
     }
 
     outsideClickListener = (e) => {

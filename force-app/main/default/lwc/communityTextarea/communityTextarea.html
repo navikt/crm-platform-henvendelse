@@ -12,8 +12,9 @@
                 onfocusout={checkError}
                 rows="6"
                 id="textareaInput"
-                value={message}
-            ></textarea>
+            >
+            {message}
+            </textarea>
             <div aria-hidden="true" class="mirror" tabindex="-1" rows="6"></div>
             <template if:true={limitCharacters}>
                 <p aria-live="off" class={remainingCharacterClass}>{remainingCharacterText}</p>

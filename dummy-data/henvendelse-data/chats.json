@@ -1,0 +1,12 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "LiveChatTranscript",
+                "referenceId": "ChatTranscriptRef1"
+            },
+            "AccountId": "@AccountRef2",
+            "LiveChatVisitorId": "@VisitorRef1"
+        }
+    ]
+}

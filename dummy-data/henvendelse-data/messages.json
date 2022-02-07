@@ -61,6 +61,33 @@
             "CRM_Thread__c": "@ThreadRef1",
             "CRM_External_Message__c": true,
             "CRM_Message_Text__c": "OK"
+        },
+        {
+            "attributes": {
+                "type": "Message__c",
+                "referenceId": "MessageRef8"
+            },
+            "CRM_Thread__c": "@ThreadRef2",
+            "CRM_External_Message__c": false,
+            "CRM_Message_Text__c": "Hi and welcome to this test chat"
+        },
+        {
+            "attributes": {
+                "type": "Message__c",
+                "referenceId": "MessageRef9"
+            },
+            "CRM_Thread__c": "@ThreadRef2",
+            "CRM_Message_Text__c": "Thank you!",
+            "CRM_From_Contact__c": "@ContactRef1"
+        },
+        {
+            "attributes": {
+                "type": "Message__c",
+                "referenceId": "MessageRef10"
+            },
+            "CRM_Thread__c": "@ThreadRef2",
+            "CRM_External_Message__c": false,
+            "CRM_Message_Text__c": "What do you need help with?"
         }
     ]
 }

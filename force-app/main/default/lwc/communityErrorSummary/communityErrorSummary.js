@@ -22,7 +22,7 @@ export default class CommunityErrorSummary extends LightningElement {
         }
     }
 
-    test(event) {
+    handleLinkClick(event) {
         event.preventDefault();
         let item = event.target.getAttribute('event-item');
         const clickedEvent = new CustomEvent('clickedevent', {
