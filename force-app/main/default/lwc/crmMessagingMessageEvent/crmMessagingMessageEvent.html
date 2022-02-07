@@ -11,7 +11,7 @@
                 ></lightning-icon>
                 <p>
                     <b>NAV</b>&nbsp;{endOfChatMessage}&nbsp;<c-crm-nav-formatted-date
-                        date={message.CreatedDate}
+                        date={message.CRM_Sent_date__c}
                     ></c-crm-nav-formatted-date>
                 </p>
             </template>
@@ -25,7 +25,7 @@
                 ></lightning-icon>
                 <p>
                     {transferMessage}&nbsp;<c-crm-nav-formatted-date
-                        date={message.CreatedDate}
+                        date={message.CRM_Sent_date__c}
                     ></c-crm-nav-formatted-date>
                 </p>
             </template>
@@ -39,7 +39,7 @@
                 ></lightning-icon>
                 <p>
                     {journalMessage}&nbsp;<c-crm-nav-formatted-date
-                        date={message.CreatedDate}
+                        date={message.CRM_Sent_date__c}
                     ></c-crm-nav-formatted-date>
                 </p>
             </template>
@@ -53,7 +53,7 @@
                 ></lightning-icon>
                 <p>
                     {message.CRM_Message_Text__c}&nbsp;<c-crm-nav-formatted-date
-                        date={message.CreatedDate}
+                        date={message.CRM_Sent_date__c}
                     ></c-crm-nav-formatted-date>
                 </p>
             </template>
