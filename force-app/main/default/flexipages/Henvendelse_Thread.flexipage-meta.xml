@@ -40,12 +40,8 @@
                     <name>showClose</name>
                     <value>true</value>
                 </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>singleThread</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentName>crmMessagingMessageComponent</componentName>
-                <identifier>c_crmMessagingMessageComponent1</identifier>
+                <componentName>crmStoMessagingContainer</componentName>
+                <identifier>c_crmStoMessagingContainer1</identifier>
             </componentInstance>
         </itemInstances>
         <name>leftcol</name>
