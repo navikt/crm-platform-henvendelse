@@ -8,14 +8,13 @@
                 onchange={handleChange}
                 oninput={handleMessage}
                 label="Skriv din melding her"
-                class="navds-textarea__input navds-body-short navds-body-medium navds-textarea--counter tekstboks"
+                class="navds-textarea__input navds-body-short navds-body-medium navds-textarea--counter tekstboks minRow"
                 onfocusout={checkError}
-                rows="6"
                 id="textareaInput"
             >
             {message}
             </textarea>
-            <div aria-hidden="true" class="mirror" tabindex="-1" rows="6"></div>
+            <div aria-hidden="true" class="mirror minRow" tabindex="-1"></div>
             <template if:true={limitCharacters}>
                 <p aria-live="off" class={remainingCharacterClass}>{remainingCharacterText}</p>
             </template>
