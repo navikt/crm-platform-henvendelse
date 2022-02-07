@@ -18,6 +18,9 @@
             <property name="alertopen" type="String" label="Alert text when still open" 
             description="Alert text shown when the thread is closed. HTML formatted"
             default="" />
+            <property name="maxLength" type="Integer" label="Max length" 
+            description="The max length a user is allowed to write. Defaults to 0 (infinite)"
+            default="0" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
