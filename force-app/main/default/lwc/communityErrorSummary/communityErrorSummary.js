@@ -31,4 +31,12 @@ export default class CommunityErrorSummary extends LightningElement {
 
         this.dispatchEvent(clickedEvent);
     }
+
+    get errorText() {
+        return (
+            'Du må rette ' +
+            (this.errorList.length > 1 ? 'disse feilene' : 'denne feilen') +
+            ' før du kan sende inn søknad.'
+        );
+    }
 }
