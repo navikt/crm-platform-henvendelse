@@ -44,7 +44,7 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Create_Innbox_Event</name>
         <label>Create Innbox Event</label>
