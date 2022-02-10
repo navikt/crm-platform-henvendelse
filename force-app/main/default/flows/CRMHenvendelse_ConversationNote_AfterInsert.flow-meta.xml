@@ -64,15 +64,9 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>PreferredChannel</name>
-            <value>
-                <stringValue>EPOST</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <name>SendExternalNotification</name>
             <value>
-                <booleanValue>true</booleanValue>
+                <booleanValue>false</booleanValue>
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
