@@ -97,8 +97,8 @@ export default class messagingThreadViewer extends LightningElement {
     //If empty, stop submitting.
     handlesubmit(event) {
         event.preventDefault();
-        this.showspinner = true;
         if (!this.quickTextCmp.isOpen()) {
+            this.showspinner = true;
             const textInput = event.detail.fields;
             // If messagefield is empty, stop the submit
             textInput.CRM_Thread__c = this.thread.Id;
