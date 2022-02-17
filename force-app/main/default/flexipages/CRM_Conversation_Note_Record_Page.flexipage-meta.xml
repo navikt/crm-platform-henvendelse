@@ -167,6 +167,12 @@
                 <identifier>RecordJournaled_cField1</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Redaction_Person_Ident__c</fieldItem>
+                <identifier>RecordRedaction_Person_Ident_cField1</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-e438758e-607c-4546-9e2c-bf518355aee0</name>
         <type>Facet</type>
     </flexiPageRegions>

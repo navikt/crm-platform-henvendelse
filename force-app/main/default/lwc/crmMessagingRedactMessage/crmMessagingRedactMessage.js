@@ -8,6 +8,7 @@ export default class CrmMessagingRedactMessage extends LightningElement {
     _isRedacting = false;
     trueValue = true;
     showSpinner = false;
+    redactAll = false;
 
     @api get message() {
         return this._message;
@@ -30,6 +31,10 @@ export default class CrmMessagingRedactMessage extends LightningElement {
 
     get isRedacting() {
         return this._isRedacting;
+    }
+
+    get isInbound() {
+        return this.message.CRM_External_Message__c ? true : false;
     }
 
     set message(value) {
@@ -85,4 +90,6 @@ export default class CrmMessagingRedactMessage extends LightningElement {
         event.preventDefault();
         this.redactedText = event.detail;
     }
+
+    RedactAllMessageText(event) {}
 }
