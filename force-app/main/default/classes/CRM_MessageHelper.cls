@@ -101,9 +101,9 @@ public with sharing class CRM_MessageHelper {
         try {
             List<Message__c> msgList = new List<Message__c>();
             String query =
-                'SELECT Id, CRM_Message_Text__c, CRM_Type__c, CRM_Event_Type__c, CreatedDate, CRM_From_User__c, CRM_From_Contact__c, CRM_From_First_Name__c, CRM_External_Message__c, CRM_From_Label__c FROM Message__c WHERE ' +
+                'SELECT Id, CRM_Message_Text__c, CRM_Type__c, CRM_Event_Type__c, CRM_Sent_date__c, CRM_From_User__c, CRM_From_Contact__c, CRM_From_First_Name__c, CRM_External_Message__c, CRM_From_Label__c FROM Message__c WHERE ' +
                 getThreadQuery(threadId) +
-                ' ORDER BY CRM_Sent_Datetime_Formula__c ASC';
+                ' ORDER BY CRM_Sent_date__c ASC';
             for (Message__c m : Database.query(query)) {
                 if (m.CRM_Message_Text__c != null) {
                     msgList.add(m);

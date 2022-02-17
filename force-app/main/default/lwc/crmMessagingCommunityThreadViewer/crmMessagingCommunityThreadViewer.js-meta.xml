@@ -40,6 +40,13 @@
                 description="Ensures that the thread is always seen as closed"
                 default="false"
             />
+            <property
+                name="maxLength"
+                type="Integer"
+                label="Max length"
+                description="The max length a user is allowed to write. Defaults to 0 (infinite)"
+                default="0"
+            />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
