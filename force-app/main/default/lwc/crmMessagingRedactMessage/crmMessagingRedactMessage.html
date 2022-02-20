@@ -35,7 +35,15 @@
                                     disabled={canSaveDisabled}
                                     variant="brand"
                                     type="submit"
-                                    class="slds-var-p-left_large"
+                                    class="slds-var-p-left_medium"
+                                ></lightning-button>
+                                <lightning-button
+                                    slot="toolbarEnd"
+                                    class="slds-var-p-left_medium"
+                                    icon-name="utility:clear"
+                                    variant="brand"
+                                    onclick={RedactAllMessageText}
+                                    label="Sladd hele meldingen"
                                 ></lightning-button>
                             </c-crm-redact-text>
                             <lightning-input-field
@@ -72,14 +80,14 @@
                                     label-when-off="Start sladding"
                                     label-when-on="Avbryt sladding"
                                 ></lightning-button-stateful>
-                                <template if:true={isRedacting}>
+                                <!--<template if:true={isRedacting}>
                                     <lightning-button
                                         class="slds-chat-message__action slds-float_right"
                                         icon-name="utility:edit"
                                         onclick={RedactAllMessageText}
                                         label="Sladd hele meldingen"
                                     ></lightning-button>
-                                </template>
+                                </template>-->
                             </template>
                             <template if:true={isInbound}>
                                 <lightning-button-stateful
@@ -101,14 +109,14 @@
                                     minute="2-digit"
                                 >
                                 </lightning-formatted-date-time>
-                                <template if:true={isRedacting}>
+                                <!--<template if:true={isRedacting}>
                                     <lightning-button
                                         class="slds-chat-message__action slds-float_left slds-m-left_none slds-var-m-right_x-small"
                                         icon-name="utility:edit"
                                         onclick={RedactAllMessageText}
                                         label="Sladd hele meldingen"
                                     ></lightning-button>
-                                </template>
+                                </template>-->
                             </template>
                         </div>
                     </template>

@@ -7,6 +7,15 @@ export default class CrmRedactText extends LightningElement {
     _textAreaclass = 'redactTextArea slds-textarea slds-text-color_default';
     _textAreaStyle = 'resize: none; overflow: hidden; overflow:hidden; ';
     hasRendered = false;
+    _redactAll = false;
+
+    @api setRedactAll() {
+        this._redactAll = true;
+    }
+
+    get redactAll() {
+        return this._redactAll;
+    }
 
     @api get textToRedact() {
         return this._originalValue;
@@ -78,12 +87,11 @@ export default class CrmRedactText extends LightningElement {
         return this.canUndo;
     }
 
-    addRedactedValue(value) {
+    @api addRedactedValue(value) {
         if (this.canRedo) {
             this._changes.length = this._changesPosition + 1;
         }
         this._changes.push(value);
-
         console.log(this._changes);
 
         this._changesPosition = this._changes.length - 1;

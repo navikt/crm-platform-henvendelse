@@ -8,7 +8,6 @@ export default class CrmMessagingRedactMessage extends LightningElement {
     _isRedacting = false;
     trueValue = true;
     showSpinner = false;
-    redactAll = false;
 
     @api get message() {
         return this._message;
@@ -77,9 +76,7 @@ export default class CrmMessagingRedactMessage extends LightningElement {
     }
 
     get canSaveDisabled() {
-        return this.template.querySelector('c-crm-redact-text')
-            ? !this.template.querySelector('c-crm-redact-text').hasChanges
-            : false;
+        return this.redactTextComponent ? !this.redactTextComponent.hasChanges : false;
     }
 
     toggleRedacting() {
@@ -91,5 +88,9 @@ export default class CrmMessagingRedactMessage extends LightningElement {
         this.redactedText = event.detail;
     }
 
-    RedactAllMessageText(event) {}
+    RedactAllMessageText() {
+        this.redactTextComponent.setRedactAll();
+        this.redactedText = this.messageText.replace(/\S/g, '*');
+        this.redactTextComponent.addRedactedValue(this.redactedText);
+    }
 }
