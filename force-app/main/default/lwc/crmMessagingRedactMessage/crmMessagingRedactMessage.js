@@ -89,7 +89,6 @@ export default class CrmMessagingRedactMessage extends LightningElement {
     }
 
     RedactAllMessageText() {
-        this.redactTextComponent.setRedactAll();
         this.redactedText = this.messageText.replace(/\S/g, '*');
         this.redactTextComponent.addRedactedValue(this.redactedText);
     }
