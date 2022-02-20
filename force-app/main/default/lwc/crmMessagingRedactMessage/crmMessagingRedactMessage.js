@@ -32,6 +32,10 @@ export default class CrmMessagingRedactMessage extends LightningElement {
         return this._isRedacting;
     }
 
+    get isInbound() {
+        return this.message.CRM_External_Message__c ? true : false;
+    }
+
     set message(value) {
         this._message = value;
         this.messageText = this.message.CRM_Message_Text__c;
@@ -72,9 +76,7 @@ export default class CrmMessagingRedactMessage extends LightningElement {
     }
 
     get canSaveDisabled() {
-        return this.template.querySelector('c-crm-redact-text')
-            ? !this.template.querySelector('c-crm-redact-text').hasChanges
-            : false;
+        return this.redactTextComponent ? !this.redactTextComponent.hasChanges : false;
     }
 
     toggleRedacting() {
@@ -84,5 +86,11 @@ export default class CrmMessagingRedactMessage extends LightningElement {
     handleRedactEvent(event) {
         event.preventDefault();
         this.redactedText = event.detail;
+    }
+
+    RedactAllMessageText() {
+        this.redactTextComponent.setRedactAll();
+        this.redactedText = this.messageText.replace(/\S/g, '*');
+        this.redactTextComponent.addRedactedValue(this.redactedText);
     }
 }
