@@ -265,6 +265,7 @@
         <queriedFields>Id</queriedFields>
         <queriedFields>CRM_Journal_Status__c</queriedFields>
         <queriedFields>CRM_From_External__c</queriedFields>
+        <queriedFields>CRM_isActive__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
