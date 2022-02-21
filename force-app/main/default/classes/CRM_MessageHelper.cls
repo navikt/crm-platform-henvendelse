@@ -106,7 +106,7 @@ public with sharing class CRM_MessageHelper {
                     CRM_Message_Text__c,
                     CRM_Type__c,
                     CRM_Event_Type__c,
-                    CreatedDate,
+                    CRM_Sent_date__c,
                     CRM_From_User__c,
                     CRM_From_Contact__c,
                     CRM_From_First_Name__c,
@@ -114,7 +114,7 @@ public with sharing class CRM_MessageHelper {
                     CRM_From_Label__c
                 FROM Message__c
                 WHERE CRM_Thread__c = :threadId
-                ORDER BY CRM_Sent_Datetime_Formula__c ASC
+                ORDER BY CRM_Sent_date__c ASC
             ]) {
                 if (m.CRM_Message_Text__c != null) {
                     msgList.add(m);

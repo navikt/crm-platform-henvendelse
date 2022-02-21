@@ -183,7 +183,7 @@
             <assignToReference>Journal_Request.tittel</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>TITLE OF JOURNAL</stringValue>
+                <elementReference>Document_Title</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>

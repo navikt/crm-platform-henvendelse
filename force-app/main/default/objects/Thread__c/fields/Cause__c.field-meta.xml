@@ -25,6 +25,12 @@
                 <default>false</default>
                 <label>Andre årsaker</label>
             </value>
+            <value>
+                <fullName>Sikkerhetshendelse</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Sikkerhetshendelse</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

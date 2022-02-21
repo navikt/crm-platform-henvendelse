@@ -13,7 +13,6 @@ export default class crmQuickText extends LightningElement {
     labels = { BLANK_ERROR };
     _conversationNote;
     loadingData = false;
-    quicktexts;
     qmap;
     initialRender = true;
 
@@ -73,7 +72,6 @@ export default class crmQuickText extends LightningElement {
     hideModal(event) {
         this.template.querySelector('[data-id="modal"]').className = 'modalHide';
         event.stopPropagation();
-        this.toggleModal();
     }
 
     outsideClickListener = (e) => {
@@ -166,10 +164,16 @@ export default class crmQuickText extends LightningElement {
      * Functions for conversation note/quick text
      */
     @wire(getQuicktexts, {})
-    wiredQuicktexts(value) {
-        if (value.data) {
-            this.quicktexts = value.data;
-            this.qmap = new Map(value.data.map((key) => [key.nksAbbreviationKey__c.toUpperCase(), key.Message]));
+    wiredQuicktexts({ error, data }) {
+        if (error) {
+            console.log(error);
+        } else if (data) {
+            this.qmap = new Map(
+                data.map((key) => [
+                    key.nksAbbreviationKey__c.toUpperCase(),
+                    { message: key.Message, isCaseSensitive: key.Case_sensitive__c }
+                ])
+            );
         }
     }
 
@@ -227,7 +231,7 @@ export default class crmQuickText extends LightningElement {
         );
         evt.preventDefault();
     }
-    
+
     handlePaste() {
         handleChange();
     }

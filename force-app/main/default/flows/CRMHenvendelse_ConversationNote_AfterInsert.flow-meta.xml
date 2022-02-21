@@ -44,7 +44,7 @@
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Create_Innbox_Event</name>
         <label>Create Innbox Event</label>
@@ -64,15 +64,9 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>PreferredChannel</name>
-            <value>
-                <stringValue>EPOST</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <name>SendExternalNotification</name>
             <value>
-                <booleanValue>true</booleanValue>
+                <booleanValue>false</booleanValue>
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>

@@ -17,16 +17,6 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>Thread__c.Discard_Messages</value>
-                            <visibilityRule>
-                                <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.Redaction_Custom_Permission}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>true</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
                             <value>Thread__c.Abort_Redaction</value>
                             <visibilityRule>
                                 <criteria>
@@ -152,6 +142,12 @@
             <fieldInstance>
                 <fieldItem>Record.Journaled__c</fieldItem>
                 <identifier>RecordJournaled_cField1</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Redaction_Person_Ident__c</fieldItem>
+                <identifier>RecordRedaction_Person_Ident_cField1</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-50358f90-0ed6-4e15-958e-68a975076db2</name>

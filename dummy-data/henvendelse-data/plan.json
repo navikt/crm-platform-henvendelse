@@ -18,6 +18,24 @@
         "files": ["accounts.json"]
     },
     {
+        "sobject": "Contact",
+        "saveRefs": true,
+        "resolveRefs": true,
+        "files": ["contacts.json"]
+    },
+    {
+        "sobject": "LiveChatVisitor",
+        "saveRefs": true,
+        "resolveRefs": false,
+        "files": ["visitors.json"]
+    },
+    {
+        "sobject": "LiveChatTranscript",
+        "saveRefs": true,
+        "resolveRefs": true,
+        "files": ["chats.json"]
+    },
+    {
         "sobject": "Conversation_Note__c",
         "saveRefs": true,
         "resolveRefs": true,

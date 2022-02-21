@@ -12,19 +12,19 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>Sendt feil bruker</fullName>
+                <default>false</default>
+                <label>Sendt feil bruker</label>
+            </value>
+            <value>
+                <fullName>Annen årsak</fullName>
+                <default>false</default>
+                <label>Annen årsak</label>
+            </value>
+            <value>
                 <fullName>Økonomisk sosialhjelp</fullName>
                 <default>false</default>
                 <label>Økonomisk sosialhjelp</label>
-            </value>
-            <value>
-                <fullName>sendt feil bruker</fullName>
-                <default>false</default>
-                <label>sendt feil bruker</label>
-            </value>
-            <value>
-                <fullName>annen årsak</fullName>
-                <default>false</default>
-                <label>annen årsak</label>
             </value>
         </valueSetDefinition>
     </valueSet>

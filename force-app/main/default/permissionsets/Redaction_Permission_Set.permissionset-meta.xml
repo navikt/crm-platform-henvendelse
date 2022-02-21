@@ -49,12 +49,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Conversation_Note__c.INT_PersonIdent__c</field>
+        <field>Conversation_Note__c.Journaled__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Conversation_Note__c.Journaled__c</field>
+        <field>Conversation_Note__c.Redaction_Person_Ident__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

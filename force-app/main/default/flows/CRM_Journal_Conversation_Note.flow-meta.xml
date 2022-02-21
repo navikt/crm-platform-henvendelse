@@ -159,6 +159,13 @@
                 <elementReference>Journal_Entry_Unit</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Entry_SF.CRM_Journal_Post_Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>NOTAT</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Update_Conversation_Note_Categorization</targetReference>
         </connector>

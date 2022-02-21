@@ -6,15 +6,15 @@ import { refreshApex } from '@salesforce/apex';
 export default class CrmMessagingMessageComponent extends LightningElement {
     showmodal = false;
     showtaskmodal = false;
-    shownewbutton = false;
     activeSectionMessage = '';
-    threads = [];
+    threads;
     singlethread;
     _threadsforRefresh;
     @api recordId;
     @api singleThread;
     @api showClose;
     setCardTitle;
+    hasError = false;
 
     @api textTemplate; //Support for conditional text template
 
@@ -24,22 +24,26 @@ export default class CrmMessagingMessageComponent extends LightningElement {
 
         if (result.error) {
             this.error = result.error;
+            this.hasError = true;
+            console.log(JSON.stringify(result.error, null, 2));
         } else if (result.data) {
             this.threads = result.data;
-
-            if (this.threads.length == 0) {
-                this.shownewbutton = true;
-            }
-            this.showspinner = false;
         }
     }
     handlenewpressed() {
         createThread({ recordId: this.recordId })
             .then((result) => {
-                this.shownewbutton = false;
                 return refreshApex(this._threadsforRefresh);
             })
             .catch((error) => {});
+    }
+
+    get showSpinner() {
+        return !this.threads && !this.hasError;
+    }
+
+    get shownewbutton() {
+        return this.threads && this.threads.length == 0 && this.recordId;
     }
 
     get cardTitle() {

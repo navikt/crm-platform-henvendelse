@@ -27,7 +27,7 @@
         <inputParameters>
             <name>fnr</name>
             <value>
-                <elementReference>$Record.CRM_Account__r.CRM_Person__r.INT_fnr__c</elementReference>
+                <elementReference>$Record.CRM_Account__r.CRM_Person__r.Name</elementReference>
             </value>
         </inputParameters>
         <inputParameters>

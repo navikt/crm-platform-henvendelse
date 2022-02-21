@@ -5,8 +5,27 @@
         title={cardTitle}
         icon-name="standard:messaging_user"
     >
-        <div>
+        <div class="slds-is-relative" style="min-height: 2em">
             <!-- Singlethread true - WIll only ever be one thread in the iteration-->
+            <lightning-spinner
+                if:true={showSpinner}
+                alternative-text="Laster samtalekomponent"
+                size="medium"
+                variant="brand"
+            ></lightning-spinner>
+            <div
+                if:true={hasError}
+                class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error"
+                role="alert"
+            >
+                <lightning-layout vertical-align="center">
+                    <lightning-icon icon-name="utility:error" size="x-small" variant="inverse"></lightning-icon>
+                    <span class="slds-assistive-text">Feil</span>
+                    <h2 class="slds-p-left_small" style="margin-top: auto; margin-bottom: auto">
+                        Det oppsto en uventet feil
+                    </h2>
+                </lightning-layout>
+            </div>
             <template if:true={shownewbutton}>
                 <lightning-button
                     label="Klikk for å starte samtale"

@@ -37,6 +37,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Existing_Journal_Entry.CRM_Journal_Post_Type__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>NOTAT</stringValue>
+                </rightValue>
+            </conditions>
             <label>Journal Entry Exists</label>
         </rules>
     </decisions>
@@ -66,6 +73,21 @@
         </rules>
     </decisions>
     <description>Creates a journal entry ready for JOARK post related to a Thread_ID.</description>
+    <formulas>
+        <description>Defines the journal post type depending on if the dialogue was initiated by NAV or the end user</description>
+        <name>JOURNAL_POST_TYPE_FORMULA</name>
+        <dataType>String</dataType>
+        <expression>IF({!Journal_Post_Type} != null,
+    {!Journal_Post_Type},
+    IF({!Get_thread.CRM_isActive__c} == true,
+        &apos;NOTAT&apos;,
+        IF({!Get_thread.CRM_From_External__c} == true,
+        &apos;INNGAAENDE&apos;,
+        &apos;UTGAAENDE&apos;
+        )
+    )
+)</expression>
+    </formulas>
     <interviewLabel>Thread Create Journal Entry {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Thread Create Journal Entry</label>
     <processMetadataValues>
@@ -114,6 +136,12 @@
             <field>CRM_Journal_Date__c</field>
             <value>
                 <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CRM_Journal_Post_Type__c</field>
+            <value>
+                <elementReference>JOURNAL_POST_TYPE_FORMULA</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -183,6 +211,7 @@
         <object>Journal_Entry__c</object>
         <outputReference>Existing_Journal_Entry</outputReference>
         <queriedFields>Id</queriedFields>
+        <queriedFields>CRM_Journal_Post_Type__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <description>Query the SF id to the common code to be journaled.</description>
@@ -235,6 +264,7 @@
         <object>Thread__c</object>
         <queriedFields>Id</queriedFields>
         <queriedFields>CRM_Journal_Status__c</queriedFields>
+        <queriedFields>CRM_From_External__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
@@ -383,6 +413,14 @@
     <variables>
         <description>NAV unit of the user creating the journal entry</description>
         <name>Journal_Entry_Unit</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Journal post type as input to allow override of the journal post type formula</description>
+        <name>Journal_Post_Type</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
