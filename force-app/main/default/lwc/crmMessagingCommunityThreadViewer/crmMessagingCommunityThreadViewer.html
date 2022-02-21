@@ -35,17 +35,11 @@
                         <div class="body-wrapper" style="">
                             <div class="example__inner">
                                 <div class="flexBox">
-                                    <lightning-textarea
-                                        data-name="messagearea"
-                                        class="messagearea typo-normal"
-                                        name="message"
-                                        type="text"
-                                        label="Skriv her"
-                                        variant="label-hidden"
-                                        autocomplete="false"
-                                        onchange={synchtext}
-                                        maxlength="1000"
-                                    ></lightning-textarea>
+                                    <c-community-textarea
+                                        max-length={maxLength}
+                                        class="inputTextbox slds-var-m-bottom_medium"
+                                        ontextchanged={handleTextChange}
+                                    ></c-community-textarea>
                                     <button
                                         disabled={buttonisdisabled}
                                         type="submit"
