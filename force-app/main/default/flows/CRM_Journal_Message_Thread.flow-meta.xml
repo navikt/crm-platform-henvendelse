@@ -176,7 +176,7 @@
             <assignToReference>Journal_Request.journalpostType</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>JOURNAL_POST_TYPE</elementReference>
+                <elementReference>Journal_Entry_SF.CRM_Journal_Post_Type__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -427,15 +427,6 @@
         <name>Journal_Case_Type</name>
         <dataType>String</dataType>
         <expression>IF(ISBLANK({!Journal_Entry_SF.NAV_Case_Reference__c}), &apos;GENERELL_SAK&apos;, &apos;FAGSAK&apos;)</expression>
-    </formulas>
-    <formulas>
-        <description>Defines the journal post type depending on if the dialogue was initiated by NAV or the end user</description>
-        <name>JOURNAL_POST_TYPE</name>
-        <dataType>String</dataType>
-        <expression>IF({!JOURNALED_THREAD.CRM_From_External__c} == true,
-&apos;INNGAAENDE&apos;,
-&apos;UTGAAENDE&apos;
-)</expression>
     </formulas>
     <formulas>
         <description>Formula to generate name convention on journal required format (For persons)</description>
