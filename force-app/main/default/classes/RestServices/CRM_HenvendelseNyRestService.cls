@@ -198,6 +198,9 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
         newNote.CRM_Created_By_NAV_Unit__c = convRequest.enhet;
         newNote.CRM_Theme_Group__c = themeGroupId;
         newNote.CRM_Theme__c = themeId;
+        newNote.CRM_Communication_Channel__c = convRequest.kanal == CRM_Melding.Communication_Channel.OPPMOTE.name()
+            ? 'Meeting'
+            : 'Phone';
         return newNote;
     }
 
@@ -328,6 +331,6 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
         global String tema;
         global String enhet;
         global String fritekst;
-        global String kanal; //Separate between phone and physical meet?
+        global String kanal; //Separate between phone and physical meet
     }
 }
