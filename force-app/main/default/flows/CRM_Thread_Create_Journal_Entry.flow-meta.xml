@@ -22,9 +22,9 @@
         <name>Check_Journal_Entries</name>
         <label>Check Journal Entries</label>
         <locationX>314</locationX>
-        <locationY>1226</locationY>
+        <locationY>1346</locationY>
         <defaultConnector>
-            <targetReference>Get_Theme_Common_Code</targetReference>
+            <targetReference>Create_Journal_Entry</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>New INN/UT Entry</defaultConnectorLabel>
         <rules>
@@ -44,7 +44,7 @@
         <name>Check_Journal_Post_Type</name>
         <label>Check Journal Post Type</label>
         <locationX>314</locationX>
-        <locationY>890</locationY>
+        <locationY>1010</locationY>
         <defaultConnector>
             <targetReference>Check_Journal_Entries</targetReference>
         </defaultConnector>
@@ -71,7 +71,7 @@
         <locationX>314</locationX>
         <locationY>398</locationY>
         <defaultConnector>
-            <targetReference>Check_Journal_Post_Type</targetReference>
+            <targetReference>Get_Theme_Common_Code</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -208,7 +208,7 @@
         <name>Create_New_NOTAT_Journal_Entry</name>
         <label>Create New NOTAT Journal Entry</label>
         <locationX>182</locationX>
-        <locationY>1010</locationY>
+        <locationY>1130</locationY>
         <connector>
             <targetReference>Check_Journal_Entries</targetReference>
         </connector>
@@ -316,11 +316,11 @@
         <description>Query the SF id to the common code to be journaled.</description>
         <name>Get_Theme_Common_Code</name>
         <label>Get Theme Common Code</label>
-        <locationX>446</locationX>
-        <locationY>1346</locationY>
+        <locationX>314</locationX>
+        <locationY>890</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Create_Journal_Entry</targetReference>
+            <targetReference>Check_Journal_Post_Type</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -339,6 +339,8 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Common_Code__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>CRM_Parent_Code__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -405,7 +407,7 @@
         <locationX>50</locationX>
         <locationY>638</locationY>
         <connector>
-            <targetReference>Check_Journal_Post_Type</targetReference>
+            <targetReference>Get_Theme_Common_Code</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
