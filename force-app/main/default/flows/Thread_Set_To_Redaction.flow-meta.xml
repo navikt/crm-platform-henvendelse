@@ -4,8 +4,8 @@
     <assignments>
         <name>Set_Thread_For_Redaction</name>
         <label>Set Thread For Redaction</label>
-        <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationX>314</locationX>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>Get_Thread.STO_Sensitive_Information__c</assignToReference>
             <operator>Assign</operator>
@@ -24,6 +24,31 @@
             <targetReference>Update_Thread</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Check_If_Sensitive_Information_Is_True</name>
+        <label>Check If Sensitive Information Is True</label>
+        <locationX>182</locationX>
+        <locationY>278</locationY>
+        <defaultConnector>
+            <targetReference>Set_Thread_to_Redaction</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Thread.STO_Sensitive_Information__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Redaction_Thread_Screen</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
     <dynamicChoiceSets>
         <name>ConversationNote_Cause</name>
         <dataType>Picklist</dataType>
@@ -64,11 +89,11 @@
     <recordLookups>
         <name>Get_Thread</name>
         <label>Get Thread</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Set_Thread_to_Redaction</targetReference>
+            <targetReference>Check_If_Sensitive_Information_Is_True</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -85,16 +110,33 @@
     <recordUpdates>
         <name>Update_Thread</name>
         <label>Update Thread</label>
-        <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationX>314</locationX>
+        <locationY>638</locationY>
         <inputReference>Get_Thread</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
+        <name>Redaction_Thread_Screen</name>
+        <label>Redaction Thread Screen</label>
+        <locationX>50</locationX>
+        <locationY>398</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Screen_Message</name>
+            <fieldText>&lt;p&gt;Samtaletråden er allerede satt til sladding.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Ok</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Set_Thread_to_Redaction</name>
         <label>Set Thread to Redaction</label>
-        <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationX>314</locationX>
+        <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -159,7 +201,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Thread</targetReference>
