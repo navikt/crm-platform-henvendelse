@@ -13,7 +13,7 @@ import THREADCLOSED_FIELD from '@salesforce/schema/Thread__c.CRM_Is_Closed__c';
 
 const fields = [THREADNAME_FIELD, THREADCLOSED_FIELD]; //Extract the name of the thread record
 
-export default class CommityThreadViewer extends LightningElement {
+export default class crmMessagingCommunityThreadViewer extends LightningElement {
     _mySendForSplitting;
     messages = [];
     buttonisdisabled = false;
