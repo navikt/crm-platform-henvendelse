@@ -420,7 +420,10 @@
     <formulas>
         <name>Document_Title</name>
         <dataType>String</dataType>
-        <expression>&apos;Samtale med NAV - &apos; + LPAD(TEXT(DAY(DATEVALUE({!JOURNALED_THREAD.CRM_Closed_Date__c}))),2,&apos;0&apos;) + &apos;.&apos; + LPAD(TEXT(MONTH(DATEVALUE({!JOURNALED_THREAD.CRM_Closed_Date__c}))),2,&apos;0&apos;) + &apos;.&apos; + TEXT(YEAR(DATEVALUE({!JOURNALED_THREAD.CRM_Closed_Date__c})))</expression>
+        <expression>IF({!JOURNALED_THREAD.CRM_isActive__c} == true,
+&apos;Pågående samtale med NAV - &apos; + {!THREAD_START_DATE},
+&apos;Samtale med NAV - &apos; + {!THREAD_CLOSE_DATE}
+)</expression>
     </formulas>
     <formulas>
         <description>Formula to define the journal case type (Sakstype). If no Journal Case ID has been input, default is GENERELL_SAK</description>
@@ -433,6 +436,17 @@
         <name>Person_Full_Name</name>
         <dataType>String</dataType>
         <expression>{!Get_Account_Info.CRM_Person__r.INT_LastName__c} &amp; &apos;, &apos; &amp; {!Get_Account_Info.CRM_Person__r.INT_FirstName__c} &amp; &apos; &apos; &amp;{!Get_Account_Info.CRM_Person__r.INT_MiddleName__c}</expression>
+    </formulas>
+    <formulas>
+        <description>Formula to generate a text for when the thread was closed.</description>
+        <name>THREAD_CLOSE_DATE</name>
+        <dataType>String</dataType>
+        <expression>LPAD(TEXT(DAY(DATEVALUE({!JOURNALED_THREAD.CRM_Closed_Date__c}))),2,&apos;0&apos;) + &apos;.&apos; + LPAD(TEXT(MONTH(DATEVALUE({!JOURNALED_THREAD.CRM_Closed_Date__c}))),2,&apos;0&apos;) + &apos;.&apos; + TEXT(YEAR(DATEVALUE({!JOURNALED_THREAD.CRM_Closed_Date__c})))</expression>
+    </formulas>
+    <formulas>
+        <name>THREAD_START_DATE</name>
+        <dataType>String</dataType>
+        <expression>LPAD(TEXT(DAY(DATEVALUE({!JOURNALED_THREAD.CRM_Date_Time_Registered__c}))),2,&apos;0&apos;) + &apos;.&apos; + LPAD(TEXT(MONTH(DATEVALUE({!JOURNALED_THREAD.CRM_Date_Time_Registered__c}))),2,&apos;0&apos;) + &apos;.&apos; + TEXT(YEAR(DATEVALUE({!JOURNALED_THREAD.CRM_Date_Time_Registered__c})))</expression>
     </formulas>
     <interviewLabel>POST_JOURNAL_AUTO_TEMPLATE {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Journal Message Thread</label>
@@ -502,6 +516,8 @@
         <queriedFields>CRM_From_External__c</queriedFields>
         <queriedFields>CRM_Journal_Status__c</queriedFields>
         <queriedFields>CRM_Closed_Date__c</queriedFields>
+        <queriedFields>CRM_isActive__c</queriedFields>
+        <queriedFields>CRM_Date_Time_Registered__c</queriedFields>
     </recordLookups>
     <recordUpdates>
         <name>Update_Journal_Entry</name>
@@ -599,13 +615,5 @@
         <value>
             <booleanValue>true</booleanValue>
         </value>
-    </variables>
-    <variables>
-        <name>THREAD_TO_JOURNAL</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
-        <objectType>Thread__c</objectType>
     </variables>
 </Flow>
