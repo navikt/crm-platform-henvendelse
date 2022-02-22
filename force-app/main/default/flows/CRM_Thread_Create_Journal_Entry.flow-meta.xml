@@ -22,11 +22,11 @@
         <name>Check_Journal_Entries</name>
         <label>Check Journal Entries</label>
         <locationX>314</locationX>
-        <locationY>890</locationY>
+        <locationY>1226</locationY>
         <defaultConnector>
             <targetReference>Get_Theme_Common_Code</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>New Entry</defaultConnectorLabel>
+        <defaultConnectorLabel>New INN/UT Entry</defaultConnectorLabel>
         <rules>
             <name>Journal_Entry_Exists</name>
             <conditionLogic>and</conditionLogic>
@@ -37,14 +37,32 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <label>Journal Entry Exists</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Journal_Post_Type</name>
+        <label>Check Journal Post Type</label>
+        <locationX>314</locationX>
+        <locationY>890</locationY>
+        <defaultConnector>
+            <targetReference>Check_Journal_Entries</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Other Post Type</defaultConnectorLabel>
+        <rules>
+            <name>New_Journal_NOTAT</name>
+            <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Existing_Journal_Entry.CRM_Journal_Post_Type__c</leftValueReference>
-                <operator>NotEqualTo</operator>
+                <leftValueReference>JOURNAL_POST_TYPE_FORMULA</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>NOTAT</stringValue>
                 </rightValue>
             </conditions>
-            <label>Journal Entry Exists</label>
+            <connector>
+                <targetReference>Create_New_NOTAT_Journal_Entry</targetReference>
+            </connector>
+            <label>New Journal NOTAT</label>
         </rules>
     </decisions>
     <decisions>
@@ -53,7 +71,7 @@
         <locationX>314</locationX>
         <locationY>398</locationY>
         <defaultConnector>
-            <targetReference>Check_Journal_Entries</targetReference>
+            <targetReference>Check_Journal_Post_Type</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -88,6 +106,15 @@
     )
 )</expression>
     </formulas>
+    <formulas>
+        <description>Formula to define if the journal post for the thread is INNGAAENDE or UTGAAENDE.</description>
+        <name>JOURNAL_POST_TYPE_INN_UT_FORMULA</name>
+        <dataType>String</dataType>
+        <expression>IF({!Get_thread.CRM_From_External__c} == true,
+    &apos;INNGAAENDE&apos;,
+    &apos;UTGAAENDE&apos;
+)</expression>
+    </formulas>
     <interviewLabel>Thread Create Journal Entry {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Thread Create Journal Entry</label>
     <processMetadataValues>
@@ -113,13 +140,78 @@
         <name>Create_Journal_Entry</name>
         <label>Create Journal Entry</label>
         <locationX>446</locationX>
-        <locationY>1130</locationY>
+        <locationY>1466</locationY>
         <connector>
             <targetReference>Update_Thread_Categorization</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Log_Error</targetReference>
         </faultConnector>
+        <inputAssignments>
+            <field>CRM_Created_By_Ident__c</field>
+            <value>
+                <elementReference>Journal_Entry_NAV_Ident</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CRM_Created_By_NAV_Unit__c</field>
+            <value>
+                <elementReference>Journal_Entry_Unit</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CRM_Journal_Date__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CRM_Journal_Post_Type__c</field>
+            <value>
+                <elementReference>JOURNAL_POST_TYPE_INN_UT_FORMULA</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CRM_NAV_Case_Legacy_System__c</field>
+            <value>
+                <elementReference>Journal_Case_Legacy_System</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CRM_Thread__c</field>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Journal_Entry_Status__c</field>
+            <value>
+                <stringValue>In Progress</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NAV_Case_Reference__c</field>
+            <value>
+                <elementReference>Journal_Case_ID</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Theme__c</field>
+            <value>
+                <elementReference>Get_Theme_Common_Code.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Journal_Entry__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_New_NOTAT_Journal_Entry</name>
+        <label>Create New NOTAT Journal Entry</label>
+        <locationX>182</locationX>
+        <locationY>1010</locationY>
+        <connector>
+            <targetReference>Check_Journal_Entries</targetReference>
+        </connector>
         <inputAssignments>
             <field>CRM_Created_By_Ident__c</field>
             <value>
@@ -208,6 +300,13 @@
                 <elementReference>Journal_Case_ID</elementReference>
             </value>
         </filters>
+        <filters>
+            <field>CRM_Journal_Post_Type__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>NOTAT</stringValue>
+            </value>
+        </filters>
         <object>Journal_Entry__c</object>
         <outputReference>Existing_Journal_Entry</outputReference>
         <queriedFields>Id</queriedFields>
@@ -218,7 +317,7 @@
         <name>Get_Theme_Common_Code</name>
         <label>Get Theme Common Code</label>
         <locationX>446</locationX>
-        <locationY>1010</locationY>
+        <locationY>1346</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Create_Journal_Entry</targetReference>
@@ -265,6 +364,7 @@
         <queriedFields>Id</queriedFields>
         <queriedFields>CRM_Journal_Status__c</queriedFields>
         <queriedFields>CRM_From_External__c</queriedFields>
+        <queriedFields>CRM_isActive__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
@@ -272,7 +372,7 @@
         <name>Update_Thread_Categorization</name>
         <label>Update Thread Categorization</label>
         <locationX>446</locationX>
-        <locationY>1250</locationY>
+        <locationY>1586</locationY>
         <faultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Log_Error</targetReference>
@@ -305,7 +405,7 @@
         <locationX>50</locationX>
         <locationY>638</locationY>
         <connector>
-            <targetReference>Check_Journal_Entries</targetReference>
+            <targetReference>Check_Journal_Post_Type</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -326,7 +426,7 @@
         <name>Log_Error</name>
         <label>Log Error</label>
         <locationX>974</locationX>
-        <locationY>1250</locationY>
+        <locationY>1586</locationY>
         <flowName>Flow_Create_Application_Log</flowName>
         <inputAssignments>
             <name>Application_Domain</name>
