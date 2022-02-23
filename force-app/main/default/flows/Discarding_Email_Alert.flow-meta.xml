@@ -91,7 +91,7 @@
             <targetReference>Discarding_Email_Alert</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>errorMessage</name>
         <dataType>String</dataType>
