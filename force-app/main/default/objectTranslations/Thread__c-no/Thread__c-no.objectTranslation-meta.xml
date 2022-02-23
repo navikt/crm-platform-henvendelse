@@ -31,7 +31,18 @@
         <value>Tråder</value>
     </caseValues>
     <gender>Masculine</gender>
+    <layouts>
+        <layout>Thread Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
     <nameFieldLabel>Tråd</nameFieldLabel>
+    <quickActions>
+        <label><!-- Trenger ikke å sladdes --></label>
+        <name>Abort_Redaction</name>
+    </quickActions>
     <quickActions>
         <aspect>Master</aspect>
         <label>Fullfør sladding</label>
@@ -41,5 +52,10 @@
         <aspect>Master</aspect>
         <label>Kasser</label>
         <name>Discard_Messages</name>
+    </quickActions>
+    <quickActions>
+        <aspect>Master</aspect>
+        <label>Sett til sladding</label>
+        <name>Set_to_Redaction</name>
     </quickActions>
 </CustomObjectTranslation>
