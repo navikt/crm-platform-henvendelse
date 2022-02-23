@@ -69,9 +69,8 @@ export default class crmQuickText extends LightningElement {
         this.template.querySelector('lightning-input').focus();
     }
 
-    hideModal(event) {
+    hideModal() {
         this.template.querySelector('[data-id="modal"]').className = 'modalHide';
-        event.stopPropagation();
     }
 
     outsideClickListener = (e) => {
