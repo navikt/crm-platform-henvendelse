@@ -4,8 +4,8 @@
     <assignments>
         <name>Set_Conversation_Note_for_redaction</name>
         <label>Set Conversation Note for redaction</label>
-        <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationX>314</locationX>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>Get_Conversation_Note.STO_Sensitive_Information__c</assignToReference>
             <operator>Assign</operator>
@@ -24,12 +24,37 @@
             <targetReference>Update_Conversation_Note</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Check_If_Sensitive_Information_Is_True</name>
+        <label>Check If Sensitive Information Is True</label>
+        <locationX>182</locationX>
+        <locationY>278</locationY>
+        <defaultConnector>
+            <targetReference>Set_Conversation_Note_to_redaction</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Conversation_Note.STO_Sensitive_Information__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Redaction_Conversation_Note_Screen</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
     <description>Active sensitive information for conversation note and add redaction cause</description>
     <dynamicChoiceSets>
         <name>ConversationNote_Cause</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
         <picklistField>Cause__c</picklistField>
         <picklistObject>Conversation_Note__c</picklistObject>
     </dynamicChoiceSets>
@@ -57,11 +82,11 @@
     <recordLookups>
         <name>Get_Conversation_Note</name>
         <label>Get Conversation Note</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Set_Conversation_Note_to_redaction</targetReference>
+            <targetReference>Check_If_Sensitive_Information_Is_True</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -78,16 +103,33 @@
     <recordUpdates>
         <name>Update_Conversation_Note</name>
         <label>Update Conversation Note</label>
-        <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationX>314</locationX>
+        <locationY>638</locationY>
         <inputReference>Get_Conversation_Note</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
+        <name>Redaction_Conversation_Note_Screen</name>
+        <label>Redaction Conversation Note Screen</label>
+        <locationX>50</locationX>
+        <locationY>398</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Screen_Message</name>
+            <fieldText>&lt;p&gt;Samtalereferatet er allerede satt til sladding.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Ok</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Set_Conversation_Note_to_redaction</name>
         <label>Set Conversation Note to Redaction</label>
-        <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationX>314</locationX>
+        <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -152,7 +194,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Conversation_Note</targetReference>
