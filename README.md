@@ -12,6 +12,8 @@ This package is dependant on the following packages
 
 -   [crm-platform-base](https://github.com/navikt/crm-platform-base)
 -   [crm-journal-utilities](https://github.com/navikt/crm-journal-utilities)
+-   [crm-shared-user-notification](https://github.com/navikt/crm-shared-user-notification)
+-   [crm-shared-flowComponents](https://github.com/navikt/crm-shared-flowComponents)
 
 ## Installation
 
