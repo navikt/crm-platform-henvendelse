@@ -2,26 +2,26 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>53.0</apiVersion>
     <assignments>
-        <name>Set_Conversation_Note_for_redaction</name>
-        <label>Set Conversation Note for redaction</label>
+        <name>Set_Thread_For_Redaction</name>
+        <label>Set Thread For Redaction</label>
         <locationX>314</locationX>
         <locationY>518</locationY>
         <assignmentItems>
-            <assignToReference>Get_Conversation_Note.STO_Sensitive_Information__c</assignToReference>
+            <assignToReference>Get_Thread.STO_Sensitive_Information__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Sensitive_Toggle.value</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Conversation_Note.Cause__c</assignToReference>
+            <assignToReference>Get_Thread.Cause__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>ConversationNote_Cause</elementReference>
+                <elementReference>Thread_Cause</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_Conversation_Note</targetReference>
+            <targetReference>Update_Thread</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -30,26 +30,25 @@
         <locationX>182</locationX>
         <locationY>278</locationY>
         <defaultConnector>
-            <targetReference>Set_Conversation_Note_to_redaction</targetReference>
+            <targetReference>Set_Thread_to_Redaction</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Conversation_Note.STO_Sensitive_Information__c</leftValueReference>
+                <leftValueReference>Get_Thread.STO_Sensitive_Information__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Redaction_Conversation_Note_Screen</targetReference>
+                <targetReference>Redaction_Thread_Screen</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
     </decisions>
-    <description>Active sensitive information for conversation note and add redaction cause</description>
     <dynamicChoiceSets>
         <name>ConversationNote_Cause</name>
         <dataType>Picklist</dataType>
@@ -58,8 +57,16 @@
         <picklistField>Cause__c</picklistField>
         <picklistObject>Conversation_Note__c</picklistObject>
     </dynamicChoiceSets>
-    <interviewLabel>Conversation Note Set Redaction {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Conversation Note Set to Redaction</label>
+    <dynamicChoiceSets>
+        <name>Thread_Cause</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Cause__c</picklistField>
+        <picklistObject>Thread__c</picklistObject>
+    </dynamicChoiceSets>
+    <interviewLabel>Thread Set To Redaction {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Thread Set To Redaction</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -80,8 +87,8 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
-        <name>Get_Conversation_Note</name>
-        <label>Get Conversation Note</label>
+        <name>Get_Thread</name>
+        <label>Get Thread</label>
         <locationX>182</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
@@ -97,20 +104,20 @@
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Conversation_Note__c</object>
+        <object>Thread__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <name>Update_Conversation_Note</name>
-        <label>Update Conversation Note</label>
+        <name>Update_Thread</name>
+        <label>Update Thread</label>
         <locationX>314</locationX>
         <locationY>638</locationY>
-        <inputReference>Get_Conversation_Note</inputReference>
+        <inputReference>Get_Thread</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
-        <name>Redaction_Conversation_Note_Screen</name>
-        <label>Redaction Conversation Note Screen</label>
+        <name>Redaction_Thread_Screen</name>
+        <label>Redaction Thread Screen</label>
         <locationX>50</locationX>
         <locationY>398</locationY>
         <allowBack>false</allowBack>
@@ -118,7 +125,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Screen_Message</name>
-            <fieldText>&lt;p&gt;Samtalereferatet er allerede satt til sladding.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Samtaletråden er allerede satt til sladding.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <nextOrFinishButtonLabel>Ok</nextOrFinishButtonLabel>
@@ -126,15 +133,15 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Set_Conversation_Note_to_redaction</name>
-        <label>Set Conversation Note to Redaction</label>
+        <name>Set_Thread_to_Redaction</name>
+        <label>Set Thread to Redaction</label>
         <locationX>314</locationX>
         <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Set_Conversation_Note_for_redaction</targetReference>
+            <targetReference>Set_Thread_For_Redaction</targetReference>
         </connector>
         <fields>
             <name>Sensitive_Toggle</name>
@@ -170,10 +177,10 @@
         </fields>
         <fields>
             <name>Cause</name>
-            <choiceReferences>ConversationNote_Cause</choiceReferences>
+            <choiceReferences>Thread_Cause</choiceReferences>
             <dataType>String</dataType>
             <defaultValue>
-                <stringValue>Sendt feil bruker</stringValue>
+                <stringValue>Utenfor NAVs behandlingsområde</stringValue>
             </defaultValue>
             <fieldText>Årsak</fieldText>
             <fieldType>DropdownBox</fieldType>
@@ -197,7 +204,7 @@
         <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Conversation_Note</targetReference>
+            <targetReference>Get_Thread</targetReference>
         </connector>
     </start>
     <status>Active</status>
