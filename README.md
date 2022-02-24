@@ -60,7 +60,7 @@ Baseline access to functionality in regards to the core is covered in the Messag
 
 ## 3. Core components
 
-The frontend functionality is delivered by a set og LWC that can be exposed [externally](force-app/main/default/core-functionality/external-components/.doc/) and [internally](force-app/main/default/core-functionality/internal-components/)
+The frontend functionality is delivered by a set og LWC that can be exposed [externally](force-app/main/default/core-functionality/external-components/.doc/) and [internally](force-app/main/default/core-functionality/internal-components/.doc/)
 
 ## 3. Guidelines
 
