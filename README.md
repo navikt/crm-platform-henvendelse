@@ -70,6 +70,7 @@ When implementing use of this package there are some important guidelines to fol
 2. Be extremely careful when implementing validation rules to ensure these do ONLY trigger for your process' thread type
 3. Please contact #crm-platform-team on slack if you require i.e. new message type or event types for to ensure this keeps the core functionality intact.
 4. As of now the API defined in RestServices is tightly connected to STO/STB flow so please contact the team if there is need to restructure the API for more generic thread type handling (should be fairly easy to implement)
+5. For journal and archive requirements a discussion is needed as currently the document template is a bit tightly connected to the STO solution and would need minor rework.
 
 ## 4. Dependencies
 
