@@ -157,6 +157,7 @@ public with sharing class CRM_MessageHelper {
         m.CRM_Message_Text__c = messageText;
         m.CRM_Thread__c = threadId;
         m.CRM_From_Contact__c = fromContactId;
+        m.CRM_Read__c = true;
 
         try {
             insert m;
