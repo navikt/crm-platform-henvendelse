@@ -158,6 +158,7 @@ public with sharing class CRM_MessageHelper {
         m.CRM_Thread__c = threadId;
         m.CRM_From_Contact__c = fromContactId;
         m.CRM_Read__c = true;
+        m.CRM_Read_Datetime__c = DateTime.now();
 
         try {
             insert m;
