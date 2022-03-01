@@ -2,13 +2,9 @@
     <div class="decorator-wrapper">
         <div class="header" style="text-align: center">
             <h1 class="typo-sidetittel">{name}</h1>
+            <slot name="subheader"></slot>
         </div>
-        <c-community-error-summary
-            error-list={errors}
-            show-warnings={showWarnings}
-            onclickedevent={handleErrorClick}
-            class="errorSummary"
-        >
+        <c-community-error-summary error-list={errorList} onclickedevent={handleErrorClick} class="errorSummary">
         </c-community-error-summary>
         <div class="contentholder">
             <template for:each={messages} for:item="message">
@@ -46,7 +42,7 @@
                                         class="knapp knapp--hoved .slds-float_right"
                                         name="submit"
                                         label="Send"
-                                        onclick={createMessage}
+                                        onclick={handleSendButtonClick}
                                     >
                                         Send
                                     </button>
