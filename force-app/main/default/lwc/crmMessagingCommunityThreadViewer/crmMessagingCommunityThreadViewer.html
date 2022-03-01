@@ -2,13 +2,9 @@
     <div class="decorator-wrapper">
         <div class="header" style="text-align: center">
             <h1 class="navds-heading navds-heading--2xlarge">{name}</h1>
+            <slot name="subheader"></slot>
         </div>
-        <c-community-error-summary
-            error-list={errors}
-            show-warnings={showWarnings}
-            onclickedevent={handleErrorClick}
-            class="errorSummary"
-        >
+        <c-community-error-summary error-list={errorList} onclickedevent={handleErrorClick} class="errorSummary">
         </c-community-error-summary>
         <div class="contentholder">
             <template for:each={messages} for:item="message">
@@ -47,7 +43,7 @@
                                         style="padding: calc(0.475rem - 1px) 2.5rem calc(0.525rem - 1px) 2.5rem"
                                         name="submit"
                                         label="Send"
-                                        onclick={createMessage}
+                                        onclick={handleSendButtonClick}
                                     >
                                         Send
                                     </button>
