@@ -17,6 +17,7 @@ Below are some of the most essential fields defined on Thread\_\_c
 | Name                             | Type             | Required | Description                                                                                                                                                        |
 | :------------------------------- | :--------------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | CRM_Account\_\_c                 | Lookup(Account)  | false    | If the thread is related to an account, standard sharing setup will automatically grant access to the related community user (for person accounts)                 |
+| CRM_Thread_Type\_\_c             | Picklist         | false    | Specifies the type of thread and should be used to filter all process automation built upon the core solution                                                      |
 | CRM_Related_Object\_\_c          | String           | false    | Reference to the object the thread related to (i.e. a Salesforce ID of a record)                                                                                   |
 | CRM_Related_Object_Type\_\_c     | String           | false    | API name of the reference in related object (If this is a SF ID)                                                                                                   |
 | CRM_Latest_Message_Datetime\_\_c | String           | false    | Depicts the timestamp of the newest message in the thread (Calculated via flow)                                                                                    |
@@ -25,6 +26,7 @@ Below are some of the most essential fields defined on Thread\_\_c
 | CRM_From_External\_\_c           | Formula(Boolean) | false    | Formula field to determine if the dialogue was initiated by the external party or NAV                                                                              |
 | CRM_API_Reference\_\_c           | String           | false    | To prevent exposing salesforce external IDs in an API this field is always automatically generated for new record                                                  |
 | CRM_Date_Time_Registered\_\_c    | Datetime         | false    | Automatically populated on creation of new threads (supporting migrating conversations from other systems without tampering with the system generated CreatedDate) |
+| CRM_Sensitive_Information\_\_c   | Boolean          | false    | Boolean tag to activate the redaction process for a thread. Contact the team for more information about this.                                                      |
 
 ### 1.2 Message model
 
@@ -38,8 +40,8 @@ Below are some of the most essential fields defined on Message\_\_c
 | CRM_Message_Text\_\_c | String              | false    | The actual message text                                                                                                                                                                         |
 | CRM_Sent_date\_\_c    | Datetime            | false    | Timestamp for when the message was sent (defaults to created date in flow if not set upon insert)                                                                                               |
 | CRM_Read\_\_c         | Boolean             | true     | Reflects the state of the message (from end-user side) if the message has been read. This is automatically set to true when opening the thread via the <i>crmMessagingCommunityThreadViewer</i> |
-| CRM_From_User\_\_c    | Boolean             | true     | Reflects the state of the message (from end-user side) if the message has been read. This is automatically set to true when opening the thread via the <i>crmMessagingCommunityThreadViewer</i> |
-| CRM_Read\_\_c         | Boolean             | true     | Reflects the state of the message (from end-user side) if the message has been read. This is automatically set to true when opening the thread via the <i>crmMessagingCommunityThreadViewer</i> |
+| CRM_From_User\_\_c    | Boolean             | true     | Lookup to a user record if the message has been sent from an internal user                                                                                                                      |
+| CRM_From_Contact\_\_c | Boolean             | true     | Lookup to a contact record if the message has been sent from an external user                                                                                                                   |
 
 ### 1.3 Conversation note model
 
