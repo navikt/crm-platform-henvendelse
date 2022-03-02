@@ -279,7 +279,7 @@
             <targetReference>Get_Conversation_Note</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Create_Innboks_User_Notification</name>
         <label>Create Innboks User Notification</label>
@@ -309,7 +309,7 @@
     <textTemplates>
         <name>Update_Conversation_Note_After_Discarding</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>{!$Label.CRMHenvendelse_ConversationNote_RedactedMessageNotificationText} {!$Flow.CurrentDateTime}</text>
+        <text>{!$Label.CRMHenvendelse_ConversationNote_DiscardedMessageNotificationText} {!$Flow.CurrentDateTime}</text>
     </textTemplates>
     <variables>
         <name>newUserNotification</name>
