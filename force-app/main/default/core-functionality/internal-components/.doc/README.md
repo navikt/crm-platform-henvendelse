@@ -11,6 +11,6 @@ TODO: Some properties in the component could potentially be exposed to allow cha
 
 ## Redaction
 
-By enabling access to the <strong>crmMessagingRedatcThreadViewer</strong> a thread that is marked with CRM_Sensitive_Information\_\_c (true) is in redaction mode and can be redacted. It is recommended to enable access to this component by i.e. granting a user the Redaction_Custom_Permission.
+By enabling access to the <strong>crmMessagingRedactThreadViewer</strong> a thread that is marked with CRM_Sensitive_Information\_\_c (true) is in redaction mode and can be redacted. It is recommended to enable access to this component by i.e. granting a user the Redaction_Custom_Permission.
 
 ![Thread Redaction](thread_redaction.png)
