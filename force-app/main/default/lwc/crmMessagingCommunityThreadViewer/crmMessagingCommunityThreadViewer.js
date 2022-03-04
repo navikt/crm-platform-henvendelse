@@ -28,9 +28,6 @@ export default class crmMessagingCommunityThreadViewer extends LightningElement 
     @api overrideValidation = false;
     @api errorList = { title: '', errors: [] };
 
-    @api testang;
-    @api testtt;
-
     connectedCallback() {
         markasread({ threadId: this.recordId });
         getContactId({})
