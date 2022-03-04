@@ -34,6 +34,6 @@ export default class CommunityErrorSummary extends LightningElement {
     }
 
     get title() {
-        return this.errorList.title !== '' ? this.errorList.title : this.originalTitle;
+        return (!this.errorList.title || this.errorList.title === 0) ? this.errorList.title : this.originalTitle;
     }
 }
