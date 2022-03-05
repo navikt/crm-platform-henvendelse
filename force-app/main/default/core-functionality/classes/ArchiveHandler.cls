@@ -11,13 +11,23 @@ public with sharing class ArchiveHandler {
         List<String> returnList = new List<String>();
         for (ArchivePostWrapper input : inputs) {
             SObject archiveObject = input.archiveObject;
-            if(input.archiveObject.getSObjectType().getDescribe().getName() == 'Thread__c'){
+            if (input.archiveObject.getSObjectType().getDescribe().getName() == 'Thread__c') {
                 List<Thread__c> threadWithMessage = [
-                SELECT Id,
-                    (SELECT Id, Name, CRM_Message_Text__c, CRM_Thread_Type__c, CRM_Read_Datetime__c, CRM_Sent_date__c, CRM_Henvendelse_BehandlingsId__c 
-                    FROM Messages__r) 
-                FROM Thread__c
-                WHERE Id=:input.archiveObject.Id
+                    SELECT
+                        Id,
+                        (
+                            SELECT
+                                Id,
+                                Name,
+                                CRM_Message_Text__c,
+                                CRM_Thread_Type__c,
+                                CRM_Read_Datetime__c,
+                                CRM_Sent_date__c,
+                                CRM_Henvendelse_BehandlingsId__c
+                            FROM Messages__r
+                        )
+                    FROM Thread__c
+                    WHERE Id = :input.archiveObject.Id
                 ];
                 archiveObject = (SObject) threadWithMessage[0];
             }
@@ -60,7 +70,8 @@ public with sharing class ArchiveHandler {
         @invocableVariable
         public String dokumentasjonId;
 
-        public ArchivePostWrapper(){}
+        public ArchivePostWrapper() {
+        }
         @TestVisible
         public ArchivePostWrapper(
             SObject archiveObject,
