@@ -26,8 +26,8 @@ export default class crmMessagingCommunityThreadViewer extends LightningElement 
     @api alertopen;
     threadId;
     @api maxLength;
-    showTextboxEmptyWarning = false;
-    showTextboxFullWarning = false;
+    @api overrideValidation = false;
+    @api errorList = { title: '', errors: [] };
 
     connectedCallback() {
         markasread({ threadId: this.recordId });
@@ -94,28 +94,72 @@ export default class crmMessagingCommunityThreadViewer extends LightningElement 
         return refreshApex(this._mySendForSplitting);
     }
 
+    handleMessageFailed() {
+        this.buttonisdisabled = true;
+        refreshApex(this._mySendForSplitting);
+        // eslint-disable-next-line @lwc/lwc/no-api-reassignments
+        this.errorList = {
+            title: 'Denne samtalen har blitt avsluttet.',
+            errors: [
+                {
+                    Id: 1,
+                    EventItem: '',
+                    Text:
+                        'Vil du <a href="https://www.nav.no/person/kontakt-oss/nb/skriv-til-oss">sende en ny melding</a>, kan du gjøre det her. Husk å kopiere det du har skrevet.'
+                }
+            ]
+        };
+        let errorSummary = this.template.querySelector('.errorSummary');
+        errorSummary.focusHeader();
+    }
+
     /**
      * Creates a message through apex
      */
-    createMessage() {
-        if (!this.valid()) {
+    @api
+    createMessage(validation) {
+        if (validation !== true) {
+            this.buttonisdisabled = false;
             return;
         }
-        this.buttonisdisabled = true;
         createmsg({ threadId: this.recordId, messageText: this.msgVal, fromContactId: this.userContactId })
             .then((result) => {
-                this.handlesuccess();
+                if (result === true) {
+                    this.handlesuccess();
+                } else {
+                    this.handleMessageFailed();
+                }
             })
             .catch((error) => console.log(error));
     }
 
+    handleSendButtonClick() {
+        this.buttonisdisabled = true;
+        // Sending out event to parent to handle any needed validation
+        if (this.overrideValidation === true) {
+            const validationEvent = new CustomEvent('validationevent', {
+                msg: this.msgVal,
+                maxLength: this.maxLength
+            });
+            this.dispatchEvent(validationEvent);
+        } else {
+            // Using default validation
+            this.createMessage(this.valid());
+        }
+    }
+
     valid() {
-        this.showTextboxEmptyWarning = false;
-        this.showTextboxFullWarning = false;
+        // This function will never run of errorList is defined from parent with overrideValidation
+        // eslint-disable-next-line @lwc/lwc/no-api-reassignments
+        this.errorList = { title: '', errors: [] };
         if (!this.msgVal || this.msgVal.length == null) {
-            this.showTextboxEmptyWarning = true;
-        } else if (this.maxLength !== 0 && this.maxLength != null && this.msgVal.length >= this.maxLength) {
-            this.showTextboxFullWarning = true;
+            this.errorList.errors.push({ Id: 1, EventItem: '.inputTextbox', Text: 'Tekstboksen kan ikke være tom.' });
+        } else if (this.maxLength !== 0 && this.maxLength != null && this.msgVal.length > this.maxLength) {
+            this.errorList.errors.push({
+                Id: 2,
+                EventItem: '.inputTextbox',
+                Text: 'Det er for mange tegn i tekstboksen.'
+            });
         } else {
             return true;
         }
@@ -126,25 +170,6 @@ export default class crmMessagingCommunityThreadViewer extends LightningElement 
 
     handleTextChange(event) {
         this.msgVal = event.detail;
-    }
-
-    get errors() {
-        let errorList = [];
-        if (this.showTextboxEmptyWarning) {
-            errorList.push({ Id: 1, EventItem: '.inputTextbox', Text: 'Tekstboksen kan ikke være tom.' });
-        }
-        if (this.showTextboxFullWarning) {
-            errorList.push({
-                Id: 2,
-                EventItem: '.inputTextbox',
-                Text: 'Det er for mange tegn i tekstboksen.'
-            });
-        }
-        return errorList;
-    }
-
-    get showWarnings() {
-        return this.showTextboxEmptyWarning || this.showTextboxFullWarning;
     }
 
     handleErrorClick(event) {
