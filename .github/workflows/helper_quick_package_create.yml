@@ -1,7 +1,7 @@
-name: "[PR MERGE] UAT Quick Package Create"
+name: "Quick Package Create"
 on:
   workflow_dispatch:
-  
+
 jobs:
   # ################################################################# #
   # ######################## CREATE PACKAGE ######################### #
@@ -58,7 +58,7 @@ jobs:
   # ################################################################# #
   create-release:
     name: Create alpha release
-    needs: [create-package, validate-in-uat]
+    needs: [create-package]
     runs-on: ubuntu-latest
     steps:
       # Checkout source code
