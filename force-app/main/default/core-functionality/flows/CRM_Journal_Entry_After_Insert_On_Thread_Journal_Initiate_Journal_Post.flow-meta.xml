@@ -2,11 +2,56 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>54.0</apiVersion>
     <decisions>
+        <description>Determines the thread type and calls the correct subflow that is overrideable.</description>
+        <name>Check_Thread_Type</name>
+        <label>Check Thread Type</label>
+        <locationX>539</locationX>
+        <locationY>408</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>STO_STB_Type</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Thread_State.CRM_Thread_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>STO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Thread_State.CRM_Thread_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>STB</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Verify_Post_Criteria</targetReference>
+            </connector>
+            <label>STO/STB Type</label>
+        </rules>
+        <rules>
+            <name>CHAT_Type</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Thread_State.CRM_Thread_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>CHAT</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Journal_Chat_Thread</targetReference>
+            </connector>
+            <label>CHAT Type</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Checks if the journal post is to be performed directly. This is the case if the thread is journaled after it has been closed, or if the post type is NOTAT.</description>
         <name>Verify_Post_Criteria</name>
         <label>Verify Post Criteria</label>
-        <locationX>374</locationX>
-        <locationY>408</locationY>
+        <locationX>209</locationX>
+        <locationY>528</locationY>
         <defaultConnectorLabel>Post Later</defaultConnectorLabel>
         <rules>
             <name>Do_Post</name>
@@ -56,11 +101,11 @@
     <recordLookups>
         <name>Get_Thread_State</name>
         <label>Get Thread State</label>
-        <locationX>374</locationX>
+        <locationX>539</locationX>
         <locationY>288</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Verify_Post_Criteria</targetReference>
+            <targetReference>Check_Thread_Type</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -74,6 +119,7 @@
         <object>Thread__c</object>
         <queriedFields>Id</queriedFields>
         <queriedFields>CRM_isActive__c</queriedFields>
+        <queriedFields>CRM_Thread_Type__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
@@ -104,10 +150,18 @@
     </start>
     <status>Active</status>
     <subflows>
+        <name>Journal_Chat_Thread</name>
+        <label>Journal Chat Thread</label>
+        <locationX>605</locationX>
+        <locationY>528</locationY>
+        <flowName>CRM_Journal_CHAT_Thread</flowName>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
         <name>Post_Journal_to_JOARK</name>
         <label>Post Journal to JOARK</label>
-        <locationX>242</locationX>
-        <locationY>528</locationY>
+        <locationX>77</locationX>
+        <locationY>648</locationY>
         <flowName>CRM_Journal_Message_Thread</flowName>
         <inputAssignments>
             <name>Journal_Entry_SF</name>
