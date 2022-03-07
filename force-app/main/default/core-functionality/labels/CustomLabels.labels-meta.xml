@@ -9,6 +9,14 @@
         <value>Conversation Note Blank Error</value>
     </labels>
     <labels>
+        <fullName>CRMHenvendelse_ConversationNote_DiscardedMessageNotificationText</fullName>
+        <categories>Henvendelse, User Notification, Sladding, Samtalereferat</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Conversation Note Discarded Message Notification Text</shortDescription>
+        <value>Innhold i referatet ditt  har blitt slettet fordi den inneholdt informasjon som ikke kan behandles, forvaltes eller lagres av denne tjenesten.</value>
+    </labels>
+    <labels>
         <fullName>CRMHenvendelse_ConversationNote_RedactedMessageNotificationText</fullName>
         <categories>Henvendelse, User Notification, Sladding, Samtalereferat</categories>
         <language>en_US</language>
