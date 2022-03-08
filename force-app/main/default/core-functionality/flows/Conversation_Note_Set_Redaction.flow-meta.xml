@@ -20,6 +20,13 @@
                 <elementReference>ConversationNote_Cause</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Conversation_Note.Redaction_Cause_Free_Text__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Cause_Description</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Update_Conversation_Note</targetReference>
         </connector>
@@ -185,6 +192,23 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Cause_Description</name>
+            <dataType>String</dataType>
+            <fieldText>Årsaks beskrivelse</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Cause</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Annen årsak</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
