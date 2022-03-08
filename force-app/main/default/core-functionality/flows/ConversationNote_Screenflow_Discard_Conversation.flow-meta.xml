@@ -159,7 +159,7 @@
         <inputAssignments>
             <field>Cause__c</field>
             <value>
-                <stringValue />
+                <stringValue/>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -309,9 +309,7 @@
     <textTemplates>
         <name>Update_Conversation_Note_After_Discarding</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>{!$Label.CRMHenvendelse_ConversationNote_RedactedMessageNotificationText} {!$Flow.CurrentDateTime}
-
-{!Get_Conversation_Note.CRM_Conversation_Note__c}</text>
+        <text>{!$Label.CRMHenvendelse_ConversationNote_DiscardedMessageNotificationText} {!$Flow.CurrentDateTime}</text>
     </textTemplates>
     <variables>
         <name>newUserNotification</name>

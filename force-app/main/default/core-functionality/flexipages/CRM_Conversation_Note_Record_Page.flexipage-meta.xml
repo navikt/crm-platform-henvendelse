@@ -17,6 +17,16 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
+                            <value>Conversation_Note__c.Discard_Conversation</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Redaction_Custom_Permission}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Conversation_Note__c.Abort_Redaction</value>
                             <visibilityRule>
                                 <criteria>
