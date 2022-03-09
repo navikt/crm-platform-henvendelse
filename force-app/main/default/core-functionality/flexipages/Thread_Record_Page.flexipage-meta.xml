@@ -140,6 +140,23 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>required</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Redaction_Cause_Free_Text__c</fieldItem>
+                <identifier>RecordRedaction_Cause_Free_Text_cField1</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Cause__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Andre årsaker</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
                 <fieldItem>Record.Journaled__c</fieldItem>
                 <identifier>RecordJournaled_cField1</identifier>
             </fieldInstance>
