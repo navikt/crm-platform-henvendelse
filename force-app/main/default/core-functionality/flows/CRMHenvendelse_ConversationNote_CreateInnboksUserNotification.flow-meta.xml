@@ -26,7 +26,7 @@
         <inputParameters>
             <name>fodselsnummer</name>
             <value>
-                <elementReference>Get_Person.Name</elementReference>
+                <elementReference>ConversationNote.Redaction_Person_Ident__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
