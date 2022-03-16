@@ -155,6 +155,12 @@
         <locationX>605</locationX>
         <locationY>528</locationY>
         <flowName>CRM_Journal_CHAT_Thread</flowName>
+        <inputAssignments>
+            <name>Journal_Entry_SF</name>
+            <value>
+                <elementReference>$Record</elementReference>
+            </value>
+        </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <subflows>
