@@ -349,6 +349,57 @@
                     }
                 }
             }
+        },
+        "/henvendelse/sladding/{kjedeId}": {
+            "post": {
+                "tags": ["Henvendelse Behandling"],
+                "description": "Sender en henvendelse til sladdekø med valgt årsakskode",
+                "parameters": [
+                    {
+                        "name": "kjedeId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Unik ID til henvendelsen"
+                    },
+                    {
+                        "$ref": "#/components/parameters/X-Correlation-ID"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Sladdeaarsak"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Henvendelse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
         }
     },
     "security": [{ "Salesforce_auth": [] }],
@@ -731,6 +782,27 @@
                     }
                 },
                 "required": ["statusCode", "message"]
+            },
+            "Sladdeaarsak": {
+                "type": "object",
+                "properties": {
+                    "aarsakskode": {
+                        "type": "string",
+                        "description": "Begrunnelse for å sende henvendelse til sladdekø",
+                        "enum": [
+                            "SENDT_FEIL_BRUKER",
+                            "OKONOMISK_SOSIALHJELP",
+                            "SIKKERHETSHENDELSE",
+                            "UTENFOR_NAVS_BEHANDLINGSOMRADE",
+                            "ANNEN"
+                        ]
+                    },
+                    "fritekst": {
+                        "type": "string",
+                        "description": "Fritekstfelt som kan benytte om årsakskode ANNEN er valgt"
+                    }
+                },
+                "required": ["aarsakskode"]
             }
         },
         "responses": {
