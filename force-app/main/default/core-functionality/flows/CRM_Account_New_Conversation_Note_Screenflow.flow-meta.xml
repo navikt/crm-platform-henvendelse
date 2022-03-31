@@ -6,7 +6,7 @@
         <name>Journal_Check</name>
         <label>Journal Check</label>
         <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <defaultConnectorLabel>No Journal</defaultConnectorLabel>
         <rules>
             <name>Do_Journal</name>
@@ -69,7 +69,7 @@ null)</expression>
         <name>Create_Conversation_Note</name>
         <label>Create Conversation Note</label>
         <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationY>398</locationY>
         <connector>
             <targetReference>Journal_Check</targetReference>
         </connector>
@@ -106,12 +106,37 @@ null)</expression>
         <object>Conversation_Note__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
+    <recordLookups>
+        <description>Query the person record</description>
+        <name>Get_Person</name>
+        <label>Get Person</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>New_Conversation_Note_Screen</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CRM_Account__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Person__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>INT_ActorId__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <runInMode>SystemModeWithSharing</runInMode>
     <screens>
         <name>New_Conversation_Note_Screen</name>
         <label>New Conversation Note</label>
         <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationY>278</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -153,7 +178,7 @@ null)</expression>
                 <inputParameters>
                     <name>width</name>
                     <value>
-                        <stringValue>6</stringValue>
+                        <stringValue>3</stringValue>
                     </value>
                 </inputParameters>
                 <isRequired>false</isRequired>
@@ -164,7 +189,7 @@ null)</expression>
                 <inputParameters>
                     <name>width</name>
                     <value>
-                        <stringValue>6</stringValue>
+                        <stringValue>9</stringValue>
                     </value>
                 </inputParameters>
                 <isRequired>false</isRequired>
@@ -175,6 +200,12 @@ null)</expression>
             <name>Person_NAV_Cases</name>
             <extensionName>c:crmPersonCaseOverview</extensionName>
             <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>actorId</name>
+                <value>
+                    <elementReference>Get_Person.INT_ActorId__c</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -211,7 +242,7 @@ null)</expression>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>New_Conversation_Note_Screen</targetReference>
+            <targetReference>Get_Person</targetReference>
         </connector>
     </start>
     <status>Draft</status>
