@@ -1,4 +1,4 @@
-import { LightningElement, api, wire } from 'lwc';
+import { LightningElement, api, wire, track } from 'lwc';
 import getmessages from '@salesforce/apex/CRM_MessageHelper.getMessagesFromThread';
 import getJournalInfo from '@salesforce/apex/CRM_MessageHelper.getJournalEntries';
 import { subscribe, unsubscribe } from 'lightning/empApi';
@@ -25,6 +25,10 @@ export default class messagingThreadViewer extends LightningElement {
     messages = [];
     showspinner = false;
     @api showClose;
+    @api englishTextTemplate;
+    @api resetTestTemplate;
+    @track langBtnLock = false;
+    langBtnAriaToggle = false;
 
     @api textTemplate; //Support for conditional text template as input
     //Constructor, called onload
@@ -171,6 +175,18 @@ export default class messagingThreadViewer extends LightningElement {
         this.quickTextCmp.showModal(event);
     }
 
+    handleLangClick() {
+        const englishEvent = new CustomEvent('englishevent', {
+            detail: !this.englishTextTemplate
+        });
+        this.langBtnAriaToggle = !this.langBtnAriaToggle;
+        this.dispatchEvent(englishEvent);
+    }
+
+    lockLangBtn() {
+        this.langBtnLock = true;
+    }
+
     //##################################//
     //#########    GETTERS    ##########//
     //##################################//
@@ -197,5 +213,13 @@ export default class messagingThreadViewer extends LightningElement {
 
     get text() {
         return this.quickTextCmp ? this.quickTextCmp.conversationNote : '';
+    }
+
+    get langBtnVariant() {
+        return this.englishTextTemplate === false ? 'neutral' : 'brand';
+    }
+
+    get langAria() {
+        return this.langBtnAriaToggle === false ? 'Språk knapp, Norsk' : 'Språk knapp, Engelsk';
     }
 }

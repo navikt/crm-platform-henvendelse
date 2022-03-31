@@ -13,7 +13,7 @@
     </div>
     <!-- Header Stop-->
     <!-- Messages Start-->
-    <section role="log" id="scroller" class="slds-box scroller slds-scrollable_y" style="">
+    <section role="log" id="scroller" class="slds-box scroller slds-scrollable_y">
         <template for:each={messages} for:item="message">
             <c-crm-messaging-Message-Container message={message} key={message.Id}></c-crm-messaging-Message-Container>
         </template>
@@ -42,6 +42,21 @@
                                     <lightning-button-group ontoolbaraction={handleToolbarAction}>
                                         <slot name="toolbar"></slot>
                                     </lightning-button-group>
+                                    <lightning-button
+                                        role="switch"
+                                        type="lang"
+                                        name="lang"
+                                        label="Engelsk"
+                                        variant={langBtnVariant}
+                                        style="min-height: 1rem"
+                                        class="slds-float_left slds-var-m-left_small"
+                                        onclick={handleLangClick}
+                                        title="Endre Språk"
+                                        disabled={langBtnLock}
+                                        aria-disabled={langBtnLock}
+                                        aria-label={langAria}
+                                    >
+                                    </lightning-button>
                                 </lightning-layout>
                             </lightning-layout-item>
                             <!-- Avslutt samtalen -->
@@ -68,7 +83,12 @@
                             <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
                         </div>
                     </template>
-                    <c-crm-messaging-quick-text conversation-note={textTemplate}> </c-crm-messaging-quick-text>
+                    <c-crm-messaging-quick-text
+                        conversation-note={textTemplate}
+                        reset-text-template={textTemplate}
+                        onlocklang={lockLangBtn}
+                    >
+                    </c-crm-messaging-quick-text>
                 </lightning-layout-item>
                 <br />
                 <lightning-layout-item size="12">
@@ -86,6 +106,7 @@
                                     variant="brand"
                                     style="min-height: 1rem"
                                     class="slds-float_right"
+                                    onclick={lockLangBtn}
                                 >
                                 </lightning-button>
                             </lightning-layout-item>
