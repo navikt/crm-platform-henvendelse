@@ -26,7 +26,6 @@ export default class messagingThreadViewer extends LightningElement {
     showspinner = false;
     @api showClose;
     @api englishTextTemplate;
-    @api resetTestTemplate;
     @track langBtnLock = false;
     langBtnAriaToggle = false;
 
@@ -100,6 +99,7 @@ export default class messagingThreadViewer extends LightningElement {
     }
     //If empty, stop submitting.
     handlesubmit(event) {
+        this.lockLangBtn();
         event.preventDefault();
         if (!this.quickTextCmp.isOpen()) {
             this.showspinner = true;

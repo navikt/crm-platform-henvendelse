@@ -21,7 +21,7 @@ export default class crmQuickText extends LightningElement {
 
     @api comments;
     @api required = false;
-    @api resetTextTemplate;
+    @api resetTextTemplate = '';
 
     @track data = [];
 
@@ -171,7 +171,6 @@ export default class crmQuickText extends LightningElement {
         if (error) {
             console.log(error);
         } else if (data) {
-            console.log('aaaaaa');
             this.qmap = new Map(
                 data.map((key) => [
                     key.nksAbbreviationKey__c.toUpperCase(),
@@ -200,7 +199,6 @@ export default class crmQuickText extends LightningElement {
     }
 
     insertText(event) {
-        console.log('a');
         const editor = this.textArea;
         editor.focus();
         editor.setRangeText(
