@@ -1,4 +1,4 @@
-import { LightningElement, api, wire } from 'lwc';
+import { LightningElement, api, wire, track } from 'lwc';
 import getmessages from '@salesforce/apex/CRM_MessageHelper.getMessagesFromThread';
 import getJournalInfo from '@salesforce/apex/CRM_MessageHelper.getJournalEntries';
 import { subscribe, unsubscribe } from 'lightning/empApi';
@@ -26,6 +26,9 @@ export default class messagingThreadViewer extends LightningElement {
     showspinner = false;
     hideModal = true;
     @api showClose;
+    @api englishTextTemplate;
+    @track langBtnLock = false;
+    langBtnAriaToggle = false;
 
     @api textTemplate; //Support for conditional text template as input
     //Constructor, called onload
@@ -101,6 +104,7 @@ export default class messagingThreadViewer extends LightningElement {
     }
     //If empty, stop submitting.
     handlesubmit(event) {
+        this.lockLangBtn();
         event.preventDefault();
         if (!this.quickTextCmp.isOpen()) {
             this.showspinner = true;
@@ -191,6 +195,18 @@ export default class messagingThreadViewer extends LightningElement {
         this.quickTextCmp.showModal(event);
     }
 
+    handleLangClick() {
+        const englishEvent = new CustomEvent('englishevent', {
+            detail: !this.englishTextTemplate
+        });
+        this.langBtnAriaToggle = !this.langBtnAriaToggle;
+        this.dispatchEvent(englishEvent);
+    }
+
+    lockLangBtn() {
+        this.langBtnLock = true;
+    }
+
     //##################################//
     //#########    GETTERS    ##########//
     //##################################//
@@ -225,6 +241,14 @@ export default class messagingThreadViewer extends LightningElement {
 
     get backdropClass() {
         return this.hideModal === true ? 'slds-hide' : 'backdrop';
+    }
+
+    get langBtnVariant() {
+        return this.englishTextTemplate === false ? 'neutral' : 'brand';
+    }
+
+    get langAria() {
+        return this.langBtnAriaToggle === false ? 'Språk knapp, Norsk' : 'Språk knapp, Engelsk';
     }
 
     //##################################//
