@@ -85,6 +85,7 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
         CRM_MessageSelector msgSelector = new CRM_MessageSelector();
         query.subselectQuery('Messages__r')
             .selectFields(msgSelector.getSObjectFieldList())
-            .setCondition(msgSelector.getApiConditions());
+            .setCondition(msgSelector.getApiConditions())
+            .setOrdering('CRM_Sent_Date__c', fflib_QueryFactory.SortOrder.ASCENDING);
     }
 }

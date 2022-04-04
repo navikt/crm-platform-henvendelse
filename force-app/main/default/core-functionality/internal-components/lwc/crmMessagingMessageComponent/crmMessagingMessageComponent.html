@@ -38,6 +38,8 @@
             </template>
             <template for:each={threads} for:item="thread">
                 <c-crm-messaging-thread-Viewer
+                    onenglishevent={handleEnglishEvent}
+                    english-text-template={englishTextTemplate}
                     key={thread.Id}
                     text-template={textTemplate}
                     thread={thread}

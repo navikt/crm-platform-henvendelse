@@ -15,6 +15,7 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     @api showClose;
     setCardTitle;
     hasError = false;
+    @api englishTextTemplate;
 
     @api textTemplate; //Support for conditional text template
 
@@ -53,5 +54,12 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     @api
     set cardTitle(cardTitle) {
         this.setCardTitle = cardTitle;
+    }
+
+    handleEnglishEvent(event) {
+        const englishEvent = new CustomEvent('englisheventtwo', {
+            detail: event.detail
+        });
+        this.dispatchEvent(englishEvent);
     }
 }
