@@ -14,6 +14,11 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
         String correlationId = getXCorrelation();
         logger.apiTransaction(correlationId, RestContext.request, CRM_ApplicationDomain.Domain.NKS);
 
+        //Perform validation of the request
+        if (!validateRequest(request)) {
+            return;
+        }
+
         try {
             String apiReference = request.kjedeId;
             Id objectId = getObjectId(apiReference);
@@ -65,6 +70,26 @@ global without sharing class CRM_HenvendelseJournalRestService extends CRM_Henve
         } finally {
             logger.publish();
         }
+    }
+
+    /**
+     * Performs validation on the henvendelse journal request
+     * @author Stian Ruud Schikora | 04-06-2022
+     * @param request
+     * @return Boolean
+     **/
+    private static Boolean validateRequest(HenvendelseJournalRequest request) {
+        Boolean valid = true;
+
+        if (
+            String.isNotBlank(request.fagsakId) && String.isBlank(request.fagsaksystem) ||
+            String.isNotBlank(request.fagsaksystem) && String.isBlank(request.fagsakId)
+        ) {
+            valid = false;
+            errorResponse(400, 'Ved journalføring av fagsak må både fagsakId og fagsaksystem være definert');
+        }
+
+        return valid;
     }
 
     /**
