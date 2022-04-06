@@ -16,6 +16,7 @@ public class CRM_HenvendelseJournalRestService_Test {
         CRM_HenvendelseJournalRestService.HenvendelseJournalRequest journalReq = new CRM_HenvendelseJournalRestService.HenvendelseJournalRequest();
         journalReq.journalforendeEnhet = '4100';
         journalReq.fagsakId = '123CASE';
+        journalReq.fagsaksystem = 'K9';
         journalReq.temakode = 'DAG;';
         journalReq.kjedeId = convNote.CRM_API_Reference__c;
 
@@ -52,6 +53,7 @@ public class CRM_HenvendelseJournalRestService_Test {
         CRM_HenvendelseJournalRestService.HenvendelseJournalRequest journalReq = new CRM_HenvendelseJournalRestService.HenvendelseJournalRequest();
         journalReq.journalforendeEnhet = '4100';
         journalReq.fagsakId = '123CASE';
+        journalReq.fagsaksystem = 'ARENA';
         journalReq.temakode = 'DAG;';
         journalReq.kjedeId = thread.CRM_API_Reference__c;
 
