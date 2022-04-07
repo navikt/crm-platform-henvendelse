@@ -278,4 +278,8 @@ export default class messagingThreadViewer extends LightningElement {
         const lastElement = this.template.querySelector('.cancelButton');
         lastElement.focus();
     }
+
+    get hasEnglishTemplate() {
+        return this.englishTextTemplate;
+    }
 }
