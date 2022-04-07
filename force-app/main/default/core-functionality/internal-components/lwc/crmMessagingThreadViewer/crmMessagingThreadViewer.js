@@ -143,7 +143,7 @@ export default class messagingThreadViewer extends LightningElement {
         fields[ACTIVE_FIELD.fieldApiName] = false;
 
         const threadInput = { fields };
-
+        this.showspinner = true;
         updateRecord(threadInput)
             .then(() => {
                 const event1 = new ShowToastEvent({
@@ -162,6 +162,10 @@ export default class messagingThreadViewer extends LightningElement {
                     variant: 'error'
                 });
                 this.dispatchEvent(event1);
+            })
+            .finally(() => {
+                this.refreshMessages();
+                this.showspinner = false;
             });
     }
 
