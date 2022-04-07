@@ -222,4 +222,8 @@ export default class messagingThreadViewer extends LightningElement {
     get langAria() {
         return this.langBtnAriaToggle === false ? 'Språk knapp, Norsk' : 'Språk knapp, Engelsk';
     }
+
+    get hasEnglishTemplate() {
+        return this.englishTextTemplate;
+    }
 }
