@@ -24,6 +24,7 @@ export default class messagingThreadViewer extends LightningElement {
     threadid;
     messages = [];
     showspinner = false;
+    hideModal = true;
     @api showClose;
     @api englishTextTemplate;
     @track langBtnLock = false;
@@ -44,6 +45,10 @@ export default class messagingThreadViewer extends LightningElement {
     }
     renderedCallback() {
         this.scrolltobottom();
+        const test = this.template.querySelector('.cancelButton');
+        if (test) {
+            test.focus();
+        }
     }
 
     //Handles subscription to streaming API for listening to changes to auth status
@@ -132,16 +137,35 @@ export default class messagingThreadViewer extends LightningElement {
     }
 
     closeThread() {
+        this.closeModal();
         const fields = {};
         fields[THREAD_ID_FIELD.fieldApiName] = this.threadid;
         fields[ACTIVE_FIELD.fieldApiName] = false;
 
         const threadInput = { fields };
-
+        this.showspinner = true;
         updateRecord(threadInput)
-            .then(() => {})
+            .then(() => {
+                const event1 = new ShowToastEvent({
+                    title: 'Avsluttet',
+                    message: 'Samtalen ble avsluttet',
+                    variant: 'success'
+                });
+                this.dispatchEvent(event1);
+            })
+
             .catch((error) => {
                 console.log(JSON.stringify(error, null, 2));
+                const event1 = new ShowToastEvent({
+                    title: 'Det oppstod en feil',
+                    message: 'Samtalen kunne ikke bli avsluttet',
+                    variant: 'error'
+                });
+                this.dispatchEvent(event1);
+            })
+            .finally(() => {
+                this.refreshMessages();
+                this.showspinner = false;
             });
     }
 
@@ -215,12 +239,44 @@ export default class messagingThreadViewer extends LightningElement {
         return this.quickTextCmp ? this.quickTextCmp.conversationNote : '';
     }
 
+    get modalClass() {
+        return 'slds-modal slds-show uiPanel north' + (this.hideModal === true ? ' geir' : ' slds-fade-in-open');
+    }
+
+    get backdropClass() {
+        return this.hideModal === true ? 'slds-hide' : 'backdrop';
+    }
+
     get langBtnVariant() {
         return this.englishTextTemplate === false ? 'neutral' : 'brand';
     }
 
     get langAria() {
         return this.langBtnAriaToggle === false ? 'Språk knapp, Norsk' : 'Språk knapp, Engelsk';
+    }
+
+    //##################################//
+    //########    MODAL    #############//
+    //##################################//
+
+    openModal() {
+        this.hideModal = false;
+    }
+
+    closeModal() {
+        this.hideModal = true;
+        const btn = this.template.querySelector('.endDialogBtn');
+        btn.focus();
+    }
+
+    trapFocusStart() {
+        const firstElement = this.template.querySelector('.closeButton');
+        firstElement.focus();
+    }
+
+    trapFocusEnd() {
+        const lastElement = this.template.querySelector('.cancelButton');
+        lastElement.focus();
     }
 
     get hasEnglishTemplate() {
