@@ -29,7 +29,12 @@
                     </div>
                 </li>
                 <template for:each={messages} for:item="message">
-                    <c-crm-messaging-redact-message key={message.Id} message={message} onsuccess={refreshMessages}>
+                    <c-crm-messaging-redact-message
+                        key={message.Id}
+                        message={message}
+                        onsuccess={refreshMessages}
+                        onredactall={handleRedactAllClick}
+                    >
                     </c-crm-messaging-redact-message>
                 </template>
             </ul>
