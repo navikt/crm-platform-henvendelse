@@ -11,6 +11,7 @@
         "Sites",
         "ForceComPlatform",
         "Communities",
+        "Knowledge",
         "CustomerCommunity",
         "CustomerCommunityPlus",
         "ServiceCloud",
@@ -36,6 +37,10 @@
         "accountSettings": {
             "enableRelateContactToMultipleAccounts": true
         },
+        "knowledgeSettings": {
+            "enableKnowledge": true,
+            "enableLightningKnowledge": true
+        },
         "liveAgentSettings": {
             "enableLiveAgent": true
         },
@@ -44,6 +49,9 @@
         },
         "nameSettings": {
             "enableMiddleName": true
+        },
+        "omniChannelSettings": {
+            "enableOmniChannel": true
         },
         "fieldServiceSettings": {
             "fieldServiceOrgPref": true,
