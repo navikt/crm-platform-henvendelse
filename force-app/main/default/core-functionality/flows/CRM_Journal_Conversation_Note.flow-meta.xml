@@ -215,13 +215,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Request.kanal</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>NAV_NO</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>Journal_Request.sak</assignToReference>
             <operator>Assign</operator>
             <value>

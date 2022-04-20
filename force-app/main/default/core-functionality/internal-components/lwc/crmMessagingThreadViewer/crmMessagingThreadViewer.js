@@ -1,4 +1,4 @@
-import { LightningElement, api, wire } from 'lwc';
+import { LightningElement, api, wire, track } from 'lwc';
 import getmessages from '@salesforce/apex/CRM_MessageHelper.getMessagesFromThread';
 import getJournalInfo from '@salesforce/apex/CRM_MessageHelper.getJournalEntries';
 import { subscribe, unsubscribe } from 'lightning/empApi';
@@ -24,7 +24,11 @@ export default class messagingThreadViewer extends LightningElement {
     threadid;
     messages = [];
     showspinner = false;
+    hideModal = true;
     @api showClose;
+    @api englishTextTemplate;
+    @track langBtnLock = false;
+    langBtnAriaToggle = false;
 
     @api textTemplate; //Support for conditional text template as input
     //Constructor, called onload
@@ -41,6 +45,10 @@ export default class messagingThreadViewer extends LightningElement {
     }
     renderedCallback() {
         this.scrolltobottom();
+        const test = this.template.querySelector('.cancelButton');
+        if (test) {
+            test.focus();
+        }
     }
 
     //Handles subscription to streaming API for listening to changes to auth status
@@ -96,6 +104,7 @@ export default class messagingThreadViewer extends LightningElement {
     }
     //If empty, stop submitting.
     handlesubmit(event) {
+        this.lockLangBtn();
         event.preventDefault();
         if (!this.quickTextCmp.isOpen()) {
             this.showspinner = true;
@@ -128,16 +137,35 @@ export default class messagingThreadViewer extends LightningElement {
     }
 
     closeThread() {
+        this.closeModal();
         const fields = {};
         fields[THREAD_ID_FIELD.fieldApiName] = this.threadid;
         fields[ACTIVE_FIELD.fieldApiName] = false;
 
         const threadInput = { fields };
-
+        this.showspinner = true;
         updateRecord(threadInput)
-            .then(() => {})
+            .then(() => {
+                const event1 = new ShowToastEvent({
+                    title: 'Avsluttet',
+                    message: 'Samtalen ble avsluttet',
+                    variant: 'success'
+                });
+                this.dispatchEvent(event1);
+            })
+
             .catch((error) => {
                 console.log(JSON.stringify(error, null, 2));
+                const event1 = new ShowToastEvent({
+                    title: 'Det oppstod en feil',
+                    message: 'Samtalen kunne ikke bli avsluttet',
+                    variant: 'error'
+                });
+                this.dispatchEvent(event1);
+            })
+            .finally(() => {
+                this.refreshMessages();
+                this.showspinner = false;
             });
     }
 
@@ -171,6 +199,18 @@ export default class messagingThreadViewer extends LightningElement {
         this.quickTextCmp.showModal(event);
     }
 
+    handleLangClick() {
+        const englishEvent = new CustomEvent('englishevent', {
+            detail: !this.englishTextTemplate
+        });
+        this.langBtnAriaToggle = !this.langBtnAriaToggle;
+        this.dispatchEvent(englishEvent);
+    }
+
+    lockLangBtn() {
+        this.langBtnLock = true;
+    }
+
     //##################################//
     //#########    GETTERS    ##########//
     //##################################//
@@ -197,5 +237,49 @@ export default class messagingThreadViewer extends LightningElement {
 
     get text() {
         return this.quickTextCmp ? this.quickTextCmp.conversationNote : '';
+    }
+
+    get modalClass() {
+        return 'slds-modal slds-show uiPanel north' + (this.hideModal === true ? ' geir' : ' slds-fade-in-open');
+    }
+
+    get backdropClass() {
+        return this.hideModal === true ? 'slds-hide' : 'backdrop';
+    }
+
+    get langBtnVariant() {
+        return this.englishTextTemplate === false ? 'neutral' : 'brand';
+    }
+
+    get langAria() {
+        return this.langBtnAriaToggle === false ? 'Språk knapp, Norsk' : 'Språk knapp, Engelsk';
+    }
+
+    //##################################//
+    //########    MODAL    #############//
+    //##################################//
+
+    openModal() {
+        this.hideModal = false;
+    }
+
+    closeModal() {
+        this.hideModal = true;
+        const btn = this.template.querySelector('.endDialogBtn');
+        btn.focus();
+    }
+
+    trapFocusStart() {
+        const firstElement = this.template.querySelector('.closeButton');
+        firstElement.focus();
+    }
+
+    trapFocusEnd() {
+        const lastElement = this.template.querySelector('.cancelButton');
+        lastElement.focus();
+    }
+
+    get hasEnglishTemplate() {
+        return this.englishTextTemplate;
     }
 }

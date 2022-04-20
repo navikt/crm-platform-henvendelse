@@ -8,6 +8,9 @@ const ESC_KEY_STRING = 'Escape';
 const TAB_KEY_CODE = 9;
 const TAB_KEY_STRING = 'Tab';
 const LIGHTNING_INPUT_FIELD = 'LIGHTNING-INPUT-FIELD';
+//all invalid key presses
+// prettier-ignore
+const keyCodes = [0, 3, 9, 13, 16, 17, 18, 19, 20, 21, 25, 27, 28, 29, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 47, 91, 92, 93, 95, 112, 113, 114, 115, 116, 117, 119, 120, 121, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 151, 166, 167, 172, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 224, 225, 230, 233, 255];
 
 export default class crmQuickText extends LightningElement {
     labels = { BLANK_ERROR };
@@ -18,6 +21,7 @@ export default class crmQuickText extends LightningElement {
 
     @api comments;
     @api required = false;
+    @api resetTextTemplate = '';
 
     @track data = [];
 
@@ -210,6 +214,8 @@ export default class crmQuickText extends LightningElement {
             detail: this.conversationNote
         });
         this.dispatchEvent(attributeChangeEvent);
+        const lockLang = new CustomEvent('locklang');
+        this.dispatchEvent(lockLang);
     }
 
     handleChange(event) {
@@ -261,6 +267,12 @@ export default class crmQuickText extends LightningElement {
     }
 
     insertquicktext(event) {
+        if (!keyCodes.includes(event.keyCode)) {
+            //to lock langBtn if a valid key is pressed
+            const lockLang = new CustomEvent('locklang');
+            this.dispatchEvent(lockLang);
+        }
+
         if (event.keyCode === 32) {
             const editor = this.textArea;
             const carretPositionEnd = editor.selectionEnd;
@@ -316,7 +328,8 @@ export default class crmQuickText extends LightningElement {
 
     @api
     clear() {
-        this._conversationNote = '';
+        //sets text content to the current
+        this._conversationNote = this.resetTextTemplate ? this.resetTextTemplate : '';
         this.textArea.value = this._conversationNote;
     }
 }

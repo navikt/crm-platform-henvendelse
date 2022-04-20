@@ -1,7 +1,8 @@
-import { LightningElement, api, wire } from 'lwc';
+import { LightningElement, api, wire, track } from 'lwc';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import { refreshApex } from '@salesforce/apex';
 import { subscribe, unsubscribe } from 'lightning/empApi';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import ACTIVE_FIELD from '@salesforce/schema/Thread__c.CRM_isActive__c';
 import CREATED_BY_FIELD from '@salesforce/schema/Thread__c.CreatedById';
 import REGISTERED_DATE from '@salesforce/schema/Thread__c.CRM_Date_Time_Registered__c';
@@ -13,6 +14,7 @@ export default class CrmMessagingRedactThreadViewer extends LightningElement {
     @api recordId;
     messages = [];
     _mySendForSplitting;
+    @track redactAll = false;
 
     connectedCallback() {
         this.handleSubscribe();
@@ -78,5 +80,16 @@ export default class CrmMessagingRedactThreadViewer extends LightningElement {
             .catch((error) => {
                 console.log('EMP unsubscribe failed: ' + JSON.stringify(error, null, 2));
             });
+    }
+
+    handleRedactAllClick(event) {
+        this.redactAll = event.detail;
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: '',
+                message: 'Husk å lagre endringer!',
+                variant: 'warning'
+            })
+        );
     }
 }
