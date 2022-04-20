@@ -1,11 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <actionCalls>
+        <description>Initiates async journal creation</description>
+        <name>Journal_Conversation_Note</name>
+        <label>Journal Conversation Note</label>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
+        <actionName>CRM_ConvNoteJournalHelper</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>Journal_Case_ID</name>
+            <value>
+                <elementReference>Person_NAV_Cases.selectedCaseId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>Journal_Case_Legacy_System</name>
+            <value>
+                <elementReference>Person_NAV_Cases.selectedCaseLegacySystem</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>Journal_Entry_NAV_Ident</name>
+            <value>
+                <elementReference>$User.CRM_NAV_Ident__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>Journal_Entry_Unit</name>
+            <value>
+                <elementReference>$User.Department</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>Journal_Theme_Code</name>
+            <value>
+                <elementReference>Person_NAV_Cases.selectedCaseTheme</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>Create_Conversation_Note</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
     <apiVersion>54.0</apiVersion>
     <decisions>
         <description>Verify if a journal entry is to be created</description>
         <name>Journal_Check</name>
         <label>Journal Check</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>518</locationY>
         <defaultConnectorLabel>No Journal</defaultConnectorLabel>
         <rules>
@@ -18,6 +64,9 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Journal_Conversation_Note</targetReference>
+            </connector>
             <label>Do Journal</label>
         </rules>
     </decisions>
@@ -68,7 +117,7 @@ null)</expression>
         <description>Insert the new conversation note to the DB</description>
         <name>Create_Conversation_Note</name>
         <label>Create Conversation Note</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>398</locationY>
         <connector>
             <targetReference>Journal_Check</targetReference>
@@ -110,7 +159,7 @@ null)</expression>
         <description>Query the person record</description>
         <name>Get_Person</name>
         <label>Get Person</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -135,7 +184,7 @@ null)</expression>
     <screens>
         <name>New_Conversation_Note_Screen</name>
         <label>New Conversation Note</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>278</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -239,13 +288,13 @@ null)</expression>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Person</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <description>Account ID</description>
         <name>recordId</name>
