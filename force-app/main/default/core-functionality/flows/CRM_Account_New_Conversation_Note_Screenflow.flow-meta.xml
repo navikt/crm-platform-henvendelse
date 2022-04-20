@@ -220,6 +220,12 @@ null)</expression>
                             <booleanValue>false</booleanValue>
                         </value>
                     </inputParameters>
+                    <inputParameters>
+                        <name>messageToggleInactive</name>
+                        <value>
+                            <stringValue>Nei</stringValue>
+                        </value>
+                    </inputParameters>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                     <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -263,6 +269,9 @@ null)</expression>
                 <conditions>
                     <leftValueReference>JOURNAL_TOGGLE.value</leftValueReference>
                     <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
