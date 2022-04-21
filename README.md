@@ -1,4 +1,4 @@
-# crm-platform-henvendelse
+# crm-henvendelse
 
 [![Build](https://github.com/navikt/crm-platform-henvendelse/workflows/%5BPUSH%5D%20Create%20Package/badge.svg)](https://github.com/navikt/crm-platform-henvendelse/actions?query=workflow%3Acreate)
 [![GitHub version](https://badgen.net/github/release/navikt/crm-platform-henvendelse/stable)](https://github.com/navikt/crm-platform-henvendelse)
