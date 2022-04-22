@@ -280,6 +280,6 @@ export default class messagingThreadViewer extends LightningElement {
     }
 
     get hasEnglishTemplate() {
-        return this.englishTextTemplate;
+        return this.englishTextTemplate !== undefined;
     }
 }
