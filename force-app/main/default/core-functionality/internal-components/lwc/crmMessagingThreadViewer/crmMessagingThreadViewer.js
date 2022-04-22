@@ -255,6 +255,10 @@ export default class messagingThreadViewer extends LightningElement {
         return this.langBtnAriaToggle === false ? 'Språk knapp, Norsk' : 'Språk knapp, Engelsk';
     }
 
+    get hasEnglishTemplate() {
+        return this.englishTextTemplate !== undefined;
+    }
+
     //##################################//
     //########    MODAL    #############//
     //##################################//
@@ -277,9 +281,5 @@ export default class messagingThreadViewer extends LightningElement {
     trapFocusEnd() {
         const lastElement = this.template.querySelector('.cancelButton');
         lastElement.focus();
-    }
-
-    get hasEnglishTemplate() {
-        return this.englishTextTemplate;
     }
 }
