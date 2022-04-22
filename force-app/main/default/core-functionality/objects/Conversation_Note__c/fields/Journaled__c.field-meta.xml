@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <formula>CASE(CRM_Journal_Status__c,
 &apos;Journal Completed&apos;, &apos;Ja&apos;,
+&apos;Journal Started&apos;, &apos;Ja&apos;,
 &apos;Journal Error&apos;, &apos; Nei&apos;,
 &apos;Nei&apos;
 )</formula>
