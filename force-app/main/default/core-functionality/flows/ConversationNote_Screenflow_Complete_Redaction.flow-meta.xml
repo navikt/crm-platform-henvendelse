@@ -4,7 +4,7 @@
         <name>close_tab</name>
         <label>close tab</label>
         <locationX>314</locationX>
-        <locationY>1094</locationY>
+        <locationY>1214</locationY>
         <actionName>c:fcTabCloser</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -25,6 +25,18 @@
         </dataTypeMappings>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
+            <name>category</name>
+            <value>
+                <stringValue>Henvendelse</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>domain</name>
+            <value>
+                <stringValue>NKS</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>logLevel</name>
             <value>
                 <stringValue>CRITICAL</stringValue>
@@ -38,6 +50,9 @@
         </inputParameters>
         <inputParameters>
             <name>refRecord</name>
+            <value>
+                <elementReference>Get_Conversation_Note</elementReference>
+            </value>
         </inputParameters>
         <inputParameters>
             <name>source</name>
@@ -51,7 +66,7 @@
         <name>isSent</name>
         <label>isSent</label>
         <locationX>314</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <defaultConnector>
             <targetReference>close_tab</targetReference>
         </defaultConnector>
@@ -60,7 +75,7 @@
             <name>Failed_to_create_user_notification</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>newUserNotification</leftValueReference>
+                <leftValueReference>Create_Innboks_Notification.newInnboksNotification</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -82,10 +97,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>newUserNotification.CRM_NotificationError__c</leftValueReference>
-                <operator>WasSet</operator>
+                <leftValueReference>Create_Innboks_Notification.newInnboksNotification.CRM_NotificationError__c</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -189,7 +204,7 @@
         <inputAssignments>
             <field>Cause__c</field>
             <value>
-                <stringValue />
+                <stringValue/>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -222,7 +237,7 @@
         <name>No_user_notification</name>
         <label>No user notification</label>
         <locationX>50</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -242,7 +257,7 @@
         <name>partialSuccess</name>
         <label>Partial Success</label>
         <locationX>314</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -302,6 +317,28 @@
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Trigger_sync_0_0</name>
+        <label>Trigger sync</label>
+        <locationX>314</locationX>
+        <locationY>758</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>isSent</targetReference>
+        </connector>
+        <fields>
+            <name>next_0_0</name>
+            <extensionName>c:fcFlowNextScreenNavigator</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
         <locationX>188</locationX>
         <locationY>0</locationY>
@@ -316,7 +353,7 @@
         <locationX>314</locationX>
         <locationY>638</locationY>
         <connector>
-            <targetReference>isSent</targetReference>
+            <targetReference>Trigger_sync_0_0</targetReference>
         </connector>
         <flowName>CRMHenvendelse_ConversationNote_CreateInnboksUserNotification</flowName>
         <inputAssignments>
@@ -326,15 +363,24 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <name>notificationDateTime</name>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>NotificationMessageText</name>
             <value>
                 <elementReference>$Label.CRMHenvendelse_ConversationNote_RedactedMessageNotificationText</elementReference>
             </value>
         </inputAssignments>
-        <outputAssignments>
-            <assignToReference>newUserNotification</assignToReference>
-            <name>newInnboksNotification</name>
-        </outputAssignments>
+        <inputAssignments>
+            <name>SendExternalNotification</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <textTemplates>
         <name>Update_Conversation_Note</name>

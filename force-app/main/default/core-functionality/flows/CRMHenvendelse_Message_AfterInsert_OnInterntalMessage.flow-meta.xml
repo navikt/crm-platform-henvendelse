@@ -109,5 +109,6 @@
                 <elementReference>$Record.CRM_Thread__c</elementReference>
             </value>
         </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
 </Flow>

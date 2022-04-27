@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Create_Innboks_Notification</name>
+        <name>CreateInnboksNotification</name>
         <label>Create Innboks Notification</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>518</locationY>
-        <actionName>UN_InnboksProducerLegacy</actionName>
+        <actionName>UN_InnboksAction</actionName>
         <actionType>apex</actionType>
+        <connector>
+            <targetReference>Evaluate_Response</targetReference>
+        </connector>
         <faultConnector>
-            <targetReference>Log_error</targetReference>
+            <targetReference>Log_Exception</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>accountId</name>
             <value>
                 <elementReference>ConversationNote.CRM_Account__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>appnavn</name>
+            <value>
+                <stringValue>sf-brukernotifikasjon</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -26,7 +35,7 @@
         <inputParameters>
             <name>fodselsnummer</name>
             <value>
-                <elementReference>ConversationNote.Redaction_Person_Ident__c</elementReference>
+                <elementReference>Get_Person.Name</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -39,6 +48,12 @@
             <name>link</name>
             <value>
                 <elementReference>varLinkURL</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>namespace</name>
+            <value>
+                <stringValue>teamnks</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -60,12 +75,6 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>systembruker</name>
-            <value>
-                <elementReference>$Label.CRMHenvendelse_SystemUser</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
             <name>tekst</name>
             <value>
                 <elementReference>NotificationMessageText</elementReference>
@@ -74,18 +83,67 @@
         <inputParameters>
             <name>tidspunkt</name>
             <value>
-                <elementReference>ConversationNote.CRM_Date_Time_Registered__c</elementReference>
+                <elementReference>notificationDateTime</elementReference>
             </value>
         </inputParameters>
-        <outputParameters>
-            <assignToReference>newInnboksNotification</assignToReference>
-            <name>output</name>
-        </outputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
-        <name>Log_error</name>
-        <label>Log error</label>
-        <locationX>578</locationX>
+        <name>Log_error_response</name>
+        <label>Log error response</label>
+        <locationX>314</locationX>
+        <locationY>758</locationY>
+        <actionName>LoggerUtility</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Assign_return_notification</targetReference>
+        </connector>
+        <dataTypeMappings>
+            <typeName>T__refRecord</typeName>
+            <typeValue>Conversation_Note__c</typeValue>
+        </dataTypeMappings>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>category</name>
+            <value>
+                <stringValue>Henvendelse</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>domain</name>
+            <value>
+                <stringValue>NKS</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logLevel</name>
+            <value>
+                <stringValue>ERROR</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logMessage</name>
+            <value>
+                <elementReference>CreateInnboksNotification.errorMessage</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>refRecord</name>
+            <value>
+                <elementReference>ConversationNote</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>source</name>
+            <value>
+                <stringValue>Conversation Note - Create Innboks User Notification</stringValue>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>Log_Exception</name>
+        <label>Log Exception</label>
+        <locationX>754</locationX>
         <locationY>638</locationY>
         <actionName>LoggerUtility</actionName>
         <actionType>apex</actionType>
@@ -145,13 +203,51 @@
             </value>
         </assignmentItems>
     </assignments>
+    <assignments>
+        <name>Assign_return_notification</name>
+        <label>Assign return notification</label>
+        <locationX>446</locationX>
+        <locationY>974</locationY>
+        <assignmentItems>
+            <assignToReference>newInnboksNotification</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CreateInnboksNotification.userNotification</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Evaluate_Response</name>
+        <label>Evaluate Response</label>
+        <locationX>446</locationX>
+        <locationY>638</locationY>
+        <defaultConnector>
+            <targetReference>Assign_return_notification</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Error</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CreateInnboksNotification.success</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Log_error_response</targetReference>
+            </connector>
+            <label>Has Error</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Has_existing_notification</name>
         <label>Has existing notification</label>
-        <locationX>182</locationX>
+        <locationX>248</locationX>
         <locationY>398</locationY>
         <defaultConnector>
-            <targetReference>Create_Innboks_Notification</targetReference>
+            <targetReference>CreateInnboksNotification</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>NO</defaultConnectorLabel>
         <rules>
@@ -200,7 +296,7 @@
     <recordLookups>
         <name>Get_Person</name>
         <label>Get Person</label>
-        <locationX>182</locationX>
+        <locationX>248</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -221,7 +317,7 @@
     <recordLookups>
         <name>Get_user_notification</name>
         <label>Get user notification</label>
-        <locationX>182</locationX>
+        <locationX>248</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -261,7 +357,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>56</locationX>
+        <locationX>122</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Person</targetReference>
@@ -283,6 +379,13 @@
         <isInput>false</isInput>
         <isOutput>true</isOutput>
         <objectType>UserNotification__c</objectType>
+    </variables>
+    <variables>
+        <name>notificationDateTime</name>
+        <dataType>DateTime</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <description>Notification Message Text</description>

@@ -23,7 +23,7 @@
             <name>User_notification_not_created</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>newUserNotification</leftValueReference>
+                <leftValueReference>Create_Innboks_User_Notification.newInnboksNotification</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -39,17 +39,17 @@
             <name>User_notification_created_but_not_sent</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>newUserNotification</leftValueReference>
+                <leftValueReference>Create_Innboks_User_Notification.newInnboksNotification</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>newUserNotification.CRM_NotificationError__c</leftValueReference>
-                <operator>WasSet</operator>
+                <leftValueReference>Create_Innboks_User_Notification.newInnboksNotification.CRM_NotificationError__c</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -182,7 +182,7 @@
         <inputAssignments>
             <field>CRM_Message_Text__c</field>
             <value>
-                <stringValue />
+                <stringValue/>
             </value>
         </inputAssignments>
         <object>Message__c</object>
@@ -215,7 +215,7 @@
         <inputAssignments>
             <field>Cause__c</field>
             <value>
-                <stringValue />
+                <stringValue/>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -277,7 +277,7 @@
         </fields>
         <fields>
             <name>usernotificationCreatedButNotSent</name>
-            <fieldText>&lt;p&gt;Brukernotoifikasjonen ble ikke sendt til bruker.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Feilmelding:&lt;/p&gt;&lt;p&gt;{!newUserNotification.CRM_NotificationError__c}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Brukernotoifikasjonen ble ikke sendt til bruker.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Feilmelding:&lt;/p&gt;&lt;p&gt;{!Create_Innboks_User_Notification.newInnboksNotification.CRM_NotificationError__c}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <nextOrFinishButtonLabel>Ok</nextOrFinishButtonLabel>
@@ -324,6 +324,12 @@
         </connector>
         <flowName>CRMHenvendelse_Thread_Subflow_CreateInnboksUserNotification</flowName>
         <inputAssignments>
+            <name>logDomain</name>
+            <value>
+                <stringValue>NKS</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>MessageDateTime</name>
             <value>
                 <elementReference>$Flow.CurrentDateTime</elementReference>
@@ -338,27 +344,16 @@
         <inputAssignments>
             <name>threadId</name>
             <value>
-                <elementReference>Get_Thread.Id</elementReference>
+                <elementReference>recordId</elementReference>
             </value>
         </inputAssignments>
-        <outputAssignments>
-            <assignToReference>newUserNotification</assignToReference>
-            <name>newInnboksNotification</name>
-        </outputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <textTemplates>
         <name>Redacted_Message_Notification_Text</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
         <text>{!$Label.CRMHenvendelse_RedactedMessageNotificationText}</text>
     </textTemplates>
-    <variables>
-        <name>newUserNotification</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>UserNotification__c</objectType>
-    </variables>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>

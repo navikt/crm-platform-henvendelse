@@ -25,6 +25,18 @@
         </dataTypeMappings>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
+            <name>category</name>
+            <value>
+                <stringValue>Henvendelse</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>domain</name>
+            <value>
+                <stringValue>NKS</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>logLevel</name>
             <value>
                 <stringValue>CRITICAL</stringValue>
@@ -38,6 +50,9 @@
         </inputParameters>
         <inputParameters>
             <name>refRecord</name>
+            <value>
+                <elementReference>Get_Thread</elementReference>
+            </value>
         </inputParameters>
         <inputParameters>
             <name>source</name>
@@ -60,7 +75,7 @@
             <name>Failed_to_create_user_notification</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>newUserNotification</leftValueReference>
+                <leftValueReference>Create_Innboks_User_Notification.newInnboksNotification</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -75,15 +90,15 @@
             <name>Failed_to_send_user_notification</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>newUserNotification</leftValueReference>
+                <leftValueReference>Create_Innboks_User_Notification.newInnboksNotification</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>newUserNotification.CRM_NotificationError__c</leftValueReference>
-                <operator>WasSet</operator>
+                <leftValueReference>Create_Innboks_User_Notification.newInnboksNotification.CRM_NotificationError__c</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
@@ -205,7 +220,7 @@
         <inputAssignments>
             <field>Cause__c</field>
             <value>
-                <stringValue />
+                <stringValue/>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -267,7 +282,7 @@
         </connector>
         <fields>
             <name>partialSuccessMessage</name>
-            <fieldText>&lt;p&gt;Tråden er sladdet, men bruker har &lt;b&gt;ikke&lt;/b&gt; fått notifikasjon på grunn av en feil.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Feilmelding:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!newUserNotification.CRM_NotificationError__c}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Tråden er sladdet, men bruker har &lt;b&gt;ikke&lt;/b&gt; fått notifikasjon på grunn av en feil.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Feilmelding:&lt;/p&gt;&lt;p&gt;{!Create_Innboks_User_Notification.newInnboksNotification.CRM_NotificationError__c}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <nextOrFinishButtonLabel>Ferdig</nextOrFinishButtonLabel>
@@ -320,6 +335,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <name>logDomain</name>
+            <value>
+                <stringValue>NKS</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>MessageDateTime</name>
             <value>
                 <elementReference>Get_Thread.LastModifiedDate</elementReference>
@@ -334,27 +355,16 @@
         <inputAssignments>
             <name>threadId</name>
             <value>
-                <elementReference>Get_Thread.Id</elementReference>
+                <elementReference>recordId</elementReference>
             </value>
         </inputAssignments>
-        <outputAssignments>
-            <assignToReference>newUserNotification</assignToReference>
-            <name>newInnboksNotification</name>
-        </outputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <textTemplates>
         <name>Redacted_Message_Notification_Text</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
         <text>{!$Label.CRMHenvendelse_RedactedMessageNotificationText}</text>
     </textTemplates>
-    <variables>
-        <name>newUserNotification</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>UserNotification__c</objectType>
-    </variables>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>

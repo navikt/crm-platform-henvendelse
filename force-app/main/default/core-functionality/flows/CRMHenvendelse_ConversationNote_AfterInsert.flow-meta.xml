@@ -26,6 +26,9 @@
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
+        <connector>
+            <targetReference>Create_Innbox_Event</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>CRM_Created_By_Ident__c</field>
@@ -36,25 +39,25 @@
         </filters>
         <object>Conversation_Note__c</object>
         <recordTriggerType>Create</recordTriggerType>
-        <scheduledPaths>
-            <connector>
-                <targetReference>Create_Innbox_Event</targetReference>
-            </connector>
-            <pathType>AsyncAfterCommit</pathType>
-        </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
     <subflows>
         <name>Create_Innbox_Event</name>
         <label>Create Innbox Event</label>
-        <locationX>308</locationX>
-        <locationY>288</locationY>
+        <locationX>176</locationX>
+        <locationY>335</locationY>
         <flowName>CRMHenvendelse_ConversationNote_CreateInnboksUserNotification</flowName>
         <inputAssignments>
             <name>ConversationNote</name>
             <value>
                 <elementReference>$Record</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>notificationDateTime</name>
+            <value>
+                <elementReference>$Record.CRM_Date_Registered__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
