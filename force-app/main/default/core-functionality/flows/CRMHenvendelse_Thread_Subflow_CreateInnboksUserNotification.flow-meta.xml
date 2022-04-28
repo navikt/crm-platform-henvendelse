@@ -380,7 +380,7 @@
             <targetReference>Thread</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <variables>
         <name>ExternalNotification</name>
         <dataType>Boolean</dataType>
