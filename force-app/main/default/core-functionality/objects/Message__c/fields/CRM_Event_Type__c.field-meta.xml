@@ -43,6 +43,11 @@
                 <default>false</default>
                 <label>EXTERNAL_MESSAGE</label>
             </value>
+            <value>
+                <fullName>REDACTED</fullName>
+                <default>false</default>
+                <label>REDACTED</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Message</controllingFieldValue>
@@ -67,6 +72,14 @@
         <valueSettings>
             <controllingFieldValue>Event</controllingFieldValue>
             <valueName>JOURNAL</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info</controllingFieldValue>
+            <valueName>REDACTED</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info</controllingFieldValue>
+            <valueName>INTERNAL_MESSAGE</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
