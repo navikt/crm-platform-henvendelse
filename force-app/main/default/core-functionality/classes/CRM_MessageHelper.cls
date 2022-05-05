@@ -136,19 +136,18 @@ public with sharing class CRM_MessageHelper {
     }
     /**
      * Method for marking unread messages - isNavOrUser: true if NAV
-     * @Lars Petter Johnsen
-     * @Date 31052021
+     * @Eirik Fladby
+     * @Date 05052022
      */
     @AuraEnabled
     public static void markAsRead(Id threadId, Boolean isNavOrUser) {
-        List<Message__c> msgList = isNavOrUser ? [SELECT Id FROM Message__c WHERE CRM_Read_By_Nav__c = FALSE AND CRM_Thread__c = :threadId] : [SELECT Id FROM Message__c WHERE CRM_Read__c = FALSE AND CRM_Thread__c = :threadId];
+        String readField = isNavOrUser ? 'CRM_Read_By_Nav__c' : 'CRM_Read__c';
+        String readDateTimeField = isNavOrUser ? 'CRM_Read_By_Nav_Datetime__c' : 'CRM_Read_Datetime__c';
+        List<Message__c> msgList = 
+            Database.query('SELECT Id, ' + readField + ', ' + readDateTimeField + ' FROM Message__c WHERE ' + readField + ' = FALSE AND CRM_Thread__c = ' + threadId);
         for (Message__c msg : msgList) {
-            if (isNavOrUser) {
-                msg.CRM_Read_By_Nav__c = true;
-            } else {
-                msg.CRM_Read__c = true;
-                msg.CRM_Read_Datetime__c = DateTime.now();
-            }
+            msg.put(readField, true);
+            msg.put(readDateTimeField, Datetime.now());
         }
         try {
             update msgList;
