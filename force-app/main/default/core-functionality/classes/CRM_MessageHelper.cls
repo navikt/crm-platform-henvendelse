@@ -146,7 +146,12 @@ public with sharing class CRM_MessageHelper {
             msg.CRM_Read__c = true;
             msg.CRM_Read_Datetime__c = DateTime.now();
         }
-        update msgList;
+        try {
+            update msgList;
+            updateThreadMessageFieldOnNewMessage(threadId, false);
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
     }
 
     /**
@@ -163,14 +168,25 @@ public with sharing class CRM_MessageHelper {
         m.CRM_Read__c = true;
         m.CRM_Read_Datetime__c = DateTime.now();
 
-        Thread__c t = [SELECT Id, CRM_isActive__c FROM Thread__c WHERE Id = :threadId LIMIT 1][0];
+        Thread__c t = [SELECT Id, CRM_isActive__c, IsNewMessageFromUser__c FROM Thread__c WHERE Id = :threadId LIMIT 1][0];
         if (!t.CRM_isActive__c) {
             return false;
         }
 
         try {
             insert m;
+            updateThreadMessageFieldOnNewMessage(threadId, true);
             return true;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    public static void updateThreadMessageFieldOnNewMessage(Id threadId, Boolean isNew) {
+        Thread__c thread = [SELECT IsNewMessageFromUser__c FROM Thread__c WHERE Id = :threadId];
+        thread.IsNewMessageFromUser__c = isNew;
+        try {
+            update thread;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
