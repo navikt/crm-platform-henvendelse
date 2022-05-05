@@ -148,7 +148,6 @@ public with sharing class CRM_MessageHelper {
         }
         try {
             update msgList;
-            updateThreadMessageFieldOnNewMessage(threadId, false);
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
@@ -166,6 +165,7 @@ public with sharing class CRM_MessageHelper {
         m.CRM_Thread__c = threadId;
         m.CRM_From_Contact__c = fromContactId;
         m.CRM_Read__c = true;
+        m.CRM_Read_By_Nav__c = false;
         m.CRM_Read_Datetime__c = DateTime.now();
 
         Thread__c t = [SELECT Id, CRM_isActive__c, IsNewMessageFromUser__c FROM Thread__c WHERE Id = :threadId LIMIT 1][0];
@@ -175,18 +175,7 @@ public with sharing class CRM_MessageHelper {
 
         try {
             insert m;
-            updateThreadMessageFieldOnNewMessage(threadId, true);
             return true;
-        } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
-        }
-    }
-
-    public static void updateThreadMessageFieldOnNewMessage(Id threadId, Boolean isNew) {
-        Thread__c thread = [SELECT IsNewMessageFromUser__c FROM Thread__c WHERE Id = :threadId];
-        thread.IsNewMessageFromUser__c = isNew;
-        try {
-            update thread;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }

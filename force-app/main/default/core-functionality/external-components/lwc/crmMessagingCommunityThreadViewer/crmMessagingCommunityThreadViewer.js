@@ -6,7 +6,6 @@ import getContactId from '@salesforce/apex/CRM_MessageHelper.getUserContactId';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import createmsg from '@salesforce/apex/CRM_MessageHelper.createMessage';
-
 import THREADNAME_FIELD from '@salesforce/schema/Thread__c.STO_ExternalName__c';
 import THREADCLOSED_FIELD from '@salesforce/schema/Thread__c.CRM_Is_Closed__c';
 
