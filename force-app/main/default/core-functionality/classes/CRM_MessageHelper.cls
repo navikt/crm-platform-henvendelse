@@ -135,16 +135,20 @@ public with sharing class CRM_MessageHelper {
         }
     }
     /**
-     * Method for marking unread messages - called onload fromt the end user perspective. Does only represent customer read.
+     * Method for marking unread messages - isNavOrUser: true if NAV
      * @Lars Petter Johnsen
      * @Date 31052021
      */
     @AuraEnabled
-    public static void markAsRead(Id threadId) {
-        List<Message__c> msgList = [SELECT Id FROM Message__c WHERE CRM_Read__c = FALSE AND CRM_Thread__c = :threadId];
+    public static void markAsRead(Id threadId, Boolean isNavOrUser) {
+        List<Message__c> msgList = isNavOrUser ? [SELECT Id FROM Message__c WHERE CRM_Read_By_Nav__c = FALSE AND CRM_Thread__c = :threadId] : [SELECT Id FROM Message__c WHERE CRM_Read__c = FALSE AND CRM_Thread__c = :threadId];
         for (Message__c msg : msgList) {
-            msg.CRM_Read__c = true;
-            msg.CRM_Read_Datetime__c = DateTime.now();
+            if (isNavOrUser) {
+                msg.CRM_Read_By_Nav__c = true;
+            } else {
+                msg.CRM_Read__c = true;
+                msg.CRM_Read_Datetime__c = DateTime.now();
+            }
         }
         try {
             update msgList;
@@ -165,8 +169,8 @@ public with sharing class CRM_MessageHelper {
         m.CRM_Thread__c = threadId;
         m.CRM_From_Contact__c = fromContactId;
         m.CRM_Read__c = true;
-        m.CRM_Read_By_Nav__c = false;
         m.CRM_Read_Datetime__c = DateTime.now();
+        m.CRM_Read_By_Nav__c = false;
 
         Thread__c t = [SELECT Id, CRM_isActive__c, IsNewMessageFromUser__c FROM Thread__c WHERE Id = :threadId LIMIT 1][0];
         if (!t.CRM_isActive__c) {

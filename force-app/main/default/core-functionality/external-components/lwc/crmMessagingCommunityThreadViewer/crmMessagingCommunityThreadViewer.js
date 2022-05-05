@@ -1,6 +1,6 @@
 import { LightningElement, wire, api, track } from 'lwc';
 import getmessages from '@salesforce/apex/CRM_MessageHelper.getMessagesFromThread';
-import markasread from '@salesforce/apex/CRM_MessageHelper.markAsRead';
+import markAsRead from '@salesforce/apex/CRM_MessageHelper.markAsRead';
 import { refreshApex } from '@salesforce/apex';
 import getContactId from '@salesforce/apex/CRM_MessageHelper.getUserContactId';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -28,7 +28,7 @@ export default class crmMessagingCommunityThreadViewer extends LightningElement 
     @api errorList = { title: '', errors: [] };
 
     connectedCallback() {
-        markasread({ threadId: this.recordId });
+        markAsRead({ threadId: this.recordId, isNavOrUser: false});
         getContactId({})
             .then((contactId) => {
                 this.userContactId = contactId;
