@@ -40,6 +40,13 @@
                     <stringValue>CHAT</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Thread_State.CRM_isActive__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Journal_Chat_Thread</targetReference>
             </connector>
