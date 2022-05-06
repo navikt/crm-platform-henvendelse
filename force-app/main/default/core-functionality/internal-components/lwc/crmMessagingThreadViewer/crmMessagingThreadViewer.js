@@ -39,7 +39,7 @@ export default class messagingThreadViewer extends LightningElement {
         }
         this.handleSubscribe();
         this.scrolltobottom();
-        markAsRead({ threadId: this.threadid, isNavOrUser: true });
+        markAsRead({ threadId: this.threadid, isUser: false });
     }
 
     disconnectedCallback() {

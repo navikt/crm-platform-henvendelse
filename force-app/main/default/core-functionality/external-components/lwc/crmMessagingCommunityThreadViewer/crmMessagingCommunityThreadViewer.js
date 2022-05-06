@@ -28,7 +28,7 @@ export default class crmMessagingCommunityThreadViewer extends LightningElement 
     @api errorList = { title: '', errors: [] };
 
     connectedCallback() {
-        markAsRead({ threadId: this.recordId, isNavOrUser: false});
+        markAsRead({ threadId: this.recordId, isUser: true});
         getContactId({})
             .then((contactId) => {
                 this.userContactId = contactId;
