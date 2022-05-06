@@ -86,7 +86,7 @@ public with sharing class CRM_MessageHelperTest {
         System.assertNotEquals(null, lisenceType);
     }
     @isTest
-    static void markasreadByUserTest() {
+    static void markasreadTest() {
         List<Thread__c> tList = [SELECT Id FROM Thread__c ORDER BY CRM_Number_of_External_Messages__c DESC];
         Test.startTest();
         CRM_MessageHelper.markAsRead(tList.get(0).Id);
