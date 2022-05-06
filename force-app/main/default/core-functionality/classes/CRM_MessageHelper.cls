@@ -186,7 +186,7 @@ public with sharing class CRM_MessageHelper {
         m.CRM_Read_Datetime__c = DateTime.now();
         m.CRM_Read_By_Nav__c = false;
 
-        Thread__c t = [SELECT Id, CRM_isActive__c, IsNewMessageFromUser__c FROM Thread__c WHERE Id = :threadId LIMIT 1][0];
+        Thread__c t = [SELECT Id, CRM_isActive__c FROM Thread__c WHERE Id = :threadId LIMIT 1][0];
         if (!t.CRM_isActive__c) {
             return false;
         }
