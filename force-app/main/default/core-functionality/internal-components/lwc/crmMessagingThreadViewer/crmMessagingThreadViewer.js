@@ -1,6 +1,7 @@
 import { LightningElement, api, wire, track } from 'lwc';
 import getmessages from '@salesforce/apex/CRM_MessageHelper.getMessagesFromThread';
 import getJournalInfo from '@salesforce/apex/CRM_MessageHelper.getJournalEntries';
+import markAsReadByNav from '@salesforce/apex/CRM_MessageHelper.markAsReadByNav';
 import { subscribe, unsubscribe } from 'lightning/empApi';
 
 import userId from '@salesforce/user/Id';
@@ -38,6 +39,7 @@ export default class messagingThreadViewer extends LightningElement {
         }
         this.handleSubscribe();
         this.scrolltobottom();
+        markAsReadByNav({ threadId: this.threadid});
     }
 
     disconnectedCallback() {

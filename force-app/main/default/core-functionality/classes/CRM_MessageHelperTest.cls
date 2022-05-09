@@ -94,6 +94,17 @@ public with sharing class CRM_MessageHelperTest {
         List<Message__c> msgList = [SELECT CRM_Read__c FROM Message__c WHERE CRM_Thread__c = :tList.get(0).Id];
         System.assertEquals(true, msgList.get(0).CRM_Read__c);
     }
+
+    @isTest
+    static void markAsReadByNavTest() {
+        List<Thread__c> tList = [SELECT Id FROM Thread__c ORDER BY CRM_Number_of_External_Messages__c DESC];
+        Test.startTest();
+        CRM_MessageHelper.markAsReadByNav(tList.get(0).Id);
+        Test.stopTest();
+        List<Message__c> msgList = [SELECT CRM_Read_By_Nav__c, CRM_Read_By_Nav_Datetime__c FROM Message__c WHERE CRM_Thread__c = :tList.get(0).Id];
+        System.assertEquals(true, msgList.get(0).CRM_Read_By_Nav__c, 'Could not set CRM_Read_By_Nav__c to true.');
+        System.assertNotEquals(null, msgList.get(0).CRM_Read_By_Nav_Datetime__c, 'CRM_Read_By_Nav_Datetime__c was not set.');
+    }
     @isTest
     static void createMessageTest() {
         List<Thread__c> tList = [SELECT Id FROM Thread__c ORDER BY CRM_Number_of_External_Messages__c DESC];
