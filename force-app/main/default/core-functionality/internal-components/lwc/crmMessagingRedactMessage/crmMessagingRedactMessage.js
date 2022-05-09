@@ -1,4 +1,4 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 
 export default class CrmMessagingRedactMessage extends LightningElement {
     _message;
@@ -8,6 +8,7 @@ export default class CrmMessagingRedactMessage extends LightningElement {
     _isRedacting = false;
     trueValue = true;
     showSpinner = false;
+    @track redactAll = false;
 
     @api get message() {
         return this._message;
@@ -91,5 +92,8 @@ export default class CrmMessagingRedactMessage extends LightningElement {
     RedactAllMessageText() {
         this.redactedText = '***';
         this.redactTextComponent.addRedactedValue(this.redactedText);
+
+        this.redactAll = true;
+        this.dispatchEvent(new CustomEvent('redactall', { detail: this.redactAll }));
     }
 }

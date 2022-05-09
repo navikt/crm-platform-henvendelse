@@ -329,7 +329,7 @@ export default class crmQuickText extends LightningElement {
     @api
     clear() {
         //sets text content to the current
-        this._conversationNote = this.resetTextTemplate;
+        this._conversationNote = this.resetTextTemplate ? this.resetTextTemplate : '';
         this.textArea.value = this._conversationNote;
     }
 }
