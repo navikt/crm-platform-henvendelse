@@ -184,7 +184,6 @@ public with sharing class CRM_MessageHelper {
         m.CRM_From_Contact__c = fromContactId;
         m.CRM_Read__c = true;
         m.CRM_Read_Datetime__c = DateTime.now();
-        m.CRM_Read_By_Nav__c = false;
 
         Thread__c t = [SELECT Id, CRM_isActive__c FROM Thread__c WHERE Id = :threadId LIMIT 1][0];
         if (!t.CRM_isActive__c) {
