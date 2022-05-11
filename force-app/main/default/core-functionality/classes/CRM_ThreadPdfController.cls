@@ -41,8 +41,6 @@ public without sharing class CRM_ThreadPdfController {
             if(lines == null){
                 return null;
             }
-            System.debug('Lines in message');
-            System.debug(lines.size());
             List<String> newLines = new List<String>();
             for(String line : lines){
                 newLines.add(splitWordsInLine(line));
