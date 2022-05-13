@@ -26,6 +26,11 @@
                 <default>false</default>
                 <label>Journal Completed</label>
             </value>
+            <value>
+                <fullName>Journal Started</fullName>
+                <default>false</default>
+                <label>Journal Started</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
