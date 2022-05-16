@@ -7,7 +7,7 @@
             },
             "FirstName": "Harry",
             "LastName": "Potter",
-            "AccountId": "@AccountRef2"
+            "AccountId": "@AccountRef3"
         }
     ]
 }
