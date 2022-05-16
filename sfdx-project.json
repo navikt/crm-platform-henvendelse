@@ -5,30 +5,30 @@
             "default": true,
             "package": "crm-henvendelse",
             "versionName": "ver 0.1",
-            "versionNumber": "0.42.0.NEXT",
+            "versionNumber": "0.57.0.NEXT",
             "dependencies": [
                 {
                     "package": "crm-platform-base",
-                    "versionNumber": "0.141.0.LATEST"
+                    "versionNumber": "0.151.0.LATEST"
                 },
                 {
                     "package": "crm-journal-utilities",
-                    "versionNumber": "0.9.0.LATEST"
+                    "versionNumber": "0.14.0.LATEST"
                 },
                 {
                     "package": "crm-shared-user-notification",
-                    "versionNumber": "0.3.0.LATEST"
+                    "versionNumber": "0.15.0.LATEST"
                 },
                 {
                     "package": "crm-shared-flowComponents",
-                    "versionNumber": "0.1.0.LATEST"
+                    "versionNumber": "0.2.0.LATEST"
                 }
             ]
         }
     ],
     "namespace": "",
     "sfdcLoginUrl": "https://login.salesforce.com",
-    "sourceApiVersion": "53.0",
+    "sourceApiVersion": "54.0",
     "packageAliases": {
         "crm-henvendelse": "0Ho2o000000fxXfCAI",
         "crm-journal-utilities": "0Ho2o000000fxXkCAI",
