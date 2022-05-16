@@ -15,6 +15,16 @@
                 "type": "Account",
                 "referenceId": "AccountRef2"
             },
+            "FirstName": "Harry",
+            "LastName": "Botter",
+            "INT_PersonIdent__c": "12345678912",
+            "CRM_Person__c": "@PersonRef2"
+        },
+        {
+            "attributes": {
+                "type": "Account",
+                "referenceId": "AccountRef3"
+            },
             "Name": "Dummy Account"
         }
     ]
