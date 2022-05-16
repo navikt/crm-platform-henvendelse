@@ -2,6 +2,7 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
     public enum HENVENDELSE_TYPE {
         SAMTALEREFERAT,
         MELDINGSKJEDE,
+        CHAT,
         MELDING
     }
 
