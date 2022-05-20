@@ -21,6 +21,7 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
             Thread__c.CRM_Disposal_Datetime__c,
             Thread__c.CRM_Created_By_Ident__c,
             Thread__c.CRM_Closed_Date__c,
+            Thread__c.CRM_Type__c,
             Thread__c.CRM_Theme_Group_Code__c,
             Thread__c.CRM_Theme_Code__c,
             Thread__c.CRM_External_ActorId_Formula__c,
@@ -63,9 +64,10 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
     }
 
     public List<Thread__c> selectByActorId(Set<String> actorIds) {
+        List<String> threadTypes = new List<String>{ 'STO', 'STB', 'CHAT' };
         fflib_QueryFactory query = newQueryFactory();
         query.setCondition(
-            '(CRM_Account__r.CRM_Person__r.INT_ActorId__c in :actorIds AND (CRM_Type__c = \'STO\' OR CRM_Type__c = \'STB\'))'
+            '(CRM_Account__r.CRM_Person__r.INT_ActorId__c in :actorIds AND CRM_Type__c in :threadTypes)'
         );
         //Adds the Journal entry selector query as a relationship query to the Thread query
         new CRM_JournalEntrySelector().addQueryFactorySubselect(query, 'Journal_Entries__r');

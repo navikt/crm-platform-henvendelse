@@ -77,9 +77,5 @@
             <controllingFieldValue>Info</controllingFieldValue>
             <valueName>REDACTED</valueName>
         </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Info</controllingFieldValue>
-            <valueName>INTERNAL_MESSAGE</valueName>
-        </valueSettings>
     </valueSet>
 </CustomField>
