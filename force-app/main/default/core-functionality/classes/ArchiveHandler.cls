@@ -1,4 +1,4 @@
-public with sharing class ArchiveHandler {
+public inherited sharing class ArchiveHandler {
     public static String checkNull(String value) {
         return String.isBlank(value) ? '' : value;
     }
