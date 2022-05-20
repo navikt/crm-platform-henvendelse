@@ -7,11 +7,8 @@
         <locationY>638</locationY>
         <actionName>UN_InnboksAction</actionName>
         <actionType>apex</actionType>
-        <connector>
-            <targetReference>Evaluate_Result</targetReference>
-        </connector>
         <faultConnector>
-            <targetReference>Log_error</targetReference>
+            <targetReference>Log_error_from_subflow</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -100,9 +97,9 @@
         </outputParameters>
     </actionCalls>
     <actionCalls>
-        <name>Log_error</name>
-        <label>Log error</label>
-        <locationX>754</locationX>
+        <name>Log_error_from_subflow</name>
+        <label>Log error from subflow</label>
+        <locationX>578</locationX>
         <locationY>758</locationY>
         <actionName>LoggerUtility</actionName>
         <actionType>apex</actionType>
@@ -123,7 +120,7 @@
         <inputParameters>
             <name>domain</name>
             <value>
-                <elementReference>logDomain</elementReference>
+                <stringValue>NKS</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -147,56 +144,7 @@
         <inputParameters>
             <name>source</name>
             <value>
-                <stringValue>Thread - Subflow - Create Innboks User Notification</stringValue>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <name>Log_error_result</name>
-        <label>Log error result</label>
-        <locationX>314</locationX>
-        <locationY>878</locationY>
-        <actionName>LoggerUtility</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Assign_response_noification</targetReference>
-        </connector>
-        <dataTypeMappings>
-            <typeName>T__refRecord</typeName>
-            <typeValue>Thread__c</typeValue>
-        </dataTypeMappings>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>category</name>
-            <value>
-                <stringValue>Henvendelse</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>domain</name>
-            <value>
-                <elementReference>logDomain</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>logLevel</name>
-        </inputParameters>
-        <inputParameters>
-            <name>logMessage</name>
-            <value>
-                <elementReference>Create_Innboks_Notification.errorMessage</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>refRecord</name>
-            <value>
-                <elementReference>Thread</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>source</name>
-            <value>
-                <stringValue>Thread - Subflow - Create Innboks User Notification</stringValue>
+                <stringValue>Thread - Create Innboks User Notification</stringValue>
             </value>
         </inputParameters>
     </actionCalls>
@@ -248,48 +196,10 @@
             </value>
         </assignmentItems>
     </assignments>
-    <assignments>
-        <name>Assign_response_noification</name>
-        <label>Assign response noification</label>
-        <locationX>446</locationX>
-        <locationY>1094</locationY>
-        <assignmentItems>
-            <assignToReference>newInnboksNotification</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Create_Innboks_Notification.userNotification</elementReference>
-            </value>
-        </assignmentItems>
-    </assignments>
-    <decisions>
-        <name>Evaluate_Result</name>
-        <label>Evaluate Result</label>
-        <locationX>446</locationX>
-        <locationY>758</locationY>
-        <defaultConnector>
-            <targetReference>Assign_response_noification</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Has_Error</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Create_Innboks_Notification.success</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Log_error_result</targetReference>
-            </connector>
-            <label>Has Error</label>
-        </rules>
-    </decisions>
     <decisions>
         <name>Has_Open_User_Notification</name>
         <label>Has Open User Notification</label>
-        <locationX>248</locationX>
+        <locationX>182</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Get_Person</targetReference>
@@ -340,7 +250,7 @@
     <recordLookups>
         <name>Get_Person</name>
         <label>Get Person</label>
-        <locationX>446</locationX>
+        <locationX>314</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -361,7 +271,7 @@
     <recordLookups>
         <name>Thread</name>
         <label>Thread</label>
-        <locationX>248</locationX>
+        <locationX>182</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -382,7 +292,7 @@
     <recordLookups>
         <name>User_Notification</name>
         <label>User Notification</label>
-        <locationX>248</locationX>
+        <locationX>182</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -416,13 +326,13 @@
     </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
-        <locationX>122</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Thread</targetReference>
         </connector>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
     <variables>
         <name>appname</name>
         <dataType>String</dataType>
