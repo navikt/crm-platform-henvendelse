@@ -74,6 +74,14 @@
         <objectType>Journal_Entry__c</objectType>
     </variables>
     <variables>
+        <name>JOURNALED_THREAD</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Thread__c</objectType>
+    </variables>
+    <variables>
         <description>Input to determine if this flow should perform the DML to update relevant records after callout or if this should be handled outside the flow.</description>
         <name>PERFORM_DML</name>
         <dataType>Boolean</dataType>
