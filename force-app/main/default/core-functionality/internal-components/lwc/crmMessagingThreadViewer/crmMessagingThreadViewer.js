@@ -94,16 +94,10 @@ export default class messagingThreadViewer extends LightningElement {
     }
     mouseMoveEventHandlerBinded = this.mouseMoveEventHandler.bind(this);
     mouseMoveEventHandler(e){
-        console.log("mouseMove1");
-        console.log(e.toElement.offsetHeight);
-                console.log(e.offsetY);
-            if((e.toElement.offsetHeight - e.offsetY) < 10){
-                console.log(e.toElement.offsetHeight);
-                console.log(e.offsetY);
+            if((this.resizablePanelTop.getBoundingClientRect().bottom - e.pageY) < 10){
                 document.body.style.cursor = "ns-resize";
                 if(this.mouseListenerCounter !== true){
                     this.resizablePanelTop.addEventListener("mousedown", this.mouseDownEventHandlerBinded, false);
-                    console.log("click");
                     this.mouseListenerCounter = true;
                 }
             }
