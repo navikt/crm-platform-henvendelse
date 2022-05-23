@@ -12,6 +12,10 @@
                     "versionNumber": "0.151.0.LATEST"
                 },
                 {
+                    "package": "crm-henvendelse-base",
+                    "versionNumber": "0.1.0.LATEST"
+                },
+                {
                     "package": "crm-journal-utilities",
                     "versionNumber": "0.14.0.LATEST"
                 },
@@ -31,6 +35,7 @@
     "sourceApiVersion": "54.0",
     "packageAliases": {
         "crm-henvendelse": "0Ho2o000000fxXfCAI",
+        "crm-henvendelse-base": "0Ho7U000000000kSAA",
         "crm-journal-utilities": "0Ho2o000000fxXkCAI",
         "crm-platform-base": "0Ho2o0000008ORmCAM",
         "crm-shared-user-notification": "0Ho2o000000fxY4CAI",
