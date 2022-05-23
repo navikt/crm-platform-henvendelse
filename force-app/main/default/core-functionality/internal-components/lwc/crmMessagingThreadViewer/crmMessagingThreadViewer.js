@@ -31,8 +31,8 @@ export default class messagingThreadViewer extends LightningElement {
     @track langBtnLock = false;
     langBtnAriaToggle = false;
     resizablePanelTop;
-    onresize = false;
-    mouseListenerCounter = false;
+    onresize = false; // true when in process of resizing
+    mouseListenerCounter = false; // flag for detecting if onmousemove listener is set for element
 
     @api textTemplate; //Support for conditional text template as input
     //Constructor, called onload
@@ -54,18 +54,46 @@ export default class messagingThreadViewer extends LightningElement {
         if (test) {
             test.focus();
         }
-        
         this.resizablePanelTop = this.template.querySelector("section");
         this.resizablePanelTop.addEventListener("mousemove", this.mouseMoveEventHandlerBinded, false);
         this.resizablePanelTop.addEventListener("mouseleave", this.mouseLeaveEventHandler, false);
     }
+    //##################################//
+    //#####    Event Handlers    #######//
+    //##################################//
+
+    mouseMoveEventHandler(e){
+        // detecting if cursor is in the area of interest
+        if((this.resizablePanelTop.getBoundingClientRect().bottom - e.pageY) < 10){
+            // change cursor style, and adding listener for mousedown event
+            document.body.style.cursor = "ns-resize";
+            if(this.mouseListenerCounter !== true){
+                this.resizablePanelTop.addEventListener("mousedown", this.mouseDownEventHandlerBinded, false);
+                this.mouseListenerCounter = true;
+            }
+        }
+        else{
+            // remove listener and reset cursor when cursor is out of area of interest
+            if(this.mouseListenerCounter === true){
+                this.resizablePanelTop.removeEventListener("mousedown", this.mouseDownEventHandlerBinded, false);
+                this.mouseListenerCounter = false;
+            }
+            document.body.style.cursor = "auto";
+        }
+    }
+    //binding, to make 'this' available when running in context of other object
+    mouseMoveEventHandlerBinded = this.mouseMoveEventHandler.bind(this);
+    
+
     mouseLeaveEventHandler(e){
-        console.log("mouseLeave");
+        if(this.mouseListenerCounter === true){
+            this.resizablePanelTop.removeEventListener("mousedown", this.mouseDownEventHandlerBinded, false);
+            this.mouseListenerCounter = false;
+        }
         document.body.style.cursor = "auto";
     }
-    mouseDownEventHandlerBinded = this.mouseDownEventHandler.bind(this);
+
     mouseDownEventHandler(e){
-        console.log("mouseDownHandler");
         this.onresize = true;
         this.resizablePanelTop.removeEventListener("mousedown", this.mouseDownEventHandlerBinded, false);
         document.addEventListener("mouseup", this.mouseUpEventHandlerBinded, true);
@@ -73,42 +101,25 @@ export default class messagingThreadViewer extends LightningElement {
         this.resizablePanelTop.removeEventListener("mouseleave", this.mouseLeaveEventHandler, false);
         document.addEventListener("mousemove", this.resizeEventHandlerBinded, true);
     }
-    resizeEventHandlerBinded = this.resizeEventHandler.bind(this);
+    mouseDownEventHandlerBinded = this.mouseDownEventHandler.bind(this);
+
     resizeEventHandler(e){
-        console.log("resizeEventHandler");
-        console.log(e.movementY);
+        e.preventDefault();
         this.resizablePanelTop.style.height = (this.resizablePanelTop.offsetHeight + e.movementY) + "px";
     }
-    mouseUpEventHandlerBinded = this.mouseUpEventHandler.bind(this);
+    resizeEventHandlerBinded = this.resizeEventHandler.bind(this);
+
     mouseUpEventHandler(e){
         this.onresize = false;
-        console.log("mouseUpHandler");
         this.resizablePanelTop.removeEventListener("mousedown", this.mouseDownEventHandlerBinded, false);
         document.removeEventListener("mouseup", this.mouseUpEventHandlerBinded, true);
         document.removeEventListener("mousemove", this.resizeEventHandlerBinded,true);
         document.body.style.cursor = "auto";
         this.resizablePanelTop.addEventListener("mousemove", this.mouseMoveEventHandlerBinded,false);
         this.resizablePanelTop.addEventListener("mouseleave", this.mouseLeaveEventHandler, false);
-        console.log("removed");
         this.mouseListenerCounter = false;
     }
-    mouseMoveEventHandlerBinded = this.mouseMoveEventHandler.bind(this);
-    mouseMoveEventHandler(e){
-            if((this.resizablePanelTop.getBoundingClientRect().bottom - e.pageY) < 10){
-                document.body.style.cursor = "ns-resize";
-                if(this.mouseListenerCounter !== true){
-                    this.resizablePanelTop.addEventListener("mousedown", this.mouseDownEventHandlerBinded, false);
-                    this.mouseListenerCounter = true;
-                }
-            }
-            else{
-                if(this.mouseListenerCounter = true){
-                    this.resizablePanelTop.removeEventListener("mousedown", this.mouseDownEventHandlerBinded, false);
-                    this.mouseListenerCounter = false;
-                }
-                document.body.style.cursor = "auto";
-            }
-    }
+    mouseUpEventHandlerBinded = this.mouseUpEventHandler.bind(this);
 
     //Handles subscription to streaming API for listening to changes to auth status
     handleSubscribe() {
@@ -341,9 +352,4 @@ export default class messagingThreadViewer extends LightningElement {
         const lastElement = this.template.querySelector('.cancelButton');
         lastElement.focus();
     }
-
-    //##################################//
-    //#####    Event Handlers    #######//
-    //##################################//
-    
 }
