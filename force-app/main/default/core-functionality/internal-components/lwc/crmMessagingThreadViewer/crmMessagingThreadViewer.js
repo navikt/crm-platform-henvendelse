@@ -30,6 +30,9 @@ export default class messagingThreadViewer extends LightningElement {
     @api englishTextTemplate;
     @track langBtnLock = false;
     langBtnAriaToggle = false;
+    resizablePanelTop;
+    onresize = false;
+    mouseListenerCounter = false;
 
     @api textTemplate; //Support for conditional text template as input
     //Constructor, called onload
@@ -51,6 +54,66 @@ export default class messagingThreadViewer extends LightningElement {
         if (test) {
             test.focus();
         }
+        
+        this.resizablePanelTop = this.template.querySelector("section");
+        this.resizablePanelTop.addEventListener("mousemove", this.mouseMoveEventHandlerBinded, false);
+        this.resizablePanelTop.addEventListener("mouseleave", this.mouseLeaveEventHandler, false);
+    }
+    mouseLeaveEventHandler(e){
+        console.log("mouseLeave");
+        document.body.style.cursor = "auto";
+    }
+    mouseDownEventHandlerBinded = this.mouseDownEventHandler.bind(this);
+    mouseDownEventHandler(e){
+        console.log("mouseDownHandler");
+        this.onresize = true;
+        this.resizablePanelTop.removeEventListener("mousedown", this.mouseDownEventHandlerBinded, false);
+        document.addEventListener("mouseup", this.mouseUpEventHandlerBinded, true);
+        this.resizablePanelTop.removeEventListener("mousemove", this.mouseMoveEventHandlerBinded, false);
+        this.resizablePanelTop.removeEventListener("mouseleave", this.mouseLeaveEventHandler, false);
+        document.addEventListener("mousemove", this.resizeEventHandlerBinded, true);
+    }
+    resizeEventHandlerBinded = this.resizeEventHandler.bind(this);
+    resizeEventHandler(e){
+        console.log("resizeEventHandler");
+        console.log(e.movementY);
+        this.resizablePanelTop.style.height = (this.resizablePanelTop.offsetHeight + e.movementY) + "px";
+    }
+    mouseUpEventHandlerBinded = this.mouseUpEventHandler.bind(this);
+    mouseUpEventHandler(e){
+        this.onresize = false;
+        console.log("mouseUpHandler");
+        this.resizablePanelTop.removeEventListener("mousedown", this.mouseDownEventHandlerBinded, false);
+        document.removeEventListener("mouseup", this.mouseUpEventHandlerBinded, true);
+        document.removeEventListener("mousemove", this.resizeEventHandlerBinded,true);
+        document.body.style.cursor = "auto";
+        this.resizablePanelTop.addEventListener("mousemove", this.mouseMoveEventHandlerBinded,false);
+        this.resizablePanelTop.addEventListener("mouseleave", this.mouseLeaveEventHandler, false);
+        console.log("removed");
+        this.mouseListenerCounter = false;
+    }
+    mouseMoveEventHandlerBinded = this.mouseMoveEventHandler.bind(this);
+    mouseMoveEventHandler(e){
+        console.log("mouseMove1");
+        console.log(e.toElement.offsetHeight);
+                console.log(e.offsetY);
+            if((e.toElement.offsetHeight - e.offsetY) < 10){
+                console.log(e.toElement.offsetHeight);
+                console.log(e.offsetY);
+                document.body.style.cursor = "ns-resize";
+                if(this.mouseListenerCounter !== true){
+                    this.resizablePanelTop.addEventListener("mousedown", this.mouseDownEventHandlerBinded, false);
+                    console.log("click");
+                    this.mouseListenerCounter = true;
+                }
+            }
+            else{
+                if(this.mouseListenerCounter = true){
+                    this.resizablePanelTop.removeEventListener("mousedown", this.mouseDownEventHandlerBinded, false);
+                    this.mouseListenerCounter = false;
+                }
+                document.body.style.cursor = "auto";
+            }
     }
 
     //Handles subscription to streaming API for listening to changes to auth status
@@ -284,4 +347,9 @@ export default class messagingThreadViewer extends LightningElement {
         const lastElement = this.template.querySelector('.cancelButton');
         lastElement.focus();
     }
+
+    //##################################//
+    //#####    Event Handlers    #######//
+    //##################################//
+    
 }
