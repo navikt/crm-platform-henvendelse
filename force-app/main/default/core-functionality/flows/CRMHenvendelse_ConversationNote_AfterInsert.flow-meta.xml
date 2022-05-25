@@ -29,6 +29,9 @@
         <label>Create Message Content</label>
         <locationX>50</locationX>
         <locationY>288</locationY>
+        <connector>
+            <targetReference>Update_Message_Content_Relation</targetReference>
+        </connector>
         <inputAssignments>
             <field>CRM_Message_Text__c</field>
             <value>
@@ -38,6 +41,19 @@
         <object>Message_Content__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
+    <recordUpdates>
+        <name>Update_Message_Content_Relation</name>
+        <label>Update Message Content Relation</label>
+        <locationX>50</locationX>
+        <locationY>408</locationY>
+        <inputAssignments>
+            <field>CRM_Message_Content__c</field>
+            <value>
+                <elementReference>Create_Message_Content</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
     <start>
         <locationX>56</locationX>
         <locationY>0</locationY>
