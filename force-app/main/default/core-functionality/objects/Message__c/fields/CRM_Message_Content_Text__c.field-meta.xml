@@ -3,7 +3,7 @@
     <fullName>CRM_Message_Content_Text__c</fullName>
     <description>Message text viewed from the message content.</description>
     <externalId>false</externalId>
-    <formula>CRM_Message_Content__r.CRM_Message__c</formula>
+    <formula>CRM_Message_Content__r.CRM_Message_Text__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Message Content Text</label>
     <required>false</required>
