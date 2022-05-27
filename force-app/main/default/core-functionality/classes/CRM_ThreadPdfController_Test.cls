@@ -52,6 +52,31 @@ public class CRM_ThreadPdfController_Test {
             'if argument is longer than limit - returns splittet string'
         );
     }
+    @isTest 
+    public static void splitLinkTest(){
+        CRM_ThreadPdfController.LongWordSplitter splitter =
+            new CRM_ThreadPdfController.LongWordSplitter(20);
+        System.assertEquals(
+            null,
+            splitter.splitLink(null),
+            'if argument is null - returns null'
+        );
+        System.assertEquals(
+            '',
+            splitter.splitLink(''),
+            'if argument is empty string - returns empty string'
+        );
+        System.assertEquals(
+            'http://short_link',
+            splitter.splitLink('http://short_link'),
+            'if argument is shorter than limit - returns argument'
+        );
+        System.assertEquals(
+            '<a style="color:black; text-decoration: none;" href="http://this_link_is_longer_than_given_length"> http://this_link_is_ longer_than_given_le ngth </a>',
+            splitter.splitLink('http://this_link_is_longer_than_given_length'),
+            'if argument is longer than limit - returns html formatted link'
+        );
+    }
     @isTest
     static void splitWordsTest(){
         CRM_ThreadPdfController.LongWordSplitter splitter = 
@@ -139,12 +164,14 @@ public class CRM_ThreadPdfController_Test {
             'hello world!\n' +
             'line with longlonglonglong words\n' +
             'line with veryveryveryverylonglonglonglong words\n' +
-            'short words in this line';
+            'short words in this line\n' +
+            'a short link here: http://www and along one https://www.nav.com';
         String expectedString =
             'hello world!\n' +
             'line with longlonglo nglong words\n' +
             'line with veryveryve ryverylong longlonglo ng words\n' +
-            'short words in this line';
+            'short words in this line\n' +
+            'a short link here: http://www and along one <a style="color:black; text-decoration: none;" href="https://www.nav.com"> https://ww w.nav.com </a>';
         System.assertEquals(expectedString, splitter.splitWordsInMessage(multilineString));
     }
 }

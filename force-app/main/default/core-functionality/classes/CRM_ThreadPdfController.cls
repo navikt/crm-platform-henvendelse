@@ -61,7 +61,11 @@ public without sharing class CRM_ThreadPdfController {
             }
             List<String> newWords = new List<String>();
             for(String word : words){
-                newWords.add(splitWord(word));
+                if(word.startsWith('http://') || word.startsWith('https://')){
+                    newWords.add(splitLink(word));
+                }else{
+                    newWords.add(splitWord(word));
+                }
             }
             return newWords;
         }
@@ -75,6 +79,16 @@ public without sharing class CRM_ThreadPdfController {
                 word = word.right(word.length()-length);
             }while(word.length() > 0);
             return String.join(wordParts, ' ');
+        }
+        @TestVisible
+        private String splitLink(String link){
+            if(link == null){
+                return null;
+            }
+            if(link.length() <= length){
+                return link;
+            }
+            return '<a style="color:black; text-decoration: none;" href="' + link + '"> ' + splitWord(link) + ' </a>';
         }
     }
 }
