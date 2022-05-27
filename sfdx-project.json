@@ -4,7 +4,6 @@
             "path": "force-app",
             "default": true,
             "package": "crm-henvendelse",
-            "versionName": "ver 0.1",
             "versionNumber": "0.63.0.NEXT",
             "dependencies": [
                 {
