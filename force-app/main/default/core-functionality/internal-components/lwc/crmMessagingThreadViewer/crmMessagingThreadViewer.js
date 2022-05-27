@@ -1,5 +1,6 @@
 import { LightningElement, api, wire, track } from 'lwc';
 import getmessages from '@salesforce/apex/CRM_MessageHelper.getMessagesFromThread';
+import getJournalInfo from '@salesforce/apex/CRM_MessageHelper.getJournalEntries';
 import markAsReadByNav from '@salesforce/apex/CRM_MessageHelper.markAsReadByNav';
 import { subscribe, unsubscribe } from 'lightning/empApi';
 
@@ -150,7 +151,10 @@ export default class messagingThreadViewer extends LightningElement {
             .catch((error) => {
                 console.log('EMP unsubscribe failed: ' + JSON.stringify(error, null, 2));
             });
-    }
+    }    
+    
+    @wire(getJournalInfo, { threadId: '$threadid' })
+    wiredJournalEntries;
 
     @wire(getRecord, {
         recordId: '$threadid',
@@ -283,6 +287,14 @@ export default class messagingThreadViewer extends LightningElement {
 
     get registereddate() {
         return getFieldValue(this.wiredThread.data, REGISTERED_DATE);
+    }
+    
+    get journalEntries() {
+        if (this.wiredJournalEntries) {
+            return this.wiredJournalEntries.data;
+        }
+
+        return null;
     }
 
     get closedThread() {
