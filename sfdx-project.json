@@ -4,11 +4,17 @@
             "path": "force-app",
             "default": true,
             "package": "crm-henvendelse",
-            "versionNumber": "0.63.0.NEXT",
+            "versionName": "ver 0.1",
+            "versionNumber": "0.64.0.NEXT",
+
             "dependencies": [
                 {
                     "package": "crm-platform-base",
                     "versionNumber": "0.156.0.LATEST"
+                },
+                {
+                    "package": "crm-henvendelse-base",
+                    "versionNumber": "0.2.0.LATEST"
                 },
                 {
                     "package": "crm-journal-utilities",
@@ -30,6 +36,7 @@
     "sourceApiVersion": "54.0",
     "packageAliases": {
         "crm-henvendelse": "0Ho2o000000fxXfCAI",
+        "crm-henvendelse-base": "0Ho7U000000000kSAA",
         "crm-journal-utilities": "0Ho2o000000fxXkCAI",
         "crm-platform-base": "0Ho2o0000008ORmCAM",
         "crm-shared-user-notification": "0Ho2o000000fxY4CAI",
