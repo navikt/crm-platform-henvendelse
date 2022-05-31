@@ -44,7 +44,7 @@
                                 -
                                 <apex:outputText value=" {!message.CRM_Sent_date__c}"> </apex:outputText>
                             </b>
-                            <p style="margin-top: 0.5em; white-space: pre-wrap">{!message.CRM_Message_Text__c}</p>
+                            <p style="margin-top: 0.5em; white-space: pre-wrap"><apex:outputText escape="false" value="{!message.CRM_Message_Text__c}"></apex:outputText></p>
                         </div>
                     </apex:outputPanel>
                 </apex:repeat>
