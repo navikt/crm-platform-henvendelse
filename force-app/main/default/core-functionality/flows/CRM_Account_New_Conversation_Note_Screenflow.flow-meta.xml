@@ -4,8 +4,8 @@
         <description>Initiates async journal creation</description>
         <name>Journal_Conversation_Note</name>
         <label>Journal Conversation Note</label>
-        <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationX>176</locationX>
+        <locationY>518</locationY>
         <actionName>CRM_ConvNoteJournalHelper</actionName>
         <actionType>apex</actionType>
         <flowTransactionModel>Automatic</flowTransactionModel>
@@ -47,29 +47,6 @@
         </inputParameters>
     </actionCalls>
     <apiVersion>54.0</apiVersion>
-    <decisions>
-        <description>Verify if a journal entry is to be created</description>
-        <name>Journal_Check</name>
-        <label>Journal Check</label>
-        <locationX>182</locationX>
-        <locationY>518</locationY>
-        <defaultConnectorLabel>No Journal</defaultConnectorLabel>
-        <rules>
-            <name>Do_Journal</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>JOURNAL_TOGGLE.value</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Journal_Conversation_Note</targetReference>
-            </connector>
-            <label>Do Journal</label>
-        </rules>
-    </decisions>
     <dynamicChoiceSets>
         <name>CONVERSATION_NOTE_CHANNELS</name>
         <dataType>Picklist</dataType>
@@ -81,16 +58,12 @@
     <formulas>
         <name>SELECTED_THEME_GROUP_ID</name>
         <dataType>String</dataType>
-        <expression>IF({!JOURNAL_TOGGLE.value} == true,
-{!Person_NAV_Cases.selectedThemeGroupSfId},
-null)</expression>
+        <expression>{!Person_NAV_Cases.selectedThemeGroupSfId}</expression>
     </formulas>
     <formulas>
         <name>SELECTED_THEME_ID</name>
         <dataType>String</dataType>
-        <expression>IF({!JOURNAL_TOGGLE.value} == true,
-{!Person_NAV_Cases.selectedCaseThemeSfId},
-null)</expression>
+        <expression>{!Person_NAV_Cases.selectedCaseThemeSfId}</expression>
     </formulas>
     <interviewLabel>Account New Conversation Note - Screenflow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Account New Conversation Note - Screenflow</label>
@@ -117,10 +90,10 @@ null)</expression>
         <description>Insert the new conversation note to the DB</description>
         <name>Create_Conversation_Note</name>
         <label>Create Conversation Note</label>
-        <locationX>182</locationX>
+        <locationX>176</locationX>
         <locationY>398</locationY>
         <connector>
-            <targetReference>Journal_Check</targetReference>
+            <targetReference>Journal_Conversation_Note</targetReference>
         </connector>
         <inputAssignments>
             <field>CRM_Account__c</field>
@@ -159,7 +132,7 @@ null)</expression>
         <description>Query the person record</description>
         <name>Get_Person</name>
         <label>Get Person</label>
-        <locationX>182</locationX>
+        <locationX>176</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -184,7 +157,7 @@ null)</expression>
     <screens>
         <name>New_Conversation_Note_Screen</name>
         <label>New Conversation Note</label>
-        <locationX>182</locationX>
+        <locationX>176</locationX>
         <locationY>278</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -192,65 +165,6 @@ null)</expression>
         <connector>
             <targetReference>Create_Conversation_Note</targetReference>
         </connector>
-        <fields>
-            <name>New_Conversation_Note_Screen_Section1</name>
-            <fieldType>RegionContainer</fieldType>
-            <fields>
-                <name>New_Conversation_Note_Screen_Section1_Column1</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>JOURNAL_TOGGLE</name>
-                    <extensionName>flowruntime:toggle</extensionName>
-                    <fieldType>ComponentInstance</fieldType>
-                    <inputParameters>
-                        <name>label</name>
-                        <value>
-                            <stringValue>Journalfør</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
-                        <name>messageToggleActive</name>
-                        <value>
-                            <stringValue>Ja</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
-                        <name>disabled</name>
-                        <value>
-                            <booleanValue>false</booleanValue>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
-                        <name>messageToggleInactive</name>
-                        <value>
-                            <stringValue>Nei</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                    <storeOutputAutomatically>true</storeOutputAutomatically>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>New_Conversation_Note_Screen_Section1_Column2</name>
-                <fieldType>Region</fieldType>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>9</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <isRequired>false</isRequired>
-        </fields>
         <fields>
             <name>Person_NAV_Cases</name>
             <extensionName>c:crmPersonCaseOverview</extensionName>
@@ -264,16 +178,6 @@ null)</expression>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>JOURNAL_TOGGLE.value</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>Note_Channel</name>
@@ -297,7 +201,7 @@ null)</expression>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Person</targetReference>
