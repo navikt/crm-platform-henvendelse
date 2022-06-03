@@ -5,11 +5,11 @@
             "default": true,
             "package": "crm-henvendelse",
             "versionName": "ver 0.1",
-            "versionNumber": "0.65.0.NEXT",
+            "versionNumber": "0.66.0.NEXT",
             "dependencies": [
                 {
                     "package": "crm-platform-base",
-                    "versionNumber": "0.156.0.LATEST"
+                    "versionNumber": "0.158.0.LATEST"
                 },
                 {
                     "package": "crm-henvendelse-base",
