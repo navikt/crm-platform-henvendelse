@@ -20,7 +20,7 @@
             if (state === 'SUCCESS') {
                 let henvId = response.getReturnValue();
                 this.navigateToHenvendelse(component, henvId);
-                this.colseWorkspaceTab(component);
+                this.closeWorkspaceTab(component);
             } else {
                 this.handleError(
                     component,
@@ -42,7 +42,7 @@
         });
     },
 
-    colseWorkspaceTab: function (component) {
+    closeWorkspaceTab: function (component) {
         let workspaceAPI = component.find('workspace');
         workspaceAPI
             .getEnclosingTabId()
