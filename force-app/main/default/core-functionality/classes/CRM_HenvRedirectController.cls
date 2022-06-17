@@ -11,8 +11,12 @@ public with sharing class CRM_HenvRedirectController {
             FIND :apiReference
             IN ALL FIELDS
             RETURNING
-                Thread__c(Id WHERE CRM_API_Reference__c = :apiReference),
-                Conversation_Note__c(Id WHERE CRM_API_Reference__c = :apiReference)
+                Thread__c(
+                    Id
+                    WHERE CRM_API_Reference__c = :apiReference OR CRM_Henvendelse_BehandlingsId__c = :apiReference),
+                Conversation_Note__c(
+                    Id
+                    WHERE CRM_API_Reference__c = :apiReference OR CRM_Henvendelse_BehandlingsId__c = :apiReference)
         ];
 
         for (List<SObject> retList : searchList) {
