@@ -20,6 +20,7 @@
             if (state === 'SUCCESS') {
                 let henvId = response.getReturnValue();
                 this.navigateToHenvendelse(component, henvId);
+                this.colseWorkspaceTab(component);
             } else {
                 this.handleError(
                     component,
@@ -39,6 +40,25 @@
             header: 'En uventet feil oppsto!',
             message: errorMsg
         });
+    },
+
+    colseWorkspaceTab: function (component) {
+        let workspaceAPI = component.find('workspace');
+        workspaceAPI
+            .getEnclosingTabId()
+            .then((tabId) => {
+                workspaceAPI
+                    .closeTab({ tabId: tabId })
+                    .then((response) => {
+                        //Success
+                    })
+                    .catch((error) => {
+                        console.log(JSON.stringify(error, null, 2));
+                    });
+            })
+            .catch((error) => {
+                console.log(JSON.stringify(error, null, 2));
+            });
     },
 
     navigateToHenvendelse: function (component, henvId) {

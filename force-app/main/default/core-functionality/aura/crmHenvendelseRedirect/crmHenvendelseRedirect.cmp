@@ -9,6 +9,7 @@
         <lightning:spinner alternativeText="Loading" size="medium" />
     </aura:if>
 
+    <lightning:workspaceAPI aura:id="workspace" />
     <!--Navigation service-->
     <lightning:navigation aura:id="navService" />
     <!--Notification library-->
