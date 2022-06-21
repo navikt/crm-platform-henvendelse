@@ -17,6 +17,18 @@ export default class CommunityTextarea extends LightningElement {
         this.processMessageStyling();
     }
 
+    checkError() {
+        if (!this.message || this.message.length === 0) {
+            this.errorState = true;
+            this.errorMessage = 'Tekstfeltet kan ikke være tomt.';
+        } else if (this.limitCharacters && this.message.length > this.maxLength) {
+            this.errorState = true;
+            this.errorMessage = 'Tekstefeltet kan ikke ha for mange tegn.';
+        } else {
+            this.errorState = false;
+        }
+    }
+
     processMessageStyling() {
         this.mirror.textContent = this.message + '\n s';
         this.tekstboks.style.height = this.mirror.offsetHeight + 'px';
@@ -39,6 +51,11 @@ export default class CommunityTextarea extends LightningElement {
         this.tekstboks.value = this.message;
         this.publishMessage();
         this.processMessageStyling();
+    }
+
+    @api
+    focus() {
+        this.tekstboks.focus();
     }
 
     get remainingCharacters() {
@@ -77,24 +94,11 @@ export default class CommunityTextarea extends LightningElement {
         return this.template.querySelector('.mirror');
     }
 
-    checkError() {
-        if (!this.message || this.message.length === 0) {
-            this.errorState = true;
-            this.errorMessage = 'Tekstfeltet kan ikke være tomt.';
-        } else if (this.limitCharacters && this.message.length > this.maxLength) {
-            this.errorState = true;
-            this.errorMessage = 'Tekstefeltet kan ikke ha for mange tegn.';
-        } else {
-            this.errorState = false;
-        }
-    }
-
     get wrapperClass() {
         return 'navds-form-field navds-form-field--medium' + (this.errorState ? ' navds-textarea--error' : '');
     }
 
-    @api
-    focus() {
-        this.tekstboks.focus();
+    get textAreaContainer() {
+        return this.errorState ? 'navds-textarea__wrapper' : 'navds-textarea__wrapper textarea-container';
     }
 }
