@@ -267,6 +267,12 @@ export default class crmQuickText extends LightningElement {
     }
 
     insertquicktext(event) {
+        if (!keyCodes.includes(event.keyCode)) {
+            //to lock langBtn if a valid key is pressed
+            const lockLang = new CustomEvent('locklang');
+            this.dispatchEvent(lockLang);
+        }
+        
         if (QUICK_TEXT_TRIGGER_KEYS.includes(event.key)) {
             const editor = this.textArea;
             const carretPositionEnd = editor.selectionEnd;
