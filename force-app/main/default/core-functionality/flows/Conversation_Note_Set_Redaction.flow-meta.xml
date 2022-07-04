@@ -1,5 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <actionCalls>
+        <name>Show_Toast_Message</name>
+        <label>Show Toast Message</label>
+        <locationX>314</locationX>
+        <locationY>758</locationY>
+        <actionName>c:fcFlowToaster</actionName>
+        <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>duration</name>
+            <value>
+                <stringValue>10</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>message</name>
+            <value>
+                <stringValue>Samtalereferatet ble satt til sladding.</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>title</name>
+            <value>
+                <stringValue>Sett til sladding</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>type</name>
+            <value>
+                <stringValue>success</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>53.0</apiVersion>
     <assignments>
         <name>Set_Conversation_Note_for_redaction</name>
@@ -105,6 +139,9 @@
         <label>Update Conversation Note</label>
         <locationX>314</locationX>
         <locationY>638</locationY>
+        <connector>
+            <targetReference>Show_Toast_Message</targetReference>
+        </connector>
         <inputReference>Get_Conversation_Note</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
