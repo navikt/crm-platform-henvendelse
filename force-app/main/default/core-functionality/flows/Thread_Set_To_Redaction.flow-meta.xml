@@ -17,7 +17,7 @@
         <inputParameters>
             <name>message</name>
             <value>
-                <stringValue>Samtaletråden ble satt til sladding.</stringValue>
+                <stringValue>Henvendelsen ble satt til sladding.</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
