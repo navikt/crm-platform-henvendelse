@@ -140,7 +140,7 @@
                 <leftValueReference>Get_Thread.Cause__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>Cause</elementReference>
+                    <elementReference>Thread_Cause</elementReference>
                 </rightValue>
             </conditions>
             <connector>

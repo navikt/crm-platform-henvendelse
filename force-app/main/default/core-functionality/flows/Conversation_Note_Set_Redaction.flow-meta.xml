@@ -115,7 +115,7 @@
                 <leftValueReference>Get_Conversation_Note.Cause__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>Cause</elementReference>
+                    <elementReference>ConversationNote_Cause</elementReference>
                 </rightValue>
             </conditions>
             <connector>
