@@ -45,7 +45,7 @@
                                 <apex:outputText value=" {!message.sentDate}"> </apex:outputText>
                             </b>
                             <p style="margin-top: 0.5em; white-space: pre-wrap">
-                                <apex:outputText escape="false" value="{!message.messageText}"></apex:outputText>
+                                <apex:outputText escape="true" value="{!message.messageText}"></apex:outputText>
                             </p>
                         </div>
                     </apex:outputPanel>
