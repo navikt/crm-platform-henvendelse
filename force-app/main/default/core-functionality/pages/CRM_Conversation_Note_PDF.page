@@ -36,7 +36,7 @@
 
             <span style="font-weight: 400; font-size: 16pt">Innhold:</span> <br />
             <div style="margin-top: 0.25em; white-space: pre-wrap">
-                <apex:outputText escape="true" value="{!messageText}"></apex:outputText>
+                <apex:outputText escape="false" value="{!messageText}"></apex:outputText>
             </div>
         </div>
 

@@ -65,11 +65,16 @@ public without sharing class CRM_ConvNotePdfController {
             }
             List<String> wordParts = new List<String>();
             do {
-                wordParts.add(word.left(length));
+                wordParts.add(escapeSpecialCharacters(word.left(length)));
                 word = word.right(word.length() - length);
             } while (word.length() > 0);
             return String.join(wordParts, ' ');
         }
+
+        private String escapeSpecialCharacters(String word) {
+            return word.replace('<', '&lt;').replace('>', '&gt;');
+        }
+
         @TestVisible
         private String splitLink(String link) {
             if (link == null) {
