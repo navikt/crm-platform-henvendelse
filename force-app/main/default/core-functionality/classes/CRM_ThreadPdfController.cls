@@ -50,10 +50,15 @@ public without sharing class CRM_ThreadPdfController {
             this.length = length;
         }
         public String splitWordsInMessage(String message) {
-            if (message == null || message.length() <= length) {
+            if (String.isBlank(message)) {
                 return message;
             }
-            return String.join(splitWordsInLines(message.split('\n|\n\r')), '\n');
+
+            if (message.length() <= length) {
+                return escapeSpecialCharacters(message);
+            }
+
+            return String.join(splitWordsInLines(escapeSpecialCharacters(message).split('\n|\n\r')), '\n');
         }
         @TestVisible
         private List<String> splitWordsInLines(List<String> lines) {
@@ -99,6 +104,11 @@ public without sharing class CRM_ThreadPdfController {
             } while (word.length() > 0);
             return String.join(wordParts, ' ');
         }
+
+        private String escapeSpecialCharacters(String word) {
+            return word.replace('<', '&lt;').replace('>', '&gt;');
+        }
+
         @TestVisible
         private String splitLink(String link) {
             if (link == null) {
