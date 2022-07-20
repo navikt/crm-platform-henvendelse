@@ -21,10 +21,15 @@ public without sharing class CRM_ConvNotePdfController {
             this.length = length;
         }
         public String splitWordsInMessage(String message) {
-            if (message == null || message.length() <= length) {
+            if (String.isBlank(message)) {
                 return message;
             }
-            return String.join(splitWordsInLines(message.split('\n|\n\r')), '\n');
+
+            if (message.length() <= length) {
+                return escapeSpecialCharacters(message);
+            }
+
+            return String.join(splitWordsInLines(escapeSpecialCharacters(message).split('\n|\n\r')), '\n');
         }
         @TestVisible
         private List<String> splitWordsInLines(List<String> lines) {
@@ -65,7 +70,7 @@ public without sharing class CRM_ConvNotePdfController {
             }
             List<String> wordParts = new List<String>();
             do {
-                wordParts.add(escapeSpecialCharacters(word.left(length)));
+                wordParts.add(word.left(length));
                 word = word.right(word.length() - length);
             } while (word.length() > 0);
             return String.join(wordParts, ' ');
