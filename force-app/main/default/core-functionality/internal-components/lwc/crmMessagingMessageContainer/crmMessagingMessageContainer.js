@@ -17,7 +17,7 @@ export default class messagingMessageContainer extends LightningElement {
     }
 
     get isevent() {
-        return !this.message.CRM_Type__c === 'Event';
+        return this.message.CRM_Type__c === 'Event';
     }
 
     //if there is a reply, hide it
