@@ -1,10 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <actionCalls>
+        <name>Show_Fail_Toast_Message</name>
+        <label>Show Fail Toast Message</label>
+        <locationX>578</locationX>
+        <locationY>878</locationY>
+        <actionName>c:fcFlowToaster</actionName>
+        <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>duration</name>
+            <value>
+                <stringValue>10</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>message</name>
+            <value>
+                <stringValue>Klarte ikke å sette henvendelsen til sladding.</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>title</name>
+            <value>
+                <stringValue>Det oppstod en feil!</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>type</name>
+            <value>
+                <stringValue>error</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Show_Toast_Message</name>
+        <label>Show Toast Message</label>
+        <locationX>314</locationX>
+        <locationY>878</locationY>
+        <actionName>c:fcFlowToaster</actionName>
+        <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>duration</name>
+            <value>
+                <stringValue>10</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>message</name>
+            <value>
+                <stringValue>Henvendelsen ble satt til sladding.</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>title</name>
+            <value>
+                <stringValue>Vellykket!</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>type</name>
+            <value>
+                <stringValue>success</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>53.0</apiVersion>
     <assignments>
         <name>Set_Thread_For_Redaction</name>
         <label>Set Thread For Redaction</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>Get_Thread.STO_Sensitive_Information__c</assignToReference>
@@ -27,7 +95,7 @@
     <decisions>
         <name>Check_If_Sensitive_Information_Is_True</name>
         <label>Check If Sensitive Information Is True</label>
-        <locationX>182</locationX>
+        <locationX>248</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Set_Thread_to_Redaction</targetReference>
@@ -47,6 +115,38 @@
                 <targetReference>Redaction_Thread_Screen</targetReference>
             </connector>
             <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_If_Thead_Is_Set_To_Redaction</name>
+        <label>Check If Thead Is Set To Redaction</label>
+        <locationX>446</locationX>
+        <locationY>758</locationY>
+        <defaultConnector>
+            <targetReference>Show_Fail_Toast_Message</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>IsSetToRedaction</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Thread.STO_Sensitive_Information__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Thread.Cause__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Thread_Cause</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Show_Toast_Message</targetReference>
+            </connector>
+            <label>IsSetToRedaction</label>
         </rules>
     </decisions>
     <dynamicChoiceSets>
@@ -89,7 +189,7 @@
     <recordLookups>
         <name>Get_Thread</name>
         <label>Get Thread</label>
-        <locationX>182</locationX>
+        <locationX>248</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -110,8 +210,11 @@
     <recordUpdates>
         <name>Update_Thread</name>
         <label>Update Thread</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>638</locationY>
+        <connector>
+            <targetReference>Check_If_Thead_Is_Set_To_Redaction</targetReference>
+        </connector>
         <inputReference>Get_Thread</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
@@ -135,7 +238,7 @@
     <screens>
         <name>Set_Thread_to_Redaction</name>
         <label>Set Thread to Redaction</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -201,7 +304,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>122</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Thread</targetReference>

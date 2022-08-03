@@ -1,41 +1,30 @@
 @isTest
-public class CRM_ThreadPdfController_Test {
+public class CRM_ConvNotePdfController_Test {
     @TestSetup
     static void makeData() {
-        Id contactId = (Id) CRM_HENV_TestDataFactory.createRecord(new Contact()).get('Id');
-        Id threadId = (Id) CRM_HENV_TestDataFactory.createRecord(new Thread__c(CRM_Contact__c = contactId)).get('Id');
-        CRM_HENV_TestDataFactory.createRecord(
-            new Message__c(CRM_Thread__c = threadId, CRM_From_Contact__c = contactId)
-        );
+        CRM_HENV_TestDataFactory.createRecord(new Conversation_Note__c(CRM_Conversation_Note__c = 'Dummy text'));
     }
 
     @isTest
-    static void testPdfController() {
-        PageReference pageRef = Page.CRM_Thread_PDF;
+    static void testConvNotePdf() {
+        PageReference pageRef = Page.CRM_Conversation_Note_PDF;
         Test.setCurrentPage(pageRef);
-        Id threadId = [SELECT Id FROM Thread__c LIMIT 1].Id;
+        Id convNoteId = [SELECT Id FROM Conversation_Note__c LIMIT 1].Id;
 
-        ApexPages.currentPage().getParameters().put('Id', threadId);
-        ApexPages.StandardController stdThread = new ApexPages.StandardController(new Thread__c(Id = threadId));
+        ApexPages.currentPage().getParameters().put('Id', convNoteId);
+        ApexPages.StandardController stdThread = new ApexPages.StandardController(
+            new Conversation_Note__c(Id = convNoteId)
+        );
 
-        CRM_ThreadPdfController pdfController = new CRM_ThreadPdfController(stdThread);
-        System.assert(pdfController.threadMessages.size() > 0);
+        CRM_ConvNotePdfController pdfController = new CRM_ConvNotePdfController(stdThread);
+        System.assert(String.isNotBlank(pdfController.messageText));
     }
 
     @isTest
-    static void splitWordTest(){
-        CRM_ThreadPdfController.LongWordSplitter splitter = 
-            new CRM_ThreadPdfController.LongWordSplitter(10);
-        System.assertEquals(
-            null,
-            splitter.splitWord(null),
-            'if argument is null - returns null'
-        );
-        System.assertEquals(
-            '',
-            splitter.splitWord(''),
-            'if argument is empty string - returns empty string'
-        );
+    static void splitWordTest() {
+        CRM_ConvNotePdfController.LongWordSplitter splitter = new CRM_ConvNotePdfController.LongWordSplitter(10);
+        System.assertEquals(null, splitter.splitWord(null), 'if argument is null - returns null');
+        System.assertEquals('', splitter.splitWord(''), 'if argument is empty string - returns empty string');
         System.assertEquals(
             'shrtstr',
             splitter.splitWord('shrtstr'),
@@ -52,20 +41,11 @@ public class CRM_ThreadPdfController_Test {
             'if argument is longer than limit - returns splittet string'
         );
     }
-    @isTest 
-    public static void splitLinkTest(){
-        CRM_ThreadPdfController.LongWordSplitter splitter =
-            new CRM_ThreadPdfController.LongWordSplitter(20);
-        System.assertEquals(
-            null,
-            splitter.splitLink(null),
-            'if argument is null - returns null'
-        );
-        System.assertEquals(
-            '',
-            splitter.splitLink(''),
-            'if argument is empty string - returns empty string'
-        );
+    @isTest
+    public static void splitLinkTest() {
+        CRM_ConvNotePdfController.LongWordSplitter splitter = new CRM_ConvNotePdfController.LongWordSplitter(20);
+        System.assertEquals(null, splitter.splitLink(null), 'if argument is null - returns null');
+        System.assertEquals('', splitter.splitLink(''), 'if argument is empty string - returns empty string');
         System.assertEquals(
             'http://short_link',
             splitter.splitLink('http://short_link'),
@@ -78,14 +58,9 @@ public class CRM_ThreadPdfController_Test {
         );
     }
     @isTest
-    static void splitWordsTest(){
-        CRM_ThreadPdfController.LongWordSplitter splitter = 
-            new CRM_ThreadPdfController.LongWordSplitter(10);
-        System.assertEquals(
-            null,
-            splitter.splitWords(null),
-            'if argument is null - returns argument'
-        );
+    static void splitWordsTest() {
+        CRM_ConvNotePdfController.LongWordSplitter splitter = new CRM_ConvNotePdfController.LongWordSplitter(10);
+        System.assertEquals(null, splitter.splitWords(null), 'if argument is null - returns argument');
         System.assertEquals(
             0,
             splitter.splitWords(new List<String>()).size(),
@@ -103,33 +78,19 @@ public class CRM_ThreadPdfController_Test {
         System.assertEquals('shortword', resultList[3]);
     }
     @isTest
-    static void splitWordsInLineTest(){
-        CRM_ThreadPdfController.LongWordSplitter splitter = 
-            new CRM_ThreadPdfController.LongWordSplitter(10);
-        System.assertEquals(
-            null,
-            splitter.splitWordsInLine(null),
-            'if argument is null - returns null'
-        );
-        System.assertEquals(
-            '',
-            splitter.splitWordsInLine(''),
-            'if argument is empty string - returns empty string'
-        );
+    static void splitWordsInLineTest() {
+        CRM_ConvNotePdfController.LongWordSplitter splitter = new CRM_ConvNotePdfController.LongWordSplitter(10);
+        System.assertEquals(null, splitter.splitWordsInLine(null), 'if argument is null - returns null');
+        System.assertEquals('', splitter.splitWordsInLine(''), 'if argument is empty string - returns empty string');
         System.assertEquals(
             'hello world! alonglongw ord shortword',
             splitter.splitWordsInLine('hello world! alonglongword shortword')
         );
     }
     @isTest
-    static void splitWordsInLinesTest(){
-        CRM_ThreadPdfController.LongWordSplitter splitter = 
-            new CRM_ThreadPdfController.LongWordSplitter(10);
-        System.assertEquals(
-            null,
-            splitter.splitWordsInLines(null),
-            'if argument is null - returns argument'
-        );
+    static void splitWordsInLinesTest() {
+        CRM_ConvNotePdfController.LongWordSplitter splitter = new CRM_ConvNotePdfController.LongWordSplitter(10);
+        System.assertEquals(null, splitter.splitWordsInLines(null), 'if argument is null - returns argument');
         System.assertEquals(
             0,
             splitter.splitWordsInLines(new List<String>()).size(),
@@ -147,19 +108,10 @@ public class CRM_ThreadPdfController_Test {
         System.assertEquals('short words in this line', resultList[3]);
     }
     @isTest
-    static void splitWordsInMessageTest(){
-        CRM_ThreadPdfController.LongWordSplitter splitter = 
-            new CRM_ThreadPdfController.LongWordSplitter(10);
-        System.assertEquals(
-            null,
-            splitter.splitWordsInMessage(null),
-            'if argument is null - returns null'
-        );
-        System.assertEquals(
-            '',
-            splitter.splitWordsInMessage(''),
-            'if argument is empty string - returns empty string'
-        );
+    static void splitWordsInMessageTest() {
+        CRM_ConvNotePdfController.LongWordSplitter splitter = new CRM_ConvNotePdfController.LongWordSplitter(10);
+        System.assertEquals(null, splitter.splitWordsInMessage(null), 'if argument is null - returns null');
+        System.assertEquals('', splitter.splitWordsInMessage(''), 'if argument is empty string - returns empty string');
         String multilineString =
             'hello world!\n' +
             'line with longlonglonglong words\n' +
