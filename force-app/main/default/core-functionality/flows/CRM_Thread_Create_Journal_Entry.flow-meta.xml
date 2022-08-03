@@ -196,9 +196,21 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Sender_Receiver__c</field>
+            <value>
+                <elementReference>Journal_Sender_Receiver</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Theme__c</field>
             <value>
                 <elementReference>Get_Theme_Common_Code.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Title__c</field>
+            <value>
+                <elementReference>Journal_Title</elementReference>
             </value>
         </inputAssignments>
         <object>Journal_Entry__c</object>
@@ -261,9 +273,21 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Sender_Receiver__c</field>
+            <value>
+                <elementReference>Journal_Sender_Receiver</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Theme__c</field>
             <value>
                 <elementReference>Get_Theme_Common_Code.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Title__c</field>
+            <value>
+                <elementReference>Journal_Title</elementReference>
             </value>
         </inputAssignments>
         <object>Journal_Entry__c</object>
@@ -529,7 +553,21 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>Journal_Sender_Receiver</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>Journal_Theme_Code</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Journal_Title</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
