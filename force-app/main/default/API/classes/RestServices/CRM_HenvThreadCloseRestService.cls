@@ -9,6 +9,7 @@ global without sharing class CRM_HenvThreadCloseRestService extends CRM_Henvende
         if (!validate())
             return;
 
+        String navIdent = getActingNavIdent();
         correlationId = getXCorrelation();
         logger.apiTransaction(correlationId, RestContext.request, CRM_ApplicationDomain.Domain.NKS);
         String apiReference = getRequestParam('kjedeId');
@@ -17,6 +18,7 @@ global without sharing class CRM_HenvThreadCloseRestService extends CRM_Henvende
             Thread__c thread = new CRM_ThreadSelector().selectByApiReference(apiReference);
             if (thread != null) {
                 thread.CRM_isActive__c = false;
+                thread.CRM_Last_Edited_By__c = navIdent;
                 update thread;
                 setResponse(204);
             } else {
