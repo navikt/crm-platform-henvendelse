@@ -23,3 +23,7 @@
 .minRow {
     min-height: 12rem;
 }
+
+.textarea-container {
+    margin-bottom: 1.5rem;
+}
