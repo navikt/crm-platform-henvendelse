@@ -2,10 +2,10 @@ import { LightningElement, api } from 'lwc';
 
 export default class CommunityModal extends LightningElement {
     @api showModal = false;
+    @api overrideFirstFocus = false;
     bufferFocus = false;
 
     closeModal() {
-        this.showModal = false;
         this.dispatchClose();
     }
 
@@ -20,6 +20,24 @@ export default class CommunityModal extends LightningElement {
             detail: false
         });
         this.dispatchEvent(closeEvent);
+    }
+
+    dispatchFocusFirst() {
+        if (this.overrideFirstFocus === false) {
+            this.focusLoop();
+        } else {
+            const focusFirstEvent = new CustomEvent('focusfirst', {
+                detail: null
+            });
+            this.dispatchEvent(focusFirstEvent);
+        }
+    }
+
+    dispatchFocusLast() {
+        const focusLastEvent = new CustomEvent('focuslast', {
+            detail: null
+        });
+        this.dispatchEvent(focusLastEvent);
     }
 
     @api
@@ -37,5 +55,15 @@ export default class CommunityModal extends LightningElement {
     focusLoop() {
         const modalFocusElement = this.template.querySelector('.modalFocus');
         modalFocusElement.focus();
+    }
+
+    handleFocus(event) {
+        console.log(event.target);
+        if (event.target.classList.contains('lastfocusable')) {
+            this.dispatchFocusFirst();
+        }
+        if (event.target.classList.contains('firstfocusable')) {
+            this.dispatchFocusLast();
+        }
     }
 }
