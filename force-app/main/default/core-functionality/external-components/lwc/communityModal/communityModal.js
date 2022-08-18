@@ -3,6 +3,7 @@ import { LightningElement, api } from 'lwc';
 export default class CommunityModal extends LightningElement {
     @api showModal = false;
     @api overrideFirstFocus = false;
+    @api hideFooterLine = false;
     bufferFocus = false;
 
     closeModal() {
@@ -58,7 +59,6 @@ export default class CommunityModal extends LightningElement {
     }
 
     handleFocus(event) {
-        console.log(event.target);
         if (event.target.classList.contains('lastfocusable')) {
             this.dispatchFocusFirst();
         }

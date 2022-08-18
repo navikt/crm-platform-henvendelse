@@ -11,7 +11,9 @@
             </button>
             <slot name="modalHeader"></slot>
             <slot name="modalContent"></slot>
-            <hr class="blokk-m" />
+            <template if:true={hideFooterLine}>
+                <hr class="blokk-m" />
+            </template>
             <slot name="modalFooter"></slot>
         </div>
         <div tabindex="0" class="lastfocusable" onfocus={handleFocus}></div>
