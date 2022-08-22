@@ -148,7 +148,7 @@
             </value>
         </inputParameters>
     </actionCalls>
-    <apiVersion>54.0</apiVersion>
+    <apiVersion>55.0</apiVersion>
     <assignments>
         <name>Assign_errors</name>
         <label>Assign errors</label>
@@ -192,7 +192,7 @@
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue/>
+                <stringValue></stringValue>
             </value>
         </assignmentItems>
     </assignments>
@@ -221,6 +221,7 @@
             <label>Yes</label>
         </rules>
     </decisions>
+    <description>Create INNBOKS notification from Thread</description>
     <formulas>
         <name>URL</name>
         <dataType>String</dataType>
@@ -332,7 +333,7 @@
             <targetReference>Thread</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>appname</name>
         <dataType>String</dataType>
