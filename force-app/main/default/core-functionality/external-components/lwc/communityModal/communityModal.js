@@ -4,7 +4,17 @@ export default class CommunityModal extends LightningElement {
     @api showModal = false;
     @api overrideFirstFocus = false;
     @api hideFooterLine = false;
+    @api hidePadding = false;
+    @api hidePaddingMobile = false;
     bufferFocus = false;
+
+    get modalClasses() {
+        return (
+            'modal modalMobile overrides' +
+            (this.hidePaddingMobile === false ? '' : 'noHorizontalPadding-mobile') +
+            (this.hidePadding === false ? ' modalpadding' : '')
+        );
+    }
 
     closeModal() {
         this.dispatchClose();
