@@ -2,9 +2,16 @@ import { LightningElement, api } from 'lwc';
 
 export default class MessageEvent extends LightningElement {
     @api message;
+    @api external;
     get endOfChatMessage() {
         return 'avsluttet samtalen - ';
     }
+
+    get test() {
+        console.log(this.external);
+        return this.external === true ? 'Du' : 'NAV';
+    }
+
     get transferMessage() {
         if (this.message.CRM_Event_Type__c === 'UNIT_TRANSFER' || this.message.CRM_Event_Type__c === 'QUEUE_TRANSFER')
             return 'Samtalen din er overført til avdelingen ' + this.message.CRM_Message_Text__c + ' - ';
