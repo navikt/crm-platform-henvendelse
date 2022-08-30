@@ -8,9 +8,6 @@ export default class messagingMessageContainer extends LightningElement {
     userid;
 
     connectedCallback() {
-        console.log('Id er: ' + Id);
-        console.log('Message er: ');
-        console.log(JSON.parse(JSON.stringify(this.message)));
         this.userid = Id;
     }
 
@@ -24,10 +21,6 @@ export default class messagingMessageContainer extends LightningElement {
     }
 
     get externalEvent() {
-        console.log('external btw');
-        console.log(this.message.CRM_From_Contact__c);
-        console.log(!this.message.CRM_From_Contact__c);
-        console.log(!!this.message.CRM_From_Contact__c);
         return !!this.message.CRM_From_Contact__c;
     }
 

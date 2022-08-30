@@ -15,7 +15,7 @@ export default class MessageEvent extends LightningElement {
         } else if (this.message.CRM_From_First_Name__c) {
             userName = this.message.CRM_From_First_Name__c;
         } else {
-            userName = 'Brukeren';
+            userName = '';
         }
         return this.external === true ? userName : 'NAV';
     }
