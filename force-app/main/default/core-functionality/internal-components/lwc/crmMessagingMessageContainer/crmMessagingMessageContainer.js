@@ -8,6 +8,9 @@ export default class messagingMessageContainer extends LightningElement {
     userid;
 
     connectedCallback() {
+        console.log('Id er: ' + Id);
+        console.log('Message er: ');
+        console.log(JSON.parse(JSON.stringify(this.message)));
         this.userid = Id;
     }
 
@@ -19,6 +22,18 @@ export default class messagingMessageContainer extends LightningElement {
     get isevent() {
         return this.message.CRM_Type__c === 'Event';
     }
+
+    get externalEvent() {
+        console.log('external btw');
+        console.log(this.message.CRM_From_Contact__c);
+        console.log(!this.message.CRM_From_Contact__c);
+        console.log(!!this.message.CRM_From_Contact__c);
+        return !!this.message.CRM_From_Contact__c;
+    }
+
+    // get test() {
+    //     return this.message.CRM_From_First_Name__c;
+    // }
 
     //if there is a reply, hide it
     get showReplyButton() {

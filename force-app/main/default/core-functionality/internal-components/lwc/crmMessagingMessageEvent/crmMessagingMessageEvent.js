@@ -3,13 +3,21 @@ import { LightningElement, api } from 'lwc';
 export default class MessageEvent extends LightningElement {
     @api message;
     @api external;
+    @api preferredName;
     get endOfChatMessage() {
         return 'avsluttet samtalen - ';
     }
 
-    get test() {
-        console.log(this.external);
-        return this.external === true ? 'Du' : 'NAV';
+    get closerName() {
+        let userName;
+        if (this.preferredName) {
+            userName = this.preferredName;
+        } else if (this.message.CRM_From_First_Name__c) {
+            userName = this.message.CRM_From_First_Name__c;
+        } else {
+            userName = 'Brukeren';
+        }
+        return this.external === true ? userName : 'NAV';
     }
 
     get transferMessage() {
