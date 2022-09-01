@@ -20,6 +20,14 @@ export default class messagingMessageContainer extends LightningElement {
         return this.message.CRM_Type__c === 'Event';
     }
 
+    get externalEvent() {
+        return !!this.message.CRM_From_Contact__c;
+    }
+
+    // get test() {
+    //     return this.message.CRM_From_First_Name__c;
+    // }
+
     //if there is a reply, hide it
     get showReplyButton() {
         return typeof this.message.Previous_Message__c !== 'undefined';

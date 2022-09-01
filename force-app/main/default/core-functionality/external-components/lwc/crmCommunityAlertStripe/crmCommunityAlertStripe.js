@@ -1,6 +1,8 @@
 import { LightningElement, api } from 'lwc';
 import ALERTLOGOS from '@salesforce/resourceUrl/alertlogos';
 
+const altTextMap = { info: 'Informasjon', suksess: 'Suksess', advarsel: 'Advarsel', feil: 'Feil' };
+
 export default class Alertstripe extends LightningElement {
     @api type; //info, suksess, advarsel, feil,
     @api alerttext; //text to be displayed
@@ -24,5 +26,9 @@ export default class Alertstripe extends LightningElement {
 
     renderedCallback() {
         this.template.querySelector('[data-id="divblock"]').className = this.getalerttype();
+    }
+
+    get altText() {
+        return altTextMap[this.type];
     }
 }

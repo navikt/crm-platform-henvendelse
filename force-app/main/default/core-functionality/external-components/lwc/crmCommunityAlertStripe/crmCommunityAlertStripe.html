@@ -1,9 +1,6 @@
 <template>
     <div data-id="divblock" class="">
-        <span class="alertstripe__ikon">
-            <span class="sr-only">{type}</span>
-        </span>
-        <img src={logopath} class="logo" />
+        <img src={logopath} class="logo" alt={altText} />
         <div class="typo-normal text-center">
             <lightning-formatted-rich-text value={alerttext}></lightning-formatted-rich-text>
         </div>
