@@ -13,11 +13,13 @@
     </div>
     <!-- Header Stop-->
     <!-- Messages Start-->
-    <section role="log" class="slds-box scroller slds-scrollable_y">
+    <section role="log" class={test} aria-disabled={test3}>
         <template for:each={messages} for:item="message">
             <c-crm-messaging-Message-Container message={message} key={message.Id}></c-crm-messaging-Message-Container>
         </template>
     </section>
+    <!-- Medskriv blocker -->
+    <div class={test2}></div>
     <!-- Messages End-->
     <!-- Reply Box Start-->
     <div slot="footer">
@@ -179,7 +181,7 @@
             ></lightning-input-field>
         </lightning-record-edit-form>
     </div>
-    
+
     <!-- POSSIBLE DISPLAY OF JOURNAL ENTRIES RELATED TO THE THREAD
     <div if:true={journalEntries}>
         <template for:each={journalEntries} for:item="journalEntry"> {journalEntry.CRM_Created_By_Ident__c} </template>

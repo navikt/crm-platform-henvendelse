@@ -12,3 +12,9 @@
     right: 0;
     bottom: 0;
 }
+.hide {
+    display: none;
+}
+.medskrivBlocker {
+    background: grey;
+}
