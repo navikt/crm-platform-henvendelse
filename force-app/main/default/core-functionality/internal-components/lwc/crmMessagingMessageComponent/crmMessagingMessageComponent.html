@@ -37,19 +37,21 @@
                 ></lightning-button>
             </template>
             <template for:each={threads} for:item="thread">
-                <c-crm-messaging-thread-Viewer
-                    onenglishevent={handleEnglishEvent}
-                    english-text-template={englishTextTemplate}
-                    key={thread.Id}
-                    text-template={textTemplate}
-                    thread={thread}
-                    show-close={showClose}
-                >
-                    <!--Ability to pass toolbar buttons thorugh slots to the toolbar-->
-                    <div slot="toolbar">
-                        <slot name="toolbar"></slot>
-                    </div>
-                </c-crm-messaging-thread-Viewer>
+                <div key={thread.Id}>
+                    <div>Medskriv er: {thread.CRM_Medskriv__c}</div>
+                    <c-crm-messaging-thread-Viewer
+                        onenglishevent={handleEnglishEvent}
+                        english-text-template={englishTextTemplate}
+                        text-template={textTemplate}
+                        thread={thread}
+                        show-close={showClose}
+                    >
+                        <!--Ability to pass toolbar buttons thorugh slots to the toolbar-->
+                        <div slot="toolbar">
+                            <slot name="toolbar"></slot>
+                        </div>
+                    </c-crm-messaging-thread-Viewer>
+                </div>
             </template>
         </div>
         <!-- Modal Stop-->
