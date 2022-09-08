@@ -7,7 +7,6 @@
             <section>Custom Links</section>
         </sections>
     </layouts>
-    <nameFieldLabel>Tråd</nameFieldLabel>
     <quickActions>
         <label><!-- Trenger ikke å sladdes --></label>
         <name>Abort_Redaction</name>
