@@ -1,7 +1,11 @@
 <template>
     <div class="slds-p-right_medium">
         <template if:true={isevent}>
-            <c-crm-messaging-message-event message={message}></c-crm-messaging-message-event>
+            <c-crm-messaging-message-event
+                message={message}
+                external={isoutbound}
+                preferred-name="Du"
+            ></c-crm-messaging-message-event>
         </template>
         <template if:false={isevent}>
             <template if:false={isoutbound}>
