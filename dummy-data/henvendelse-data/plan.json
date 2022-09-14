@@ -6,6 +6,12 @@
         "files": ["theme_groups.json", "themes.json", "subthemes.json"]
     },
     {
+        "sobject": "Person__c",
+        "saveRefs": true,
+        "resolveRefs": false,
+        "files": ["persons.json"]
+    },
+    {
         "sobject": "Account",
         "saveRefs": true,
         "resolveRefs": true,
@@ -16,12 +22,6 @@
         "saveRefs": true,
         "resolveRefs": true,
         "files": ["contacts.json"]
-    },
-    {
-        "sobject": "Person__c",
-        "saveRefs": true,
-        "resolveRefs": true,
-        "files": ["persons.json"]
     },
     {
         "sobject": "LiveChatVisitor",
