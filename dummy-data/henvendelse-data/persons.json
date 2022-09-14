@@ -6,6 +6,7 @@
                 "referenceId": "PersonRef1"
             },
             "Name": "12345678901",
+            "CRM_Account__c": "@AccountRef1",
             "INT_MunicipalityNumber__c": "0301",
             "INT_GTDistrictNumber__c": "030103",
             "INT_FirstName__c": "Harry",
@@ -28,6 +29,7 @@
                 "referenceId": "PersonRef2"
             },
             "Name": "12345678902",
+            "CRM_Account__c": "@AccountRef2",
             "INT_MunicipalityNumber__c": "0301",
             "INT_GTDistrictNumber__c": "030103",
             "INT_FirstName__c": "Harry",
