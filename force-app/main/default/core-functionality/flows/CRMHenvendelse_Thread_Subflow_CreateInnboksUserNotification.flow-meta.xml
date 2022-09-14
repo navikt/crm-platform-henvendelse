@@ -333,7 +333,7 @@
             <targetReference>Thread</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>appname</name>
         <dataType>String</dataType>

@@ -8,7 +8,7 @@
         <actionName>UN_InnboksAction</actionName>
         <actionType>apex</actionType>
         <faultConnector>
-            <targetReference>Log_error_0</targetReference>
+            <targetReference>Log_error</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -101,7 +101,7 @@
         </outputParameters>
     </actionCalls>
     <actionCalls>
-        <name>Log_error_0</name>
+        <name>Log_error</name>
         <label>Log error</label>
         <locationX>578</locationX>
         <locationY>638</locationY>
