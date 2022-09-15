@@ -11,7 +11,7 @@
         <chartType>Donut</chartType>
         <enableHoverLabels>false</enableHoverLabels>
         <expandOthers>false</expandOthers>
-        <groupingColumn>Thread__c$STO_Sensitive_Information_Date__c</groupingColumn>
+        <groupingColumn>Conversation_Note__c$CRM_Theme_Group__c</groupingColumn>
         <legendPosition>Right</legendPosition>
         <location>CHART_BOTTOM</location>
         <showAxisLabels>true</showAxisLabels>
@@ -26,54 +26,51 @@
         <titleSize>18</titleSize>
     </chart>
     <columns>
-        <field>Thread__c$Name</field>
+        <field>Conversation_Note__c$Name</field>
     </columns>
     <columns>
-        <field>Thread__c$CRM_Thread_Type__c</field>
+        <field>Conversation_Note__c$STO_Sensitive_Information_Activated_By__c</field>
     </columns>
     <columns>
-        <field>Thread__c$STO_Sensitive_Information_Activated_By__c</field>
+        <field>Conversation_Note__c$STO_Sensitive_Information_Date__c</field>
     </columns>
     <columns>
-        <field>Thread__c$Cause__c</field>
+        <field>Conversation_Note__c$STO_Sensitive_Information_Unit__c</field>
     </columns>
     <columns>
-        <field>Thread__c$Journaled__c</field>
+        <field>Conversation_Note__c$Cause__c</field>
+    </columns>
+    <columns>
+        <field>Conversation_Note__c$Journaled__c</field>
     </columns>
     <filter>
         <criteriaItems>
-            <column>Thread__c$STO_Sensitive_Information__c</column>
+            <column>Conversation_Note__c$STO_Sensitive_Information__c</column>
             <columnToColumn>false</columnToColumn>
             <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
             <value>1</value>
         </criteriaItems>
-        <criteriaItems>
-            <column>Thread__c$STO_Sensitive_Information_Unit__c</column>
-            <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
-            <operator>equals</operator>
-            <value></value>
-        </criteriaItems>
         <language>en_US</language>
     </filter>
     <format>Summary</format>
     <groupingsDown>
-        <field>Thread__c$STO_Sensitive_Information_Date__c</field>
+        <dateGranularity>Day</dateGranularity>
+        <field>Conversation_Note__c$CRM_Theme_Group__c</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <name>Samtaletråder Brukerstøtte</name>
+    <name>Sladding Samtalereferater</name>
     <params>
         <name>co</name>
         <value>1</value>
     </params>
-    <reportType>NKS_Thread_Report_Type__c</reportType>
+    <reportType>NKS_ConversationNote_Report_Type__c</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>false</showSubTotals>
     <timeFrameFilter>
-        <dateColumn>Thread__c$CreatedDate</dateColumn>
+        <dateColumn>Conversation_Note__c$CreatedDate</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>
     </timeFrameFilter>
 </Report>

@@ -20,9 +20,9 @@
                 <drillToDetailEnabled>false</drillToDetailEnabled>
                 <enableHover>false</enableHover>
                 <expandOthers>false</expandOthers>
-                <groupingSortProperties/>
+                <groupingSortProperties />
                 <header>Samtaletråder NKS</header>
-                <report>NKS_Reports/Redaction_NKS_Threads_Report</report>
+                <report>NKS_System_Reports/Redaction_Threads_NKS</report>
                 <showPercentage>false</showPercentage>
                 <showPicturesOnCharts>false</showPicturesOnCharts>
                 <showValues>false</showValues>
@@ -44,9 +44,9 @@
                 <drillToDetailEnabled>false</drillToDetailEnabled>
                 <enableHover>false</enableHover>
                 <expandOthers>false</expandOthers>
-                <groupingSortProperties/>
+                <groupingSortProperties />
                 <header>Samtaletråder Brukerstøtte</header>
-                <report>NKS_Reports/Samtaletrder_BrukerSttte_Rapport</report>
+                <report>NKS_System_Reports/Redaction_Threads_Support_Team</report>
                 <showPercentage>false</showPercentage>
                 <showPicturesOnCharts>false</showPicturesOnCharts>
                 <showValues>false</showValues>
@@ -68,9 +68,9 @@
                 <drillToDetailEnabled>false</drillToDetailEnabled>
                 <enableHover>false</enableHover>
                 <expandOthers>false</expandOthers>
-                <groupingSortProperties/>
+                <groupingSortProperties />
                 <header>Samtalereferater</header>
-                <report>NKS_Reports/Redaction_ConversationNotes_Report</report>
+                <report>NKS_System_Reports/Redaction_ConversationNotes</report>
                 <showPercentage>false</showPercentage>
                 <showPicturesOnCharts>false</showPicturesOnCharts>
                 <showValues>false</showValues>
@@ -85,7 +85,7 @@
     </dashboardGridLayout>
     <dashboardType>SpecifiedUser</dashboardType>
     <isGridLayout>true</isGridLayout>
-    <runningUser>test-opyaxsdeqmov@example.com</runningUser>
+    <runningUser>sfdx.integration.user@nav.no</runningUser>
     <textColor>#000000</textColor>
     <title>Sladding Dashboard</title>
     <titleColor>#000000</titleColor>
