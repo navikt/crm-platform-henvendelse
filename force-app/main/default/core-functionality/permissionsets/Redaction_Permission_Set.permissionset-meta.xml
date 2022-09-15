@@ -53,6 +53,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Conversation_Note__c.Redaction_Description__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Conversation_Note__c.Redaction_Person_Ident__c</field>
         <readable>true</readable>
@@ -140,6 +145,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Thread__c.Journaled__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Thread__c.Redaction_Description__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
