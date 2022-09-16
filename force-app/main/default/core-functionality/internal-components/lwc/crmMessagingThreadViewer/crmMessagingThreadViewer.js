@@ -33,12 +33,12 @@ export default class messagingThreadViewer extends LightningElement {
     resizablePanelTop;
     onresize = false; // true when in process of resizing
     mouseListenerCounter = false; // flag for detecting if onmousemove listener is set for element
+    @api checkMedskriv = false;
+    acceptedMedskriv = false;
 
     @api textTemplate; //Support for conditional text template as input
     //Constructor, called onload
     connectedCallback() {
-        console.log('Logging');
-        console.log(JSON.stringify(this.thread));
         if (this.thread) {
             this.threadid = this.thread.Id;
         }
@@ -51,8 +51,6 @@ export default class messagingThreadViewer extends LightningElement {
         this.handleUnsubscribe();
     }
     renderedCallback() {
-        console.log('Per');
-        console.log(JSON.stringify(this.thread));
         this.scrolltobottom();
         const test = this.template.querySelector('.cancelButton');
         if (test) {
@@ -283,6 +281,10 @@ export default class messagingThreadViewer extends LightningElement {
         this.langBtnLock = true;
     }
 
+    handleMedskrivClick() {
+        this.acceptedMedskriv = true;
+    }
+
     //##################################//
     //#########    GETTERS    ##########//
     //##################################//
@@ -331,18 +333,19 @@ export default class messagingThreadViewer extends LightningElement {
         return this.englishTextTemplate !== undefined;
     }
 
-    get test() {
-        console.log('Medskriverton er artig I guess');
-        console.log(this.thread.CRM_Medskriv__c);
-        return 'slds-box scroller slds-scrollable_y' + (this.thread.CRM_Medskriv__c ? '' : ' hide');
+    get showMedskrivBlocker() {
+        return this.checkMedskriv === true && this.acceptedMedskriv === false && this.thread.CRM_Medskriv__c === false;
     }
 
-    get test2() {
-        return 'medskrivBlocker scroller' + (this.thread.CRM_Medskriv__c ? ' hide' : '');
+    get messageContainerClasses() {
+        return 'slds-box scroller slds-scrollable_y' + (this.showMedskrivBlocker ? ' hide' : '');
     }
 
-    get test3() {
-        return !this.thread.CRM_Medskriv__c;
+    get medskrivBlockerClasses() {
+        return (
+            'slds-align_absolute-center slds-grid_vertical medskrivBlocker scroller ' +
+            (this.showMedskrivBlocker ? '' : ' hide')
+        );
     }
 
     //##################################//
