@@ -16,6 +16,7 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     setCardTitle;
     hasError = false;
     @api englishTextTemplate;
+    @api checkMedskriv;
 
     @api textTemplate; //Support for conditional text template
 

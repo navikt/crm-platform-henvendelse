@@ -13,13 +13,16 @@
     </div>
     <!-- Header Stop-->
     <!-- Messages Start-->
-    <section role="log" class={test} aria-disabled={test3}>
+    <section role="log" class={messageContainerClasses}>
         <template for:each={messages} for:item="message">
             <c-crm-messaging-Message-Container message={message} key={message.Id}></c-crm-messaging-Message-Container>
         </template>
     </section>
     <!-- Medskriv blocker -->
-    <div class={test2}></div>
+    <div class={medskrivBlockerClasses}>
+        <p class="slds-text-body_regular slds-m-bottom_small">Brukeren har ikke samtykket til medskriv</p>
+        <lightning-button variant="brand" label="Vis melding" onclick={handleMedskrivClick}></lightning-button>
+    </div>
     <!-- Messages End-->
     <!-- Reply Box Start-->
     <div slot="footer">

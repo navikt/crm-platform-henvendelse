@@ -38,13 +38,13 @@
             </template>
             <template for:each={threads} for:item="thread">
                 <div key={thread.Id}>
-                    <div>Medskriv er: {thread.CRM_Medskriv__c}</div>
                     <c-crm-messaging-thread-Viewer
                         onenglishevent={handleEnglishEvent}
                         english-text-template={englishTextTemplate}
                         text-template={textTemplate}
                         thread={thread}
                         show-close={showClose}
+                        check-medskriv={checkMedskriv}
                     >
                         <!--Ability to pass toolbar buttons thorugh slots to the toolbar-->
                         <div slot="toolbar">
