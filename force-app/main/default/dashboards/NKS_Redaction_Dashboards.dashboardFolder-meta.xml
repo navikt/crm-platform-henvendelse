@@ -5,10 +5,5 @@
         <sharedTo>integration@00d1j000000fspqeak.com</sharedTo>
         <sharedToType>User</sharedToType>
     </folderShares>
-    <folderShares>
-        <accessLevel>View</accessLevel>
-        <sharedTo>NKS_Redaction</sharedTo>
-        <sharedToType>Group</sharedToType>
-    </folderShares>
     <name>NKS Redaction Dashboards</name>
 </DashboardFolder>
