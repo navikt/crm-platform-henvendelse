@@ -8,6 +8,7 @@
     <columns>STO_Sensitive_Information_Unit__c</columns>
     <columns>Cause__c</columns>
     <columns>Journaled__c</columns>
+    <columns>Redaction_Progress__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>STO_Sensitive_Information__c</field>
