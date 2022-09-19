@@ -17,5 +17,5 @@
         <field>STO_Sensitive_Information_Unit__c</field>
         <operation>equals</operation>
     </filters>
-    <label>Samtaletråder BrukerStøtte</label>
+    <label>Samtaletråder Brukerstøtte</label>
 </ListView>
