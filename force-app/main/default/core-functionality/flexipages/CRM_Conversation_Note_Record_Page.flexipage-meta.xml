@@ -173,7 +173,7 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.Redaction_Description__c</fieldItem>
+                <fieldItem>Record.Redaction_Progress__c</fieldItem>
                 <identifier>RecordRedaction_Description_cField</identifier>
             </fieldInstance>
         </itemInstances>
