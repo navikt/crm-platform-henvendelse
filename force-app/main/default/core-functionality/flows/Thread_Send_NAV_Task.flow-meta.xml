@@ -4,7 +4,7 @@
         <name>Success_Toast</name>
         <label>Success Toast</label>
         <locationX>50</locationX>
-        <locationY>1238</locationY>
+        <locationY>1358</locationY>
         <actionName>c:fcFlowToaster</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -40,7 +40,7 @@
         <name>NAV_Task_Assignment</name>
         <label>NAV Task Assignment</label>
         <locationX>182</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>NavTask.NKS_Comments__c</assignToReference>
             <operator>Assign</operator>
@@ -66,7 +66,7 @@
             <assignToReference>NavTask.CRM_Priority__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Task_Priority</elementReference>
+                <stringValue>NORM</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -87,7 +87,7 @@
             <assignToReference>NavTask.NKS_TaskType__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Task_Type_Selector.selectedTaskTypeId</elementReference>
+                <elementReference>Get_Task_Type.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -133,7 +133,7 @@
         <name>Verify_Task_Post</name>
         <label>Verify Task Post</label>
         <locationX>182</locationX>
-        <locationY>1118</locationY>
+        <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>Post_Error_Screen</targetReference>
         </defaultConnector>
@@ -201,7 +201,7 @@
         <name>Get_Gjelder</name>
         <label>Get Gjelder</label>
         <locationX>182</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>NAV_Task_Assignment</targetReference>
@@ -225,7 +225,7 @@
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>NAV_Task_Input_Screen</targetReference>
+            <targetReference>Get_Task_Type</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -250,6 +250,41 @@
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Common_Code__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Task_Type</name>
+        <label>Get Task Type</label>
+        <locationX>182</locationX>
+        <locationY>638</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>NAV_Task_Input_Screen</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CRM_Code_Set__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Oppgavetyper</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>CRM_Code__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>VURD_HENV</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Vurder henvendelse</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Common_Code__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
@@ -343,7 +378,7 @@
         <name>NAV_Task_Input_Screen</name>
         <label>NAV Task Input Screen</label>
         <locationX>182</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -356,31 +391,6 @@
             <dataType>String</dataType>
             <fieldText>Gjelder</fieldText>
             <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>Task_Type_Selector</name>
-            <extensionName>c:crmTaskTypePicklist</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>showcomponent</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <fields>
-            <name>Task_Priority</name>
-            <choiceReferences>Priority_Picklist</choiceReferences>
-            <dataType>String</dataType>
-            <defaultValue>
-                <stringValue>LAV</stringValue>
-            </defaultValue>
-            <fieldText>Prioritet</fieldText>
-            <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
         </fields>
         <fields>
@@ -397,7 +407,7 @@
             <inputParameters>
                 <name>hideDelegateToSelf</name>
                 <value>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -412,6 +422,12 @@
                     <elementReference>Get_Thread.CRM_Account__r.CRM_Person__c</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>taskType</name>
+                <value>
+                    <elementReference>Get_Task_Type.Id</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -424,7 +440,7 @@
         <name>Post_Error_Screen</name>
         <label>Post Error Screen</label>
         <locationX>314</locationX>
-        <locationY>1238</locationY>
+        <locationY>1358</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -433,7 +449,7 @@
             <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: -apple-system, system-ui, &amp;quot;Segoe UI&amp;quot;, Roboto, Oxygen, Ubuntu, &amp;quot;Fira Sans&amp;quot;, &amp;quot;Droid Sans&amp;quot;, &amp;quot;Helvetica Neue&amp;quot;, sans-serif; font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt;Oppgaveopprettelse feilet. En utvikler har fått beskjed, og vil feilsøke dette. &lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <nextOrFinishButtonLabel>Ok</nextOrFinishButtonLabel>
+        <nextOrFinishButtonLabel>Prøv på nytt</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -449,7 +465,7 @@
         <name>Send_NAV_Task</name>
         <label>Send NAV Task</label>
         <locationX>182</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <connector>
             <targetReference>Verify_Task_Post</targetReference>
         </connector>
