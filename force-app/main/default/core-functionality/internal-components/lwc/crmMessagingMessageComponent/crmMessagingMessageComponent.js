@@ -23,10 +23,6 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     @wire(getThreads, { recordId: '$recordId', singleThread: '$singleThread' }) //Calls apex and extracts messages related to this record
     wiredThreads(result) {
         this._threadsforRefresh = result;
-        console.log('Ran');
-        console.log(result);
-        console.log(this.singleThread);
-        console.log(this.recordId);
 
         if (result.error) {
             this.error = result.error;
