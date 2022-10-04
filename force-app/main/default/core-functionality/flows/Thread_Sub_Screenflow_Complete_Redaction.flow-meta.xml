@@ -37,7 +37,7 @@
             </value>
         </inputParameters>
     </actionCalls>
-    <apiVersion>54.0</apiVersion>
+    <apiVersion>55.0</apiVersion>
     <assignments>
         <name>Assign_fault_message</name>
         <label>Assign fault message</label>
@@ -230,7 +230,7 @@
         <inputAssignments>
             <field>CRM_Message_Text__c</field>
             <value>
-                <stringValue/>
+                <stringValue></stringValue>
             </value>
         </inputAssignments>
         <object>Message__c</object>
@@ -263,7 +263,7 @@
         <inputAssignments>
             <field>Cause__c</field>
             <value>
-                <stringValue/>
+                <stringValue></stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
