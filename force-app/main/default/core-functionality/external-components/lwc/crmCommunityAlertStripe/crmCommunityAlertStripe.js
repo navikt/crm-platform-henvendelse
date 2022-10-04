@@ -11,16 +11,16 @@ export default class Alertstripe extends LightningElement {
     getalerttype() {
         if (this.type === 'info') {
             this.logopath = ALERTLOGOS + '/InformationFilled.svg';
-            return 'navds-alert navds-alert--medium navds-alert--info ';
+            return 'alertstripe alertstripe--info';
         } else if (this.type === 'suksess') {
             this.logopath = ALERTLOGOS + '/SuccessFilled.svg';
-            return 'navds-alert navds-alert--medium navds-alert--success ';
+            return 'alertstripe alertstripe--suksess';
         } else if (this.type === 'advarsel') {
             this.logopath = ALERTLOGOS + '/WarningFilled.svg';
-            return 'navds-alert navds-alert--medium navds-alert--warning ';
+            return 'alertstripe alertstripe--advarsel';
         } else if (this.type === 'feil') {
             this.logopath = ALERTLOGOS + '/ErrorFilled.svg';
-            return 'navds-alert navds-alert--medium navds-alert--error ';
+            return 'alertstripe alertstripe--feil';
         }
     }
 
