@@ -9,6 +9,7 @@ global without sharing class CRM_HenvRedactionRestService extends CRM_Henvendels
      **/
     @HttpPost
     global static void markForRedaction() {
+        String navIdent = getActingNavIdent();
         correlationId = getXCorrelation();
         logger.apiTransaction(correlationId, RestContext.request, CRM_ApplicationDomain.Domain.NKS);
         try {
@@ -25,8 +26,10 @@ global without sharing class CRM_HenvRedactionRestService extends CRM_Henvendels
                 SObject objToUpdate = objectId.getSobjectType().newSObject(objectId);
                 objToUpdate.put('STO_Sensitive_Information__c', true);
                 objToUpdate.put('Cause__c', slRequest.aarsak);
+                objToUpdate.put('CRM_Last_Edited_By__c', navIdent);
 
                 update objToUpdate;
+                setResponse(200);
             } else {
                 errorResponse(400, 'Invalid reference value for kjedeId: ' + slRequest.kjedeId);
                 logger.publish();
