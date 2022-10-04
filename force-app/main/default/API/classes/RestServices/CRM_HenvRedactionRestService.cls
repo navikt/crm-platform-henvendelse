@@ -3,6 +3,10 @@ global without sharing class CRM_HenvRedactionRestService extends CRM_Henvendels
     private static String correlationId;
     private static LoggerUtility logger = new LoggerUtility('Henvendelse API');
 
+    /**
+     * Marks a thread or conversation note for redaction based on kjedeId and redaction cause as input
+     * @author Stian Ruud Schikora | 10-04-2022
+     **/
     @HttpPost
     global static void markForRedaction() {
         correlationId = getXCorrelation();
@@ -14,9 +18,7 @@ global without sharing class CRM_HenvRedactionRestService extends CRM_Henvendels
                 SladdingRequest.class
             );
 
-            System.debug('REQUEST: ' + JSON.serializePretty(slRequest));
             Id objectId = getObjectId(slRequest.kjedeId);
-            System.debug('OBJECT ID: ' + objectId);
             String objectName = objectId != null ? objectId.getSobjectType().getDescribe().getName() : null;
 
             if (objectName == 'Thread__c' || objectName == 'Conversation_Note__c') {
@@ -47,6 +49,10 @@ global without sharing class CRM_HenvRedactionRestService extends CRM_Henvendels
         }
     }
 
+    /**
+     * Returns the available redaction causes for the given kjedeId
+     * @author Stian Ruud Schikora | 10-04-2022
+     **/
     @HttpGet
     global static void getRedactionCauses() {
         correlationId = getXCorrelation();
