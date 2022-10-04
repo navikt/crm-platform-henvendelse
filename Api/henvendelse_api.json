@@ -39,6 +39,77 @@
                 ]
             }
         },
+        "/henvendelse/sladding/aarsaker/{kjedeId}": {
+            "get": {
+                "tags": ["Sladding"],
+                "description": "Returnerer gyldige sladdeårsaker for en meldingskjede",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "example": ["Ikke statlig dialog", "Sikkerhetshendelse"]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/X-Correlation-ID"
+                    },
+                    {
+                        "name": "kjedeId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "ID til kjeden som har meldinger som skal sladdes"
+                    }
+                ]
+            }
+        },
+        "/henvendelse/sladding": {
+            "post": {
+                "tags": ["Sladding"],
+                "description": "Registrerer den gitte meldingen for sladding med den definerte årsakskoden",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SladdeRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/X-Correlation-ID"
+                    }
+                ]
+            }
+        },
         "/henvendelse/journal": {
             "post": {
                 "tags": ["Journal"],
@@ -606,6 +677,11 @@
                         "enum": ["TELEFON", "OPPMOTE", "DIGITAL"],
                         "example": "DIGITAL"
                     },
+                    "meldingsId": {
+                        "type": "string",
+                        "description": "Unik id for meldingen i kjeden",
+                        "example": "a0J3N000004dUBJUA2"
+                    },
                     "fra": {
                         "$ref": "#/components/schemas/MeldingFra"
                     }
@@ -719,6 +795,20 @@
                     }
                 },
                 "required": ["navn", "kode"]
+            },
+            "SladdeRequest": {
+                "type": "object",
+                "properties": {
+                    "aarsak": {
+                        "type": "string",
+                        "example": "Sikkerhetshendelse"
+                    },
+                    "kjedeId": {
+                        "type": "string",
+                        "example": "a0J3N000004dUBJUA2"
+                    }
+                },
+                "required": ["aarsak", "kjedeId"]
             },
             "Error": {
                 "type": "object",
