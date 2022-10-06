@@ -44,7 +44,7 @@
     <quickActions>
         <aspect>Master</aspect>
         <label>Opprett oppgave</label>
-        <name>Create_NAV_Task</name>
+        <name>Redaction_Create_NAV_Task</name>
     </quickActions>
     <quickActions>
         <aspect>Master</aspect>
