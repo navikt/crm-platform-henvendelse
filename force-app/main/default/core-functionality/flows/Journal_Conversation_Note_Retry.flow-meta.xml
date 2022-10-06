@@ -106,43 +106,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_Journal_Entry_Default_data</name>
-        <label>Assign Journal Entry Default data</label>
-        <locationX>182</locationX>
-        <locationY>1574</locationY>
-        <assignmentItems>
-            <assignToReference>Journal_Entry_SF.CRM_Created_By_Ident__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Journal_Entry_NAV_Ident</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Journal_Entry_SF.NAV_Case_Reference__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Journal_Case_ID</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Journal_Entry_SF.CRM_Journal_Date__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Flow.CurrentDateTime</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Journal_Entry_SF.Theme__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_SF_Theme_Common_Code.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Update_Journal_Entry</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <description>Assigns needed values to document variant wrapper</description>
         <name>Document_Variant_Assignment</name>
         <label>Document Variant Assignment</label>
@@ -211,7 +174,7 @@
             <assignToReference>Journal_Request.journalfoerendeEnhet</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Journal_Entry_Unit</elementReference>
+                <elementReference>Journal_Entry_SF.CRM_Created_By_NAV_Unit__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -232,14 +195,7 @@
             <assignToReference>Journal_Request.tema</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Journal_Theme_Code</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Journal_Request.behandlingstema</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Journal_Subtheme_Code</elementReference>
+                <elementReference>Journal_Entry_SF.CRM_Theme_Code__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -256,7 +212,7 @@
             <assignToReference>Journal_Sak.fagsakId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Journal_Case_ID</elementReference>
+                <elementReference>Journal_Entry_SF.NAV_Case_Reference__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -270,7 +226,7 @@
             <assignToReference>Journal_Sak.fagsaksystem</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Journal_Case_Legacy_System_Formula</elementReference>
+                <elementReference>Journal_Entry_SF.CRM_NAV_Case_Legacy_System__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -297,14 +253,21 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Necessary_Record_Info.CRM_Journal_Status__c</assignToReference>
+            <assignToReference>Conversation_Note_Record.CRM_Journal_Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Journal Completed</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Entry_SF.CRM_Journal_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
-            <targetReference>Get_SF_Theme_Common_Code</targetReference>
+            <targetReference>Check_DML_Input</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -320,16 +283,38 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Necessary_Record_Info.CRM_Journal_Status__c</assignToReference>
+            <assignToReference>Conversation_Note_Record.CRM_Journal_Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Journal Error</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_SF_Theme_Common_Code</targetReference>
+            <targetReference>Check_DML_Input</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Check_DML_Input</name>
+        <label>Check DML Input</label>
+        <locationX>182</locationX>
+        <locationY>1454</locationY>
+        <defaultConnectorLabel>No DML</defaultConnectorLabel>
+        <rules>
+            <name>Do_DML</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>PERFORM_DML</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Journal_Entry</targetReference>
+            </connector>
+            <label>Do DML</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Check_Post_State</name>
         <label>Check Post State</label>
@@ -359,19 +344,13 @@
     <formulas>
         <name>Document_Title</name>
         <dataType>String</dataType>
-        <expression>&apos;Samtale med NAV - &apos; + LPAD(TEXT(DAY(DATEVALUE({!Get_Necessary_Record_Info.CRM_Registered_Datetime_Formula__c}))),2,&apos;0&apos;) + &apos;.&apos; + LPAD(TEXT(MONTH(DATEVALUE({!Get_Necessary_Record_Info.CRM_Registered_Datetime_Formula__c}))),2,&apos;0&apos;) + &apos;.&apos; + TEXT(YEAR(DATEVALUE({!Get_Necessary_Record_Info.CRM_Registered_Datetime_Formula__c})))</expression>
-    </formulas>
-    <formulas>
-        <description>Better null/blank handling for passing this value to apex</description>
-        <name>Journal_Case_Legacy_System_Formula</name>
-        <dataType>String</dataType>
-        <expression>IF(ISBLANK({!Journal_Case_Legacy_System}), null, {!Journal_Case_Legacy_System})</expression>
+        <expression>&apos;Samtale med NAV - &apos; + LPAD(TEXT(DAY(DATEVALUE({!Conversation_Note_Record.CRM_Registered_Datetime_Formula__c}))),2,&apos;0&apos;) + &apos;.&apos; + LPAD(TEXT(MONTH(DATEVALUE({!Conversation_Note_Record.CRM_Registered_Datetime_Formula__c}))),2,&apos;0&apos;) + &apos;.&apos; + TEXT(YEAR(DATEVALUE({!Conversation_Note_Record.CRM_Registered_Datetime_Formula__c})))</expression>
     </formulas>
     <formulas>
         <description>Formula to define the journal case type (Sakstype). If no Journal Case ID has been input, default is GENERELL_SAK</description>
         <name>Journal_Case_Type</name>
         <dataType>String</dataType>
-        <expression>IF(ISBLANK({!Journal_Case_ID}), &apos;GENERELL_SAK&apos;, &apos;FAGSAK&apos;)</expression>
+        <expression>IF(ISBLANK({!Journal_Entry_SF.NAV_Case_Reference__c}), &apos;GENERELL_SAK&apos;, &apos;FAGSAK&apos;)</expression>
     </formulas>
     <formulas>
         <description>Formula to generate name convention on journal required format (For persons)</description>
@@ -415,7 +394,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Necessary_Record_Info.CRM_Account__c</elementReference>
+                <elementReference>Conversation_Note_Record.CRM_Account__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -428,7 +407,7 @@
         <label>Get Necessary Record Info</label>
         <locationX>182</locationX>
         <locationY>158</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Account_Info</targetReference>
         </connector>
@@ -440,52 +419,26 @@
                 <elementReference>Journal_Entry_SF.CRM_Conversation_Note__c</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Conversation_Note__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_SF_Theme_Common_Code</name>
-        <label>Get SF Theme Common Code</label>
-        <locationX>182</locationX>
-        <locationY>1454</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Assign_Journal_Entry_Default_data</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>CRM_Code__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Journal_Theme_Code</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>CRM_Code_Set__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Tema</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Common_Code__c</object>
+        <outputReference>Conversation_Note_Record</outputReference>
         <queriedFields>Id</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <queriedFields>CRM_Journal_Status__c</queriedFields>
+        <queriedFields>CRM_Account__c</queriedFields>
+        <queriedFields>CRM_Registered_Datetime_Formula__c</queriedFields>
     </recordLookups>
     <recordUpdates>
         <description>Updates field on the conversation note to reflect the journal state</description>
         <name>Update_Conversation_Note</name>
         <label>Update Conversation Note</label>
-        <locationX>182</locationX>
-        <locationY>1814</locationY>
-        <inputReference>Get_Necessary_Record_Info</inputReference>
+        <locationX>50</locationX>
+        <locationY>1694</locationY>
+        <inputReference>Conversation_Note_Record</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_Journal_Entry</name>
         <label>Update Journal Entry</label>
-        <locationX>182</locationX>
-        <locationY>1694</locationY>
+        <locationX>50</locationX>
+        <locationY>1574</locationY>
         <connector>
             <targetReference>Update_Conversation_Note</targetReference>
         </connector>
@@ -501,28 +454,21 @@
     </start>
     <status>Active</status>
     <variables>
+        <description>Conversation note to update based on the journal entry process.</description>
+        <name>Conversation_Note_Record</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Conversation_Note__c</objectType>
+    </variables>
+    <variables>
         <description>Document variant wrapper for journal request</description>
         <name>Document_Variant_PDF</name>
         <apexClass>CRM_Dokumentvarianter</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <description>Unique reference to the case in NAVs fagsystem that the journal post should relate to.</description>
-        <name>Journal_Case_ID</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <description>Required variable for journal post in the Dokarkiv API.</description>
-        <name>Journal_Case_Legacy_System</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
@@ -535,29 +481,13 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <description>NAV Ident of the user initiating the journal flow.</description>
-        <name>Journal_Entry_NAV_Ident</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
         <description>SF journal entry record to be created for a journal request</description>
         <name>Journal_Entry_SF</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>false</isOutput>
+        <isOutput>true</isOutput>
         <objectType>Journal_Entry__c</objectType>
-    </variables>
-    <variables>
-        <description>NAV unit number of the user initiating the journal entry.</description>
-        <name>Journal_Entry_Unit</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
     </variables>
     <variables>
         <description>Wrapper class for the actual journal request to be sent.</description>
@@ -578,26 +508,21 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <description>Unique subtheme code for the journal entry (Not required)</description>
-        <name>Journal_Subtheme_Code</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <description>Unique theme code for the journal entry</description>
-        <name>Journal_Theme_Code</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
         <name>PDF_DOCUMENT</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Variable to define if the flow is to perform the DML operation directly or the DML will be handled outside</description>
+        <name>PERFORM_DML</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>true</booleanValue>
+        </value>
     </variables>
 </Flow>
