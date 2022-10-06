@@ -27,7 +27,7 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>Conversation_Note__c.Create_NAV_Task</value>
+                            <value>Conversation_Note__c.Redaction_Create_NAV_Task</value>
                             <visibilityRule>
                                 <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>

@@ -154,14 +154,14 @@
             <label>Post Success</label>
         </rules>
     </decisions>
-    <description>Screen flow to support sending NAV Task related to a thread.</description>
+    <description>Flow to send NAV Task for Thread on Sladding-app.</description>
     <dynamicChoiceSets>
         <name>Gjelder_Pick_List</name>
         <collectionReference>Get_Gjelder_List</collectionReference>
         <dataType>String</dataType>
         <displayField>Name</displayField>
         <object>Common_Code__c</object>
-        <valueField>Name</valueField>
+        <valueField>CRM_Code__c</valueField>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
         <name>Priority_Picklist</name>
@@ -171,8 +171,8 @@
         <picklistField>CRM_Priority__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
-    <interviewLabel>SEND NAV TASK TEMPLATE {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Thread Send NAV Task</label>
+    <interviewLabel>Thread Redaction Send NAV Task {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Thread Redaction Send NAV Task</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -203,14 +203,24 @@
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Name</field>
+            <field>CRM_Code__c</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>Gjelder</elementReference>
             </value>
         </filters>
+        <filters>
+            <field>CRM_Code_Set__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Gjelder</stringValue>
+            </value>
+        </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Common_Code__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>CRM_Subtype__c</queriedFields>
+        <queriedFields>CRM_Subtheme__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
