@@ -76,7 +76,7 @@ public class CRM_HenvRedactionRestService_Test {
         CRM_HenvRedactionRestService.markForRedaction();
         Test.stopTest();
 
-        System.assertEquals(200, RestContext.response.statusCode);
+        System.assertEquals(204, RestContext.response.statusCode);
     }
 
     @isTest

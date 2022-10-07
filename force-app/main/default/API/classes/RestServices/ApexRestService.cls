@@ -4,6 +4,7 @@ global virtual class ApexRestService {
         200 => 'OK',
         201 => 'CREATED',
         202 => 'ACCEPTED',
+        204 => 'NO_CONTENT',
         400 => 'BAD_REQUEST',
         401 => 'UNAUTHORIZED',
         403 => 'FORBIDDEN',

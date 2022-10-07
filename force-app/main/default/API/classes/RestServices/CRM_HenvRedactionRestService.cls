@@ -29,7 +29,7 @@ global without sharing class CRM_HenvRedactionRestService extends CRM_Henvendels
                 objToUpdate.put('CRM_Last_Edited_By__c', navIdent);
 
                 update objToUpdate;
-                setResponse(200);
+                setResponse(204);
             } else {
                 errorResponse(400, 'Invalid reference value for kjedeId: ' + slRequest.kjedeId);
                 logger.publish();
