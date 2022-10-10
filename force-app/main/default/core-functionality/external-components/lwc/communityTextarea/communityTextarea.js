@@ -2,7 +2,7 @@ import { LightningElement, api } from 'lwc';
 
 export default class CommunityTextarea extends LightningElement {
     @api maxLength;
-    errorMessage = 'Tekstboksen kan ikke være tomt';
+    errorMessage = 'Tekstboksen kan ikke være tom';
     message;
     errorState = false;
 
