@@ -1,10 +1,7 @@
 <template>
     <div data-id="divblock" class="">
-        <span class="alertstripe__ikon">
-            <span class="sr-only">{type}</span>
-        </span>
-        <img src={logopath} class="logo" />
-        <div class="typo-normal text-center">
+        <img src={logopath} class="logo" alt={altText} />
+        <div class="navds-alert__wrapper navds-body-long">
             <lightning-formatted-rich-text value={alerttext}></lightning-formatted-rich-text>
         </div>
     </div>
