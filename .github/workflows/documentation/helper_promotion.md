@@ -41,7 +41,7 @@ This workflows does the following:
 
 - Environemnt secrets
     - `secrets.CRM_PROD_SFDX_URL`
-    - `secrets.PRECRM_PROD_SFDX_URL`
+    - `secrets.CRM_PREPROD_SFDX_URL`
 - `secrets.PACKAGE_KEY`
     - Needed to install dependant packages
 - `secrets.DEPLOYMENT_PAT`
