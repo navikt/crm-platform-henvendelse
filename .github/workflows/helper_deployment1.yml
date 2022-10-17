@@ -28,10 +28,10 @@ jobs:
         id: auth-url
         run: |
           if [ ${{ github.event.inputs.org }} == "prod" ];then
-            echo "::set-output name=target::$(echo ${{ secrets.PROD_SFDX_URL }})"
+            echo "::set-output name=target::$(echo ${{ secrets.CRM_PROD_SFDX_URL }})"
             echo "'prod' was set"
           elif [ ${{ github.event.inputs.org }} == "preprod" ];then
-            echo "::set-output name=target::$(echo ${{ secrets.PREPROD_SFDX_URL }})"
+            echo "::set-output name=target::$(echo ${{ secrets.CRM_PREPROD_SFDX_URL }})"
             echo "'preprod' was set"
           elif [ ${{ github.event.inputs.org }} == "dev" ];then
             echo "::set-output name=target::$(echo ${{ secrets.DEV_SFDX_URL }})"
@@ -40,7 +40,7 @@ jobs:
             echo "::set-output name=target::$(echo ${{ secrets.UAT_SFDX_URL }})"
             echo "'preprod' was set"
           elif [ ${{ github.event.inputs.org }} == "sit" ];then
-            echo "::set-output name=target::$(echo ${{ secrets.INTEGRATION_SANDBOX_SFDX_URL }})"
+            echo "::set-output name=target::$(echo ${{ secrets.CRM_SIT_SFDX_URL }})"
             echo "'sit' was set"
           fi
 
