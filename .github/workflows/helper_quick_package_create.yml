@@ -18,14 +18,12 @@ jobs:
       - name: Install SFDX
         uses: navikt/crm-workflows-base/.github/actions/installSFDX@master
 
-      # Authorize SFDX
-      - name: Authorize SFDX
-        uses: navikt/crm-workflows-base/.github/actions/authenticateOrg@master
-        with:
-          auth-url: ${{ secrets.CRM_PROD_SFDX_URL }}
-          alias: targetOrg
-          setDefaultUsername: true
-          setDefaultDevhubUsername: false
+      # Authenticate prod
+      - name: Authenticate prod
+        run: |
+          echo ${{ secrets.CRM_PROD_SFDX_URL}} > ./CRM_PROD_SFDX_URL.txt
+          sfdx auth:sfdxurl:store -f ./CRM_PROD_SFDX_URL.txt -a devhub -d
+          rm -f ./CRM_PROD_SFDX_URL.txt
 
       # Delete unpackagable and scratch-org folder
       - name: Delete unpackagable
