@@ -11,6 +11,7 @@ global class CRM_Melding extends CRM_HenvendelseApiUtils {
     global String lestDato;
     global String kanal;
     global String meldingsId;
+    global Boolean sladding;
     global String henvendelseId; //Legacy ID for verification purposes
 
     global CRM_Melding(Message__c message) {
@@ -19,6 +20,7 @@ global class CRM_Melding extends CRM_HenvendelseApiUtils {
         this.lestDato = formatDateTime(message.CRM_Read_Datetime__c);
         this.kanal = Communication_Channel.DIGITAL.name();
         this.meldingsId = message.CRM_API_Reference__c;
+        this.sladding = message.CRM_Sensitive_Information__c;
         this.fra = new CRM_MessageFrom();
 
         if (message.CRM_Type__c == 'Info') {
@@ -37,6 +39,7 @@ global class CRM_Melding extends CRM_HenvendelseApiUtils {
         this.lestDato = formatDateTime(convNote.CRM_Read_Date__c);
         this.sendtDato = formatDateTime(convNote.CRM_Date_Time_Registered__c);
         this.meldingsId = convNote.CRM_API_Reference__c;
+        this.sladding = convNote.STO_Sensitive_Information__c;
         if (String.isNotBlank(convNote.CRM_Communication_Channel__c)) {
             this.kanal = convNote.CRM_Communication_Channel__c.equalsIgnoreCase('Phone')
                 ? Communication_Channel.TELEFON.name()
