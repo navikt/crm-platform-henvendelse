@@ -4,10 +4,11 @@
             <div class="slds-chat-message">
                 <div class="slds-chat-message__body">
                     <div class={divClasses}>
-                        <lightning-formatted-rich-text
+                        <lightning-formatted-text
                             if:false={isRedacting}
                             value={message.CRM_Message_Text__c}
-                        ></lightning-formatted-rich-text>
+                            linkify
+                        ></lightning-formatted-text>
                         <lightning-record-edit-form
                             if:true={isRedacting}
                             object-api-name="Message__c"

@@ -22,10 +22,11 @@
                                     ></c-crm-nav-formatted-date>
                                 </div>
                             </div>
-                            <lightning-formatted-rich-text
+                            <lightning-formatted-text
                                 value={message.CRM_Message_Text__c}
                                 class="linebreaks typo-normal"
-                            ></lightning-formatted-rich-text>
+                                linkify
+                            ></lightning-formatted-text>
                         </div>
                     </lightning-layout-item>
                 </lightning-layout>
