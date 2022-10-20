@@ -82,7 +82,6 @@ This package is dependant on the following packages
 -   [crm-journal-utilities](https://github.com/navikt/crm-journal-utilities)
 -   [crm-shared-user-notification](https://github.com/navikt/crm-shared-user-notification)
 -   [crm-shared-flowComponents](https://github.com/navikt/crm-shared-flowComponents)
--   [crm-thread-view](https://github.com/navikt/crm-thread-view)
 
 ## 5. Installation
 
