@@ -34,10 +34,6 @@
                 {
                     "package": "crm-platform-oppgave",
                     "versionNumber": "0.41.0.LATEST"
-                },
-                {
-                    "package": "crm-thread-view",
-                    "versionNumber": "0.2.0.LATEST"
                 }
             ]
         }
@@ -53,7 +49,6 @@
         "crm-shared-user-notification": "0Ho2o000000fxY4CAI",
         "crm-shared-flowComponents": "0Ho2o000000fxYJCAY",
         "crm-platform-integration": "0Ho2o0000008ORrCAM",
-        "crm-platform-oppgave": "0Ho2o000000fxXzCAI",
-        "crm-thread-view": "0Ho7U000000000zSAA"
+        "crm-platform-oppgave": "0Ho2o000000fxXzCAI"
     }
 }
