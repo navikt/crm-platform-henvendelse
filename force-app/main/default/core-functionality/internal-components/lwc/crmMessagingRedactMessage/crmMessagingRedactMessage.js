@@ -66,9 +66,10 @@ export default class CrmMessagingRedactMessage extends LightningElement {
     }
 
     get divClasses() {
-        const cssClass = this.message.CRM_External_Message__c
+        let cssClass = this.message.CRM_External_Message__c
             ? 'slds-chat-message__text_inbound'
             : 'slds-chat-message__text_outbound';
+        cssClass += this.message.CRM_Sensitive_Information__c ? ' redaction-marked ' : '';
         return `slds-chat-message__text ${cssClass}`;
     }
 

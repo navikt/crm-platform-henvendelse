@@ -4,6 +4,10 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
     private static final String MELDING_TYPE = HENVENDELSE_TYPE.MELDING.name();
     private static String correlationId;
     private static LoggerUtility logger = new LoggerUtility('Henvendelse API');
+    private static CRM_DatabaseOperations dbOp = new CRM_DatabaseOperations()
+        .setAllOrNone()
+        .setDomain(CRM_ApplicationDomain.Domain.NKS)
+        .setMaxRetries(5);
 
     @HttpPost
     global static void createHenvendelse() {
@@ -68,7 +72,7 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
         Conversation_Note__c newNote = validateNewConversationNote(req, kjedeId);
 
         try {
-            insert newNote;
+            dbOp.insertRecords(newNote);
             List<Conversation_Note__c> notesFromDatabase = new List<Conversation_Note__c>();
             if (String.isNotBlank(kjedeId))
                 notesFromDatabase = new CRM_ConversationNoteSelector().selectByBehandlingskjedeId(kjedeId);
@@ -114,13 +118,13 @@ global without sharing class CRM_HenvendelseNyRestService extends CRM_Henvendels
                 Thread__c newThread = newMessage.CRM_Thread__r;
                 newThread.CRM_Assignee__c = threadAssignee;
                 newThread.CRM_Assignee_NAV_Unit__c = newMessage.CRM_From_NAV_Unit__c;
-                insert newThread;
+                dbOp.insertRecords(newThread);
                 newMessage.CRM_Thread__c = newThread.Id;
             } else {
                 //Updates the thread assignee
                 updateThreadAssignee(threadAssignee, newMessage.CRM_From_NAV_Unit__c, newMessage.CRM_Thread__c);
             }
-            insert newMessage;
+            dbOp.insertRecords(newMessage);
             Thread__c updatedThread = new CRM_ThreadSelector().selectById(newMessage.CRM_Thread__c);
             setResponse(
                 200,
