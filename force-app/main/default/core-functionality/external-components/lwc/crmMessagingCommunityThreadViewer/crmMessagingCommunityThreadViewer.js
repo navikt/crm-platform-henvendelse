@@ -10,7 +10,7 @@ import THREADNAME_FIELD from '@salesforce/schema/Thread__c.STO_ExternalName__c';
 import THREADCLOSED_FIELD from '@salesforce/schema/Thread__c.CRM_Is_Closed__c';
 import THREAD_TYPE_FIELD from '@salesforce/schema/Thread__c.CRM_Type__c';
 
-const fields = [THREADNAME_FIELD, THREADCLOSED_FIELD]; //Extract the name of the thread record
+const fields = [THREADNAME_FIELD, THREADCLOSED_FIELD, THREAD_TYPE_FIELD]; //Extract the name of the thread record
 
 export default class crmMessagingCommunityThreadViewer extends LightningElement {
     _mySendForSplitting;
@@ -45,14 +45,12 @@ export default class crmMessagingCommunityThreadViewer extends LightningElement 
     }
 
     get isSTO() {
-        return getFieldValue(this.thread.data, THREAD_TYPE_FIELD) === 'STO' ? true : false;
+        const value = getFieldValue(this.thread.data, THREAD_TYPE_FIELD);
+        return value === 'STO' || value === 'STB';
     }
 
     get showopenwarning() {
-        if (this.alertopen && !this.isSTO) {
-            return true;
-        }
-        return false;
+        return this.alertopen && !this.isSTO;
     }
 
     get name() {
@@ -70,7 +68,11 @@ export default class crmMessagingCommunityThreadViewer extends LightningElement 
         }
     }
     get isclosed() {
-        return getFieldValue(this.thread.data, THREADCLOSED_FIELD) && !this.isSTO ? true : false;
+        return getFieldValue(this.thread.data, THREADCLOSED_FIELD);
+    }
+
+    get showClosedText() {
+        return this.isclosed && !this.isSTO;
     }
     /**
      * Blanks out all text fields, and enables the submit-button again.
