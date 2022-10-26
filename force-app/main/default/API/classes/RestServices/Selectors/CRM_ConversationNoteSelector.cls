@@ -24,7 +24,9 @@ public inherited sharing class CRM_ConversationNoteSelector extends CRM_ApiSelec
         'CRM_Original_Person_GT__c',
         'CRM_Original_Person_NAV_Unit__c',
         'STO_Sensitive_Information__c',
-        'CRM_API_Reference__c'
+        'CRM_API_Reference__c',
+        'CRM_Account__r.CRM_Person__r.INT_Confidential__c',
+        'CRM_Account__r.CRM_Person__r.INT_IsNavEmployee__c'
     };
 
     public List<Schema.SObjectField> getSObjectFieldList() {

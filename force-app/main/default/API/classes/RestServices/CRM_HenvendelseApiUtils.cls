@@ -1,10 +1,13 @@
 public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestService {
+    private static MicrosoftGraphService microsoftGraphService;
+    
     public enum HENVENDELSE_TYPE {
         SAMTALEREFERAT,
         MELDINGSKJEDE,
         CHAT,
         MELDING
     }
+    
 
     /**
      * @description: Helper method to return the correct HENVENDELSE_TYPE
@@ -115,15 +118,6 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
     }
 
     /**
-     * @description: For system integration the NAV ident of the user performing the action should be included in a request header
-     * @author Stian Ruud Schikora | 07-07-2021
-     * @return String
-     **/
-    public static String getActingNavIdent() {
-        return getRequestHeader('X-ACTING-NAV-IDENT');
-    }
-
-    /**
      * @description apiReference is unique accross the Thread and Conversation Note table. SOSL search to find the record Id with the matching apiReference
      * @author Stian Ruud Schikora | 10-21-2021
      * @param apiReference
@@ -154,6 +148,11 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
         }
 
         return objectId;
+    }
+
+    public static string getMicrosoftGraphToken(){
+        String salesforceAzureToken=CRM_HenvendelseApiUtils.getRequestHeader('X-Azure-Token');
+        return  AzureAccessTokenService.getTokenForOtherService(salesforceAzureToken, 'MicrosoftGraph');
     }
 
     public class HenvendelseConversionException extends exception {
