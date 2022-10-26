@@ -50,7 +50,10 @@ export default class crmMessagingCommunityThreadViewer extends LightningElement 
     }
 
     get showopenwarning() {
-        return this.alertopen && !this.isSTO;
+        if (this.alertopen) {
+            return !this.isSTO;
+        }
+        return false;
     }
 
     get name() {
