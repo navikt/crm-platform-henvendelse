@@ -8,6 +8,7 @@ import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import createmsg from '@salesforce/apex/CRM_MessageHelper.createMessage';
 import THREADNAME_FIELD from '@salesforce/schema/Thread__c.STO_ExternalName__c';
 import THREADCLOSED_FIELD from '@salesforce/schema/Thread__c.CRM_Is_Closed__c';
+import THREAD_TYPE_FIELD from '@salesforce/schema/Thread__c.CRM_Type__c';
 
 const fields = [THREADNAME_FIELD, THREADCLOSED_FIELD]; //Extract the name of the thread record
 
@@ -28,7 +29,7 @@ export default class crmMessagingCommunityThreadViewer extends LightningElement 
     @api errorList = { title: '', errors: [] };
 
     connectedCallback() {
-        markAsRead({ threadId: this.recordId});
+        markAsRead({ threadId: this.recordId });
         getContactId({})
             .then((contactId) => {
                 this.userContactId = contactId;
@@ -42,8 +43,13 @@ export default class crmMessagingCommunityThreadViewer extends LightningElement 
     wirethread(result) {
         this.thread = result;
     }
+
+    get isSTO() {
+        return getFieldValue(this.thread.data, THREAD_TYPE_FIELD) === 'STO' ? true : false;
+    }
+
     get showopenwarning() {
-        if (this.alertopen) {
+        if (this.alertopen && !this.isSTO) {
             return true;
         }
         return false;
@@ -64,7 +70,7 @@ export default class crmMessagingCommunityThreadViewer extends LightningElement 
         }
     }
     get isclosed() {
-        return getFieldValue(this.thread.data, THREADCLOSED_FIELD);
+        return getFieldValue(this.thread.data, THREADCLOSED_FIELD) && !this.isSTO ? true : false;
     }
     /**
      * Blanks out all text fields, and enables the submit-button again.
