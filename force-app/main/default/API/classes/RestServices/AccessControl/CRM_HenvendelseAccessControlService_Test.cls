@@ -1,9 +1,16 @@
 @isTest
 private class CRM_HenvendelseAccessControlService_Test {
+
+    @TestSetup
+    static void makeData() {
+        Person__c dummyPerson = (Person__c) CRM_HENV_TestDataFactory.createRecord(
+            new Person__c(Name = '12345678910', INT_ActorId__c = '123456789101213')
+        );
+    }
     
     @isTest
     private static void testCheckPersonAccess_whenPersonIsUgradert(){
-        String body = '{"@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users(onPremisesSamAccountName)/$entity","onPremisesSamAccountName": "H157299"}';
+        String body = '{"@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users(onPremisesSamAccountName)/$entity","onPremisesSamAccountName": "X99"}';
         SingleRequestMock httpMock = new SingleRequestMock(200, 'Success', body, null);
         Test.setMock(HttpCalloutMock.class, httpMock);
 
@@ -14,7 +21,7 @@ private class CRM_HenvendelseAccessControlService_Test {
 
     @isTest
     private static void testCheckPersonAccess_whenPersonIsFortroligAndUserHasNotAccess(){
-        String body = '{"@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users(onPremisesSamAccountName)/$entity","onPremisesSamAccountName": "H157299"}';
+        String body = '{"@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users(onPremisesSamAccountName)/$entity","onPremisesSamAccountName": "X99"}';
         SingleRequestMock httpMock = new SingleRequestMock(200, 'Success', body, null);
         Test.setMock(HttpCalloutMock.class, httpMock);
 
@@ -36,7 +43,7 @@ private class CRM_HenvendelseAccessControlService_Test {
     
     @isTest
     private static void testCheckPersonAccess_whenPersonIsStrengtFortroligAndUserHasNotAccess(){
-        String body = '{"@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users(onPremisesSamAccountName)/$entity","onPremisesSamAccountName": "H157299"}';
+        String body = '{"@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users(onPremisesSamAccountName)/$entity","onPremisesSamAccountName": "X99"}';
         SingleRequestMock httpMock = new SingleRequestMock(200, 'Success', body, null);
         Test.setMock(HttpCalloutMock.class, httpMock);
 
@@ -58,7 +65,7 @@ private class CRM_HenvendelseAccessControlService_Test {
 
     @isTest
     private static void testCheckPersonAccess_whenPersonIsSkjermetAndUserHasNotAccess(){
-        String body = '{"@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users(onPremisesSamAccountName)/$entity","onPremisesSamAccountName": "H157299"}';
+        String body = '{"@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users(onPremisesSamAccountName)/$entity","onPremisesSamAccountName": "X99"}';
         SingleRequestMock httpMock = new SingleRequestMock(200, 'Success', body, null);
         Test.setMock(HttpCalloutMock.class, httpMock);
 

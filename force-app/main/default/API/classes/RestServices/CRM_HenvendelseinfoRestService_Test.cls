@@ -6,7 +6,7 @@ public class CRM_HenvendelseinfoRestService_Test {
     @TestSetup
     static void makeData() {
         Person__c dummyPerson = (Person__c) CRM_HENV_TestDataFactory.createRecord(
-            new Person__c(Name = '12345678910', INT_ActorId__c = '123456789101213')
+            new Person__c(Name = '12345678910', INT_ActorId__c = '123456789101213', INT_Confidential__c='UGRADERT', INT_LastName__c='Last')
         );
 
         Contact personCon = [SELECT Id, AccountId FROM Contact WHERE Account.CRM_Person__c = :dummyPerson.Id LIMIT 1];
@@ -39,7 +39,11 @@ public class CRM_HenvendelseinfoRestService_Test {
     }
 
     @isTest
-    static void testGetConversationNote() {
+    static void testGetConversationNote() {        
+        String body = '{"@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users(onPremisesSamAccountName)/$entity","onPremisesSamAccountName": "X99"}';
+        SingleRequestMock httpMock = new SingleRequestMock(200, 'Success', body, null);
+        Test.setMock(HttpCalloutMock.class, httpMock);
+
         Conversation_Note__c convNote = [
             SELECT Id, CRM_Henvendelse_BehandlingskjedeId__c
             FROM Conversation_Note__c
@@ -66,7 +70,44 @@ public class CRM_HenvendelseinfoRestService_Test {
     }
 
     @isTest
+    static void testGetConversationNote_whenNoPersonAccess() {        
+        String body = '{"@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users(onPremisesSamAccountName)/$entity","onPremisesSamAccountName": "X99"}';
+        SingleRequestMock httpMock = new SingleRequestMock(200, 'Success', body, null);
+        Test.setMock(HttpCalloutMock.class, httpMock);
+
+        makeConfidentialData();
+        Conversation_Note__c convNote = [
+            SELECT Id, CRM_Henvendelse_BehandlingskjedeId__c
+            FROM Conversation_Note__c
+            WHERE CRM_Henvendelse_BehandlingskjedeId__c =: CONV_NOTE_PREFIX + 'FORTROLIG'
+            LIMIT 1
+        ];
+
+        RestRequest req = new RestRequest();
+        RestResponse resp = new RestResponse();
+
+        req.requestURI =
+            Url.getSalesforceBaseUrl().toExternalForm() +
+            '/services/apexrest/henvendelseinfo/henvendelse/' +
+            convNote.CRM_Henvendelse_BehandlingskjedeId__c;
+        req.headers.put('X-Correlation-ID', '123TEST');
+        req.httpMethod = 'GET';
+        RestContext.request = req;
+        RestContext.response = resp;
+
+        Test.startTest();
+        CRM_HenvendelseinfoRestService.getHenvendelse();
+        Test.stopTest();
+
+        System.assertEquals(403, RestContext.response.statusCode);
+    }
+
+    @isTest
     static void testGetThread() {
+        String body = '{"@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users(onPremisesSamAccountName)/$entity","onPremisesSamAccountName": "X99"}';
+        SingleRequestMock httpMock = new SingleRequestMock(200, 'Success', body, null);
+        Test.setMock(HttpCalloutMock.class, httpMock);
+
         Thread__c thread = [SELECT Id, CRM_API_Reference__c FROM Thread__c LIMIT 1];
 
         RestRequest req = new RestRequest();
@@ -89,7 +130,43 @@ public class CRM_HenvendelseinfoRestService_Test {
     }
 
     @isTest
+    static void testGetThread_whenNoPersonAccess() {
+        String body = '{"@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users(onPremisesSamAccountName)/$entity","onPremisesSamAccountName": "X99"}';
+        SingleRequestMock httpMock = new SingleRequestMock(200, 'Success', body, null);
+        Test.setMock(HttpCalloutMock.class, httpMock);
+
+        makeConfidentialData();
+        Thread__c thread = [
+            SELECT Id, CRM_API_Reference__c, CRM_Henvendelse_BehandlingsId__c
+            FROM Thread__c
+            WHERE CRM_Henvendelse_BehandlingsId__c=:CONV_NOTE_PREFIX + 'FORTROLIG'
+            LIMIT 1
+        ];
+
+        RestRequest req = new RestRequest();
+        RestResponse resp = new RestResponse();
+
+        req.requestURI =
+            Url.getSalesforceBaseUrl().toExternalForm() +
+            '/services/apexrest/henvendelseinfo/henvendelse/' +
+            thread.CRM_API_Reference__c;
+        req.headers.put('X-Correlation-ID', '123TEST');
+        req.httpMethod = 'GET';
+        RestContext.request = req;
+        RestContext.response = resp;
+
+        Test.startTest();
+        CRM_HenvendelseinfoRestService.getHenvendelse();
+        Test.stopTest();
+
+        System.assertEquals(403, RestContext.response.statusCode);
+    }
+
+    @isTest
     static void testInvalidObjextId() {
+        String body = '{"@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users(onPremisesSamAccountName)/$entity","onPremisesSamAccountName": "X99"}';
+        SingleRequestMock httpMock = new SingleRequestMock(200, 'Success', body, null);
+        Test.setMock(HttpCalloutMock.class, httpMock);       
         String accountRef = [SELECT Id FROM Account LIMIT 1].Id;
 
         RestRequest req = new RestRequest();
@@ -113,6 +190,9 @@ public class CRM_HenvendelseinfoRestService_Test {
 
     @isTest
     static void testInvalidId() {
+        String body = '{"@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users(onPremisesSamAccountName)/$entity","onPremisesSamAccountName": "X99"}';
+        SingleRequestMock httpMock = new SingleRequestMock(200, 'Success', body, null);
+        Test.setMock(HttpCalloutMock.class, httpMock);
         RestRequest req = new RestRequest();
         RestResponse resp = new RestResponse();
 
@@ -134,6 +214,9 @@ public class CRM_HenvendelseinfoRestService_Test {
 
     @isTest
     static void testException() {
+        String body = '{"@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users(onPremisesSamAccountName)/$entity","onPremisesSamAccountName": "X99"}';
+        SingleRequestMock httpMock = new SingleRequestMock(200, 'Success', body, null);
+        Test.setMock(HttpCalloutMock.class, httpMock);
         Thread__c thread = [SELECT Id, CRM_API_Reference__c FROM Thread__c LIMIT 1];
 
         RestRequest req = new RestRequest();
@@ -154,5 +237,36 @@ public class CRM_HenvendelseinfoRestService_Test {
         Test.stopTest();
 
         System.assertEquals(500, RestContext.response.statusCode);
+    }
+
+
+    
+    private static void makeConfidentialData() {
+        Person__c dummyPerson = (Person__c) CRM_HENV_TestDataFactory.createRecord(
+            new Person__c(Name = '92345678919', INT_ActorId__c = '923456789101219', INT_Confidential__c='FORTROLIG', INT_LastName__c='Skjermet')
+        );
+
+        Contact personCon = [SELECT Id, AccountId FROM Contact WHERE Account.CRM_Person__c = :dummyPerson.Id LIMIT 1];
+
+        Conversation_Note__c convNote = (Conversation_Note__c) CRM_HENV_TestDataFactory.createRecord(
+            new Conversation_Note__c(
+                CRM_Account__c = personCon.AccountId,
+                CRM_Henvendelse_BehandlingskjedeId__c = CONV_NOTE_PREFIX + 'FORTROLIG'
+            )
+        );
+        //Adding a follow up note to the test data
+        CRM_HENV_TestDataFactory.createRecord(
+            new Conversation_Note__c(
+                CRM_Account__c = personCon.AccountId,
+                CRM_Henvendelse_BehandlingskjedeId__c = CONV_NOTE_PREFIX + 'FORTROLIG'
+            )
+        );
+        Thread__c thread = (Thread__c) CRM_HENV_TestDataFactory.createRecord(
+            new Thread__c(CRM_Contact__c = personCon.Id, CRM_Account__c = personCon.AccountId, 	CRM_Henvendelse_BehandlingsId__c=CONV_NOTE_PREFIX + 'FORTROLIG')
+        );
+
+        CRM_HENV_TestDataFactory.createRecord(
+            new Message__c(CRM_Thread__c = thread.Id, CRM_Message_Text__c = 'DUMMY TEXT')
+        );
     }
 }

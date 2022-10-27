@@ -5,12 +5,14 @@ global without sharing class CRM_HenvendelseinfoRestService extends CRM_Henvende
 
     @HttpGet
     global static void getHenvendelse() {
+        system.debug('start');
         if (!validate()) {
             return;
         }
 
         String correlationId = getXCorrelation();
         logger.apiTransaction(correlationId, RestContext.request, CRM_ApplicationDomain.Domain.NKS);
+        
         try {
             accessControlService=new CRM_HenvendelseAccessControlService(getMicrosoftGraphToken());
             String apiReference = getLastPathParameter();
@@ -20,10 +22,17 @@ global without sharing class CRM_HenvendelseinfoRestService extends CRM_Henvende
             switch on objectName {
                 when 'Thread__c' {
                     Thread__c thread = new CRM_ThreadSelector().selectByApiReference(apiReference);
-                    setResponse(
-                        200,
-                        JSON.serializePretty(new CRM_Henvendelse(thread, thread.Messages__r, thread.Journal_Entries__r))
-                    );
+                    Boolean hasPersonAccess=accessControlService.checkPersonAccess(thread.CRM_Account__r.CRM_Person__r.INT_Confidential__c, thread.CRM_Account__r.CRM_Person__r.INT_IsNavEmployee__c);
+                    
+                    if(hasPersonAccess){
+                        setResponse(
+                            200,
+                            JSON.serializePretty(new CRM_Henvendelse(thread, thread.Messages__r, thread.Journal_Entries__r))
+                        );
+                    }
+                    else{
+                        errorResponse(403, 'No access to thread ID: ' + apiReference);    
+                    }
                 }
                 when 'Conversation_Note__c' {
                     List<Conversation_Note__c> noteList = new CRM_ConversationNoteSelector()
@@ -34,7 +43,7 @@ global without sharing class CRM_HenvendelseinfoRestService extends CRM_Henvende
                         setResponse(200, JSON.serializePretty(new CRM_Henvendelse(noteList)));
                     }
                     else{
-                        errorResponse(403, 'No access to henv/thread ID: ' + apiReference);    
+                        errorResponse(403, 'No access to conversation note ID: ' + apiReference);    
                     }
                     
 
@@ -45,6 +54,7 @@ global without sharing class CRM_HenvendelseinfoRestService extends CRM_Henvende
             }
             logger.publish();
         } catch (Exception ex) {
+            system.debug('Exception: ' + ex.getMessage());
             errorResponse(500, 'Exception: ' + ex.getMessage());
             logger.error(
                 'Exception: ' +
