@@ -1,7 +1,8 @@
 .decorator-wrapper {
 }
 .contentholder {
-    margin: auto;
+    margin-right: 1rem;
+    margin-left: 1rem;
     max-width: 80em;
 }
 .submitbtn {
