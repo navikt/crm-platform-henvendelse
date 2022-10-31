@@ -18,6 +18,8 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     @api englishTextTemplate;
     @api checkMedskriv;
 
+    @api hasChecked = false;
+
     @api textTemplate; //Support for conditional text template
 
     @wire(getThreads, { recordId: '$recordId', singleThread: '$singleThread' }) //Calls apex and extracts messages related to this record
@@ -62,5 +64,24 @@ export default class CrmMessagingMessageComponent extends LightningElement {
             detail: event.detail
         });
         this.dispatchEvent(englishEvent);
+    }
+
+    renderedCallback() {
+        console.log('Rendering');
+        const slot = this.template.querySelector('.slotContent');
+        console.log(slot);
+        if (!slot) return;
+        console.log('Running extra');
+        const hasContent = slot.assignedElements().length !== 0;
+        console.log('hasContent');
+        console.log(hasContent);
+        this.hasContent = hasContent;
+    }
+
+    hasContent = true;
+
+    @api
+    checkSlotChange() {
+        this.hasContent = true;
     }
 }

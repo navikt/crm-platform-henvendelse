@@ -61,7 +61,7 @@ public with sharing class CRM_MessageHelper {
                 return getThreadFromThreadId(recordId);
             }
             Thread__c t = [
-                SELECT Id, CRM_Number_of_External_Messages__c, CRM_Related_Object__c, CRM_isActive__c, CRM_Medskriv__c
+                SELECT Id, CRM_Number_of_External_Messages__c, CRM_Related_Object__c, CRM_isActive__c, STO_Medskriv__c
                 FROM Thread__c
                 WHERE CRM_Related_Object__c = :recordId
                 LIMIT 1
@@ -77,7 +77,7 @@ public with sharing class CRM_MessageHelper {
     public static Thread__c getThreadFromThreadId(Id recordId) {
         try {
             Thread__c t = [
-                SELECT Id, CRM_Number_of_External_Messages__c, CRM_Related_Object__c, CRM_isActive__c, CRM_Medskriv__c
+                SELECT Id, CRM_Number_of_External_Messages__c, CRM_Related_Object__c, CRM_isActive__c, STO_Medskriv__c
                 FROM Thread__c
                 WHERE Id = :recordId
                 LIMIT 1

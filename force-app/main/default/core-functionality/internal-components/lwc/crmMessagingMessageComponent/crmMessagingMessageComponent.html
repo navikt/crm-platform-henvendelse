@@ -50,6 +50,9 @@
                         <div slot="toolbar">
                             <slot name="toolbar"></slot>
                         </div>
+                        <div if:true={hasContent} slot="messages2">
+                            <slot class="slotContent" name="messages"></slot>
+                        </div>
                     </c-crm-messaging-thread-Viewer>
                 </div>
             </template>

@@ -281,10 +281,6 @@ export default class messagingThreadViewer extends LightningElement {
         this.langBtnLock = true;
     }
 
-    handleMedskrivClick() {
-        this.acceptedMedskriv = true;
-    }
-
     //##################################//
     //#########    GETTERS    ##########//
     //##################################//
@@ -331,21 +327,6 @@ export default class messagingThreadViewer extends LightningElement {
 
     get hasEnglishTemplate() {
         return this.englishTextTemplate !== undefined;
-    }
-
-    get showMedskrivBlocker() {
-        return this.checkMedskriv === true && this.acceptedMedskriv === false && this.thread.CRM_Medskriv__c === false;
-    }
-
-    get messageContainerClasses() {
-        return 'slds-box scroller slds-scrollable_y' + (this.showMedskrivBlocker ? ' hide' : '');
-    }
-
-    get medskrivBlockerClasses() {
-        return (
-            'slds-align_absolute-center slds-grid_vertical medskrivBlocker scroller ' +
-            (this.showMedskrivBlocker ? '' : ' hide')
-        );
     }
 
     //##################################//
