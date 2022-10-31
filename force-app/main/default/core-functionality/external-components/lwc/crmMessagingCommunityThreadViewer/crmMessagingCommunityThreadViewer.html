@@ -1,5 +1,5 @@
 <template>
-    <div class="decorator-wrapper">
+    <div class="decorator-wrapper slds-var-p-bottom_xx-large">
         <div class="header" style="text-align: center">
             <h1 class="typo-sidetittel">{name}</h1>
             <slot name="subheader"></slot>
@@ -68,7 +68,7 @@
                 </lightning-layout>
             </template>
         </div>
-        <template if:true={isclosed}>
+        <template if:true={showClosedText}>
             <div class="infocontainer slds-var-p-top_medium slds-var-p-horizontal_medium largePadding">
                 <c-crm-community-alert-stripe
                     class="alertbox"

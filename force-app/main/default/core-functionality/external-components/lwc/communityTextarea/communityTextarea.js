@@ -2,7 +2,7 @@ import { LightningElement, api } from 'lwc';
 
 export default class CommunityTextarea extends LightningElement {
     @api maxLength;
-    errorMessage = 'Tekstboksen kan ikke være tomt';
+    errorMessage = 'Tekstboksen kan ikke være tom';
     message;
     errorState = false;
 
@@ -20,7 +20,7 @@ export default class CommunityTextarea extends LightningElement {
     checkError() {
         if (!this.message || this.message.length === 0) {
             this.errorState = true;
-            this.errorMessage = 'Tekstboksen kan ikke være tomt.';
+            this.errorMessage = 'Tekstboksen kan ikke være tom.';
         } else if (this.limitCharacters && this.message.length > this.maxLength) {
             this.errorState = true;
             this.errorMessage = 'Det er for mange tegn i tekstboksen.';

@@ -111,7 +111,8 @@ public with sharing class CRM_MessageHelper {
                     CRM_From_Contact__c,
                     CRM_From_First_Name__c,
                     CRM_External_Message__c,
-                    CRM_From_Label__c
+                    CRM_From_Label__c,
+                    CRM_Sensitive_Information__c
                 FROM Message__c
                 WHERE CRM_Thread__c = :threadId
                 ORDER BY CRM_Sent_date__c ASC

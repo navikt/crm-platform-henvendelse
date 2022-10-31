@@ -4,16 +4,18 @@
             <div class="slds-chat-message__body">
                 <template if:true={isOwner}>
                     <div class="slds-chat-message__text slds-chat-message__text_outbound">
-                        <lightning-formatted-rich-text
+                        <lightning-formatted-text
                             value={message.CRM_Message_Text__c}
-                        ></lightning-formatted-rich-text>
+                            linkify
+                        ></lightning-formatted-text>
                     </div>
                 </template>
                 <template if:false={isOwner}>
                     <div class="slds-chat-message__text slds-chat-message__text_outbound-agent">
-                        <lightning-formatted-rich-text
+                        <lightning-formatted-text
                             value={message.CRM_Message_Text__c}
-                        ></lightning-formatted-rich-text>
+                            linkify
+                        ></lightning-formatted-text>
                     </div>
                 </template>
                 <template if:false={isInfo}>
