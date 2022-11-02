@@ -33,8 +33,6 @@ export default class messagingThreadViewer extends LightningElement {
     resizablePanelTop;
     onresize = false; // true when in process of resizing
     mouseListenerCounter = false; // flag for detecting if onmousemove listener is set for element
-    @api checkMedskriv = false;
-    acceptedMedskriv = false;
 
     @api textTemplate; //Support for conditional text template as input
     //Constructor, called onload

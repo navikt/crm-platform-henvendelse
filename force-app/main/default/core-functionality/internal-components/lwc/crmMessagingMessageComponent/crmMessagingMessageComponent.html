@@ -37,24 +37,22 @@
                 ></lightning-button>
             </template>
             <template for:each={threads} for:item="thread">
-                <div key={thread.Id}>
-                    <c-crm-messaging-thread-Viewer
-                        onenglishevent={handleEnglishEvent}
-                        english-text-template={englishTextTemplate}
-                        text-template={textTemplate}
-                        thread={thread}
-                        show-close={showClose}
-                        check-medskriv={checkMedskriv}
-                    >
-                        <!--Ability to pass toolbar buttons thorugh slots to the toolbar-->
-                        <div slot="toolbar">
-                            <slot name="toolbar"></slot>
-                        </div>
-                        <div if:true={hasContent} slot="messages2">
-                            <slot class="slotContent" name="messages"></slot>
-                        </div>
-                    </c-crm-messaging-thread-Viewer>
-                </div>
+                <c-crm-messaging-thread-Viewer
+                    onenglishevent={handleEnglishEvent}
+                    english-text-template={englishTextTemplate}
+                    key={thread.Id}
+                    text-template={textTemplate}
+                    thread={thread}
+                    show-close={showClose}
+                >
+                    <!--Ability to pass toolbar buttons thorugh slots to the toolbar-->
+                    <div slot="toolbar">
+                        <slot name="toolbar"></slot>
+                    </div>
+                    <div if:true={hasContent} slot="messages2">
+                        <slot class="slotContent" name="messages"></slot>
+                    </div>
+                </c-crm-messaging-thread-Viewer>
             </template>
         </div>
         <!-- Modal Stop-->
