@@ -5,17 +5,21 @@ global without sharing class CRM_HenvendelseinfoRestService extends CRM_Henvende
 
     @HttpGet
     global static void getHenvendelse() {
-        system.debug('start');
         if (!validate()) {
             return;
         }
+
+
 
         String correlationId = getXCorrelation();
         logger.apiTransaction(correlationId, RestContext.request, CRM_ApplicationDomain.Domain.NKS);
         
         try {
-            accessControlService=new CRM_HenvendelseAccessControlService(getMicrosoftGraphToken());
             String apiReference = getLastPathParameter();
+
+            String microsoftGraphToken=getMicrosoftGraphToken();         
+            accessControlService=new CRM_HenvendelseAccessControlService(microsoftGraphToken);
+            
             Id objectId = getObjectId(apiReference);
             String objectName = objectId != null ? objectId.getSobjectType().getDescribe().getName() : null;
 
@@ -24,7 +28,10 @@ global without sharing class CRM_HenvendelseinfoRestService extends CRM_Henvende
                     Thread__c thread = new CRM_ThreadSelector().selectByApiReference(apiReference);
                     Boolean hasPersonAccess=accessControlService.checkPersonAccess(thread.CRM_Account__r.CRM_Person__r.INT_Confidential__c, thread.CRM_Account__r.CRM_Person__r.INT_IsNavEmployee__c);
                     
-                    if(hasPersonAccess){
+                      if(microsoftGraphToken==null){
+                        errorResponse(401, 'Invalid AD-token: ' + apiReference);    
+                    }
+                    else if(hasPersonAccess){
                         setResponse(
                             200,
                             JSON.serializePretty(new CRM_Henvendelse(thread, thread.Messages__r, thread.Journal_Entries__r))
@@ -38,8 +45,10 @@ global without sharing class CRM_HenvendelseinfoRestService extends CRM_Henvende
                     List<Conversation_Note__c> noteList = new CRM_ConversationNoteSelector()
                         .selectByBehandlingskjedeId(apiReference);
                     Boolean hasPersonAccess=accessControlService.checkPersonAccess(noteList[0].CRM_Account__r.CRM_Person__r.INT_Confidential__c, noteList[0].CRM_Account__r.CRM_Person__r.INT_IsNavEmployee__c);
-                    
-                    if(hasPersonAccess){
+                    if(microsoftGraphToken==null){
+                        errorResponse(401, 'Invalid AD-token: ' + apiReference);    
+                    }
+                    else if(hasPersonAccess){
                         setResponse(200, JSON.serializePretty(new CRM_Henvendelse(noteList)));
                     }
                     else{

@@ -152,7 +152,11 @@ public without sharing virtual class CRM_HenvendelseApiUtils extends ApexRestSer
 
     public static string getMicrosoftGraphToken(){
         String salesforceAzureToken=CRM_HenvendelseApiUtils.getRequestHeader('X-Azure-Token');
-        return  AzureAccessTokenService.getTokenForOtherService(salesforceAzureToken, 'MicrosoftGraph');
+        return AzureAccessTokenService.getTokenForOtherService(salesforceAzureToken, 'MicrosoftGraph');
+     }
+
+    public static String getActingNavIdent(){
+        return '';
     }
 
     public class HenvendelseConversionException extends exception {

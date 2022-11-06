@@ -18,6 +18,10 @@ public with sharing class CRM_HenvendelseAccessControlService {
         return checkConfidentialAccess(confidential) && checkSkjermetAccess(isNavEmployee);
     }
 
+    public Boolean checkPersonAccess(String actorId){
+        return false;
+    }
+
     private Boolean checkConfidentialAccess(String confidential){
         switch on confidential {
             when 'UGRADERT' {

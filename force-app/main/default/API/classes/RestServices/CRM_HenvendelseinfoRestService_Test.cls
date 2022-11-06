@@ -36,6 +36,10 @@ public class CRM_HenvendelseinfoRestService_Test {
         jeList.add(new Journal_Entry__c(CRM_Conversation_Note__c = convNote.Id));
         jeList.add(new Journal_Entry__c(CRM_Thread__c = thread.Id));
         CRM_HENV_TestDataFactory.createRecordList(jeList);
+
+
+        AccessTokenScope__c accessTokenScope=new AccessTokenScope__c(MicrosoftGraph__c='scope');
+        insert accessTokenScope;
     }
 
     @isTest
@@ -104,8 +108,7 @@ public class CRM_HenvendelseinfoRestService_Test {
 
     @isTest
     static void testGetThread() {
-        String body = '{"@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users(onPremisesSamAccountName)/$entity","onPremisesSamAccountName": "X99"}';
-        SingleRequestMock httpMock = new SingleRequestMock(200, 'Success', body, null);
+        SingleRequestMock httpMock = new SingleRequestMock(200, 'Success', getTokenResponse(), null);
         Test.setMock(HttpCalloutMock.class, httpMock);
 
         Thread__c thread = [SELECT Id, CRM_API_Reference__c FROM Thread__c LIMIT 1];
@@ -118,6 +121,7 @@ public class CRM_HenvendelseinfoRestService_Test {
             '/services/apexrest/henvendelseinfo/henvendelse/' +
             thread.CRM_API_Reference__c;
         req.headers.put('X-Correlation-ID', '123TEST');
+        req.headers.put('X-Azure-Token', 'token');
         req.httpMethod = 'GET';
         RestContext.request = req;
         RestContext.response = resp;
@@ -239,6 +243,33 @@ public class CRM_HenvendelseinfoRestService_Test {
         System.assertEquals(500, RestContext.response.statusCode);
     }
 
+    @isTest
+    static void testInvalidAzureToken() {
+        String body = '{}';
+        SingleRequestMock httpMock = new SingleRequestMock(500, 'Error', body, null);
+        Test.setMock(HttpCalloutMock.class, httpMock);
+
+        Thread__c thread = [SELECT Id, CRM_API_Reference__c FROM Thread__c LIMIT 1];
+
+        RestRequest req = new RestRequest();
+        RestResponse resp = new RestResponse();
+
+        req.requestURI =
+            Url.getSalesforceBaseUrl().toExternalForm() +
+            '/services/apexrest/henvendelseinfo/henvendelse/' +
+            thread.CRM_API_Reference__c;
+        req.headers.put('X-Correlation-ID', '123TEST');
+        req.httpMethod = 'GET';
+        RestContext.request = req;
+        RestContext.response = resp;
+
+        Test.startTest();
+        CRM_HenvendelseinfoRestService.getHenvendelse();
+        Test.stopTest();
+
+        System.assertEquals(401, RestContext.response.statusCode);
+    }
+
 
     
     private static void makeConfidentialData() {
@@ -268,5 +299,11 @@ public class CRM_HenvendelseinfoRestService_Test {
         CRM_HENV_TestDataFactory.createRecord(
             new Message__c(CRM_Thread__c = thread.Id, CRM_Message_Text__c = 'DUMMY TEXT')
         );
+    }
+
+    private static String getTokenResponse(){
+        String response='{"access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ik5HVEZ2ZEstZnl0aEV1Q...","token_type": "Bearer","expires_in": 3599,"scope": "https%3A%2F%2Fgraph.microsoft.com%2Fmail.read","refresh_token": "AwABAAAAvPM1KaPlrEqdFSBzjqfTGAMxZGUTdM0t4B4...","id_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJhdWQiOiIyZDRkMTFhMi1mODE0LTQ2YTctOD..."}';
+        return response;
+
     }
 }
