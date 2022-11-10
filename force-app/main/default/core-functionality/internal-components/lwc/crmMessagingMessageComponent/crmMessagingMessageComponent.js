@@ -1,4 +1,4 @@
-import { LightningElement, api, wire } from 'lwc';
+import { LightningElement, api, track, wire } from 'lwc';
 import getThreads from '@salesforce/apex/CRM_MessageHelper.getThreadsCollection';
 import createThread from '@salesforce/apex/CRM_MessageHelper.createThread';
 import { refreshApex } from '@salesforce/apex';
@@ -16,8 +16,12 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     setCardTitle;
     hasError = false;
     @api englishTextTemplate;
-
     @api textTemplate; //Support for conditional text template
+    @track slotsNeedCheckedOrRendered = { messages: true }; // To check the slot content the slot has to be rendered initially
+
+    renderedCallback() {
+        this.handleSlotChanges();
+    }
 
     @wire(getThreads, { recordId: '$recordId', singleThread: '$singleThread' }) //Calls apex and extracts messages related to this record
     wiredThreads(result) {
@@ -44,7 +48,7 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     }
 
     get shownewbutton() {
-        return this.threads && this.threads.length == 0 && this.recordId;
+        return this.threads && this.threads.length === 0 && this.recordId;
     }
 
     get cardTitle() {
@@ -63,22 +67,27 @@ export default class CrmMessagingMessageComponent extends LightningElement {
         this.dispatchEvent(englishEvent);
     }
 
-    renderedCallback() {
-        console.log('Rendering');
-        const slot = this.template.querySelector('.slotContent');
-        console.log(slot);
-        if (!slot) return;
-        console.log('Running extra');
-        const hasContent = slot.assignedElements().length !== 0;
-        console.log('hasContent');
-        console.log(hasContent);
-        this.hasContent = hasContent;
+    // Make the component check slot content dynamically.
+    // If the slot is not rendered in the DOM we have no way of checking it's content
+    @api
+    checkSlotChange(slotName) {
+        console.log('Api call');
+        console.log(slotName);
+        console.log(this.slotsNeedCheckedOrRendered[slotName]);
+        this.slotsNeedCheckedOrRendered[slotName] = true;
     }
 
-    hasContent = true;
-
-    @api
-    checkSlotChange() {
-        this.hasContent = true;
+    handleSlotChanges() {
+        const slots = this.template.querySelectorAll('slot');
+        if (!slots) return;
+        const changeableSlots = Object.keys(this.slotsNeedCheckedOrRendered).filter(
+            (slotValue) => this.slotsNeedCheckedOrRendered[slotValue]
+        );
+        changeableSlots.forEach((slotName) => {
+            const slot = Array.from(slots).find((a) => a.name === slotName);
+            if (!slot) return;
+            const hasContent = slot.assignedElements().length !== 0;
+            this.slotsNeedCheckedOrRendered[slot.name] = hasContent;
+        });
     }
 }
