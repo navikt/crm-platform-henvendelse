@@ -4,7 +4,8 @@ global without sharing class CRM_HenvRedactionRestService extends CRM_Henvendels
     private static LoggerUtility logger = new LoggerUtility('Henvendelse API');
 
     /**
-     * Marks a thread or conversation note for redaction based on kjedeId and redaction cause as input
+     * V1: Marks a thread or conversation note for redaction based on kjedeId and redaction cause as input
+     * V2: Marks one or more messages or conversation notes for redaction.
      * @author Stian Ruud Schikora | 10-04-2022
      **/
     @HttpPost
@@ -19,21 +20,59 @@ global without sharing class CRM_HenvRedactionRestService extends CRM_Henvendels
                 SladdingRequest.class
             );
 
-            Id objectId = getObjectId(slRequest.kjedeId);
-            String objectName = objectId != null ? objectId.getSobjectType().getDescribe().getName() : null;
+            Id kjedeObjectId = getObjectId(slRequest.kjedeId);
+            String kjedeObjectName = kjedeObjectId != null
+                ? kjedeObjectId.getSobjectType().getDescribe().getName()
+                : null;
 
-            if (objectName == 'Thread__c' || objectName == 'Conversation_Note__c') {
-                SObject objToUpdate = objectId.getSobjectType().newSObject(objectId);
-                objToUpdate.put('STO_Sensitive_Information__c', true);
-                objToUpdate.put('Cause__c', slRequest.aarsak);
-                objToUpdate.put('CRM_Last_Edited_By__c', navIdent);
+            if (slRequest.meldingsIder != null && slRequest.meldingsIder.size() > 0) {
+                //V2
+                if (kjedeObjectName == 'Thread__c') {
+                    List<Message__c> msgsToRedact = new CRM_MessageSelector()
+                        .selectByApiReference(slRequest.meldingsIder);
+                    //Validate that all messages are on same thread
+                    if (!validateMessages(msgsToRedact)) {
+                        errorResponse(400, 'All messages must have the same kjedeId');
+                        return;
+                    }
+                    for (Message__c msg : msgsToRedact) {
+                        msg.CRM_Sensitive_Information__c = true;
+                    }
+                    Thread__c threadToUpdate = new Thread__c(Id = msgsToRedact[0].CRM_Thread__c);
+                    threadToUpdate.Cause__c = slRequest.aarsak;
+                    threadToUpdate.STO_Sensitive_Information__c = true;
+                    threadToUpdate.CRM_Last_Edited_By__c = navIdent;
+                    update msgsToRedact;
+                    update threadToUpdate;
+                    setResponse(204);
+                } else if (kjedeObjectName == 'Conversation_Note__c') {
+                    List<Conversation_Note__c> convsToRedact = new CRM_ConversationNoteSelector()
+                        .selectByApiReferences(slRequest.meldingsIder);
 
-                update objToUpdate;
-                setResponse(200);
+                    for (Conversation_Note__c convNote : convsToRedact) {
+                        convNote.STO_Sensitive_Information__c = true;
+                        convNote.Cause__c = slRequest.aarsak;
+                        convNote.CRM_Last_Edited_By__c = navIdent;
+                    }
+
+                    update convsToRedact;
+                    setResponse(204);
+                }
             } else {
-                errorResponse(400, 'Invalid reference value for kjedeId: ' + slRequest.kjedeId);
-                logger.publish();
-                return;
+                //V1
+                if (kjedeObjectName == 'Thread__c' || kjedeObjectName == 'Conversation_Note__c') {
+                    SObject objToUpdate = kjedeObjectId.getSobjectType().newSObject(kjedeObjectId);
+                    objToUpdate.put('STO_Sensitive_Information__c', true);
+                    objToUpdate.put('Cause__c', slRequest.aarsak);
+                    objToUpdate.put('CRM_Last_Edited_By__c', navIdent);
+
+                    update objToUpdate;
+                    setResponse(204);
+                } else {
+                    errorResponse(400, 'Invalid reference value for kjedeId: ' + slRequest.kjedeId);
+                    logger.publish();
+                    return;
+                }
             }
         } catch (DmlException dmlEx) {
             errorResponse(500, dmlEx.getMessage());
@@ -50,6 +89,25 @@ global without sharing class CRM_HenvRedactionRestService extends CRM_Henvendels
                 correlationId
             );
         }
+    }
+
+    /**
+     * Validates that all messages in list belongs to the same thread
+     * @author Stian Ruud Schikora | 10-11-2022
+     * @param msgList
+     * @return boolean
+     **/
+    private static boolean validateMessages(List<Message__c> msgList) {
+        Boolean valid = false;
+        String threadId = msgList.size() > 0 ? msgList[0].CRM_Thread__c : null;
+        if (threadId == null)
+            return false;
+
+        for (Message__c msg : msgList) {
+            valid = msg.CRM_Thread__c == threadId;
+        }
+
+        return valid;
     }
 
     /**
@@ -94,5 +152,6 @@ global without sharing class CRM_HenvRedactionRestService extends CRM_Henvendels
     public class SladdingRequest {
         public String aarsak;
         public String kjedeId;
+        public List<String> meldingsIder;
     }
 }
