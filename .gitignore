@@ -1,15 +1,14 @@
-
 # profiles
 # ----------------------------------------------------------------------------------------
 **/profiles/*
+!**/scratch-org/**
 
 # lwc config
 **/jsconfig.json
 
 
 # NOTE!! USE **/ before
-!**/unpackagable/profiles/* 
-# NOTE!! USE **/ before
+!**/unpackagable/profiles/*
 
 
 # standard fields not needed in source control
@@ -61,7 +60,6 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 
-
 # SSDX Helper
 # ----------------------------------------------------------------------------------------
 **/.ssdx/
@@ -71,8 +69,6 @@ install.cmd
 .packageKey
 **/deployment_tmp*
 **/dummy-data/*.out/*
-
-
 
 # DX-mate
 # ----------------------------------------------------------------------------------------
@@ -109,7 +105,6 @@ $RECYCLE.BIN/
 
 .localdevserver
 
-
 # jetbrains
 # ----------------------------------------------------------------------------------------
 
@@ -145,16 +140,6 @@ out
 # Gradle
 .idea/**/gradle.xml
 .idea/**/libraries
-
-# Gradle and Maven with auto-import
-# When using Gradle or Maven with auto-import, you should exclude module files,
-# since they will be recreated, and may cause churn.  Uncomment if using
-# auto-import.
-# .idea/modules.xml
-# .idea/*.iml
-# .idea/modules
-# *.iml
-# *.ipr
 
 # CMake
 cmake-build-*/
