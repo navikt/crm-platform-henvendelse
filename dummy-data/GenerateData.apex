@@ -1,3 +1,8 @@
+//Set user role
+if(String.isBlank(UserInfo.getUserRoleId())) {
+    update new User(Id = UserInfo.getUserId(), UserRoleId = [SELECT Id FROM UserRole WHERE Name = 'NKS'][0].Id);
+}
+
 //Dummy data script for creating community user and associated dummy data
 Account communityAccount = [SELECT Id, FirstName, LastName, PersonContactId FROM Account WHERE CRM_Person__r.Name = '12345678901' LIMIT 1];
 

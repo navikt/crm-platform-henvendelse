@@ -7,7 +7,7 @@
             },
             "FirstName": "Harry",
             "LastName": "Potter",
-            "INT_PersonIdent__c": "12345678910",
+            "INT_PersonIdent__c": "12345678901",
             "CRM_Person__c": "@PersonRef1"
         },
         {
@@ -17,7 +17,7 @@
             },
             "FirstName": "Harry",
             "LastName": "Botter",
-            "INT_PersonIdent__c": "12345678912",
+            "INT_PersonIdent__c": "12345678902",
             "CRM_Person__c": "@PersonRef2"
         },
         {
