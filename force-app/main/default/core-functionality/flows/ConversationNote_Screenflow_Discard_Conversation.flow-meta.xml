@@ -4,60 +4,12 @@
         <name>Close_Tab</name>
         <label>Close Tab</label>
         <locationX>176</locationX>
-        <locationY>1094</locationY>
+        <locationY>758</locationY>
         <actionName>c:fcTabCloser</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
     </actionCalls>
-    <apiVersion>53.0</apiVersion>
-    <decisions>
-        <name>User_notification_result</name>
-        <label>User notification result</label>
-        <locationX>176</locationX>
-        <locationY>758</locationY>
-        <defaultConnector>
-            <targetReference>Close_Tab</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Sent</defaultConnectorLabel>
-        <rules>
-            <name>User_notification_not_created</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>newUserNotification</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <isGoTo>true</isGoTo>
-                <targetReference>Something_is_not_OK</targetReference>
-            </connector>
-            <label>User notification not created</label>
-        </rules>
-        <rules>
-            <name>User_notification_created_but_not_sent</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>newUserNotification</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>newUserNotification.CRM_NotificationError__c</leftValueReference>
-                <operator>WasSet</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Something_is_not_OK</targetReference>
-            </connector>
-            <label>User notification created, but not sent</label>
-        </rules>
-    </decisions>
+    <apiVersion>56.0</apiVersion>
     <interviewLabel>ConversationNote Screenflow Discard Conversation {!$Flow.CurrentDateTime}</interviewLabel>
     <label>ConversationNote Screenflow Discard Conversation</label>
     <processMetadataValues>
@@ -107,7 +59,7 @@
     <recordRollbacks>
         <name>rollBack</name>
         <label>rollBack</label>
-        <locationX>616</locationX>
+        <locationX>440</locationX>
         <locationY>518</locationY>
         <connector>
             <targetReference>Failed</targetReference>
@@ -159,7 +111,7 @@
         <inputAssignments>
             <field>Cause__c</field>
             <value>
-                <stringValue/>
+                <stringValue></stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -174,7 +126,7 @@
     <screens>
         <name>Failed</name>
         <label>Failed</label>
-        <locationX>616</locationX>
+        <locationX>440</locationX>
         <locationY>638</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -185,46 +137,6 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <nextOrFinishButtonLabel>OK</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Something_is_not_OK</name>
-        <label>Something is not OK</label>
-        <locationX>176</locationX>
-        <locationY>878</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Close_Tab</targetReference>
-        </connector>
-        <fields>
-            <name>somethingWnetWrongText</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;Noe har gått galt under kassering, se meldingene under.&lt;/b&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>userNotificationNotCreated</name>
-            <fieldText>&lt;p&gt;Brukernotifikasjon ble ikke opprettet og bruker har ikke blitt varslet om kasseringen.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>User_notification_not_created</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>usernotificationCreatedButNotSent</name>
-            <fieldText>&lt;p&gt;Brukernotoifikasjonen ble ikke sendt til bruker.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Feilmelding:&lt;/p&gt;&lt;p&gt;{!newUserNotification.CRM_NotificationError__c}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <nextOrFinishButtonLabel>Ok</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -286,7 +198,7 @@
         <locationX>176</locationX>
         <locationY>638</locationY>
         <connector>
-            <targetReference>User_notification_result</targetReference>
+            <targetReference>Close_Tab</targetReference>
         </connector>
         <flowName>CRMHenvendelse_ConversationNote_CreateInnboksUserNotification</flowName>
         <inputAssignments>
