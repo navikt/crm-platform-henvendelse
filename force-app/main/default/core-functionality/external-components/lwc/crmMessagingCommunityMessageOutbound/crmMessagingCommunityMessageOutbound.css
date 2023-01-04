@@ -1,3 +1,21 @@
+@media (width <= 30em){
+    .snakkeboble-panel {
+        display: block;
+        max-width: 100%;
+        min-width: fit-content;
+        background-color: #cce1ff !important;
+        float: right;
+    }
+}
+@media (width > 30em){
+    .snakkeboble-panel {
+        display: block;
+        max-width: 80%;
+        min-width: fit-content;
+        background-color: #cce1ff !important;
+        float: right;
+    }
+}
 .body-wrapper {
     float: none;
 }
@@ -9,12 +27,6 @@
 .snakkeboble--hoyre {
     float: right;
     display: contents;
-}
-.snakkeboble-panel {
-    max-width: 80%;
-    float: right;
-    background-color: #cce1ff !important;
-    min-width: fit-content;
 }
 .Person-Icon {
     height: 3em;
