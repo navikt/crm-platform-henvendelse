@@ -3,7 +3,6 @@
         display: block;
         max-width: 100%;
         min-width: fit-content;
-        float: left;
     }
 }
 @media (width > 30em){
