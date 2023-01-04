@@ -1,3 +1,11 @@
+@media (min-width:30em){
+    .snakkeboble-panel {
+        display: block;
+        max-width: 80%;
+        min-width: fit-content;
+    }
+}
+
 .message-from {
     margin-right: 0.5em;
     font-weight: bolder;
@@ -9,7 +17,7 @@
 }
 .snakkeboble-panel {
     display: block;
-    max-width: 80%;
+    max-width: 100%;
     min-width: fit-content;
 }
 .ikon {
