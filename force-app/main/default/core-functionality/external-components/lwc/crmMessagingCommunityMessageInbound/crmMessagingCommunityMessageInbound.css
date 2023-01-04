@@ -1,11 +1,11 @@
-@media (width <= 30em){
+@media (max-width: 30em){
     .snakkeboble-panel {
         display: block;
         max-width: 100%;
         min-width: fit-content;
     }
 }
-@media (width > 30em){
+@media (min-width: 30em){
     .snakkeboble-panel {
         display: block;
         max-width: 80%;

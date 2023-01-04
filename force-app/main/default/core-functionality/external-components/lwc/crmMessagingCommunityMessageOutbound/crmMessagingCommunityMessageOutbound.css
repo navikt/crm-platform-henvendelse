@@ -1,4 +1,4 @@
-@media (width <= 30em){
+@media (max-width: 30em){
     .snakkeboble-panel {
         display: block;
         max-width: 100%;
@@ -6,7 +6,7 @@
         background-color: #cce1ff !important;
     }
 }
-@media (width > 30em){
+@media (min-width: 30em){
     .snakkeboble-panel {
         display: block;
         max-width: 80%;
