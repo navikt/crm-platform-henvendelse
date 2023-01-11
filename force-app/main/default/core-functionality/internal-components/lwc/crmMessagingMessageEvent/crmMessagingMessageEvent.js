@@ -2,9 +2,24 @@ import { LightningElement, api } from 'lwc';
 
 export default class MessageEvent extends LightningElement {
     @api message;
+    @api external;
+    @api preferredName;
     get endOfChatMessage() {
         return 'avsluttet samtalen - ';
     }
+
+    get closerName() {
+        let userName;
+        if (this.preferredName) {
+            userName = this.preferredName;
+        } else if (this.message.CRM_From_First_Name__c) {
+            userName = this.message.CRM_From_First_Name__c;
+        } else {
+            userName = '';
+        }
+        return this.external === true ? userName : 'NAV';
+    }
+
     get transferMessage() {
         if (this.message.CRM_Event_Type__c === 'UNIT_TRANSFER' || this.message.CRM_Event_Type__c === 'QUEUE_TRANSFER')
             return 'Samtalen din er overført til avdelingen ' + this.message.CRM_Message_Text__c + ' - ';

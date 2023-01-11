@@ -17,7 +17,7 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>Conversation_Note__c.Discard_Conversation</value>
+                            <value>Conversation_Note__c.Abort_Redaction</value>
                             <visibilityRule>
                                 <criteria>
                                     <leftValue>{!$Permission.CustomPermission.Redaction_Custom_Permission}</leftValue>
@@ -27,7 +27,23 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>Conversation_Note__c.Abort_Redaction</value>
+                            <value>Conversation_Note__c.Redaction_Create_NAV_Task</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Redaction_Custom_Permission}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Journaled__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Ja</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Conversation_Note__c.Discard_Conversation</value>
                             <visibilityRule>
                                 <criteria>
                                     <leftValue>{!$Permission.CustomPermission.Redaction_Custom_Permission}</leftValue>
@@ -169,6 +185,12 @@
             <fieldInstance>
                 <fieldItem>Record.Cause__c</fieldItem>
                 <identifier>RecordCause_cField1</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Redaction_Progress__c</fieldItem>
+                <identifier>RecordRedaction_Progress_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

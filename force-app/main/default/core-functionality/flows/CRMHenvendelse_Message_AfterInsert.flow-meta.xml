@@ -48,6 +48,9 @@
         <connector>
             <targetReference>Create_Message_Content</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Create_Error_Log</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>CRM_Message_Id__c</field>
             <value>
@@ -77,7 +80,7 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>56</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Create_new_message_event</targetReference>
@@ -94,9 +97,52 @@
     </start>
     <status>Active</status>
     <subflows>
+        <name>Create_Error_Log</name>
+        <label>Create Error Log</label>
+        <locationX>314</locationX>
+        <locationY>408</locationY>
+        <flowName>Flow_Create_Application_Log</flowName>
+        <inputAssignments>
+            <name>Application_Domain</name>
+            <value>
+                <stringValue>NKS</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Error_Payload</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Error_Source</name>
+            <value>
+                <stringValue>Flow - Message After Insert</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Log_Category</name>
+            <value>
+                <stringValue>Henvendelse Message Insert</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Log_Level</name>
+            <value>
+                <stringValue>Error</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Log_Message</name>
+            <value>
+                <stringValue>Error when publishing platform event</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
         <name>Thread_recalculate_message_summary</name>
         <label>Thread - recalculate message summary</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>288</locationY>
         <flowName>CRMHenvendelse_Thread_Subflow_RecalculateMessageSummary</flowName>
         <inputAssignments>

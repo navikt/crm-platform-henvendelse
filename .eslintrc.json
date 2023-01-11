@@ -3,7 +3,13 @@
         "browser": true,
         "es2021": true
     },
-    "extends": "eslint:recommended",
+    "plugins": ["@salesforce/eslint-plugin-aura"],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@salesforce/eslint-plugin-aura/recommended",
+        "plugin:@salesforce/eslint-plugin-aura/locker",
+        "@salesforce/eslint-config-lwc/recommended"
+    ],
     "parserOptions": {
         "ecmaVersion": 12,
         "sourceType": "module"

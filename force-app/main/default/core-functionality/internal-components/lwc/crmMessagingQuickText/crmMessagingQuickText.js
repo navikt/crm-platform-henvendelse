@@ -11,7 +11,7 @@ const LIGHTNING_INPUT_FIELD = 'LIGHTNING-INPUT-FIELD';
 //all invalid key presses
 // prettier-ignore
 const keyCodes = [0, 3, 9, 13, 16, 17, 18, 19, 20, 21, 25, 27, 28, 29, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 47, 91, 92, 93, 95, 112, 113, 114, 115, 116, 117, 119, 120, 121, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 151, 166, 167, 172, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 224, 225, 230, 233, 255];
-const QUICK_TEXT_TRIGGER_KEYS = ['Enter', ' ', '.', ','];
+const QUICK_TEXT_TRIGGER_KEYS = ['Enter', ' ', ','];
 export default class crmQuickText extends LightningElement {
     labels = { BLANK_ERROR };
     _conversationNote;
@@ -163,7 +163,7 @@ export default class crmQuickText extends LightningElement {
         inputField.focus();
     }
 
-    /**
+   /**
      * Functions for conversation note/quick text
      */
     @wire(getQuicktexts, {})
@@ -171,12 +171,12 @@ export default class crmQuickText extends LightningElement {
         if (error) {
             console.log(error);
         } else if (data) {
-            this.qmap = new Map(
-                data.map((key) => [
-                    key.nksAbbreviationKey__c.toUpperCase(),
-                    { message: key.Message, isCaseSensitive: key.Case_sensitive__c }
-                ])
-            );
+            this.qmap = data.map((key) => {
+                return {
+                    abbreviation: key.nksAbbreviationKey__c,
+                    content: { message: key.Message, isCaseSensitive: key.Case_sensitive__c }
+                };
+            });
         }
     }
 
@@ -272,7 +272,7 @@ export default class crmQuickText extends LightningElement {
             const lockLang = new CustomEvent('locklang');
             this.dispatchEvent(lockLang);
         }
-
+        
         if (QUICK_TEXT_TRIGGER_KEYS.includes(event.key)) {
             const editor = this.textArea;
             const carretPositionEnd = editor.selectionEnd;
@@ -283,31 +283,43 @@ export default class crmQuickText extends LightningElement {
                 .split(' ')
                 .pop();
 
-            const abbreviation = lastItem.toUpperCase().replace(event.key, '');
-            const obj = this.qmap.get(abbreviation);
-            const quickText = obj.message;
-            const isCaseSensitive = obj.isCaseSensitive;
+            const abbreviation = lastItem.replace(event.key, '');
 
-            if (this.qmap.has(abbreviation)) {
-                const startindex = carretPositionEnd - abbreviation.length - 1;
-                const lastChar = event.key === 'Enter' ? '\n' : event.key;
-                if (isCaseSensitive) {
-                    const words = quickText.split(' ');
-
-                    if (lastItem.charAt(0) === lastItem.charAt(0).toLowerCase()) {
-                        words[0] = words[0].toLowerCase();
-                        const lowerCaseQuickText = words.join(' ');
-                        editor.setRangeText(lowerCaseQuickText + lastChar, startindex, carretPositionEnd, 'end');
-                    } else if (lastItem.charAt(0) === lastItem.charAt(0).toUpperCase()) {
-                        const upperCaseQuickText = quickText.charAt(0).toUpperCase() + quickText.slice(1);
-                        editor.setRangeText(upperCaseQuickText + lastChar, startindex, carretPositionEnd, 'end');
+            let obj;
+            for (const item of this.qmap) {
+                if (item.abbreviation.toUpperCase() !== item.content.message) {
+                    item.abbreviation = item.abbreviation.toUpperCase();
+                    if (item.abbreviation === abbreviation.toUpperCase()) {
+                        obj = item;
                     }
-                } else {
-                    editor.setRangeText(quickText + lastChar, startindex, carretPositionEnd, 'end');
                 }
+                if (item.abbreviation === abbreviation) {
+                    obj = item;
+                }
+            }
+
+            const quickText = obj.content.message;
+            const isCaseSensitive = obj.content.isCaseSensitive;
+            const startindex = carretPositionEnd - abbreviation.length - 1;
+            const lastChar = event.key === 'Enter' ? '\n' : event.key;
+
+            if (isCaseSensitive) {
+                const words = quickText.split(' ');
+
+                if (lastItem.charAt(0) === lastItem.charAt(0).toLowerCase()) {
+                    words[0] = words[0].toLowerCase();
+                    const lowerCaseQuickText = words.join(' ');
+                    editor.setRangeText(lowerCaseQuickText + lastChar, startindex, carretPositionEnd, 'end');
+                } else if (lastItem.charAt(0) === lastItem.charAt(0).toUpperCase()) {
+                    const upperCaseQuickText = quickText.charAt(0).toUpperCase() + quickText.slice(1);
+                    editor.setRangeText(upperCaseQuickText + lastChar, startindex, carretPositionEnd, 'end');
+                }
+            } else {
+                editor.setRangeText(quickText + lastChar, startindex, carretPositionEnd, 'end');
             }
         }
     }
+
 
     toPlainText(value) {
         let plainText = value ? value : '';

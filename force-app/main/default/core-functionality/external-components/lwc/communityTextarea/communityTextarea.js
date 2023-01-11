@@ -2,7 +2,7 @@ import { LightningElement, api } from 'lwc';
 
 export default class CommunityTextarea extends LightningElement {
     @api maxLength;
-    errorMessage = 'Tekstfeltet kan ikke være tomt';
+    errorMessage = 'Tekstboksen kan ikke være tom';
     message;
     errorState = false;
 
@@ -15,6 +15,18 @@ export default class CommunityTextarea extends LightningElement {
         this.errorState = false;
         this.message = event.target.value;
         this.processMessageStyling();
+    }
+
+    checkError() {
+        if (!this.message || this.message.length === 0) {
+            this.errorState = true;
+            this.errorMessage = 'Tekstboksen kan ikke være tom.';
+        } else if (this.limitCharacters && this.message.length > this.maxLength) {
+            this.errorState = true;
+            this.errorMessage = 'Det er for mange tegn i tekstboksen.';
+        } else {
+            this.errorState = false;
+        }
     }
 
     processMessageStyling() {
@@ -39,6 +51,11 @@ export default class CommunityTextarea extends LightningElement {
         this.tekstboks.value = this.message;
         this.publishMessage();
         this.processMessageStyling();
+    }
+
+    @api
+    focus() {
+        this.tekstboks.focus();
     }
 
     get remainingCharacters() {
@@ -77,24 +94,11 @@ export default class CommunityTextarea extends LightningElement {
         return this.template.querySelector('.mirror');
     }
 
-    checkError() {
-        if (!this.message || this.message.length === 0) {
-            this.errorState = true;
-            this.errorMessage = 'Tekstfeltet kan ikke være tomt.';
-        } else if (this.limitCharacters && this.message.length > this.maxLength) {
-            this.errorState = true;
-            this.errorMessage = 'Tekstefeltet kan ikke ha for mange tegn.';
-        } else {
-            this.errorState = false;
-        }
-    }
-
     get wrapperClass() {
         return 'navds-form-field navds-form-field--medium' + (this.errorState ? ' navds-textarea--error' : '');
     }
 
-    @api
-    focus() {
-        this.tekstboks.focus();
+    get textAreaContainer() {
+        return this.errorState ? 'navds-textarea__wrapper' : 'navds-textarea__wrapper textarea-container';
     }
 }

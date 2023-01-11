@@ -40,7 +40,7 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputAssignments>
-        <object>SharingEvent__e</object>
+        <object>RecordSharingEvent__e</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <start>
@@ -49,6 +49,14 @@
         <connector>
             <targetReference>Publish_Sharing_Event</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CRM_Parent_Record_Id__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue/>
+            </value>
+        </filters>
         <object>Message_Content__c</object>
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>

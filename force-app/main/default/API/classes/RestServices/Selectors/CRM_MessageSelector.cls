@@ -24,7 +24,9 @@ public inherited sharing class CRM_MessageSelector extends CRM_ApiSelector {
             Message__c.CRM_Read_Datetime__c,
             Message__c.CRM_External_Message__c,
             Message__c.CRM_From_Ident_Formula__c,
-            Message__c.CRM_From_NAV_Unit__c
+            Message__c.CRM_From_NAV_Unit__c,
+            Message__c.CRM_API_Reference__c,
+            Message__c.CRM_Sensitive_Information__c
         };
     }
 
@@ -35,6 +37,12 @@ public inherited sharing class CRM_MessageSelector extends CRM_ApiSelector {
     public List<Message__c> selectById(Set<Id> idSet) {
         fflib_QueryFactory query = newQueryFactory();
         query.setCondition('Id in :idSet AND ' + getApiConditions());
+        return (List<Message__c>) Database.query(query.toSOQL());
+    }
+
+    public List<Message__c> selectByApiReference(List<String> refSet) {
+        fflib_QueryFactory query = newQueryFactory();
+        query.setCondition('CRM_API_Reference__c in :refSet AND ' + getApiConditions());
         return (List<Message__c>) Database.query(query.toSOQL());
     }
 }

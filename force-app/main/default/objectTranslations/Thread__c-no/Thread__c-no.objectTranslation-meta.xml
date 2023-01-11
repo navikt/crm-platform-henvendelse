@@ -3,50 +3,55 @@
     <caseValues>
         <article>Definite</article>
         <plural>false</plural>
-        <value>Tråden</value>
+        <value>Samtalen</value>
     </caseValues>
     <caseValues>
         <article>Indefinite</article>
         <plural>false</plural>
-        <value>Tråd</value>
+        <value>Samtale</value>
     </caseValues>
     <caseValues>
         <article>None</article>
         <plural>false</plural>
-        <value>Tråd</value>
+        <value>Samtale</value>
     </caseValues>
     <caseValues>
         <article>Definite</article>
         <plural>true</plural>
-        <value>Trådene</value>
+        <value>Samtalene</value>
     </caseValues>
     <caseValues>
         <article>Indefinite</article>
         <plural>true</plural>
-        <value>Tråder</value>
+        <value>Samtaler</value>
     </caseValues>
     <caseValues>
         <article>None</article>
         <plural>true</plural>
-        <value>Tråder</value>
+        <value>Samtaler</value>
     </caseValues>
     <gender>Masculine</gender>
     <layouts>
         <layout>Thread Layout</layout>
         <sections>
-            <label><!-- Custom Links --></label>
+            <label></label>
             <section>Custom Links</section>
         </sections>
     </layouts>
-    <nameFieldLabel>Tråd</nameFieldLabel>
+    <nameFieldLabel>Samtale navn</nameFieldLabel>
     <quickActions>
-        <label><!-- Trenger ikke å sladdes --></label>
+        <label></label>
         <name>Abort_Redaction</name>
     </quickActions>
     <quickActions>
         <aspect>Master</aspect>
         <label>Fullfør sladding</label>
         <name>Complete_Redaction</name>
+    </quickActions>
+    <quickActions>
+        <aspect>Master</aspect>
+        <label>Opprett oppgave</label>
+        <name>Redaction_Create_NAV_Task</name>
     </quickActions>
     <quickActions>
         <aspect>Master</aspect>

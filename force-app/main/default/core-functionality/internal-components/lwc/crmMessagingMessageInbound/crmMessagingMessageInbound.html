@@ -5,9 +5,10 @@
                 <div class="slds-chat-message__body">
                     <div class="slds-chat-message__text slds-chat-message__text_inbound">
                         <!--<span>{message.CRM_Message_Text__c}</span>-->
-                        <lightning-formatted-rich-text
+                        <lightning-formatted-text
                             value={message.CRM_Message_Text__c}
-                        ></lightning-formatted-rich-text>
+                            linkify
+                        ></lightning-formatted-text>
                     </div>
                 </div>
                 <div class="slds-chat-message__meta">
