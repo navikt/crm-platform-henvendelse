@@ -28,5 +28,11 @@
         "**/.sfdx": true,
         "**/.vscode": true,
         "**/.idea": true
-    }
+    },
+    "unpackagable.location": "",
+    "scratch.default.permissionsets": [
+        "Messaging_Read_and_Write_Messages_and_Threads",
+        "Henvendelse_API_Permission",
+        "Henvendelse_Scratch_Permissions"
+    ]
 }

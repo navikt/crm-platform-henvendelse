@@ -1,0 +1,9 @@
+.logo {
+    height: 2em;
+    margin-right: 1em;
+}
+
+.text-center {
+    display: flex;
+    align-items: center;
+}

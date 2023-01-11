@@ -1,0 +1,17 @@
+<aura:component implements="lightning:isUrlAddressable" controller="CRM_HenvRedirectController">
+    <!--Page reference for retrieving url/query parameters-->
+    <aura:attribute name="pageReference" type="Object" />
+    <aura:attribute name="loading" type="Boolean" default="true" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <aura:if isTrue="{!v.loading}">
+        <lightning:spinner alternativeText="Loading" size="medium" />
+    </aura:if>
+
+    <lightning:workspaceAPI aura:id="workspace" />
+    <!--Navigation service-->
+    <lightning:navigation aura:id="navService" />
+    <!--Notification library-->
+    <lightning:notificationsLibrary aura:id="notifLib" />
+</aura:component>

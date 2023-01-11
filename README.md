@@ -113,11 +113,26 @@ To build locally without using SSDX, do the following:
 ```bash
 sfdx force:org:create -f ./config/project-scratch-def.json --setalias scratch_org --durationdays 1 --setdefaultusername
 echo y | sfdx plugins:install sfpowerkit@2.0.1
-keys="" && for p in $(sfdx force:package:list --json | jq '.result | .[].Name' -r); do keys+=$p":navcrm "; done
+keys="" && for p in $(sfdx force:package:list --json | jq '.result | .[].Name' -r); do keys+=$p":PACKAGE_KEY "; done
 sfdx sfpowerkit:package:dependencies:install -u scratch_org -r -a -w 60 -k ${keys}
 sfdx force:source:push
 sfdx force:org:open
 ```
+
+## Scratch org Setup
+
+There are two apex scripts in dummy data that can be run in order to generate and cleanup dummy data:`GenerateData` and `MergeAccounts`. MergeAccounts will try to clean up any duplicate account that were created when importing dummy data. This should be run before `GenerateData`
+
+The apex scripts can de run with these commands:
+
+-   `sfdx force:apex:execute -f ./dummy-data/MergeAccounts.apex`
+-   `sfdx force:apex:execute -f ./dummy-data/GenerateData.apex`
+
+`package.json` contains some jobs in scripts that can be run in the scratch org:
+
+-   `scratch:user:enableDebug` Enable debug molde on user
+-   `scratch:enableMock:200` Enable all mocks
+-   `scratch:postCreate` Runs the two mentioned scripts and the apex scripts
 
 ## Other
 
