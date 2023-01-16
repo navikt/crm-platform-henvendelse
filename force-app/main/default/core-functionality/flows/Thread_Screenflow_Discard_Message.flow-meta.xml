@@ -4,7 +4,7 @@
         <name>Close_Tab</name>
         <label>Close Tab</label>
         <locationX>176</locationX>
-        <locationY>878</locationY>
+        <locationY>758</locationY>
         <actionName>c:fcTabCloser</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -35,7 +35,7 @@
         <name>Create_Info_Message_on_Discarding</name>
         <label>Create Info Message on Discarding</label>
         <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationY>398</locationY>
         <connector>
             <targetReference>Update_Messages</targetReference>
         </connector>
@@ -99,7 +99,7 @@
         <name>rollBack</name>
         <label>rollBack</label>
         <locationX>440</locationX>
-        <locationY>878</locationY>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Failed</targetReference>
         </connector>
@@ -108,7 +108,7 @@
         <name>Update_Messages</name>
         <label>Update Messages</label>
         <locationX>176</locationX>
-        <locationY>638</locationY>
+        <locationY>518</locationY>
         <connector>
             <targetReference>Update_Thread_0</targetReference>
         </connector>
@@ -149,7 +149,7 @@
         <name>Update_Thread_0</name>
         <label>Update Thread</label>
         <locationX>176</locationX>
-        <locationY>758</locationY>
+        <locationY>638</locationY>
         <connector>
             <targetReference>Close_Tab</targetReference>
         </connector>
@@ -189,7 +189,7 @@
         <name>Failed</name>
         <label>Failed</label>
         <locationX>440</locationX>
-        <locationY>998</locationY>
+        <locationY>878</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -211,7 +211,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Create_Innboks_User_Notification</targetReference>
+            <targetReference>Create_Info_Message_on_Discarding</targetReference>
         </connector>
         <fields>
             <name>next</name>
@@ -232,38 +232,6 @@
         </connector>
     </start>
     <status>Active</status>
-    <subflows>
-        <name>Create_Innboks_User_Notification</name>
-        <label>Create Innboks User Notification</label>
-        <locationX>176</locationX>
-        <locationY>398</locationY>
-        <connector>
-            <targetReference>Create_Info_Message_on_Discarding</targetReference>
-        </connector>
-        <flowName>CRMHenvendelse_Thread_Subflow_CreateInnboksUserNotification</flowName>
-        <inputAssignments>
-            <name>MessageDateTime</name>
-            <value>
-                <elementReference>$Flow.CurrentDateTime</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>NotificationMessageText</name>
-            <value>
-                <elementReference>$Label.CRMHenvendelse_NewMessageNotification</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>threadId</name>
-            <value>
-                <elementReference>Get_Thread.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <outputAssignments>
-            <assignToReference>newUserNotification</assignToReference>
-            <name>newInnboksNotification</name>
-        </outputAssignments>
-    </subflows>
     <textTemplates>
         <name>Redacted_Message_Notification_Text</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
