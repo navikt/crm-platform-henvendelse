@@ -32,4 +32,6 @@
         <label>Sett til sladding</label>
         <name>Set_to_Redaction</name>
     </quickActions>
+    <gender>Masculine</gender>
+    <nameFieldLabel>Samtale navn</nameFieldLabel>
 </CustomObjectTranslation>
