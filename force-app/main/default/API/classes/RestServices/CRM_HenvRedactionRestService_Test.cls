@@ -88,7 +88,7 @@ public class CRM_HenvRedactionRestService_Test {
         RestResponse resp = new RestResponse();
 
         CRM_HenvRedactionRestService.SladdingRequest slRequest = new CRM_HenvRedactionRestService.SladdingRequest();
-        slRequest.aarsak = 'Økonomisk sosialhjelp';
+        slRequest.aarsak = 'Andre årsaker';
         slRequest.kjedeId = msg.CRM_Thread__r.CRM_API_Reference__c;
         slRequest.meldingsIder = new List<String>{ msg.CRM_API_Reference__c };
 
@@ -103,11 +103,6 @@ public class CRM_HenvRedactionRestService_Test {
         Test.startTest();
         CRM_HenvRedactionRestService.markForRedaction();
         Test.stopTest();
-
-        // TEST
-        String s = '';
-        String res =  EncodingUtil.base64Encode(RestContext.response.responseBody);
-        System.assertEquals(s, res);
 
         System.assertEquals(204, RestContext.response.statusCode);
         System.assertEquals(1, [SELECT COUNT() FROM Message__c WHERE CRM_Sensitive_Information__c = TRUE]);
