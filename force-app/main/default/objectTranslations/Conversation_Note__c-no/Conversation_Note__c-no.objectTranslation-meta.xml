@@ -19,6 +19,4 @@
         <label>Kasser</label>
         <name>Discard_Conversation</name>
     </quickActions>
-    <gender>Neuter</gender>
-    <nameFieldLabel>Referatnummer</nameFieldLabel>
 </CustomObjectTranslation>
