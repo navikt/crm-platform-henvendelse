@@ -5,7 +5,7 @@
             "default": true,
             "package": "crm-henvendelse",
             "versionName": "ver 0.1",
-            "versionNumber": "0.92.0.NEXT",
+            "versionNumber": "0.93.0.NEXT",
             "dependencies": [
                 {
                     "package": "crm-platform-base",
@@ -13,7 +13,8 @@
                 },
                 {
                     "package": "crm-henvendelse-base",
-                    "versionNumber": "0.12.0.LATEST"
+                    "versionNumber": "0.14.0.LATEST"
+
                 },
                 {
                     "package": "crm-journal-utilities",

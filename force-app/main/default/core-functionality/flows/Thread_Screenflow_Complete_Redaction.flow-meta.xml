@@ -4,7 +4,7 @@
         <name>Close_tab</name>
         <label>Close tab</label>
         <locationX>176</locationX>
-        <locationY>878</locationY>
+        <locationY>758</locationY>
         <actionName>c:fcTabCloser</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -13,7 +13,7 @@
         <name>Log_exception</name>
         <label>Log exception</label>
         <locationX>440</locationX>
-        <locationY>998</locationY>
+        <locationY>878</locationY>
         <actionName>LoggerUtility</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -73,7 +73,7 @@
         <name>Create_Info_Message_On_Redaction</name>
         <label>Create Info Message On Redaction</label>
         <locationX>176</locationX>
-        <locationY>638</locationY>
+        <locationY>518</locationY>
         <connector>
             <targetReference>Set_thread_to_redacted</targetReference>
         </connector>
@@ -115,7 +115,7 @@
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Create_Innboks_User_Notification</targetReference>
+            <targetReference>Trigger_sync</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -137,7 +137,7 @@
         <name>Rollback</name>
         <label>Rollback</label>
         <locationX>440</locationX>
-        <locationY>878</locationY>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Log_exception</targetReference>
         </connector>
@@ -146,7 +146,7 @@
         <name>Set_Messages_to_Redacted</name>
         <label>Set Messages to Redacted</label>
         <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationY>398</locationY>
         <connector>
             <targetReference>Create_Info_Message_On_Redaction</targetReference>
         </connector>
@@ -181,7 +181,7 @@
         <name>Set_thread_to_redacted</name>
         <label>Set thread to redacted</label>
         <locationX>176</locationX>
-        <locationY>758</locationY>
+        <locationY>638</locationY>
         <connector>
             <targetReference>Close_tab</targetReference>
         </connector>
@@ -215,7 +215,7 @@
         <name>Exception_Screen</name>
         <label>Exception Screen</label>
         <locationX>440</locationX>
-        <locationY>1118</locationY>
+        <locationY>998</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -232,7 +232,7 @@
         <name>Trigger_sync</name>
         <label>Trigger sync</label>
         <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -258,44 +258,6 @@
         </connector>
     </start>
     <status>Active</status>
-    <subflows>
-        <name>Create_Innboks_User_Notification</name>
-        <label>Create Innboks User Notification</label>
-        <locationX>176</locationX>
-        <locationY>278</locationY>
-        <connector>
-            <targetReference>Trigger_sync</targetReference>
-        </connector>
-        <flowName>CRMHenvendelse_Thread_Subflow_CreateInnboksUserNotification</flowName>
-        <inputAssignments>
-            <name>ExternalNotification</name>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>MessageDateTime</name>
-            <value>
-                <elementReference>Get_Thread.LastModifiedDate</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>NotificationMessageText</name>
-            <value>
-                <elementReference>$Label.CRMHenvendelse_NewMessageNotification</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>threadId</name>
-            <value>
-                <elementReference>Get_Thread.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <outputAssignments>
-            <assignToReference>newUserNotification</assignToReference>
-            <name>newInnboksNotification</name>
-        </outputAssignments>
-    </subflows>
     <textTemplates>
         <name>Redacted_Message_Notification_Text</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
