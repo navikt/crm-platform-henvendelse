@@ -26,3 +26,10 @@
 .largePadding {
     padding-bottom: 5.5em;
 }
+
+@media (max-width: 576px) {
+    .contentholder {
+      margin-left: 1rem;
+      margin-right: 1rem;
+    }
+  }
