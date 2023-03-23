@@ -30,7 +30,7 @@
             <targetReference>Log_Journal_Creation</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Log_Journal_Creation</name>
         <label>Log Journal Creation</label>
@@ -62,4 +62,20 @@
             </value>
         </inputAssignments>
     </subflows>
+    <variables>
+        <name>Journal_Entry_Record</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Journal_Entry__c</objectType>
+    </variables>
+    <variables>
+        <name>Thread_Record_JOURNALED</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Thread__c</objectType>
+    </variables>
 </Flow>

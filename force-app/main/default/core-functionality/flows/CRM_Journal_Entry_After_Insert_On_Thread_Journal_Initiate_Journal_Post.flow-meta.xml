@@ -211,5 +211,12 @@
         <locationX>842</locationX>
         <locationY>528</locationY>
         <flowName>TAG_Dialog_Post_Journal_OVERRIDABLE</flowName>
+        <inputAssignments>
+            <name>Journal_Entry_Record</name>
+            <value>
+                <elementReference>$Record</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
 </Flow>
