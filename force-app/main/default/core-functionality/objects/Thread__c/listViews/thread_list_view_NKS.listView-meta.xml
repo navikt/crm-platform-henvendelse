@@ -19,5 +19,10 @@
         <field>STO_Sensitive_Information_Unit__c</field>
         <operation>notEqual</operation>
     </filters>
+    <filters>
+        <field>CRM_Thread_Type__c</field>
+        <operation>notEqual</operation>
+        <value>AG_MLØNN</value>
+    </filters>
     <label>Samtaletråder NKS</label>
 </ListView>
