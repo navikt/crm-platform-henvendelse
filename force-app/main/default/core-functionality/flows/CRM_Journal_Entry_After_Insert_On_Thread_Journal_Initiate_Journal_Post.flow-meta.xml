@@ -5,7 +5,7 @@
         <description>Determines the thread type and calls the correct subflow that is overrideable.</description>
         <name>Check_Thread_Type</name>
         <label>Check Thread Type</label>
-        <locationX>539</locationX>
+        <locationX>644</locationX>
         <locationY>408</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -52,12 +52,27 @@
             </connector>
             <label>CHAT Type</label>
         </rules>
+        <rules>
+            <name>AG_Type</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Thread_State.CRM_Thread_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>AG_MLØNN</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>TAG_Dialog_Post_Journal</targetReference>
+            </connector>
+            <label>AG Type</label>
+        </rules>
     </decisions>
     <decisions>
         <description>Checks if the journal post is to be performed directly. This is the case if the thread is journaled after it has been closed, or if the post type is NOTAT.</description>
         <name>Verify_Post_Criteria</name>
         <label>Verify Post Criteria</label>
-        <locationX>209</locationX>
+        <locationX>182</locationX>
         <locationY>528</locationY>
         <defaultConnectorLabel>Post Later</defaultConnectorLabel>
         <rules>
@@ -108,7 +123,7 @@
     <recordLookups>
         <name>Get_Thread_State</name>
         <label>Get Thread State</label>
-        <locationX>539</locationX>
+        <locationX>644</locationX>
         <locationY>288</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -130,7 +145,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>50</locationX>
+        <locationX>89</locationX>
         <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -159,7 +174,7 @@
     <subflows>
         <name>Journal_Chat_Thread</name>
         <label>Journal Chat Thread</label>
-        <locationX>605</locationX>
+        <locationX>578</locationX>
         <locationY>528</locationY>
         <flowName>CRM_Journal_CHAT_Thread</flowName>
         <inputAssignments>
@@ -173,7 +188,7 @@
     <subflows>
         <name>Post_Journal_to_JOARK</name>
         <label>Post Journal to JOARK</label>
-        <locationX>77</locationX>
+        <locationX>50</locationX>
         <locationY>648</locationY>
         <flowName>CRM_Journal_Message_Thread</flowName>
         <inputAssignments>
@@ -186,6 +201,20 @@
             <name>PERFORM_DML</name>
             <value>
                 <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>TAG_Dialog_Post_Journal</name>
+        <label>TAG Dialog Post Journal</label>
+        <locationX>842</locationX>
+        <locationY>528</locationY>
+        <flowName>TAG_Dialog_Post_Journal_OVERRIDABLE</flowName>
+        <inputAssignments>
+            <name>Journal_Entry_Record</name>
+            <value>
+                <elementReference>$Record</elementReference>
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>

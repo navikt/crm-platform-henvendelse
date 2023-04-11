@@ -1,14 +1,24 @@
+/**
+ * @description       :
+ * @author            : mamikals
+ * @group             :
+ * @last modified on  : 21-03-2023
+ * @last modified by  : mamikals
+ **/
 @RestResource(urlmapping='/henvendelseinfo/henvendelse/*')
 global without sharing class CRM_HenvendelseinfoRestService extends CRM_HenvendelseApiUtils {
     private static LoggerUtility logger = new LoggerUtility('Henvendelse API');
     @HttpGet
     global static void getHenvendelse() {
+        Datetime startTime = system.now();
         if (!validate()) {
             return;
         }
 
         String correlationId = getXCorrelation();
         logger.apiTransaction(correlationId, RestContext.request, CRM_ApplicationDomain.Domain.NKS);
+        Long timeTaken = System.now().getTime() - startTime.getTime();
+        logger.peek().Log_Messages__c = 'Get henvendelse used ' + timeTaken + 'ms';
         try {
             String apiReference = getLastPathParameter();
             Id objectId = getObjectId(apiReference);
