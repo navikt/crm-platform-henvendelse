@@ -2,7 +2,7 @@
  * @description       :
  * @author            : mamikals
  * @group             :
- * @last modified on  : 28-02-2023
+ * @last modified on  : 11-04-2023
  * @last modified by  : mamikals
  **/
 public inherited sharing class ArchiveHandler {
@@ -68,9 +68,9 @@ public inherited sharing class ArchiveHandler {
             );
             archiveObjects.add(inputWrapper);
         }
-        List<ArchiveResponseWrapper> resp = service.postToArchive(archiveObjects);
+        List<ArchiveService.ArchiveResponseWrapper> resp = service.postToArchive(archiveObjects);
         List<String> returnStrings = new List<String>();
-        for (ArchiveResponseWrapper archive : resp) {
+        for (ArchiveService.ArchiveResponseWrapper archive : resp) {
             returnStrings.add(archive.dokumentasjonId);
         }
         return returnStrings;
