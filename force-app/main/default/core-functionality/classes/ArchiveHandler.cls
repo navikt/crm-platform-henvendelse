@@ -2,7 +2,7 @@
  * @description       :
  * @author            : mamikals
  * @group             :
- * @last modified on  : 11-04-2023
+ * @last modified on  : 12-04-2023
  * @last modified by  : mamikals
  **/
 public inherited sharing class ArchiveHandler {
@@ -115,6 +115,27 @@ public inherited sharing class ArchiveHandler {
             this.tema = tema;
             this.konfidentiellt = konfidentiellt;
             this.dokumentasjonId = dokumentasjonId;
+        }
+
+        public ArchivePostWrapper(SObject archiveObject, String opprettetAv) {
+            this.archiveObject = archiveObject;
+            this.opprettetAv = opprettetAv;
+            switch on archiveObject.getSObjectType().getDescribe().getName() {
+                when 'Thread__c' {
+                    this.fnr = ((Thread__c) archiveObject)?.CRM_Account__r?.CRM_Person__r?.Name;
+                    this.aktoerid = ((Thread__c) archiveObject)?.CRM_Account__r?.CRM_Person__r?.INT_ActorId__c;
+                    this.konfidentiellt = ((Thread__c) archiveObject)?.STO_Sensitive_Information__c;
+                    this.tema = ((Thread__c) archiveObject).CRM_Theme__c;
+                }
+                when 'Conversation_note__c' {
+                    this.konfidentiellt = true;
+                    this.aktoerid = ((Conversation_Note__c) archiveObject)?.CRM_Account__r?.CRM_Person__r?.INT_ActorId__c;
+                    this.fnr = ((Conversation_Note__c) archiveObject)?.CRM_Account__r?.CRM_Person__r?.Name;
+                    this.tema = ((Conversation_Note__c) archiveObject).CRM_Theme__c;
+                }
+                when else {
+                }
+            }
         }
     }
 }
