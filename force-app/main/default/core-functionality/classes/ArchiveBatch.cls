@@ -5,7 +5,7 @@
  * @last modified on  : 13-04-2023
  * @last modified by  : mamikals
  **/
-public with sharing class ArchiveBatch implements Database.Batchable<sObject> {
+public with sharing class ArchiveBatch implements Database.Batchable<sObject>, Database.allowcallouts  {
     private final Date startDate;
     private final Date endDate;
     private String query;
