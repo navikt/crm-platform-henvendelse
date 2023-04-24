@@ -10,6 +10,10 @@ import THREADNAME_FIELD from '@salesforce/schema/Thread__c.STO_ExternalName__c';
 import THREADCLOSED_FIELD from '@salesforce/schema/Thread__c.CRM_Is_Closed__c';
 import THREAD_TYPE_FIELD from '@salesforce/schema/Thread__c.CRM_Type__c';
 
+import { loadStyle } from 'lightning/platformResourceLoader';
+import navStyling from '@salesforce/resourceUrl/navStyling';
+import index from '@salesforce/resourceUrl/index';
+
 const fields = [THREADNAME_FIELD, THREADCLOSED_FIELD, THREAD_TYPE_FIELD]; //Extract the name of the thread record
 
 export default class crmMessagingCommunityThreadViewer extends LightningElement {
@@ -37,6 +41,11 @@ export default class crmMessagingCommunityThreadViewer extends LightningElement 
             .catch((error) => {
                 //Apex error
             });
+    }
+
+    renderedCallback() {
+        loadStyle(this, navStyling);
+        loadStyle(this, index);
     }
 
     @wire(getRecord, { recordId: '$recordId', fields })
