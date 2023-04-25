@@ -12,3 +12,8 @@
     right: 0;
     bottom: 0;
 }
+
+.colorOverwrite {
+    background-color: var(--overwrite-header-color, white);
+    color: black;
+}
