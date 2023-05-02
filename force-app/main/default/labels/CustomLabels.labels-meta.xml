@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>CRMHenvendelse_RedactedMessageAG</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Thread Redacted Message AG</shortDescription>
+        <value>Dette er en informasjonsmelding om at tekst i en av meldingene nylig ble slettet fra våre systemer. Vi vurderte at teksten inneholdt sensitive eller andre opplysninger som ikke bør deles offentlig. Vi tar personvern på alvor og det er vårt ansvar å sikre at alle brukere føler seg trygge når det deles informasjon på vår plattform. Teksten er fjernet for å beskytte personvernet til deg og andre parter.</value>
+    </labels>
+</CustomLabels>
