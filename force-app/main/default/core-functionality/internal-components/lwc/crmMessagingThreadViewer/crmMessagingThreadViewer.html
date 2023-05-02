@@ -33,7 +33,7 @@
                         class="slds-rich-text-editor__toolbar slds-shrink-none"
                         style="display: block; border-radius: 0"
                     >
-                        <lightning-layout>
+                        <lightning-layout class="toolbar">
                             <!-- Toolbar -->
                             <lightning-layout-item size="8">
                                 <lightning-layout horizontal-align="start">
@@ -68,16 +68,24 @@
                             <!-- Avslutt samtalen -->
                             <template if:true={showClose}>
                                 <lightning-layout-item size="4">
-                                    <lightning-layout horizontal-align="end">
+                                    <lightning-layout class="layout">
                                         <lightning-record-edit-form record-id={threadid} object-api-name="Thread__c">
-                                            <lightning-button
+                                            <button
+                                                type="submit"
+                                                disabled={closedThread}
+                                                onclick={openModal}
+                                                class="endDialogBtn slds-button slds-button_destructive"
+                                                >Avslutt samtale
+                                            </button>
+                                            
+                                            <!--<lightning-button
                                                 variant="destructive"
                                                 label="Avslutt samtale"
                                                 disabled={closedThread}
                                                 onclick={openModal}
-                                                class="endDialogBtn"
+                                                class="endDialogBtn slds-button_stretch"
                                             >
-                                            </lightning-button>
+                                            </lightning-button>-->
                                         </lightning-record-edit-form>
                                     </lightning-layout>
                                 </lightning-layout-item>

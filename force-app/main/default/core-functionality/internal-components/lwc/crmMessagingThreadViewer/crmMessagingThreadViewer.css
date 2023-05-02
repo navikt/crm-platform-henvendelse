@@ -12,3 +12,25 @@
     right: 0;
     bottom: 0;
 }
+.endDialogBtn {
+    white-space: nowrap; 
+}
+.toolbar {
+    display: flex;
+}
+.layout {
+    justify-content: end;
+}
+
+@media (max-width: 1180px) {
+    .toolbar {
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+    .layout {
+        justify-content: start;
+    }
+    .endDialogBtn {
+        margin-top: 0.5rem;
+    }
+}
