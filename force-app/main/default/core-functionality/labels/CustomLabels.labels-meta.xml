@@ -9,6 +9,14 @@
         <value>Conversation Note Blank Error</value>
     </labels>
     <labels>
+        <fullName>CRMHenvendelse_BTOURL</fullName>
+        <categories>Henvendelse, User Notification</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Henvendelse - BTO visning URL</shortDescription>
+        <value>/beskjed-til-oss/visning?samtale=</value>
+    </labels>
+    <labels>
         <fullName>CRMHenvendelse_ConversationNote_DiscardedMessageNotificationText</fullName>
         <categories>Henvendelse, User Notification, Sladding, Samtalereferat</categories>
         <language>en_US</language>
