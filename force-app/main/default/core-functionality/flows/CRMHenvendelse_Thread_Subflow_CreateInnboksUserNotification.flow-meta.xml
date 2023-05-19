@@ -226,7 +226,7 @@
         <dataType>String</dataType>
         <expression> {!$Label.CRMHenvendelse_InnboksBaseURL} + 
 IF(ISPICKVAL({!Thread.CRM_Thread_Type__c}, &apos;BTO&apos;), 
-{!$Label.CRMHenvendelse_BTOURL}+&apos;/&apos;+{!Thread.Id}, 
+{!$Label.CRMHenvendelse_BTOURL}+{!Thread.Id}, 
 {!$Label.CRMHenvendelse_ThreadURL}+&apos;/&apos;+{!Thread.Id}+&apos;/&apos;+{!Thread.CRM_API_Reference__c})</expression>
     </formulas>
     <interviewLabel>Thread - Subflow - Create Innboks User Notification {!$Flow.CurrentDateTime}</interviewLabel>
