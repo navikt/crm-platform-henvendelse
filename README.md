@@ -4,11 +4,17 @@
 [![GitHub version](https://badgen.net/github/release/navikt/crm-henvendelse/stable)](https://github.com/navikt/crm-henvendelse)
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/navikt/crm-henvendelse/blob/master/LICENSE)
 
-Repository containing data model and functionality connected to dialogues between NAV and their end-users. This package exposes a custom rest API for consumers to submit and retrieve inquiry(henvendels) information to and from Salesforce.
+Repository containing data model and functionality connected to dialogues
+between NAV and their end-users. This package exposes a custom rest API for
+consumers to submit and retrieve inquiry(henvendels) information to and from
+Salesforce.
 
 ## 1. Core objects
 
-The package consists of three custom objects, Thread**c and Message**c and Conversation_Note**c. Thread and message are made to model a threaded dialogue similar to i.e slack, teams etc. Conversation_Note**c models a written note summary from NAV to summarize either a phone- or physical meeting.
+The package consists of three custom objects, `Thread__c` and `Message__c` and
+`Conversation_Note__c.` Thread and message are made to model a threaded dialogue
+similar to i.e slack, teams etc. `Conversation_Note__c` models a written note
+summary from NAV to summarize either a phone- or physical meeting.
 
 ### 1.1 Thread model
 
