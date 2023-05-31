@@ -12,3 +12,13 @@
     right: 0;
     bottom: 0;
 }
+.endDialogBtn {
+    line-height: unset;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.colorOverwrite {
+    background-color: var(--overwrite-header-color, white);
+    color: black;
+}

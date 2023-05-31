@@ -1,6 +1,6 @@
 <template>
     <!-- Header start -->
-    <div class="slds-chat-bookend">
+    <div class="slds-chat-bookend colorOverwrite">
         <lightning-icon
             icon-name="utility:chat"
             alternative-text="chat-icon"
@@ -70,14 +70,13 @@
                                 <lightning-layout-item size="4">
                                     <lightning-layout horizontal-align="end">
                                         <lightning-record-edit-form record-id={threadid} object-api-name="Thread__c">
-                                            <lightning-button
-                                                variant="destructive"
-                                                label="Avslutt samtale"
+                                            <button
+                                                type="submit"
                                                 disabled={closedThread}
                                                 onclick={openModal}
-                                                class="endDialogBtn"
-                                            >
-                                            </lightning-button>
+                                                class="endDialogBtn slds-button slds-button_destructive"
+                                                >Avslutt samtale
+                                            </button>
                                         </lightning-record-edit-form>
                                     </lightning-layout>
                                 </lightning-layout-item>

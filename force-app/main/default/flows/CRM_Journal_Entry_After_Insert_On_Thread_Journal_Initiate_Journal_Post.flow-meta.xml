@@ -25,6 +25,13 @@
                     <stringValue>STB</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Thread_State.CRM_Thread_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>BTO</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Verify_Post_Criteria</targetReference>
             </connector>
