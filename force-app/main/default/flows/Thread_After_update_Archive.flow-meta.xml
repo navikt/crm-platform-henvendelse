@@ -83,7 +83,7 @@
         <locationX>50</locationX>
         <locationY>0</locationY>
         <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
-        <filterLogic>(1 OR (2 AND 3)) AND (4 OR 5)</filterLogic>
+        <filterLogic>(1 OR (2 AND 3)) AND (4 OR 5 or 6)</filterLogic>
         <filters>
             <field>STO_Sensitive_Information__c</field>
             <operator>EqualTo</operator>
@@ -117,6 +117,13 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>STB</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>CRM_Thread_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>BTO</stringValue>
             </value>
         </filters>
         <object>Thread__c</object>
