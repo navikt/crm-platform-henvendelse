@@ -2,7 +2,7 @@
  * @description       :
  * @author            : mamikals
  * @group             :
- * @last modified on  : 12-04-2023
+ * @last modified on  : 21-06-2023
  * @last modified by  : mamikals
  **/
 public inherited sharing class ArchiveHandler {
@@ -17,38 +17,45 @@ public inherited sharing class ArchiveHandler {
     public static List<String> postToArchive(List<ArchivePostWrapper> inputs) {
         List<ArchiveRequestWrapper> archiveObjects = new List<ArchiveRequestWrapper>();
         ArchiveService service = new ArchiveService();
+        Map<Id, Thread__c> threadMap = new Map<Id, Thread__c>();
+        List<Id> threadList = new List<Id>();
+        for (ArchivePostWrapper input : inputs) {
+            if (input.archiveObject.getSObjectType().getDescribe().getName() == 'Thread__c') {
+                threadList.add(input.archiveObject.Id);
+            }
+        }
+        try {
+            for (Thread__c thread : [
+                SELECT
+                    Id,
+                    (
+                        SELECT
+                            Id,
+                            Name,
+                            CRM_Message_Text__c,
+                            CRM_Thread_Type__c,
+                            CRM_Read_Datetime__c,
+                            CRM_Sent_date__c,
+                            CRM_Henvendelse_BehandlingsId__c
+                        FROM Messages__r
+                    )
+                FROM Thread__c
+                WHERE Id IN :threadList
+            ]) {
+                threadMap.put(thread.Id, thread);
+            }
+        } catch (Exception e) {
+            LoggerUtility logger = new LoggerUtility('Arkiv');
+            logger.error(
+                'Feil med henting av tråder for arkivering: ' +
+                e,
+                null
+            );
+        }
         for (ArchivePostWrapper input : inputs) {
             SObject archiveObject = input.archiveObject;
             if (input.archiveObject.getSObjectType().getDescribe().getName() == 'Thread__c') {
-                try {
-                    List<Thread__c> threadWithMessage = [
-                        SELECT
-                            Id,
-                            (
-                                SELECT
-                                    Id,
-                                    Name,
-                                    CRM_Message_Text__c,
-                                    CRM_Thread_Type__c,
-                                    CRM_Read_Datetime__c,
-                                    CRM_Sent_date__c,
-                                    CRM_Henvendelse_BehandlingsId__c
-                                FROM Messages__r
-                            )
-                        FROM Thread__c
-                        WHERE Id = :input.archiveObject.Id
-                    ];
-                    archiveObject = (SObject) threadWithMessage[0];
-                } catch (Exception e) {
-                    LoggerUtility logger = new LoggerUtility('Arkiv');
-                    logger.error(
-                        'Feil med å hente tråd ' +
-                        input.archiveObject.Id +
-                        ' for arkivering: ' +
-                        e,
-                        input.archiveObject
-                    );
-                }
+                archiveObject = (SObject) threadMap.get(input.archiveObject.Id);
             }
             input.aktoerid = checkNull(input.aktoerid);
             input.fnr = checkNull(input.fnr);
@@ -129,7 +136,10 @@ public inherited sharing class ArchiveHandler {
                 }
                 when 'Conversation_note__c' {
                     this.konfidentiellt = true;
-                    this.aktoerid = ((Conversation_Note__c) archiveObject)?.CRM_Account__r?.CRM_Person__r?.INT_ActorId__c;
+                    this.aktoerid = ((Conversation_Note__c) archiveObject)
+                        ?.CRM_Account__r
+                        ?.CRM_Person__r
+                        ?.INT_ActorId__c;
                     this.fnr = ((Conversation_Note__c) archiveObject)?.CRM_Account__r?.CRM_Person__r?.Name;
                     this.tema = ((Conversation_Note__c) archiveObject).CRM_Theme__c;
                 }
