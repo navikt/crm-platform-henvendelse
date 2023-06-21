@@ -17,7 +17,6 @@ public inherited sharing class ArchiveHandler {
     public static List<String> postToArchive(List<ArchivePostWrapper> inputs) {
         List<ArchiveRequestWrapper> archiveObjects = new List<ArchiveRequestWrapper>();
         ArchiveService service = new ArchiveService();
-        Map<Id, Thread__c> threadMap = new Map<Id, Thread__c>();
         List<Id> threadList = new List<Id>();
         for (ArchivePostWrapper input : inputs) {
             if (input.archiveObject.getSObjectType().getDescribe().getName() == 'Thread__c') {
@@ -25,32 +24,28 @@ public inherited sharing class ArchiveHandler {
             }
         }
         try {
-            for (Thread__c thread : [
-                SELECT
-                    Id,
-                    (
-                        SELECT
-                            Id,
-                            Name,
-                            CRM_Message_Text__c,
-                            CRM_Thread_Type__c,
-                            CRM_Read_Datetime__c,
-                            CRM_Sent_date__c,
-                            CRM_Henvendelse_BehandlingsId__c
-                        FROM Messages__r
-                    )
-                FROM Thread__c
-                WHERE Id IN :threadList
-            ]) {
-                threadMap.put(thread.Id, thread);
-            }
+            Map<Id, Thread__c> threadMap = new Map<Id, Thread__c>(
+                [
+                    SELECT
+                        Id,
+                        (
+                            SELECT
+                                Id,
+                                Name,
+                                CRM_Message_Text__c,
+                                CRM_Thread_Type__c,
+                                CRM_Read_Datetime__c,
+                                CRM_Sent_date__c,
+                                CRM_Henvendelse_BehandlingsId__c
+                            FROM Messages__r
+                        )
+                    FROM Thread__c
+                    WHERE Id IN :threadList
+                ]
+            );
         } catch (Exception e) {
             LoggerUtility logger = new LoggerUtility('Arkiv');
-            logger.error(
-                'Feil med henting av tråder for arkivering: ' +
-                e,
-                null
-            );
+            logger.error('Feil med henting av tråder for arkivering: ' + e, null);
         }
         for (ArchivePostWrapper input : inputs) {
             SObject archiveObject = input.archiveObject;
