@@ -2,7 +2,7 @@
  * @description       :
  * @author            : mamikals
  * @group             :
- * @last modified on  : 21-06-2023
+ * @last modified on  : 23-06-2023
  * @last modified by  : mamikals
  **/
 public inherited sharing class ArchiveHandler {
@@ -23,8 +23,9 @@ public inherited sharing class ArchiveHandler {
                 threadList.add(input.archiveObject.Id);
             }
         }
+        Map<Id, Thread__c> threadMap = null;
         try {
-            Map<Id, Thread__c> threadMap = new Map<Id, Thread__c>(
+            threadMap = new Map<Id, Thread__c>(
                 [
                     SELECT
                         Id,
@@ -50,7 +51,7 @@ public inherited sharing class ArchiveHandler {
         for (ArchivePostWrapper input : inputs) {
             SObject archiveObject = input.archiveObject;
             if (input.archiveObject.getSObjectType().getDescribe().getName() == 'Thread__c') {
-                archiveObject = (SObject) threadMap.get(input.archiveObject.Id);
+                archiveObject = (SObject) threadMap?.get(input.archiveObject.Id);
             }
             input.aktoerid = checkNull(input.aktoerid);
             input.fnr = checkNull(input.fnr);
