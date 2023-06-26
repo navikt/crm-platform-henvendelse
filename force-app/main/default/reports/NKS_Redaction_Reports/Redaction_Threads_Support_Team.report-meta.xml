@@ -58,6 +58,13 @@
             <operator>equals</operator>
             <value></value>
         </criteriaItems>
+        <criteriaItems>
+            <column>Thread__c$CRM_Thread_Type__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>AG_MLØNN,BTO,CHAT,STO</value>
+        </criteriaItems>
         <language>en_US</language>
     </filter>
     <format>Summary</format>
