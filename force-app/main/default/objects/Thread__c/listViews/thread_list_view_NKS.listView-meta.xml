@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>thread_list_view_NKS</fullName>
+    <fullName>Thread_list_view_NKS</fullName>
     <columns>NAME</columns>
     <columns>CRM_Thread_Type__c</columns>
     <columns>STO_Sensitive_Information_Activated_By__c</columns>
