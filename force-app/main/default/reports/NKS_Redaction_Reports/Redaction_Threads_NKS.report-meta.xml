@@ -61,6 +61,13 @@
             <operator>notEqual</operator>
             <value></value>
         </criteriaItems>
+        <criteriaItems>
+            <column>Thread__c$CRM_Thread_Type__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>BTO,CHAT,STO</value>
+        </criteriaItems>
         <language>en_US</language>
     </filter>
     <format>Summary</format>

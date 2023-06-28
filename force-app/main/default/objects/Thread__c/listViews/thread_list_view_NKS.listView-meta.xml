@@ -21,8 +21,8 @@
     </filters>
     <filters>
         <field>CRM_Thread_Type__c</field>
-        <operation>notEqual</operation>
-        <value>AG_MLØNN</value>
+        <operation>equals</operation>
+        <value>STO,CHAT,BTO</value>
     </filters>
     <label>Samtaletråder NKS</label>
 </ListView>
