@@ -15,10 +15,6 @@
         <value>1</value>
     </filters>
     <filters>
-        <field>STO_Sensitive_Information_Unit__c</field>
-        <operation>equals</operation>
-    </filters>
-    <filters>
         <field>CRM_Thread_Type__c</field>
         <operation>notEqual</operation>
         <value>STO,CHAT,AG_MLØNN,BTO</value>

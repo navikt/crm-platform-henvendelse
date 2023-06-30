@@ -52,13 +52,6 @@
             <value>1</value>
         </criteriaItems>
         <criteriaItems>
-            <column>Thread__c$STO_Sensitive_Information_Unit__c</column>
-            <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
-            <operator>equals</operator>
-            <value></value>
-        </criteriaItems>
-        <criteriaItems>
             <column>Thread__c$CRM_Thread_Type__c</column>
             <columnToColumn>false</columnToColumn>
             <isUnlocked>true</isUnlocked>
