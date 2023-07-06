@@ -3,7 +3,6 @@ import getmessages from '@salesforce/apex/CRM_MessageHelper.getMessagesFromThrea
 import markAsRead from '@salesforce/apex/CRM_MessageHelper.markAsRead';
 import { refreshApex } from '@salesforce/apex';
 import getContactId from '@salesforce/apex/CRM_MessageHelper.getUserContactId';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import createmsg from '@salesforce/apex/CRM_MessageHelper.createMessage';
 import THREADNAME_FIELD from '@salesforce/schema/Thread__c.STO_ExternalName__c';
@@ -24,7 +23,7 @@ export default class crmMessagingCommunityThreadViewer extends LightningElement 
     @track msgVal;
     userContactId;
     thread;
-    @api alerttext;
+    @api alerttext = 'Dialogen er lukket.';
     @api header;
     @api secondheader;
     @api alertopen;
