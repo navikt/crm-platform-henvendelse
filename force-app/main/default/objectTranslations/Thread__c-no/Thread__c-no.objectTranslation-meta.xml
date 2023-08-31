@@ -24,11 +24,6 @@
     </quickActions>
     <quickActions>
         <aspect>Master</aspect>
-        <label>Kasser</label>
-        <name>Discard_Messages</name>
-    </quickActions>
-    <quickActions>
-        <aspect>Master</aspect>
         <label>Sett til sladding</label>
         <name>Set_to_Redaction</name>
     </quickActions>
