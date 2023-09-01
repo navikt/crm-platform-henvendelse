@@ -27,6 +27,7 @@ export default class messagingThreadViewer extends LightningElement {
     showspinner = false;
     hideModal = true;
     @api showClose;
+    @api showQuick;
     @api englishTextTemplate;
     @track langBtnLock = false;
     langBtnAriaToggle = false;

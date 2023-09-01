@@ -35,36 +35,38 @@
                     >
                         <lightning-layout>
                             <!-- Toolbar -->
-                            <lightning-layout-item size="8">
-                                <lightning-layout horizontal-align="start">
-                                    <lightning-button-icon
-                                        icon-name="utility:quick_text"
-                                        alternative-text="Hurtigtekst"
-                                        onclick={showQuickText}
-                                    >
-                                    </lightning-button-icon>
-                                    <lightning-button-group ontoolbaraction={handleToolbarAction}>
-                                        <slot name="toolbar"></slot>
-                                    </lightning-button-group>
-                                    <template if:true={hasEnglishTemplate}>
-                                        <lightning-button
-                                            role="switch"
-                                            type="lang"
-                                            name="lang"
-                                            label="Engelsk"
-                                            variant={langBtnVariant}
-                                            style="min-height: 1rem"
-                                            class="slds-float_left slds-var-m-left_small"
-                                            onclick={handleLangClick}
-                                            title="Endre Språk"
-                                            disabled={langBtnLock}
-                                            aria-disabled={langBtnLock}
-                                            aria-label={langAria}
-                                        >
-                                        </lightning-button>
-                                    </template>
-                                </lightning-layout>
-                            </lightning-layout-item>
+                                <lightning-layout-item size="8">
+                                    <lightning-layout horizontal-align="start">
+                                        <template if:true={showQuick}>
+                                            <lightning-button-icon
+                                            icon-name="utility:quick_text"
+                                            alternative-text="Hurtigtekst"
+                                            onclick={showQuickText}
+                                            >
+                                            </lightning-button-icon>
+                                        </template>
+                                        <lightning-button-group ontoolbaraction={handleToolbarAction}>
+                                            <slot name="toolbar"></slot>
+                                        </lightning-button-group>
+                                        <template if:true={hasEnglishTemplate}>
+                                            <lightning-button
+                                                role="switch"
+                                                type="lang"
+                                                name="lang"
+                                                label="Engelsk"
+                                                variant={langBtnVariant}
+                                                style="min-height: 1rem"
+                                                class="slds-float_left slds-var-m-left_small"
+                                                onclick={handleLangClick}
+                                                title="Endre Språk"
+                                                disabled={langBtnLock}
+                                                aria-disabled={langBtnLock}
+                                                aria-label={langAria}
+                                            >
+                                            </lightning-button>
+                                        </template>
+                                    </lightning-layout>
+                                </lightning-layout-item>
                             <!-- Avslutt samtalen -->
                             <template if:true={showClose}>
                                 <lightning-layout-item size="4">
