@@ -5,6 +5,7 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
     global String avsluttetDato;
     global String opprettetDato;
     global Boolean kontorsperre;
+    global String sistEndretAv;
     global Boolean sladding;
     global Boolean feilsendt;
     global String kjedeId;
@@ -119,13 +120,16 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         this.henvendelseId = thread.CRM_HenvendelseId__c;
         this.fnr = thread.CRM_External_Person_Ident_Formula__c;
         this.aktorId = thread.CRM_External_ActorId_Formula__c;
+        this.sistEndretAv = thread.CRM_Last_Edited_By__c;
         this.opprinneligGT = thread.CRM_Original_Person_GT__c;
         this.opprinneligEnhet = thread.CRM_Original_Person_NAV_Unit__c;
         this.kasseringsDato = formatDateTime(thread.CRM_Disposal_Datetime__c);
         this.opprettetDato = formatDateTime(thread.CRM_Date_Time_Registered__c);
         this.avsluttetDato = formatDateTime(thread.CRM_Closed_Date__c);
         this.meldinger = new List<CRM_Melding>();
-        this.henvendelseType = (thread.CRM_Type__c == 'CHAT') ? HENVENDELSE_TYPE.CHAT.name() : HENVENDELSE_TYPE.MELDINGSKJEDE.name();
+        this.henvendelseType = (thread.CRM_Type__c == 'CHAT')
+            ? HENVENDELSE_TYPE.CHAT.name()
+            : HENVENDELSE_TYPE.MELDINGSKJEDE.name();
         this.gjeldendeTemagruppe = thread.CRM_Theme_Group_Code__c;
         this.gjeldendeTema = thread.CRM_Theme_Code__c;
         this.sladding = thread.STO_Sensitive_Information__c;
