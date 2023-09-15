@@ -8,6 +8,7 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
             Thread__c.CRM_isActive__c,
             Thread__c.CRM_Date_Time_Registered__c,
             Thread__c.CRM_Office_Restriction__c,
+            Thread__c.CRM_Last_edited_by__c,
             Thread__c.Id,
             Thread__c.CRM_HenvendelseId__c,
             Thread__c.Name,
