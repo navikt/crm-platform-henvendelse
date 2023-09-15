@@ -735,6 +735,11 @@
                         "description": "Definerer om henvendelsen er markert som kontorsperret. Markeringsinformasjon finnes i listen av markeringer",
                         "example": false
                     },
+                    "sistEndretAv": {
+                        "type": "string",
+                        "description": "Identen til den siste som gjorde endring på tråden.",
+                        "example": "Z994035"
+                    },
                     "sladding": {
                         "type": "boolean",
                         "description": "Definerer om henvendelsen skal vurderes for sladding. Dette sender henvendelsen til en sladdekø",
