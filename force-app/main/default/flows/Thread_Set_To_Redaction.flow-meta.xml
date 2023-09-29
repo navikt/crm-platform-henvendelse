@@ -5,7 +5,7 @@
         <name>Set_Thread_For_Redaction</name>
         <label>Set Thread For Redaction</label>
         <locationX>446</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>Get_Thread.STO_Sensitive_Information__c</assignToReference>
             <operator>Assign</operator>
@@ -17,18 +17,42 @@
             <assignToReference>Get_Thread.Cause__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Thread_Cause</elementReference>
+                <elementReference>Cause</elementReference>
             </value>
         </assignmentItems>
         <connector>
             <targetReference>Update_Thread</targetReference>
         </connector>
     </assignments>
+    <choices>
+        <name>Ikke_statlig_dialog</name>
+        <choiceText>Ikke statlig dialog</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Ikke statlig dialog</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Sendt_feil_bruker</name>
+        <choiceText>Sendt feil bruker</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Sendt feil bruker</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Sensitive_personopplysninger</name>
+        <choiceText>Sensitive personopplysninger</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Sensitive personopplysninger </stringValue>
+        </value>
+    </choices>
     <decisions>
         <name>Check_If_Sensitive_Information_Is_True</name>
         <label>Check If Sensitive Information Is True</label>
         <locationX>248</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <defaultConnector>
             <targetReference>Set_Thread_to_Redaction</targetReference>
         </defaultConnector>
@@ -53,7 +77,7 @@
         <name>Check_If_Thead_Is_Set_To_Redaction</name>
         <label>Check If Thead Is Set To Redaction</label>
         <locationX>446</locationX>
-        <locationY>758</locationY>
+        <locationY>674</locationY>
         <defaultConnector>
             <targetReference>Error_Screen</targetReference>
         </defaultConnector>
@@ -72,7 +96,7 @@
                 <leftValueReference>Get_Thread.Cause__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>Thread_Cause</elementReference>
+                    <elementReference>Cause</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -88,14 +112,6 @@
         <object xsi:nil="true"/>
         <picklistField>Cause__c</picklistField>
         <picklistObject>Conversation_Note__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>Thread_Cause</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>Cause__c</picklistField>
-        <picklistObject>Thread__c</picklistObject>
     </dynamicChoiceSets>
     <interviewLabel>Thread Set To Redaction {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Thread Set To Redaction</label>
@@ -122,7 +138,7 @@
         <name>Get_Thread</name>
         <label>Get Thread</label>
         <locationX>248</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_If_Sensitive_Information_Is_True</targetReference>
@@ -143,7 +159,7 @@
         <name>Update_Thread</name>
         <label>Update Thread</label>
         <locationX>446</locationX>
-        <locationY>638</locationY>
+        <locationY>566</locationY>
         <connector>
             <targetReference>Check_If_Thead_Is_Set_To_Redaction</targetReference>
         </connector>
@@ -154,7 +170,7 @@
         <name>Error_Screen</name>
         <label>Error Screen</label>
         <locationX>578</locationX>
-        <locationY>878</locationY>
+        <locationY>782</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -203,7 +219,7 @@
         <name>Finish_Screen</name>
         <label>Finish Screen</label>
         <locationX>314</locationX>
-        <locationY>878</locationY>
+        <locationY>782</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -252,7 +268,7 @@
         <name>Redaction_Thread_Screen</name>
         <label>Redaction Thread Screen</label>
         <locationX>50</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -269,7 +285,7 @@
         <name>Set_Thread_to_Redaction</name>
         <label>Set Thread to Redaction</label>
         <locationX>446</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -310,11 +326,11 @@
         </fields>
         <fields>
             <name>Cause</name>
-            <choiceReferences>Thread_Cause</choiceReferences>
+            <choiceReferences>Sendt_feil_bruker</choiceReferences>
+            <choiceReferences>Ikke_statlig_dialog</choiceReferences>
+            <choiceReferences>Sensitive_personopplysninger</choiceReferences>
             <dataType>String</dataType>
-            <defaultValue>
-                <stringValue>Utenfor NAVs behandlingsområde</stringValue>
-            </defaultValue>
+            <defaultSelectedChoiceReference>Sendt_feil_bruker</defaultSelectedChoiceReference>
             <fieldText>Årsak</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
