@@ -173,7 +173,7 @@ export default class messagingThreadViewer extends LightningElement {
     }
     //If empty, stop submitting.
     handlesubmit(event) {
-        trackAmplitudeEvent('STO handlesubmit');
+        trackAmplitudeEvent('STO', { type: 'handlesubmit on thread' });
         this.lockLangBtn();
         event.preventDefault();
         if (!this.quickTextCmp.isOpen()) {
@@ -207,7 +207,7 @@ export default class messagingThreadViewer extends LightningElement {
     }
 
     closeThread() {
-        trackAmplitudeEvent('STO closeThread');
+        trackAmplitudeEvent('STO', { type: 'closeThread' });
         this.closeModal();
         const fields = {};
         fields[THREAD_ID_FIELD.fieldApiName] = this.threadid;
@@ -267,12 +267,12 @@ export default class messagingThreadViewer extends LightningElement {
     }
 
     showQuickText(event) {
-        trackAmplitudeEvent('STO showQuickText');
+        trackAmplitudeEvent('STO', { type: 'showQuickText' });
         this.quickTextCmp.showModal(event);
     }
 
     handleLangClick() {
-        trackAmplitudeEvent('STO handleLangClick');
+        trackAmplitudeEvent('STO', { type: 'handleLangClick' });
         const englishEvent = new CustomEvent('englishevent', {
             detail: !this.englishTextTemplate
         });
@@ -337,12 +337,12 @@ export default class messagingThreadViewer extends LightningElement {
     //##################################//
 
     openModal() {
-        trackAmplitudeEvent('STO openModal');
+        trackAmplitudeEvent('STO', { type: 'openModal close thread' });
         this.hideModal = false;
     }
 
     closeModal() {
-        trackAmplitudeEvent('STO closeModal');
+        trackAmplitudeEvent('STO', { type: 'closeModal close thread' });
         this.hideModal = true;
         const btn = this.template.querySelector('.endDialogBtn');
         btn.focus();
