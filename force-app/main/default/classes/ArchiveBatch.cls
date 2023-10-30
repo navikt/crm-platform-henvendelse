@@ -9,13 +9,16 @@ public with sharing class ArchiveBatch implements Database.Batchable<sObject>, D
     private final Date startDate;
     private final Date endDate;
     private String query;
-    private final String archiveObject;
     private final String opprettetAv;
+
+    public ArchiveBatch(String query, String opprettetAv) {
+        this.query = query;
+        this.opprettetAv = opprettetAv;
+    }
 
     public ArchiveBatch(Date startDate, Date endDate, String opprettetAv) {
         this.startDate = startDate;
         this.endDate = endDate;
-        this.archiveObject = archiveObject;
         this.opprettetAv = opprettetAv;
 
         //Starting two batches, one for Conv notes and one for threads.
