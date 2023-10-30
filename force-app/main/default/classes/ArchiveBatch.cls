@@ -14,6 +14,7 @@ public with sharing class ArchiveBatch implements Database.Batchable<sObject>, D
     public ArchiveBatch(String query, String opprettetAv) {
         this.query = query;
         this.opprettetAv = opprettetAv;
+        Database.executeBatch(this);
     }
 
     public ArchiveBatch(Date startDate, Date endDate, String opprettetAv) {
