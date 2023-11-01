@@ -3,7 +3,6 @@ import getmessages from '@salesforce/apex/CRM_MessageHelper.getMessagesFromThrea
 import getJournalInfo from '@salesforce/apex/CRM_MessageHelper.getJournalEntries';
 import markAsReadByNav from '@salesforce/apex/CRM_MessageHelper.markAsReadByNav';
 import { subscribe, unsubscribe } from 'lightning/empApi';
-import { trackAmplitudeEvent } from 'c/amplitude'
 import userId from '@salesforce/user/Id';
 import { updateRecord, getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import ACTIVE_FIELD from '@salesforce/schema/Thread__c.CRM_isActive__c';
@@ -14,6 +13,8 @@ import FIRSTNAME_FIELD from '@salesforce/schema/Thread__c.CreatedBy.FirstName';
 import LASTNAME_FIELD from '@salesforce/schema/Thread__c.CreatedBy.LastName';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
+import { MessageContext, publish } from 'lightning/messageService';
+import AMPLITUDE_CHANNEL from '@salesforce/messageChannel/amplitude__c';
 
 export default class messagingThreadViewer extends LightningElement {
     createdbyid;
@@ -34,6 +35,9 @@ export default class messagingThreadViewer extends LightningElement {
     resizablePanelTop;
     onresize = false; // true when in process of resizing
     mouseListenerCounter = false; // flag for detecting if onmousemove listener is set for element
+
+    @wire(MessageContext)
+    messageContext;
 
     @api textTemplate; //Support for conditional text template as input
     //Constructor, called onload
@@ -173,7 +177,12 @@ export default class messagingThreadViewer extends LightningElement {
     }
     //If empty, stop submitting.
     handlesubmit(event) {
-        trackAmplitudeEvent('STO', { type: 'handlesubmit on thread' });
+        const message = {
+            eventType: 'STO',
+            properties: { type: 'handlesubmit on thread' }
+        };
+        publish(this.messageContext, AMPLITUDE_CHANNEL, message);
+
         this.lockLangBtn();
         event.preventDefault();
         if (!this.quickTextCmp.isOpen()) {
@@ -207,7 +216,12 @@ export default class messagingThreadViewer extends LightningElement {
     }
 
     closeThread() {
-        trackAmplitudeEvent('STO', { type: 'closeThread' });
+        const message = {
+            eventType: 'STO',
+            properties: { type: 'closeThread' }
+        };
+        publish(this.messageContext, AMPLITUDE_CHANNEL, message);
+
         this.closeModal();
         const fields = {};
         fields[THREAD_ID_FIELD.fieldApiName] = this.threadid;
@@ -267,12 +281,22 @@ export default class messagingThreadViewer extends LightningElement {
     }
 
     showQuickText(event) {
-        trackAmplitudeEvent('STO', { type: 'showQuickText' });
+        const message = {
+            eventType: 'STO',
+            properties: { type: 'showQuickText' }
+        };
+        publish(this.messageContext, AMPLITUDE_CHANNEL, message);
+
         this.quickTextCmp.showModal(event);
     }
 
     handleLangClick() {
-        trackAmplitudeEvent('STO', { type: 'handleLangClick' });
+        const message = {
+            eventType: 'STO',
+            properties: { type: 'handleLangClick' }
+        };
+        publish(this.messageContext, AMPLITUDE_CHANNEL, message);
+
         const englishEvent = new CustomEvent('englishevent', {
             detail: !this.englishTextTemplate
         });
@@ -337,12 +361,20 @@ export default class messagingThreadViewer extends LightningElement {
     //##################################//
 
     openModal() {
-        trackAmplitudeEvent('STO', { type: 'openModal close thread' });
+        const message = {
+            eventType: 'STO',
+            properties: { type: 'openModal close thread' }
+        };
+        publish(this.messageContext, AMPLITUDE_CHANNEL, message);
         this.hideModal = false;
     }
 
     closeModal() {
-        trackAmplitudeEvent('STO', { type: 'closeModal close thread' });
+        const message = {
+            eventType: 'STO',
+            properties: { type: 'closeModal close thread' }
+        };
+        publish(this.messageContext, AMPLITUDE_CHANNEL, message);
         this.hideModal = true;
         const btn = this.template.querySelector('.endDialogBtn');
         btn.focus();
