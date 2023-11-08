@@ -13,8 +13,7 @@ import FIRSTNAME_FIELD from '@salesforce/schema/Thread__c.CreatedBy.FirstName';
 import LASTNAME_FIELD from '@salesforce/schema/Thread__c.CreatedBy.LastName';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
-import { MessageContext, publish } from 'lightning/messageService';
-import AMPLITUDE_CHANNEL from '@salesforce/messageChannel/amplitude__c';
+import { publishToAmplitude } from 'c/amplitude';
 
 export default class messagingThreadViewer extends LightningElement {
     createdbyid;
@@ -35,9 +34,6 @@ export default class messagingThreadViewer extends LightningElement {
     resizablePanelTop;
     onresize = false; // true when in process of resizing
     mouseListenerCounter = false; // flag for detecting if onmousemove listener is set for element
-
-    @wire(MessageContext)
-    messageContext;
 
     @api textTemplate; //Support for conditional text template as input
     //Constructor, called onload
@@ -177,11 +173,7 @@ export default class messagingThreadViewer extends LightningElement {
     }
     //If empty, stop submitting.
     handlesubmit(event) {
-        const message = {
-            eventType: 'STO',
-            properties: { type: 'handlesubmit on thread' }
-        };
-        publish(this.messageContext, AMPLITUDE_CHANNEL, message);
+        publishToAmplitude('STO', { type: 'handlesubmit on thread' });
 
         this.lockLangBtn();
         event.preventDefault();
@@ -216,11 +208,7 @@ export default class messagingThreadViewer extends LightningElement {
     }
 
     closeThread() {
-        const message = {
-            eventType: 'STO',
-            properties: { type: 'closeThread' }
-        };
-        publish(this.messageContext, AMPLITUDE_CHANNEL, message);
+        publishToAmplitude('STO', { type: 'closeThread' });
 
         this.closeModal();
         const fields = {};
@@ -281,22 +269,12 @@ export default class messagingThreadViewer extends LightningElement {
     }
 
     showQuickText(event) {
-        const message = {
-            eventType: 'STO',
-            properties: { type: 'showQuickText' }
-        };
-        publish(this.messageContext, AMPLITUDE_CHANNEL, message);
-
+        publishToAmplitude('STO', { type: 'showQuickText' });
         this.quickTextCmp.showModal(event);
     }
 
     handleLangClick() {
-        const message = {
-            eventType: 'STO',
-            properties: { type: 'handleLangClick' }
-        };
-        publish(this.messageContext, AMPLITUDE_CHANNEL, message);
-
+        publishToAmplitude('STO', { type: 'handleLangClick' });
         const englishEvent = new CustomEvent('englishevent', {
             detail: !this.englishTextTemplate
         });
@@ -361,20 +339,12 @@ export default class messagingThreadViewer extends LightningElement {
     //##################################//
 
     openModal() {
-        const message = {
-            eventType: 'STO',
-            properties: { type: 'openModal close thread' }
-        };
-        publish(this.messageContext, AMPLITUDE_CHANNEL, message);
+        publishToAmplitude('STO', { type: 'openModal close thread' });
         this.hideModal = false;
     }
 
     closeModal() {
-        const message = {
-            eventType: 'STO',
-            properties: { type: 'closeModal close thread' }
-        };
-        publish(this.messageContext, AMPLITUDE_CHANNEL, message);
+        publishToAmplitude('STO', { type: 'closeModal close thread' });
         this.hideModal = true;
         const btn = this.template.querySelector('.endDialogBtn');
         btn.focus();
