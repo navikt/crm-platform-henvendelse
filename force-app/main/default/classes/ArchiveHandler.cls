@@ -2,7 +2,7 @@
  * @description       :
  * @author            : mamikals
  * @group             :
- * @last modified on  : 23-06-2023
+ * @last modified on  : 01-11-2023
  * @last modified by  : mamikals
  **/
 public inherited sharing class ArchiveHandler {
@@ -67,7 +67,7 @@ public inherited sharing class ArchiveHandler {
                 input.tema,
                 input.konfidentiellt,
                 input.dokumentasjonId,
-                input.archiveObject
+                archiveObject
             );
             archiveObjects.add(inputWrapper);
         }
