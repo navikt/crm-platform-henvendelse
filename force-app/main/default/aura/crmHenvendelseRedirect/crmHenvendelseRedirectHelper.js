@@ -6,7 +6,7 @@
 
     getReference: function (component) {
         const state = component.get('v.pageReference').state;
-        const henvId = state['c__henvendelseId'];
+        const henvId = state.c__henvendelseId;
         return henvId;
     },
 
