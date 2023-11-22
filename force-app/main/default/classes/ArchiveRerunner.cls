@@ -1,7 +1,6 @@
 public with sharing class ArchiveRerunner {
     
     public static void rerunFailedArchivation(String staticResourceName) {
-        // TODO: Upload actual static resource for testing so it works
         StaticResource sr;
         if (!Test.isRunningTest()) {
             sr = [SELECT Body FROM StaticResource WHERE Name = :staticResourceName LIMIT 1];
@@ -9,7 +8,7 @@ public with sharing class ArchiveRerunner {
        
         String body = Test.isRunningTest() ? '[{ "attributes": { "type": "Thread__c", "url": "/services/data/v56.0/sobjects/Thread__c/a0W1l0000039XlPEAU"}, "Id": "a0W1l0000039XlPEAU"}]' : sr.Body.toString();
         if (body == null) {
-            System.debug('No body found!');
+            System.debug('Error: No body found!');
             return;
         }
 
@@ -19,7 +18,7 @@ public with sharing class ArchiveRerunner {
             recordIds.add('\'' + record.Id + '\'');
         }
         if (recordIds.isEmpty()) {
-            System.debug('No record ids found!');
+            System.debug('Error: No record ids found!');
             return;
         }
         System.debug('recordIds: ' + recordIds);
