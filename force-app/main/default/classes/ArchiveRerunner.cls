@@ -12,9 +12,9 @@ public with sharing class ArchiveRerunner {
             return;
         }
 
-        List<RecordsToArchive> recordsToArchive = (List<RecordsToArchive>)JSON.deserialize(body, List<RecordsToArchive>.class);
+        List<SObject> recordsToArchive = (List<SObject>)JSON.deserialize(body, List<SObject>.class);
         List<String> recordIds = new List<String>();
-        for (RecordsToArchive record : recordsToArchive) {
+        for (SObject record : recordsToArchive) {
             recordIds.add('\'' + record.Id + '\'');
         }
         if (recordIds.isEmpty()) {
@@ -24,7 +24,7 @@ public with sharing class ArchiveRerunner {
         System.debug('recordIds: ' + recordIds);
 
         ArchiveBatch ab;
-        Id recordId = (Id)recordIds[0].replace('\'', '');
+        Id recordId = (Id) recordIds[0].replace('\'', '');
         String objectName = recordId.getSObjectType().getDescribe().getName();
         if (Test.isRunningTest()) {
             objectName = 'Thread__c';
@@ -37,9 +37,5 @@ public with sharing class ArchiveRerunner {
                 ab = new ArchiveBatch('SELECT Id, CRM_Account__r.CRM_Person__r.INT_ActorId__c, CRM_Account__r.CRM_Person__r.Name, CRM_Theme__c, CRM_Conversation_Note__c FROM Conversation_Note__c WHERE CRM_Journal_Status__c = \'Not Journaled\' AND Id IN ' + recordIds, 'NKS');
             }
         }
-    }
-
-    public class RecordsToArchive {
-        public String Id;   
     }
 }
