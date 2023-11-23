@@ -12,9 +12,9 @@ public with sharing class ArchiveRerunner {
             return;
         }
 
-        List<SObject> recordsToArchive = (List<SObject>)JSON.deserialize(body, List<SObject>.class);
+        List<RecordsToArchive> recordsToArchive = (List<RecordsToArchive>)JSON.deserialize(body, List<RecordsToArchive>.class);
         List<String> recordIds = new List<String>();
-        for (SObject record : recordsToArchive) {
+        for (RecordsToArchive record : recordsToArchive) {
             recordIds.add('\'' + record.Id + '\'');
         }
         if (recordIds.isEmpty()) {
@@ -37,5 +37,9 @@ public with sharing class ArchiveRerunner {
                 ab = new ArchiveBatch('SELECT Id, CRM_Account__r.CRM_Person__r.INT_ActorId__c, CRM_Account__r.CRM_Person__r.Name, CRM_Theme__c, CRM_Conversation_Note__c FROM Conversation_Note__c WHERE CRM_Journal_Status__c = \'Not Journaled\' AND Id IN ' + recordIds, 'NKS');
             }
         }
+    }
+
+    public class RecordsToArchive {
+        public String id;
     }
 }
