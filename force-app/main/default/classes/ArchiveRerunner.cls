@@ -1,5 +1,6 @@
 public with sharing class ArchiveRerunner {
     
+    // Input: Static resource in JSON format with ID of records to rerun
     public static void rerunFailedArchivation(String staticResourceName) {
         StaticResource sr;
         if (!Test.isRunningTest()) {
