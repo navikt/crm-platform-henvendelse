@@ -21,7 +21,7 @@ public with sharing class ArchiveBatch implements Database.Batchable<Id>, Databa
 
     public void execute(Database.BatchableContext BC, List<Id> scope) {
         String objName = scope[0].getSObjectType().getDescribe().getName();
-        List<SObject> records;
+        List<SObject> records = new List<SObject>();
         if (objName == 'Thread__c') {
             records = [SELECT Id, CRM_Account__r.CRM_Person__r.Name, CRM_Account__r.CRM_Person__r.INT_ActorId__c, STO_Sensitive_Information__c, CRM_Theme__c FROM Thread__c WHERE CRM_Thread_Type__c IN ('STO', 'STB', 'BTO') AND CRM_Journal_Status__c= 'Not Journaled' AND Id IN :scope];
         } else if (objName == 'Conversation_Note__c') {
