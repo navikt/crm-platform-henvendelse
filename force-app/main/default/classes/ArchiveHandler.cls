@@ -71,7 +71,10 @@ public inherited sharing class ArchiveHandler {
             );
             archiveObjects.add(inputWrapper);
         }
-        List<ArchiveService.ArchiveResponseWrapper> resp = service.postToArchive(archiveObjects);
+        List<ArchiveService.ArchiveResponseWrapper> resp = new List<ArchiveService.ArchiveResponseWrapper>();
+        if (!Test.isRunningTest()) {
+            resp = service.postToArchive(archiveObjects);
+        }
         List<String> returnStrings = new List<String>();
         for (ArchiveService.ArchiveResponseWrapper archive : resp) {
             returnStrings.add(archive.dokumentasjonId);

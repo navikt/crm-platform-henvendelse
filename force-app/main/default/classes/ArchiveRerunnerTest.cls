@@ -3,7 +3,7 @@ private class ArchiveRerunnerTest {
     @isTest
     static void testRerunFailedArchivation() {
         Test.startTest();
-        ArchiveRerunner.rerunFailedArchivation('ArchiveRerunnerTestResource');
+        ArchiveRerunner.rerunFailedArchivation('ArchiveRerunnerTestResource', 'NKS');
         Test.stopTest();
 
         AsyncApexJob aaj = [SELECT Id, ApexClass.Name, Status FROM AsyncApexJob];
