@@ -5,44 +5,35 @@
  * @last modified on  : 19-06-2023
  * @last modified by  : mamikals
  **/
-public with sharing class ArchiveBatch implements Database.Batchable<sObject>, Database.AllowsCallouts {
-    private final Date startDate;
-    private final Date endDate;
-    private String query;
-    private final String opprettetAv;
+public with sharing class ArchiveBatch implements Database.Batchable<Id>, Database.AllowsCallouts {
+    private List<Id> idsToArchive;
+    private string opprettetAv;
 
-    public ArchiveBatch(String query, String opprettetAv) {
-        this.query = query;
+    public ArchiveBatch(List<Id> idsToArchive, String opprettetAv) {
+        this.idsToArchive = idsToArchive;
         this.opprettetAv = opprettetAv;
         Database.executeBatch(this);
     }
 
-    public ArchiveBatch(Date startDate, Date endDate, String opprettetAv) {
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.opprettetAv = opprettetAv;
-
-        //Starting two batches, one for Conv notes and one for threads.
-        this.query = 'Select Id, CRM_Account__r.CRM_Person__r.INT_ActorId__c, CRM_Account__r.CRM_Person__r.Name, CRM_Theme__c, CRM_Conversation_Note__c from Conversation_note__c where (STO_Sensitive_Information_Date__c  <= :endDate and STO_Sensitive_Information_Date__c  >= :startDate) OR (createddate <= :endDate AND createddate >= :startDate AND CRM_Journal_Status__c = \'Not Journaled\')';
-        Database.executeBatch(this);
-        this.query = 'Select Id, CRM_Account__r.CRM_Person__r.Name, CRM_Account__r.CRM_Person__r.INT_ActorId__c, STO_Sensitive_Information__c, CRM_Theme__c from Thread__c where crm_thread_type__c IN (\'STO\', \'STB\', \'BTO\') AND ((STO_Sensitive_Information_Date__c  <= :endDate and STO_Sensitive_Information_Date__c >= :startDate) OR (CRM_Journal_Status__c=\'Not Journaled\' AND (CRM_Closed_Date__c <= :endDate and CRM_Closed_Date__c  >= :startDate)))';
-        Database.executeBatch(this);
+    public Iterable<Id> start(Database.BatchableContext BC) {
+        return idsToArchive;
     }
 
-    public Database.QueryLocator start(Database.BatchableContext BC) {
-        if (query == null)
-            return null;
-        return Database.getQueryLocator(query);
-    }
+    public void execute(Database.BatchableContext BC, List<Id> scope) {
+        String objName = scope[0].getSObjectType().getDescribe().getName();
+        List<SObject> records = new List<SObject>();
+        if (objName == 'Thread__c') {
+            records = [SELECT Id, CRM_Account__r.CRM_Person__r.Name, CRM_Account__r.CRM_Person__r.INT_ActorId__c, STO_Sensitive_Information__c, CRM_Theme__c FROM Thread__c WHERE CRM_Thread_Type__c IN ('STO', 'STB', 'BTO') AND CRM_Journal_Status__c= 'Not Journaled' AND Id IN :scope];
+        } else if (objName == 'Conversation_Note__c') {
+            records = [SELECT Id, CRM_Account__r.CRM_Person__r.INT_ActorId__c, CRM_Account__r.CRM_Person__r.Name, CRM_Theme__c, CRM_Conversation_Note__c FROM Conversation_Note__c WHERE CRM_Journal_Status__c = 'Not Journaled' AND Id IN :scope];
+        }
 
-    public void execute(Database.BatchableContext BC, List<sObject> scope) {
         List<ArchiveHandler.ArchivePostWrapper> postList = new List<ArchiveHandler.ArchivePostWrapper>();
-        for (sObject obj : scope) {
+        for (SObject obj : records) {
             postList.add(new ArchiveHandler.ArchivePostWrapper(obj, opprettetAv));
         }
         ArchiveHandler.postToArchive(postList);
     }
 
-    public void finish(Database.BatchableContext BC) {
-    }
+    public void finish(Database.BatchableContext BC) {}
 }
