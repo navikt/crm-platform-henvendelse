@@ -8,8 +8,6 @@
                         if:true={isRedacting}
                         object-api-name="Conversation_Note__c"
                         record-id={recordId}
-                        onsuccess={handleSuccess}
-                        onerror={handleError}
                         onsubmit={handleSubmit}
                     >
                         <lightning-spinner
@@ -28,16 +26,6 @@
                                 class="slds-p-left_large"
                             ></lightning-button>
                         </c-crm-redact-text>
-                        <lightning-input-field
-                            class="slds-hide"
-                            value={redactedText}
-                            field-name="CRM_Conversation_Note__c"
-                        ></lightning-input-field>
-                        <lightning-input-field
-                            class="slds-hide"
-                            value={trueValue}
-                            field-name="CRM_Is_Redacted__c"
-                        ></lightning-input-field>
                     </lightning-record-edit-form>
                 </lightning-layout-item>
                 <lightning-layout-item>
