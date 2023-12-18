@@ -2,7 +2,7 @@
 public with sharing class CRM_HenvendelseRedactHelperTest {
     @TestSetup
     static void makeData() {
-        insert new Conversation_Note__c(CRM_Conversation_note__c = 'Skal sladdes');
+        insert new Conversation_Note__c(CRM_Conversation_note__c = 'Skal sladdes', CRM_Is_Redacted__c = false);
     }
 
     @IsTest
@@ -10,7 +10,7 @@ public with sharing class CRM_HenvendelseRedactHelperTest {
         Conversation_Note__c cNote = [
             SELECT Id
             FROM Conversation_note__c
-            WHERE CRM_Conversation_note__c = 'Skal sladdes'
+            WHERE CRM_Is_Redacted__c = FALSE
         ];
         String redactedText = 'Skal *******';
         Test.startTest();
