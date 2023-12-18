@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <classAccesses>
+        <apexClass>CRM_HenvendelseRedactHelper</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>LoggerUtility</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -23,7 +27,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Conversation_Note__c.CRM_Conversation_Note__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -89,11 +93,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Message__c.CRM_Sensitive_Information__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Message__c.CRM_From_Label__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -105,6 +104,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Message__c.CRM_Message_Text__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Message__c.CRM_Sensitive_Information__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
