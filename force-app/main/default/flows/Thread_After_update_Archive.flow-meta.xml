@@ -1,55 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <actionCalls>
-        <name>Post_to_archive</name>
-        <label>Post to archive</label>
-        <locationX>308</locationX>
-        <locationY>288</locationY>
-        <actionName>ArchiveHandler</actionName>
-        <actionType>apex</actionType>
-        <dataTypeMappings>
-            <typeName>T__archiveObject</typeName>
-            <typeValue>Thread__c</typeValue>
-        </dataTypeMappings>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>aktoerid</name>
-            <value>
-                <elementReference>$Record.CRM_Account__r.CRM_Person__r.INT_ActorId__c</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>archiveObject</name>
-            <value>
-                <elementReference>$Record</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>fnr</name>
-            <value>
-                <elementReference>$Record.CRM_Account__r.CRM_Person__r.Name</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>konfidentiellt</name>
-            <value>
-                <elementReference>$Record.STO_Sensitive_Information__c</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>opprettetAv</name>
-            <value>
-                <elementReference>TeamNKS</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>tema</name>
-            <value>
-                <elementReference>$Record.CRM_Theme__c</elementReference>
-            </value>
-        </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
     <apiVersion>53.0</apiVersion>
     <constants>
         <name>TeamNKS</name>
@@ -79,6 +29,34 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Related_Messages</name>
+        <label>Get Related Messages</label>
+        <locationX>308</locationX>
+        <locationY>276</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Subflow_Archive_Record</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CRM_Thread__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Message__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>CRM_Message_Text__c</queriedFields>
+        <queriedFields>CRM_Thread_Type__c</queriedFields>
+        <queriedFields>CRM_Read_Datetime__c</queriedFields>
+        <queriedFields>CRM_Sent_date__c</queriedFields>
+        <queriedFields>CRM_Henvendelse_BehandlingsId__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
@@ -130,11 +108,77 @@
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Post_to_archive</targetReference>
+                <targetReference>Get_Related_Messages</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Subflow_Archive_Record</name>
+        <label>Subflow - Archive Record</label>
+        <locationX>308</locationX>
+        <locationY>384</locationY>
+        <flowName>Subflow_Archive_Record</flowName>
+        <inputAssignments>
+            <name>ActorId</name>
+            <value>
+                <elementReference>$Record.CRM_Account__r.CRM_Person__r.INT_ActorId__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ArchiveData</name>
+            <value>
+                <elementReference>ArchiveData</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Confidential</name>
+            <value>
+                <elementReference>$Record.STO_Sensitive_Information__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Domain</name>
+            <value>
+                <elementReference>TeamNKS</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Fnr</name>
+            <value>
+                <elementReference>$Record.CRM_Account__r.CRM_Person__r.Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ReferenceId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ReferenceObject</name>
+            <value>
+                <stringValue>Thread__c</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>SourceFlow</name>
+            <value>
+                <stringValue>Thread - After Update - Archive</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Theme</name>
+            <value>
+                <elementReference>$Record.CRM_Theme__c</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <textTemplates>
+        <name>ArchiveData</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;Sensitive Information: {!$Record.STO_Sensitive_Information__c}&lt;/p&gt;&lt;p&gt;Messages: {!Get_Related_Messages}&lt;/p&gt;</text>
+    </textTemplates>
 </Flow>

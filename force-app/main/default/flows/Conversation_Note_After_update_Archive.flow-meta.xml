@@ -1,55 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <actionCalls>
-        <name>Post_to_archive</name>
-        <label>Post to archive</label>
-        <locationX>308</locationX>
-        <locationY>288</locationY>
-        <actionName>ArchiveHandler</actionName>
-        <actionType>apex</actionType>
-        <dataTypeMappings>
-            <typeName>T__archiveObject</typeName>
-            <typeValue>Conversation_Note__c</typeValue>
-        </dataTypeMappings>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>aktoerid</name>
-            <value>
-                <elementReference>$Record.CRM_Account__r.CRM_Person__r.INT_ActorId__c</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>archiveObject</name>
-            <value>
-                <elementReference>$Record</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>fnr</name>
-            <value>
-                <elementReference>$Record.CRM_Account__r.CRM_Person__r.Name</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>konfidentiellt</name>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>opprettetAv</name>
-            <value>
-                <elementReference>TeamNKS</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>tema</name>
-            <value>
-                <elementReference>$Record.CRM_Theme__c</elementReference>
-            </value>
-        </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
     <apiVersion>53.0</apiVersion>
     <constants>
         <name>TeamNKS</name>
@@ -95,11 +45,77 @@
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Post_to_archive</targetReference>
+                <targetReference>Subflow_Archive_Record</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Subflow_Archive_Record</name>
+        <label>Subflow - Archive Record</label>
+        <locationX>308</locationX>
+        <locationY>276</locationY>
+        <flowName>Subflow_Archive_Record</flowName>
+        <inputAssignments>
+            <name>ActorId</name>
+            <value>
+                <elementReference>$Record.CRM_Account__r.CRM_Person__r.INT_ActorId__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ArchiveData</name>
+            <value>
+                <elementReference>ArchiveData</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Confidential</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Domain</name>
+            <value>
+                <elementReference>TeamNKS</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Fnr</name>
+            <value>
+                <elementReference>$Record.CRM_Account__r.CRM_Person__r.Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ReferenceId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ReferenceObject</name>
+            <value>
+                <stringValue>Conversation_Note__c</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>SourceFlow</name>
+            <value>
+                <stringValue>Conversation Note - After Update - Archive</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Theme</name>
+            <value>
+                <elementReference>$Record.CRM_Theme__c</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <textTemplates>
+        <name>ArchiveData</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;Sensitive Information: {!$Record.STO_Sensitive_Information__c}&lt;/p&gt;&lt;p&gt;Conversation Note: {!$Record.CRM_Conversation_Note__c}&lt;/p&gt;</text>
+    </textTemplates>
 </Flow>
