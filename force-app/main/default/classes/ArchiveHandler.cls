@@ -6,28 +6,24 @@
  * @last modified by  : mamikals
  **/
 public inherited sharing class ArchiveHandler {
-    @InvocableMethod(
-        label='Post data to archive server'
-        description='Sends all the data of a query to the archive server.'
-    )
-    public static List<String> postToArchive(List<Archive_Entry__c> archiveEntryInputs) {
+    @InvocableMethod(label='Post data to archive server' description='Sends data to the archive server.')
+    public static List<String> postToArchive(List<ArchivePostWrapper> inputs) {
         List<ArchiveRequestWrapper> archiveRecordsToPost = new List<ArchiveRequestWrapper>();
-
-        // TODO: Make sure the queried messages related to Thread are added properly in the thread flow
-        for (Archive_Entry__c archiveEntry : archiveEntryInputs) {
+        for (ArchivePostWrapper input : inputs) {
             ArchiveRequestWrapper reqWrapper = new ArchiveRequestWrapper(
-                archiveEntry.Domain__c,
-                archiveEntry.Actor_Id__c,
-                archiveEntry.Fnr__c,
-                archiveEntry.Orgnr__c,
-                archiveEntry.Theme__c,
-                archiveEntry.Confidential__c,
-                archiveEntry.Documentation_Id__c,
-                archiveEntry.Archive_Data__c,
-                archiveEntry.Reference_Object__c
+                input.opprettetAv,
+                input.aktoerid,
+                input.fnr,
+                input.orgnr,
+                input.tema,
+                input.konfidentiellt,
+                input.dokumentasjonId,
+                input.archiveData,
+                input.referenceObject
             );
             archiveRecordsToPost.add(reqWrapper);
         }
+
         System.debug('archiveRecordsToPost: ' + archiveRecordsToPost);
         List<ArchiveService.ArchiveResponseWrapper> response = new ArchiveService().postToArchive(archiveRecordsToPost);
 
@@ -37,5 +33,56 @@ public inherited sharing class ArchiveHandler {
         }
         System.debug('returnStrings: ' + returnStrings);
         return returnStrings; // TODO: Set status based on response on Archive Entry record (what is dokumentasjonId?)
+    }
+
+    public class ArchivePostWrapper {
+        @invocableVariable(required=true)
+        public String archiveData;
+        @invocableVariable(required=true)
+        public String opprettetAv;
+        @invocableVariable
+        public String aktoerid;
+        @invocableVariable
+        public String fnr;
+        @invocableVariable
+        public String orgnr;
+        @invocableVariable
+        public String tema;
+        @invocableVariable(required=true)
+        public Boolean konfidentiellt;
+        @invocableVariable
+        public String dokumentasjonId;
+        @invocableVariable
+        public String referenceObject;
+        @invocableVariable
+        public String referenceId;
+
+        public ArchivePostWrapper() {
+        }
+
+        @TestVisible
+        public ArchivePostWrapper(
+            String archiveData,
+            String opprettetAv,
+            String aktoerid,
+            String fnr,
+            String orgnr,
+            String tema,
+            Boolean konfidentiellt,
+            String dokumentasjonId,
+            String referenceObject,
+            String referenceId
+        ) {
+            this.archiveData = archiveData;
+            this.opprettetAv = opprettetAv;
+            this.aktoerid = aktoerid;
+            this.fnr = fnr;
+            this.orgnr = orgnr;
+            this.tema = tema;
+            this.konfidentiellt = konfidentiellt;
+            this.dokumentasjonId = dokumentasjonId;
+            this.referenceObject = referenceObject;
+            this.referenceId = referenceId;
+        }
     }
 }
