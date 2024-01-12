@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>54.0</apiVersion>
+    <assignments>
+        <name>Add_Field_Values_To_ArchiveData</name>
+        <label>Add Field Values To ArchiveData</label>
+        <locationX>308</locationX>
+        <locationY>276</locationY>
+        <assignmentItems>
+            <assignToReference>ArchiveData</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Conversation Note Id: </stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ArchiveData</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ArchiveData</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>, CRM_Conversation_Note__c: </stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ArchiveData</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>$Record.CRM_Conversation_Note__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Subflow_Archive_Record</targetReference>
+        </connector>
+    </assignments>
     <constants>
         <name>TeamNKS</name>
         <dataType>String</dataType>
@@ -44,7 +81,7 @@
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Subflow_Archive_Record</targetReference>
+                <targetReference>Add_Field_Values_To_ArchiveData</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -55,7 +92,7 @@
         <name>Subflow_Archive_Record</name>
         <label>Subflow - Archive Record</label>
         <locationX>308</locationX>
-        <locationY>276</locationY>
+        <locationY>384</locationY>
         <flowName>Subflow_Archive_Record</flowName>
         <inputAssignments>
             <name>ActorId</name>
@@ -112,9 +149,11 @@
             </value>
         </inputAssignments>
     </subflows>
-    <textTemplates>
+    <variables>
         <name>ArchiveData</name>
-        <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;Sensitive Information: {!$Record.STO_Sensitive_Information__c}&lt;/p&gt;&lt;p&gt;Conversation Note: {!$Record.CRM_Conversation_Note__c}&lt;/p&gt;</text>
-    </textTemplates>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>
