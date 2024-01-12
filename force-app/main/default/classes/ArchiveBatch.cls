@@ -47,6 +47,7 @@ public with sharing class ArchiveBatch implements Database.Batchable<SObject>, D
             ArchiveService.ArchiveResponseWrapper response = responseByArchiveEntryId.get(archiveEntry.Id)
                 .dokumentasjonId; // TODO: Set correct value to check for err
 
+            // TODO: Decide if better to create Application Log in callout in service class
             if (response != null) {
                 // TODO: Set correct err to check
                 archiveEntry.Status__c = (response.dokumentasjonId == 'HTTP Err') ? 'Failed' : 'Completed';
