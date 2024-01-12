@@ -19,7 +19,8 @@ public inherited sharing class ArchiveHandler {
                 input.konfidentiellt,
                 input.dokumentasjonId,
                 input.archiveData,
-                input.referenceObject
+                input.referenceObject,
+                input.referenceId
             );
             archiveRecordsToPost.add(reqWrapper);
         }
