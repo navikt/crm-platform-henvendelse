@@ -28,12 +28,12 @@ public inherited sharing class ArchiveHandler {
         System.debug('archiveRecordsToPost: ' + archiveRecordsToPost);
         List<ArchiveService.ArchiveResponseWrapper> response = new ArchiveService().postToArchive(archiveRecordsToPost);
 
-        List<String> returnStrings = new List<String>();
+        List<String> documentationIdResponses = new List<String>(); // The API returns documentationId attribute on success
         for (ArchiveService.ArchiveResponseWrapper archiveResponse : response) {
-            returnStrings.add(archiveResponse.dokumentasjonId);
+            documentationIdResponses.add(archiveResponse.dokumentasjonId);
         }
-        System.debug('returnStrings: ' + returnStrings);
-        return returnStrings; // TODO: Set status based on response on Archive Entry record (what is dokumentasjonId?)
+        System.debug('documentationIdResponses: ' + documentationIdResponses);
+        return documentationIdResponses;
     }
 
     public class ArchivePostWrapper {

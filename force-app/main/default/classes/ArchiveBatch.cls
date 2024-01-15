@@ -52,12 +52,10 @@ public with sharing class ArchiveBatch implements Database.Batchable<SObject>, D
 
         // Update Archive Entry status based on response
         for (Archive_Entry__c archiveEntry : scope) {
-            ArchiveService.ArchiveResponseWrapper response = responseByArchiveEntryId.get(archiveEntry.Id)
-                .dokumentasjonId; // TODO: Set correct value to check for err
+            ArchiveService.ArchiveResponseWrapper response = responseByArchiveEntryId.get(archiveEntry.Id);
 
             if (response != null) {
-                // TODO: Set correct err to check
-                archiveEntry.Status__c = (response.dokumentasjonId == 'HTTP Err') ? 'Failed' : 'Completed';
+                archiveEntry.Status__c = (response.dokumentasjonId != null) ? 'Completed' : 'Failed';
                 archiveEntry.Archived_Date__c = (archiveEntry.Status__c == 'Completed') ? System.now() : null;
                 archiveEntriesToUpdate.add(archiveEntry);
             }
