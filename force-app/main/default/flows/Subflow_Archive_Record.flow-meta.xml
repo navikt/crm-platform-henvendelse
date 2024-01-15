@@ -188,6 +188,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Documentation_Id__c</field>
+            <value>
+                <elementReference>ArchiveResponse</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Domain__c</field>
             <value>
                 <elementReference>Domain</elementReference>
