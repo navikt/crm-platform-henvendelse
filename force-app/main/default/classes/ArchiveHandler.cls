@@ -19,20 +19,17 @@ public inherited sharing class ArchiveHandler {
                 input.konfidentiellt,
                 input.dokumentasjonId,
                 input.archiveData,
-                input.referenceObject,
-                input.referenceId
+                input.referenceId,
+                input.referenceObject
             );
             archiveRecordsToPost.add(reqWrapper);
         }
 
-        System.debug('archiveRecordsToPost: ' + archiveRecordsToPost);
         List<ArchiveService.ArchiveResponseWrapper> response = new ArchiveService().postToArchive(archiveRecordsToPost);
-
         List<String> documentationIdResponses = new List<String>(); // The API returns documentationId attribute on success
         for (ArchiveService.ArchiveResponseWrapper archiveResponse : response) {
             documentationIdResponses.add(archiveResponse.dokumentasjonId);
         }
-        System.debug('documentationIdResponses: ' + documentationIdResponses);
         return documentationIdResponses;
     }
 
@@ -54,9 +51,9 @@ public inherited sharing class ArchiveHandler {
         @invocableVariable
         public String dokumentasjonId;
         @invocableVariable
-        public String referenceObject;
-        @invocableVariable
         public String referenceId;
+        @invocableVariable
+        public String referenceObject;
 
         public ArchivePostWrapper() {
         }
@@ -71,8 +68,8 @@ public inherited sharing class ArchiveHandler {
             String tema,
             Boolean konfidentiellt,
             String dokumentasjonId,
-            String referenceObject,
-            String referenceId
+            String referenceId,
+            String referenceObject
         ) {
             this.archiveData = archiveData;
             this.opprettetAv = opprettetAv;
@@ -82,8 +79,8 @@ public inherited sharing class ArchiveHandler {
             this.tema = tema;
             this.konfidentiellt = konfidentiellt;
             this.dokumentasjonId = dokumentasjonId;
-            this.referenceObject = referenceObject;
             this.referenceId = referenceId;
+            this.referenceObject = referenceObject;
         }
     }
 }
