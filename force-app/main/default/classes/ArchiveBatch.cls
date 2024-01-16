@@ -6,7 +6,7 @@
  * @last modified by  : mamikals
  **/
 public with sharing class ArchiveBatch implements Database.Batchable<SObject>, Database.AllowsCallouts, Schedulable {
-    private String query = 'SELECT Id, Name, Actor_Id__c, Confidential__c, Documentation_Id__c, Domain__c, Fnr__c, Orgnr__c, Reference_Id__c, Reference_Object__c, Status__c, Theme__c, Archive_Data__c FROM Archive_Entry__c WHERE Status = \'Failed\'';
+    private String query = 'SELECT Id, Reference_Id__c, Reference_Object__c, Actor_Id__c, Confidential__c, Documentation_Id__c, Domain__c, Fnr__c, Orgnr__c, Status__c, Theme__c, Archive_Data__c FROM Archive_Entry__c WHERE Status__c = \'Failed\'';
     private static LoggerUtility logger = new LoggerUtility('NKS');
 
     public Database.QueryLocator start(Database.BatchableContext BC) {
@@ -15,7 +15,7 @@ public with sharing class ArchiveBatch implements Database.Batchable<SObject>, D
 
     public void execute(Database.BatchableContext BC, List<Archive_Entry__c> scope) {
         List<Archive_Entry__c> archiveEntriesToUpdate = new List<Archive_Entry__c>();
-        Map<Id, ArchiveService.ArchiveResponseWrapper> responseByArchiveEntryId = new Map<Id, ArchiveService.ArchiveResponseWrapper>();
+        Map<String, List<ArchiveService.ArchiveResponseWrapper>> responseByArchiveEntryId = new Map<String, List<ArchiveService.ArchiveResponseWrapper>>();
 
         // Collect data for callouts
         List<ArchiveRequestWrapper> archiveRecordsToPost = new List<ArchiveRequestWrapper>();
@@ -29,8 +29,8 @@ public with sharing class ArchiveBatch implements Database.Batchable<SObject>, D
                 archiveEntry.Confidential__c,
                 archiveEntry.Documentation_Id__c,
                 archiveEntry.Archive_Data__c,
-                archiveEntry.Reference_Object__c,
-                archiveEntry.Reference_Id__c
+                archiveEntry.Reference_Id__c,
+                archiveEntry.Reference_Object__c
             );
             archiveRecordsToPost.add(reqWrapper);
         }
@@ -40,7 +40,7 @@ public with sharing class ArchiveBatch implements Database.Batchable<SObject>, D
         for (ArchiveRequestWrapper archiveRequest : archiveRecordsToPost) {
             try {
                 responseByArchiveEntryId.put(
-                    archiveRequest.Reference_Id__c,
+                    archiveRequest.referenceId,
                     new ArchiveService().postToArchive(archiveRequest)
                 );
             } catch (Exception e) {
@@ -52,7 +52,8 @@ public with sharing class ArchiveBatch implements Database.Batchable<SObject>, D
 
         // Update Archive Entry status based on response
         for (Archive_Entry__c archiveEntry : scope) {
-            ArchiveService.ArchiveResponseWrapper response = responseByArchiveEntryId.get(archiveEntry.Id);
+            ArchiveService.ArchiveResponseWrapper response = responseByArchiveEntryId.get(archiveEntry.Reference_Id__c)
+                ?.get(0);
 
             if (response != null) {
                 archiveEntry.Status__c = (response.dokumentasjonId != null) ? 'Completed' : 'Failed';
@@ -68,7 +69,7 @@ public with sharing class ArchiveBatch implements Database.Batchable<SObject>, D
     }
 
     //Schedulable
-    global void execute(System.SchedulableContext schContext) {
+    public void execute(System.SchedulableContext schContext) {
         Database.executeBatch(new ArchiveBatch(), 10);
     }
 
