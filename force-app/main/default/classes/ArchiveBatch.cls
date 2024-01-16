@@ -35,28 +35,19 @@ public with sharing class ArchiveBatch implements Database.Batchable<SObject>, D
             archiveRecordsToPost.add(reqWrapper);
         }
 
-        // TODO: Send in list or send 1 by 1 to get unique response per record?
-        // Map Archive Entry Id with Response
-        for (ArchiveRequestWrapper archiveRequest : archiveRecordsToPost) {
-            try {
-                responseByArchiveEntryId.put(
-                    archiveRequest.referenceId,
-                    new ArchiveService().postToArchive(archiveRequest)
-                );
-            } catch (Exception e) {
-                logger.error(e.getMessage(), null, CRM_ApplicationDomain.Domain.NKS);
-            } finally {
-                logger.publish();
-            }
+        List<ArchiveService.ArchiveResponseWrapper> response;
+        try {
+            response = new ArchiveService().postToArchive(archiveRecordsToPost);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), null, CRM_ApplicationDomain.Domain.NKS);
+        } finally {
+            logger.publish();
         }
 
         // Update Archive Entry status based on response
         for (Archive_Entry__c archiveEntry : scope) {
-            ArchiveService.ArchiveResponseWrapper response = responseByArchiveEntryId.get(archiveEntry.Reference_Id__c)
-                ?.get(0);
-
             if (response != null) {
-                archiveEntry.Status__c = (response.dokumentasjonId != null) ? 'Completed' : 'Failed';
+                archiveEntry.Status__c = (response[0].dokumentasjonId != null) ? 'Completed' : 'Failed';
                 archiveEntry.Archived_Date__c = (archiveEntry.Status__c == 'Completed') ? System.now() : null;
                 archiveEntriesToUpdate.add(archiveEntry);
             }
