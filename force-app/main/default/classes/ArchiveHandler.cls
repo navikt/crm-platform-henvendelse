@@ -50,7 +50,7 @@ public inherited sharing class ArchiveHandler {
         public Boolean konfidentiellt;
         @invocableVariable
         public String dokumentasjonId;
-        @invocableVariable
+        @invocableVariable(required=true)
         public String referenceId;
         @invocableVariable
         public String referenceObject;
