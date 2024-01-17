@@ -6,7 +6,7 @@
  * @last modified by  : mamikals
  **/
 public with sharing class ArchiveBatch implements Database.Batchable<SObject>, Database.AllowsCallouts, Schedulable {
-    private String query = 'SELECT Id, Reference_Id__c, Reference_Object__c, Actor_Id__c, Confidential__c, Documentation_Id__c, Domain__c, Fnr__c, Orgnr__c, Status__c, Theme__c, Archive_Data__c FROM Archive_Entry__c WHERE Status__c = \'Failed\'';
+    private String query = 'SELECT Id, Reference_Object__c, Actor_Id__c, Confidential__c, Documentation_Id__c, Domain__c, Fnr__c, Orgnr__c, Status__c, Theme__c, Archive_Data__c FROM Archive_Entry__c WHERE Status__c = \'Failed\'';
     private static LoggerUtility logger = new LoggerUtility('NKS');
 
     public Database.QueryLocator start(Database.BatchableContext BC) {
@@ -29,7 +29,6 @@ public with sharing class ArchiveBatch implements Database.Batchable<SObject>, D
                 archiveEntry.Confidential__c,
                 archiveEntry.Documentation_Id__c,
                 archiveEntry.Archive_Data__c,
-                archiveEntry.Reference_Id__c,
                 archiveEntry.Reference_Object__c
             );
             archiveRecordsToPost.add(reqWrapper);

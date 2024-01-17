@@ -45,12 +45,6 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>referenceId</name>
-            <value>
-                <elementReference>ReferenceId</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
             <name>referenceObject</name>
             <value>
                 <elementReference>ReferenceObject</elementReference>

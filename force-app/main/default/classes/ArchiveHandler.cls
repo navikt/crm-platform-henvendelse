@@ -19,7 +19,6 @@ public inherited sharing class ArchiveHandler {
                 input.konfidentiellt,
                 input.dokumentasjonId,
                 input.archiveData,
-                input.referenceId,
                 input.referenceObject
             );
             archiveRecordsToPost.add(reqWrapper);
@@ -50,8 +49,6 @@ public inherited sharing class ArchiveHandler {
         public Boolean konfidentiellt;
         @invocableVariable
         public String dokumentasjonId;
-        @invocableVariable(required=true)
-        public String referenceId;
         @invocableVariable
         public String referenceObject;
 
@@ -68,7 +65,6 @@ public inherited sharing class ArchiveHandler {
             String tema,
             Boolean konfidentiellt,
             String dokumentasjonId,
-            String referenceId,
             String referenceObject
         ) {
             this.archiveData = archiveData;
@@ -79,7 +75,6 @@ public inherited sharing class ArchiveHandler {
             this.tema = tema;
             this.konfidentiellt = konfidentiellt;
             this.dokumentasjonId = dokumentasjonId;
-            this.referenceId = referenceId;
             this.referenceObject = referenceObject;
         }
     }
