@@ -39,7 +39,7 @@ public with sharing class ArchiveBatch implements Database.Batchable<SObject>, D
         try {
             response = new ArchiveService().postToArchive(archiveRecordsToPost);
         } catch (Exception e) {
-            logger.error(e.getMessage(), null, CRM_ApplicationDomain.Domain.NKS);
+            logger.error(e.getMessage() + '. ' + e.getStackTraceString(), null, CRM_ApplicationDomain.Domain.NKS);
         } finally {
             logger.publish();
         }
@@ -61,9 +61,18 @@ public with sharing class ArchiveBatch implements Database.Batchable<SObject>, D
 
     //Schedulable
     public void execute(System.SchedulableContext schContext) {
-        Database.executeBatch(new ArchiveBatch(), 10);
+        ArchiveBatch batch = new ArchiveBatch();
+        Database.executebatch(batch, 10);
     }
 
     public void finish(Database.BatchableContext BC) {
+        if (!Test.isRunningTest()) {
+            try {
+                System.scheduleBatch(new ArchiveBatch(), 'ArchiveBatch', 1440, 10);
+            } catch (Exception e) {
+                logger.exception(e, CRM_ApplicationDomain.Domain.NKS);
+                logger.publishSynch();
+            }
+        }
     }
 }
