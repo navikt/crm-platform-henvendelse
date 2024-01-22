@@ -6,20 +6,27 @@
  * @last modified by  : mamikals
  **/
 public with sharing class ArchiveBatch implements Database.Batchable<SObject>, Database.AllowsCallouts, Schedulable {
-    private String query = 'SELECT Id, Reference_Object__c, Actor_Id__c, Confidential__c, Documentation_Id__c, Domain__c, Fnr__c, Orgnr__c, Status__c, Theme__c, Archive_Data__c FROM Archive_Entry__c WHERE Status__c = \'Failed\' AND Domain__c = \'NKS\'';
-    private static LoggerUtility logger = new LoggerUtility('NKS');
+    private String domain;
+    private LoggerUtility logger;
+
+    public ArchiveBatch(String domain) {
+        this.domain = domain;
+        this.logger = new LoggerUtility(domain);
+    }
 
     /*Schedulable
         Scheduled for every day at 23:00 by running the following in dev console:
         String cronExp = '0 0 23 * * ?';
-        System.schedule('ArchiveBatch', cronExp, new ArchiveBatch());
+        System.schedule('ArchiveBatch', cronExp, new ArchiveBatch('domain'));
+        Make sure to set correct domain param
     */
     public void execute(System.SchedulableContext schContext) {
-        ArchiveBatch batch = new ArchiveBatch();
+        ArchiveBatch batch = new ArchiveBatch(domain);
         Database.executebatch(batch, 10);
     }
 
     public Database.QueryLocator start(Database.BatchableContext BC) {
+        String query = 'SELECT Id, Reference_Object__c, Actor_Id__c, Confidential__c, Documentation_Id__c, Domain__c, Fnr__c, Orgnr__c, Status__c, Theme__c, Archive_Data__c FROM Archive_Entry__c WHERE Status__c = \'Failed\' AND Domain__c = :domain';
         return Database.getQueryLocator(query);
     }
 

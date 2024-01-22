@@ -16,7 +16,7 @@ private class ArchiveBatch_Test {
         ApiMock.setTestMock('POST_ARCHIVE', 201, 'Created');
 
         Test.startTest();
-        Id batchJobId = Database.executeBatch(new ArchiveBatch());
+        Id batchJobId = Database.executeBatch(new ArchiveBatch('NKS'));
         Test.stopTest();
 
         AsyncApexJob aaj = [SELECT Id, ApexClass.Name, Status FROM AsyncApexJob WHERE Id = :batchJobId];
@@ -32,7 +32,7 @@ private class ArchiveBatch_Test {
         String cron_exp = '0 0 0 3 9 ? 2030';
 
         Test.startTest();
-        String jobId = System.schedule('ArchiveBatch', cron_exp, new ArchiveBatch());
+        String jobId = System.schedule('ArchiveBatch', cron_exp, new ArchiveBatch('NKS'));
         Test.stopTest();
         Assert.areNotEqual(null, jobId, 'Job id was null');
     }
