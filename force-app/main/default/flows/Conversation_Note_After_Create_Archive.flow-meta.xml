@@ -1,41 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Convert_Conversation_Note_to_JSON</name>
+        <label>Convert Conversation Note to JSON</label>
+        <locationX>308</locationX>
+        <locationY>384</locationY>
+        <actionName>ArchiveHelper</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Subflow_Archive_Record</targetReference>
+        </connector>
+        <dataTypeMappings>
+            <typeName>T__recordsList</typeName>
+            <typeValue>Conversation_Note__c</typeValue>
+        </dataTypeMappings>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordsList</name>
+            <value>
+                <elementReference>ConversationNote</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>ArchiveData</assignToReference>
+            <name>output</name>
+        </outputParameters>
+    </actionCalls>
     <apiVersion>54.0</apiVersion>
     <assignments>
-        <name>Add_Field_Values_To_ArchiveData</name>
-        <label>Add Field Values To ArchiveData</label>
+        <name>Set_Conversation_Note_as_list</name>
+        <label>Set Conversation Note as list</label>
         <locationX>308</locationX>
         <locationY>276</locationY>
         <assignmentItems>
-            <assignToReference>ArchiveData</assignToReference>
+            <assignToReference>ConversationNote</assignToReference>
             <operator>Add</operator>
             <value>
-                <stringValue>Conversation Note Id: </stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ArchiveData</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ArchiveData</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>, CRM_Conversation_Note__c: </stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ArchiveData</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>$Record.CRM_Conversation_Note__c</elementReference>
+                <elementReference>$Record</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Subflow_Archive_Record</targetReference>
+            <targetReference>Convert_Conversation_Note_to_JSON</targetReference>
         </connector>
     </assignments>
     <constants>
@@ -81,7 +86,7 @@
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Add_Field_Values_To_ArchiveData</targetReference>
+                <targetReference>Set_Conversation_Note_as_list</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -92,7 +97,7 @@
         <name>Subflow_Archive_Record</name>
         <label>Subflow - Archive Record</label>
         <locationX>308</locationX>
-        <locationY>384</locationY>
+        <locationY>492</locationY>
         <flowName>Subflow_Archive_Record</flowName>
         <inputAssignments>
             <name>ActorId</name>
@@ -155,5 +160,13 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ConversationNote</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Conversation_Note__c</objectType>
     </variables>
 </Flow>

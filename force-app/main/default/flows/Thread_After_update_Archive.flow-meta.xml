@@ -1,129 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Convert_Messages_to_JSON</name>
+        <label>Convert Messages to JSON</label>
+        <locationX>308</locationX>
+        <locationY>384</locationY>
+        <actionName>ArchiveHelper</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Subflow_Archive_Record</targetReference>
+        </connector>
+        <dataTypeMappings>
+            <typeName>T__recordsList</typeName>
+            <typeValue>Message__c</typeValue>
+        </dataTypeMappings>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordsList</name>
+            <value>
+                <elementReference>Get_Related_Messages</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>ArchiveData</assignToReference>
+            <name>output</name>
+        </outputParameters>
+    </actionCalls>
     <apiVersion>53.0</apiVersion>
-    <assignments>
-        <name>Add_Relevant_Fields_To_ArchiveData_Variable</name>
-        <label>Add Relevant Fields To ArchiveData Variable</label>
-        <locationX>440</locationX>
-        <locationY>600</locationY>
-        <assignmentItems>
-            <assignToReference>ArchiveData</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>, Message Name: </stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ArchiveData</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Loop_Messages.Name</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ArchiveData</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>, CRM_Message_Text__c: </stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ArchiveData</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Loop_Messages.CRM_Message_Text__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ArchiveData</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>, CRM_Thread_Type__c: </stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ArchiveData</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Loop_Messages.CRM_Thread_Type__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ArchiveData</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>, CRM_Read_DateTime__c: </stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ArchiveData</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Loop_Messages.CRM_Read_Datetime__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ArchiveData</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>, CRM_Sent_Date__c: </stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ArchiveData</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Loop_Messages.CRM_Sent_date__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ArchiveData</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>, CRM_Henvendelse_BehandlingsId__c: </stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ArchiveData</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Loop_Messages.CRM_Henvendelse_BehandlingsId__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ArchiveData</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>, </stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Loop_Messages</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Add_Thread_Fields_To_ArchiveData</name>
-        <label>Add Thread Fields To ArchiveData</label>
-        <locationX>352</locationX>
-        <locationY>276</locationY>
-        <assignmentItems>
-            <assignToReference>ArchiveData</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>Thread Id: </stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ArchiveData</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Get_Related_Messages</targetReference>
-        </connector>
-    </assignments>
     <constants>
         <name>TeamNKS</name>
         <dataType>String</dataType>
@@ -133,20 +36,6 @@
     </constants>
     <interviewLabel>Thread - After update - Archive {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Thread - After update - Archive</label>
-    <loops>
-        <name>Loop_Messages</name>
-        <label>Loop Messages</label>
-        <locationX>352</locationX>
-        <locationY>492</locationY>
-        <collectionReference>Get_Related_Messages</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Add_Relevant_Fields_To_ArchiveData_Variable</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Subflow_Archive_Record</targetReference>
-        </noMoreValuesConnector>
-    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -169,11 +58,11 @@
     <recordLookups>
         <name>Get_Related_Messages</name>
         <label>Get Related Messages</label>
-        <locationX>352</locationX>
-        <locationY>384</locationY>
+        <locationX>308</locationX>
+        <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Loop_Messages</targetReference>
+            <targetReference>Convert_Messages_to_JSON</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -245,7 +134,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Add_Thread_Fields_To_ArchiveData</targetReference>
+                <targetReference>Get_Related_Messages</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -255,8 +144,8 @@
     <subflows>
         <name>Subflow_Archive_Record</name>
         <label>Subflow - Archive Record</label>
-        <locationX>352</locationX>
-        <locationY>792</locationY>
+        <locationX>308</locationX>
+        <locationY>492</locationY>
         <flowName>Subflow_Archive_Record</flowName>
         <inputAssignments>
             <name>ActorId</name>

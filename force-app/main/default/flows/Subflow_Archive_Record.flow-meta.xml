@@ -4,14 +4,14 @@
         <name>Send_To_Archive</name>
         <label>Send To Archive</label>
         <locationX>182</locationX>
-        <locationY>134</locationY>
+        <locationY>242</locationY>
         <actionName>ArchiveHandler</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Check_Success</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Create_Archive_Entry_Failed</targetReference>
+            <targetReference>Set_Status_Failed</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -62,13 +62,133 @@
         </outputParameters>
     </actionCalls>
     <apiVersion>59.0</apiVersion>
+    <assignments>
+        <name>Set_Archive_Entry_fields</name>
+        <label>Set Archive Entry fields</label>
+        <locationX>182</locationX>
+        <locationY>134</locationY>
+        <assignmentItems>
+            <assignToReference>ArchiveEntry.Actor_Id__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ActorId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ArchiveEntry.Archive_Data__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ArchiveData</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ArchiveEntry.Confidential__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Confidential</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ArchiveEntry.Domain__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Domain</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ArchiveEntry.Fnr__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Fnr</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ArchiveEntry.Reference_Id__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ReferenceId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ArchiveEntry.Reference_Object__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ReferenceObject</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ArchiveEntry.Theme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Theme</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Send_To_Archive</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Completed_and_Date</name>
+        <label>Set Completed and Date</label>
+        <locationX>50</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>ArchiveEntry.Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ArchiveEntry.Archived_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Archive_Entry</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Status_Failed</name>
+        <label>Set Status Failed</label>
+        <locationX>578</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>ArchiveEntry.Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Failed</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Application_Log</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Status_Failed2</name>
+        <label>Set Status Failed</label>
+        <locationX>314</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>ArchiveEntry.Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Failed</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Archive_Entry</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Check_Success</name>
         <label>Check Success</label>
         <locationX>182</locationX>
-        <locationY>242</locationY>
+        <locationY>350</locationY>
         <defaultConnector>
-            <targetReference>Create_Archive_Entry_Failed_On_Bad_Response</targetReference>
+            <targetReference>Set_Status_Failed2</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Response Not OK</defaultConnectorLabel>
         <rules>
@@ -82,7 +202,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_Archive_Entry_Completed</targetReference>
+                <targetReference>Set_Completed_and_Date</targetReference>
             </connector>
             <label>Response OK</label>
         </rules>
@@ -112,7 +232,11 @@
         <name>Create_Application_Log</name>
         <label>Create Application Log</label>
         <locationX>578</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Create_Archive_Entry</targetReference>
+        </connector>
         <inputAssignments>
             <field>Application_Domain__c</field>
             <value>
@@ -159,206 +283,18 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordCreates>
-        <name>Create_Archive_Entry_Completed</name>
-        <label>Create Archive Entry Completed</label>
-        <locationX>50</locationX>
-        <locationY>350</locationY>
-        <inputAssignments>
-            <field>Actor_Id__c</field>
-            <value>
-                <elementReference>ActorId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Archive_Data__c</field>
-            <value>
-                <elementReference>ArchiveData</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Confidential__c</field>
-            <value>
-                <elementReference>Confidential</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Documentation_Id__c</field>
-            <value>
-                <elementReference>ArchiveResponse</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Domain__c</field>
-            <value>
-                <elementReference>Domain</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Fnr__c</field>
-            <value>
-                <elementReference>Fnr</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Reference_Id__c</field>
-            <value>
-                <elementReference>ReferenceId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Reference_Object__c</field>
-            <value>
-                <elementReference>ReferenceObject</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Status__c</field>
-            <value>
-                <stringValue>Completed</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Theme__c</field>
-            <value>
-                <elementReference>Theme</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Archive_Entry__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
-    <recordCreates>
-        <name>Create_Archive_Entry_Failed</name>
-        <label>Create Archive Entry Failed</label>
-        <locationX>578</locationX>
-        <locationY>242</locationY>
-        <connector>
-            <targetReference>Create_Application_Log</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>Actor_Id__c</field>
-            <value>
-                <elementReference>ActorId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Archive_Data__c</field>
-            <value>
-                <elementReference>ArchiveData</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Confidential__c</field>
-            <value>
-                <elementReference>Confidential</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Domain__c</field>
-            <value>
-                <elementReference>Domain</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Fnr__c</field>
-            <value>
-                <elementReference>Fnr</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Reference_Id__c</field>
-            <value>
-                <elementReference>ReferenceId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Reference_Object__c</field>
-            <value>
-                <elementReference>ReferenceObject</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Status__c</field>
-            <value>
-                <stringValue>Failed</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Theme__c</field>
-            <value>
-                <elementReference>Theme</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Archive_Entry__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
-    <recordCreates>
-        <name>Create_Archive_Entry_Failed_On_Bad_Response</name>
-        <label>Create Archive Entry Failed</label>
-        <locationX>314</locationX>
-        <locationY>350</locationY>
-        <inputAssignments>
-            <field>Actor_Id__c</field>
-            <value>
-                <elementReference>ActorId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Archive_Data__c</field>
-            <value>
-                <elementReference>ArchiveData</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Confidential__c</field>
-            <value>
-                <elementReference>Confidential</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Domain__c</field>
-            <value>
-                <elementReference>Domain</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Fnr__c</field>
-            <value>
-                <elementReference>Fnr</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Reference_Id__c</field>
-            <value>
-                <elementReference>ReferenceId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Reference_Object__c</field>
-            <value>
-                <elementReference>ReferenceObject</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Status__c</field>
-            <value>
-                <stringValue>Failed</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Theme__c</field>
-            <value>
-                <elementReference>Theme</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Archive_Entry__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <name>Create_Archive_Entry</name>
+        <label>Create Archive Entry</label>
+        <locationX>182</locationX>
+        <locationY>650</locationY>
+        <inputReference>ArchiveEntry</inputReference>
     </recordCreates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
         <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Send_To_Archive</targetReference>
+            <targetReference>Set_Archive_Entry_fields</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -375,6 +311,14 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ArchiveEntry</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Archive_Entry__c</objectType>
     </variables>
     <variables>
         <name>ArchiveEntryRecordId</name>
