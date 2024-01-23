@@ -4,7 +4,7 @@
         <name>Generate_Document</name>
         <label>Generate Document</label>
         <locationX>446</locationX>
-        <locationY>638</locationY>
+        <locationY>566</locationY>
         <actionName>CRM_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -33,7 +33,7 @@
         <name>Post_Journal_Request</name>
         <label>Post Journal Request</label>
         <locationX>446</locationX>
-        <locationY>1238</locationY>
+        <locationY>1106</locationY>
         <actionName>CRM_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -72,7 +72,7 @@
         <name>Assign_Journal_Documents</name>
         <label>Assign Journal Documents</label>
         <locationX>446</locationX>
-        <locationY>878</locationY>
+        <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>Journal_Documents.dokumentvarianter</assignToReference>
             <operator>Add</operator>
@@ -109,7 +109,7 @@
         <name>Assign_Journal_Entry_Default_data</name>
         <label>Assign Journal Entry Default data</label>
         <locationX>446</locationX>
-        <locationY>1814</locationY>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.CRM_Created_By_Ident__c</assignToReference>
             <operator>Assign</operator>
@@ -175,7 +175,7 @@
         <name>Document_Variant_Assignment</name>
         <label>Document Variant Assignment</label>
         <locationX>446</locationX>
-        <locationY>758</locationY>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>Document_Variant_PDF.filtype</assignToReference>
             <operator>Assign</operator>
@@ -206,7 +206,7 @@
         <name>Journal_Request_Assignment</name>
         <label>Journal Request Assignment</label>
         <locationX>446</locationX>
-        <locationY>1118</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>Journal_Request.tittel</assignToReference>
             <operator>Assign</operator>
@@ -279,7 +279,7 @@
         <name>Journal_Sak_Assignment</name>
         <label>Journal Sak Assignment</label>
         <locationX>446</locationX>
-        <locationY>998</locationY>
+        <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>Journal_Sak.fagsakId</assignToReference>
             <operator>Assign</operator>
@@ -309,7 +309,7 @@
         <name>Set_Post_Completed</name>
         <label>Set Post Completed</label>
         <locationX>314</locationX>
-        <locationY>1478</locationY>
+        <locationY>1322</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -339,7 +339,7 @@
         <name>Set_Post_Failed</name>
         <label>Set Post Failed</label>
         <locationX>578</locationX>
-        <locationY>1478</locationY>
+        <locationY>1322</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -363,7 +363,7 @@
         <name>Update_Conversation_Note_Categorization</name>
         <label>Update Conversation Note Categorization</label>
         <locationX>446</locationX>
-        <locationY>1934</locationY>
+        <locationY>1730</locationY>
         <assignmentItems>
             <assignToReference>JOURNALED_CONV_NOTE.CRM_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
@@ -387,7 +387,7 @@
         <name>Check_Journal_Entries</name>
         <label>Check Journal Entries</label>
         <locationX>776</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <defaultConnectorLabel>Entry Exists</defaultConnectorLabel>
         <rules>
             <name>Entry_Exists</name>
@@ -409,7 +409,7 @@
         <name>Check_Post_State</name>
         <label>Check Post State</label>
         <locationX>446</locationX>
-        <locationY>1358</locationY>
+        <locationY>1214</locationY>
         <defaultConnector>
             <targetReference>Set_Post_Failed</targetReference>
         </defaultConnector>
@@ -435,7 +435,7 @@
         <name>DML_Check</name>
         <label>DML Check</label>
         <locationX>446</locationX>
-        <locationY>2054</locationY>
+        <locationY>1838</locationY>
         <defaultConnectorLabel>No DML</defaultConnectorLabel>
         <rules>
             <name>Do_DML</name>
@@ -457,7 +457,12 @@
     <formulas>
         <name>Document_Title</name>
         <dataType>String</dataType>
-        <expression>&apos;Samtale med NAV - &apos; + LPAD(TEXT(DAY(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c}))),2,&apos;0&apos;) + &apos;.&apos; + LPAD(TEXT(MONTH(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c}))),2,&apos;0&apos;) + &apos;.&apos; + TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))</expression>
+        <expression>&apos;Samtale med NAV - &apos; + 
+LPAD(TEXT(DAY(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c}))),2,&apos;0&apos;) + &apos;.&apos; + 
+LPAD(TEXT(MONTH(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c}))),2,&apos;0&apos;) + &apos;.&apos; + 
+TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c}))) + 
+&apos; - &apos; + 
+{!JOURNALED_CONV_NOTE.CRM_Theme__c}</expression>
     </formulas>
     <formulas>
         <description>Better null/blank handling for passing this value to apex</description>
@@ -503,7 +508,7 @@
         <name>Create_Journal_Entry</name>
         <label>Create Journal Entry</label>
         <locationX>50</locationX>
-        <locationY>2174</locationY>
+        <locationY>1946</locationY>
         <connector>
             <targetReference>Update_Conversation_Note</targetReference>
         </connector>
@@ -517,7 +522,7 @@
         <name>Get_Account_Info</name>
         <label>Get Account Info</label>
         <locationX>446</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Generate_Document</targetReference>
@@ -538,7 +543,7 @@
         <name>Get_Existing_Journal_Entries</name>
         <label>Get Existing Journal Entries</label>
         <locationX>776</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Journal_Entries</targetReference>
@@ -574,7 +579,7 @@
         <name>Get_Necessary_Record_Info</name>
         <label>Get Necessary Record Info</label>
         <locationX>446</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Account_Info</targetReference>
@@ -597,7 +602,7 @@
         <name>Get_SF_Theme_Common_Code</name>
         <label>Get SF Theme Common Code</label>
         <locationX>446</locationX>
-        <locationY>1694</locationY>
+        <locationY>1514</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_Journal_Entry_Default_data</targetReference>
@@ -628,7 +633,7 @@
         <name>Update_Conversation_Note</name>
         <label>Update Conversation Note</label>
         <locationX>50</locationX>
-        <locationY>2294</locationY>
+        <locationY>2054</locationY>
         <faultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Log_Error</targetReference>
@@ -648,7 +653,7 @@
         <name>Log_Error</name>
         <label>Log Error</label>
         <locationX>578</locationX>
-        <locationY>2294</locationY>
+        <locationY>2054</locationY>
         <flowName>Flow_Create_Application_Log</flowName>
         <inputAssignments>
             <name>Application_Domain</name>
