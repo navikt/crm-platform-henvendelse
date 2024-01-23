@@ -421,8 +421,8 @@
         <name>Document_Title</name>
         <dataType>String</dataType>
         <expression>IF({!JOURNALED_THREAD.CRM_isActive__c} == true,
-&apos;Pågående samtale med NAV - &apos; + {!THREAD_START_DATE} + &apos; - &apos; + {!JOURNALED_THREAD.CRM_Theme__c},
-&apos;Samtale med NAV - &apos; + {!THREAD_CLOSE_DATE} + &apos; - &apos; + {!JOURNALED_THREAD.CRM_Theme__c}
+&apos;Pågående samtale med NAV - &apos; + {!THREAD_START_DATE} + &apos; - &apos; + {!JOURNALED_THREAD.CRM_Theme_Name__c},
+&apos;Samtale med NAV - &apos; + {!THREAD_CLOSE_DATE} + &apos; - &apos; + {!JOURNALED_THREAD.CRM_Theme_Name__c}
 )</expression>
     </formulas>
     <formulas>
@@ -518,7 +518,7 @@
         <queriedFields>CRM_Closed_Date__c</queriedFields>
         <queriedFields>CRM_isActive__c</queriedFields>
         <queriedFields>CRM_Date_Time_Registered__c</queriedFields>
-        <queriedFields>CRM_Theme__c</queriedFields>
+        <queriedFields>CRM_Theme_Name__c</queriedFields>
     </recordLookups>
     <recordUpdates>
         <name>Update_Journal_Entry</name>

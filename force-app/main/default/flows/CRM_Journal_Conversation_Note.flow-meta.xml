@@ -462,7 +462,7 @@ LPAD(TEXT(DAY(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c
 LPAD(TEXT(MONTH(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c}))),2,&apos;0&apos;) + &apos;.&apos; + 
 TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c}))) + 
 &apos; - &apos; + 
-{!JOURNALED_CONV_NOTE.CRM_Theme__c}</expression>
+{!JOURNALED_CONV_NOTE.CRM_Theme_Name__c}</expression>
     </formulas>
     <formulas>
         <description>Better null/blank handling for passing this value to apex</description>
@@ -597,7 +597,7 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
         <queriedFields>Id</queriedFields>
         <queriedFields>CRM_Account__c</queriedFields>
         <queriedFields>CRM_Registered_Datetime_Formula__c</queriedFields>
-        <queriedFields>CRM_Theme__c</queriedFields>
+        <queriedFields>CRM_Theme_Name__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_SF_Theme_Common_Code</name>
