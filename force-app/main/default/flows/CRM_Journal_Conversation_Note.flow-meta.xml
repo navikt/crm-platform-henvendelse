@@ -597,6 +597,7 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
         <queriedFields>Id</queriedFields>
         <queriedFields>CRM_Account__c</queriedFields>
         <queriedFields>CRM_Registered_Datetime_Formula__c</queriedFields>
+        <queriedFields>CRM_Theme__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_SF_Theme_Common_Code</name>

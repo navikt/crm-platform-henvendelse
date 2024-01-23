@@ -518,6 +518,7 @@
         <queriedFields>CRM_Closed_Date__c</queriedFields>
         <queriedFields>CRM_isActive__c</queriedFields>
         <queriedFields>CRM_Date_Time_Registered__c</queriedFields>
+        <queriedFields>CRM_Theme__c</queriedFields>
     </recordLookups>
     <recordUpdates>
         <name>Update_Journal_Entry</name>
