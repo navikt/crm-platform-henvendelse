@@ -14,7 +14,6 @@ public with sharing class ArchiveHandler_Test {
             'DAG',
             false,
             null,
-            '123',
             'Thread__c'
         );
         testList.add(testInput);
