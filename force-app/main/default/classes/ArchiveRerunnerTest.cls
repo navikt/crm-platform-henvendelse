@@ -8,6 +8,6 @@ private class ArchiveRerunnerTest {
         Test.stopTest();
 
         AsyncApexJob aaj = [SELECT Id, ApexClass.Name, Status FROM AsyncApexJob];
-        Assert.areEqual(aaj.ApexClass.Name, 'ArchiveBatch', 'ArchiveBatch was not started.');
+        Assert.areEqual(aaj.ApexClass.Name, 'ArchiveRerunBatch', 'ArchiveRerunBatch was not started.');
     }
 }

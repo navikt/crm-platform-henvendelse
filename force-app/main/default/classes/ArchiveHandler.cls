@@ -6,60 +6,11 @@
  * @last modified by  : mamikals
  **/
 public inherited sharing class ArchiveHandler {
-    public static String checkNull(String value) {
-        return String.isBlank(value) ? '' : value;
-    }
-
-    @InvocableMethod(
-        label='Post data to archive server'
-        description='Sends all the data of a query to the archive server.'
-    )
+    @InvocableMethod(label='Post data to archive server' description='Sends data to the archive server.')
     public static List<String> postToArchive(List<ArchivePostWrapper> inputs) {
-        List<ArchiveRequestWrapper> archiveObjects = new List<ArchiveRequestWrapper>();
-        ArchiveService service = new ArchiveService();
-        List<Id> threadList = new List<Id>();
+        List<ArchiveRequestWrapper> archiveRecordsToPost = new List<ArchiveRequestWrapper>();
         for (ArchivePostWrapper input : inputs) {
-            if (input.archiveObject.getSObjectType().getDescribe().getName() == 'Thread__c') {
-                threadList.add(input.archiveObject.Id);
-            }
-        }
-        Map<Id, Thread__c> threadMap = null;
-        try {
-            threadMap = new Map<Id, Thread__c>(
-                [
-                    SELECT
-                        Id,
-                        (
-                            SELECT
-                                Id,
-                                Name,
-                                CRM_Message_Text__c,
-                                CRM_Thread_Type__c,
-                                CRM_Read_Datetime__c,
-                                CRM_Sent_date__c,
-                                CRM_Henvendelse_BehandlingsId__c
-                            FROM Messages__r
-                        )
-                    FROM Thread__c
-                    WHERE Id IN :threadList
-                ]
-            );
-        } catch (Exception e) {
-            LoggerUtility logger = new LoggerUtility('Arkiv');
-            logger.error('Feil med henting av tråder for arkivering: ' + e, null);
-        }
-        for (ArchivePostWrapper input : inputs) {
-            SObject archiveObject = input.archiveObject;
-            if (input.archiveObject.getSObjectType().getDescribe().getName() == 'Thread__c') {
-                archiveObject = (SObject) threadMap?.get(input.archiveObject.Id);
-            }
-            input.aktoerid = checkNull(input.aktoerid);
-            input.fnr = checkNull(input.fnr);
-            input.orgnr = checkNull(input.orgnr);
-            input.tema = checkNull(input.tema);
-            input.dokumentasjonId = checkNull(input.dokumentasjonId);
-
-            ArchiveRequestWrapper inputWrapper = new ArchiveRequestWrapper(
+            ArchiveRequestWrapper reqWrapper = new ArchiveRequestWrapper(
                 input.opprettetAv,
                 input.aktoerid,
                 input.fnr,
@@ -67,21 +18,23 @@ public inherited sharing class ArchiveHandler {
                 input.tema,
                 input.konfidentiellt,
                 input.dokumentasjonId,
-                archiveObject
+                input.archiveData,
+                input.referenceObject
             );
-            archiveObjects.add(inputWrapper);
+            archiveRecordsToPost.add(reqWrapper);
         }
-        List<ArchiveService.ArchiveResponseWrapper> resp = service.postToArchive(archiveObjects);
-        List<String> returnStrings = new List<String>();
-        for (ArchiveService.ArchiveResponseWrapper archive : resp) {
-            returnStrings.add(archive.dokumentasjonId);
+
+        List<ArchiveService.ArchiveResponseWrapper> response = new ArchiveService().postToArchive(archiveRecordsToPost);
+        List<String> documentationIdResponses = new List<String>(); // The API returns documentationId attribute on success
+        for (ArchiveService.ArchiveResponseWrapper archiveResponse : response) {
+            documentationIdResponses.add(archiveResponse.dokumentasjonId);
         }
-        return returnStrings;
+        return documentationIdResponses;
     }
 
     public class ArchivePostWrapper {
         @invocableVariable(required=true)
-        public Sobject archiveObject;
+        public String archiveData;
         @invocableVariable(required=true)
         public String opprettetAv;
         @invocableVariable
@@ -96,21 +49,25 @@ public inherited sharing class ArchiveHandler {
         public Boolean konfidentiellt;
         @invocableVariable
         public String dokumentasjonId;
+        @invocableVariable
+        public String referenceObject;
 
         public ArchivePostWrapper() {
         }
+
         @TestVisible
         public ArchivePostWrapper(
-            SObject archiveObject,
+            String archiveData,
             String opprettetAv,
             String aktoerid,
             String fnr,
             String orgnr,
             String tema,
             Boolean konfidentiellt,
-            String dokumentasjonId
+            String dokumentasjonId,
+            String referenceObject
         ) {
-            this.archiveObject = archiveObject;
+            this.archiveData = archiveData;
             this.opprettetAv = opprettetAv;
             this.aktoerid = aktoerid;
             this.fnr = fnr;
@@ -118,30 +75,7 @@ public inherited sharing class ArchiveHandler {
             this.tema = tema;
             this.konfidentiellt = konfidentiellt;
             this.dokumentasjonId = dokumentasjonId;
-        }
-
-        public ArchivePostWrapper(SObject archiveObject, String opprettetAv) {
-            this.archiveObject = archiveObject;
-            this.opprettetAv = opprettetAv;
-            switch on archiveObject.getSObjectType().getDescribe().getName() {
-                when 'Thread__c' {
-                    this.fnr = ((Thread__c) archiveObject)?.CRM_Account__r?.CRM_Person__r?.Name;
-                    this.aktoerid = ((Thread__c) archiveObject)?.CRM_Account__r?.CRM_Person__r?.INT_ActorId__c;
-                    this.konfidentiellt = ((Thread__c) archiveObject)?.STO_Sensitive_Information__c;
-                    this.tema = ((Thread__c) archiveObject).CRM_Theme__c;
-                }
-                when 'Conversation_note__c' {
-                    this.konfidentiellt = true;
-                    this.aktoerid = ((Conversation_Note__c) archiveObject)
-                        ?.CRM_Account__r
-                        ?.CRM_Person__r
-                        ?.INT_ActorId__c;
-                    this.fnr = ((Conversation_Note__c) archiveObject)?.CRM_Account__r?.CRM_Person__r?.Name;
-                    this.tema = ((Conversation_Note__c) archiveObject).CRM_Theme__c;
-                }
-                when else {
-                }
-            }
+            this.referenceObject = referenceObject;
         }
     }
 }
