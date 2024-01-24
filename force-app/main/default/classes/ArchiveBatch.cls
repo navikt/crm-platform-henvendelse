@@ -5,35 +5,70 @@
  * @last modified on  : 19-06-2023
  * @last modified by  : mamikals
  **/
-public with sharing class ArchiveBatch implements Database.Batchable<Id>, Database.AllowsCallouts {
-    private List<Id> idsToArchive;
-    private string opprettetAv;
+public with sharing class ArchiveBatch implements Database.Batchable<SObject>, Database.AllowsCallouts, Schedulable {
+    private String domain;
+    private LoggerUtility logger;
 
-    public ArchiveBatch(List<Id> idsToArchive, String opprettetAv) {
-        this.idsToArchive = idsToArchive;
-        this.opprettetAv = opprettetAv;
-        Database.executeBatch(this);
+    public ArchiveBatch(String domain) {
+        this.domain = domain;
+        this.logger = new LoggerUtility(domain);
     }
 
-    public Iterable<Id> start(Database.BatchableContext BC) {
-        return idsToArchive;
+    /*Schedulable
+        Scheduled for every day at 23:00 by running the following in dev console:
+        String cronExp = '0 0 23 * * ?';
+        System.schedule('ArchiveBatch', cronExp, new ArchiveBatch('domain'));
+        Make sure to set correct domain param
+    */
+    public void execute(System.SchedulableContext schContext) {
+        ArchiveBatch batch = new ArchiveBatch(domain);
+        Database.executebatch(batch, 10);
     }
 
-    public void execute(Database.BatchableContext BC, List<Id> scope) {
-        String objName = scope[0].getSObjectType().getDescribe().getName();
-        List<SObject> records = new List<SObject>();
-        if (objName == 'Thread__c') {
-            records = [SELECT Id, CRM_Account__r.CRM_Person__r.Name, CRM_Account__r.CRM_Person__r.INT_ActorId__c, STO_Sensitive_Information__c, CRM_Theme__c FROM Thread__c WHERE CRM_Thread_Type__c IN ('STO', 'STB', 'BTO') AND CRM_Journal_Status__c= 'Not Journaled' AND Id IN :scope];
-        } else if (objName == 'Conversation_Note__c') {
-            records = [SELECT Id, CRM_Account__r.CRM_Person__r.INT_ActorId__c, CRM_Account__r.CRM_Person__r.Name, CRM_Theme__c, CRM_Conversation_Note__c FROM Conversation_Note__c WHERE CRM_Journal_Status__c = 'Not Journaled' AND Id IN :scope];
+    public Database.QueryLocator start(Database.BatchableContext BC) {
+        String query = 'SELECT Id, Reference_Object__c, Actor_Id__c, Confidential__c, Documentation_Id__c, Domain__c, Fnr__c, Orgnr__c, Status__c, Theme__c, Archive_Data__c FROM Archive_Entry__c WHERE Status__c = \'Failed\' AND Domain__c = :domain';
+        return Database.getQueryLocator(query);
+    }
+
+    public void execute(Database.BatchableContext BC, List<Archive_Entry__c> scope) {
+        // Collect data for callouts
+        List<ArchiveRequestWrapper> archiveRecordsToPost = new List<ArchiveRequestWrapper>();
+        for (Archive_Entry__c archiveEntry : scope) {
+            ArchiveRequestWrapper reqWrapper = new ArchiveRequestWrapper(
+                archiveEntry.Domain__c,
+                archiveEntry.Actor_Id__c,
+                archiveEntry.Fnr__c,
+                archiveEntry.Orgnr__c,
+                archiveEntry.Theme__c,
+                archiveEntry.Confidential__c,
+                archiveEntry.Documentation_Id__c,
+                archiveEntry.Archive_Data__c,
+                archiveEntry.Reference_Object__c
+            );
+            archiveRecordsToPost.add(reqWrapper);
         }
 
-        List<ArchiveHandler.ArchivePostWrapper> postList = new List<ArchiveHandler.ArchivePostWrapper>();
-        for (SObject obj : records) {
-            postList.add(new ArchiveHandler.ArchivePostWrapper(obj, opprettetAv));
+        List<ArchiveService.ArchiveResponseWrapper> response;
+        try {
+            response = new ArchiveService().postToArchive(archiveRecordsToPost);
+        } catch (Exception e) {
+            logger.error(e.getMessage() + '. ' + e.getStackTraceString(), null, CRM_ApplicationDomain.Domain.NKS);
+        } finally {
+            logger.publish();
         }
-        ArchiveHandler.postToArchive(postList);
+
+        // Update Archive Entry status based on response
+        if (response != null) {
+            for (Archive_Entry__c archiveEntry : scope) {
+                archiveEntry.Status__c = (response[0].dokumentasjonId != null) ? 'Completed' : 'Failed';
+                archiveEntry.Archived_Date__c = (archiveEntry.Status__c == 'Completed') ? System.now() : null;
+            }
+        }
+
+        // Update Archive Entry records
+        update scope;
     }
 
-    public void finish(Database.BatchableContext BC) {}
+    public void finish(Database.BatchableContext BC) {
+    }
 }

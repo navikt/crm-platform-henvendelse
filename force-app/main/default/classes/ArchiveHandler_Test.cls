@@ -1,35 +1,27 @@
 @isTest
 public with sharing class ArchiveHandler_Test {
-    @TestSetup
-    static void makeData() {
-        Account a1 = new Account(Name = 'Account 1');
-        insert a1;
-        Account a2 = new Account(Name = 'Account 2');
-        insert a2;
-    }
-
     @isTest
-    static void searchRecordsTest() {
+    static void postToArchiveTest() {
         ApiMock.setTestMock('POST_ARCHIVE', 201, 'Created');
 
-        List<Account> accountList = [SELECT Id, Name FROM Account LIMIT 1];
         List<ArchiveHandler.ArchivePostWrapper> testList = new List<ArchiveHandler.ArchivePostWrapper>();
         ArchiveHandler.ArchivePostWrapper testInput = new ArchiveHandler.ArchivePostWrapper(
-            accountList[0],
+            'testdata',
             'NKS',
             null,
             null,
             null,
             'DAG',
             false,
-            null
+            null,
+            'Thread__c'
         );
-
         testList.add(testInput);
 
         Test.startTest();
         List<String> testResult = ArchiveHandler.postToArchive(testList);
         Test.stopTest();
-        System.assertEquals(false, testResult.isempty());
+
+        Assert.areEqual(false, testResult.isEmpty(), 'testResult list from response was empty.');
     }
 }

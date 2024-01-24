@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Convert_Messages_to_JSON</name>
-        <label>Convert Messages to JSON</label>
+        <name>Convert_Conversation_Note_to_JSON</name>
+        <label>Convert Conversation Note to JSON</label>
         <locationX>308</locationX>
         <locationY>384</locationY>
         <actionName>ArchiveHelper</actionName>
@@ -12,13 +12,13 @@
         </connector>
         <dataTypeMappings>
             <typeName>T__recordsList</typeName>
-            <typeValue>Message__c</typeValue>
+            <typeValue>Conversation_Note__c</typeValue>
         </dataTypeMappings>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>recordsList</name>
             <value>
-                <elementReference>Get_Related_Messages</elementReference>
+                <elementReference>ConversationNote</elementReference>
             </value>
         </inputParameters>
         <outputParameters>
@@ -26,7 +26,23 @@
             <name>output</name>
         </outputParameters>
     </actionCalls>
-    <apiVersion>53.0</apiVersion>
+    <apiVersion>54.0</apiVersion>
+    <assignments>
+        <name>Set_Conversation_Note_as_list</name>
+        <label>Set Conversation Note as list</label>
+        <locationX>308</locationX>
+        <locationY>276</locationY>
+        <assignmentItems>
+            <assignToReference>ConversationNote</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>$Record</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Convert_Conversation_Note_to_JSON</targetReference>
+        </connector>
+    </assignments>
     <constants>
         <name>TeamNKS</name>
         <dataType>String</dataType>
@@ -34,8 +50,8 @@
             <stringValue>NKS</stringValue>
         </value>
     </constants>
-    <interviewLabel>Thread - After update - Archive {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Thread - After update - Archive</label>
+    <interviewLabel>Conversation Note - After Create - Archive {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Conversation Note - After Create - Archive</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -55,53 +71,10 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordLookups>
-        <name>Get_Related_Messages</name>
-        <label>Get Related Messages</label>
-        <locationX>308</locationX>
-        <locationY>276</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Convert_Messages_to_JSON</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>CRM_Thread__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>Message__c</object>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Name</queriedFields>
-        <queriedFields>CRM_Message_Text__c</queriedFields>
-        <queriedFields>CRM_Thread_Type__c</queriedFields>
-        <queriedFields>CRM_Read_Datetime__c</queriedFields>
-        <queriedFields>CRM_Sent_date__c</queriedFields>
-        <queriedFields>CRM_Henvendelse_BehandlingsId__c</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
-        <filterLogic>(1 OR (2 AND 3)) AND (4 OR 5 or 6)</filterLogic>
-        <filters>
-            <field>STO_Sensitive_Information__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>CRM_isActive__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>CRM_Journal_Status__c</field>
             <operator>EqualTo</operator>
@@ -109,32 +82,11 @@
                 <stringValue>Not Journaled</stringValue>
             </value>
         </filters>
-        <filters>
-            <field>CRM_Thread_Type__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>STO</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>CRM_Thread_Type__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>STB</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>CRM_Thread_Type__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>BTO</stringValue>
-            </value>
-        </filters>
-        <object>Thread__c</object>
-        <recordTriggerType>Update</recordTriggerType>
+        <object>Conversation_Note__c</object>
+        <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Get_Related_Messages</targetReference>
+                <targetReference>Set_Conversation_Note_as_list</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
@@ -162,7 +114,7 @@
         <inputAssignments>
             <name>Confidential</name>
             <value>
-                <elementReference>$Record.STO_Sensitive_Information__c</elementReference>
+                <booleanValue>false</booleanValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -186,13 +138,13 @@
         <inputAssignments>
             <name>ReferenceObject</name>
             <value>
-                <stringValue>Thread__c</stringValue>
+                <stringValue>Conversation_Note__c</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>SourceFlow</name>
             <value>
-                <stringValue>Thread - After Update - Archive</stringValue>
+                <stringValue>Conversation Note - After Create - Archive</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -208,5 +160,13 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ConversationNote</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Conversation_Note__c</objectType>
     </variables>
 </Flow>
