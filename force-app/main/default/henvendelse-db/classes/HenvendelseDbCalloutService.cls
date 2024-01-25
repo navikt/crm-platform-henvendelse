@@ -12,11 +12,11 @@ public with sharing class HenvendelseDbCalloutService extends ApiController {
     }
 
     public enum SERVICES {
-        POST_HENVENDELSE
+        POST_HENVENDELSE_DB_API
     }
 
     public HttpResponse postHenvendelse(String body) {
-        initRequest(CONFIG_NAME, SERVICES.POST_HENVENDELSE.name());
+        initRequest(CONFIG_NAME, SERVICES.POST_HENVENDELSE_DB_API.name());
         setSystemContext();
         addServiceAuthHeader(SERVICE_AUTH_HEADER);
         setBody(body);
