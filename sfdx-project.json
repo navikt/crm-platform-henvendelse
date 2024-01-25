@@ -5,11 +5,11 @@
             "default": true,
             "package": "crm-henvendelse",
             "versionName": "ver 0.1",
-            "versionNumber": "0.107.0.NEXT",
+            "versionNumber": "0.114.0.NEXT",
             "dependencies": [
                 {
                     "package": "crm-platform-base",
-                    "versionNumber": "0.197.0.LATEST"
+                    "versionNumber": "0.209.0.LATEST"
                 },
                 {
                     "package": "crm-henvendelse-base",
@@ -42,6 +42,10 @@
                 {
                     "package": "crm-community-base",
                     "versionNumber": "0.92.0.LATEST"
+                },
+                {
+                    "package": "crm-platform-reporting",
+                    "versionNumber": "0.35.0.LATEST"
                 }
             ]
         }
@@ -59,6 +63,7 @@
         "crm-shared-user-notification": "0Ho2o000000fxY4CAI",
         "crm-shared-flowComponents": "0Ho2o000000fxYJCAY",
         "crm-platform-integration": "0Ho2o0000008ORrCAM",
-        "crm-platform-oppgave": "0Ho2o000000fxXzCAI"
+        "crm-platform-oppgave": "0Ho2o000000fxXzCAI",
+        "crm-platform-reporting": "0Ho2o0000008OSfCAM"
     }
 }

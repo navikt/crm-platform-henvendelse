@@ -3,7 +3,6 @@ import getmessages from '@salesforce/apex/CRM_MessageHelper.getMessagesFromThrea
 import getJournalInfo from '@salesforce/apex/CRM_MessageHelper.getJournalEntries';
 import markAsReadByNav from '@salesforce/apex/CRM_MessageHelper.markAsReadByNav';
 import { subscribe, unsubscribe } from 'lightning/empApi';
-
 import userId from '@salesforce/user/Id';
 import { updateRecord, getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import ACTIVE_FIELD from '@salesforce/schema/Thread__c.CRM_isActive__c';
@@ -14,6 +13,7 @@ import FIRSTNAME_FIELD from '@salesforce/schema/Thread__c.CreatedBy.FirstName';
 import LASTNAME_FIELD from '@salesforce/schema/Thread__c.CreatedBy.LastName';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
+import { publishToAmplitude } from 'c/amplitude';
 
 export default class messagingThreadViewer extends LightningElement {
     createdbyid;
@@ -173,6 +173,8 @@ export default class messagingThreadViewer extends LightningElement {
     }
     //If empty, stop submitting.
     handlesubmit(event) {
+        publishToAmplitude('STO', { type: 'handlesubmit on thread' });
+
         this.lockLangBtn();
         event.preventDefault();
         if (!this.quickTextCmp.isOpen()) {
@@ -206,6 +208,8 @@ export default class messagingThreadViewer extends LightningElement {
     }
 
     closeThread() {
+        publishToAmplitude('STO', { type: 'closeThread' });
+
         this.closeModal();
         const fields = {};
         fields[THREAD_ID_FIELD.fieldApiName] = this.threadid;
@@ -265,10 +269,12 @@ export default class messagingThreadViewer extends LightningElement {
     }
 
     showQuickText(event) {
+        publishToAmplitude('STO', { type: 'showQuickText' });
         this.quickTextCmp.showModal(event);
     }
 
     handleLangClick() {
+        publishToAmplitude('STO', { type: 'handleLangClick' });
         const englishEvent = new CustomEvent('englishevent', {
             detail: !this.englishTextTemplate
         });
@@ -333,10 +339,12 @@ export default class messagingThreadViewer extends LightningElement {
     //##################################//
 
     openModal() {
+        publishToAmplitude('STO', { type: 'openModal close thread' });
         this.hideModal = false;
     }
 
     closeModal() {
+        publishToAmplitude('STO', { type: 'closeModal close thread' });
         this.hideModal = true;
         const btn = this.template.querySelector('.endDialogBtn');
         btn.focus();

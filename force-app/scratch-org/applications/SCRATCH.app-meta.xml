@@ -3,11 +3,11 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>SCRATCH_THREAD</content>
+        <content>SCRATCH_Account</content>
         <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
-        <pageOrSobjectType>Thread__c</pageOrSobjectType>
+        <pageOrSobjectType>Account</pageOrSobjectType>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
@@ -21,11 +21,11 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>SCRATCH_Account</content>
+        <content>SCRATCH_THREAD</content>
         <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
-        <pageOrSobjectType>Account</pageOrSobjectType>
+        <pageOrSobjectType>Thread__c</pageOrSobjectType>
     </actionOverrides>
     <brand>
         <headerColor>#0070D2</headerColor>
@@ -44,11 +44,15 @@
     <tabs>Conversation_Note__c</tabs>
     <tabs>Application_Log__c</tabs>
     <tabs>Common_Code__c</tabs>
+    <tabs>Archive_Entry__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>SCRATCH_UtilityBar</utilityBar>
     <workspaceConfig>
         <mappings>
             <tab>Application_Log__c</tab>
+        </mappings>
+        <mappings>
+            <tab>Archive_Entry__c</tab>
         </mappings>
         <mappings>
             <tab>Common_Code__c</tab>

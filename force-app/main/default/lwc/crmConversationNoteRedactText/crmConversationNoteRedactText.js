@@ -3,6 +3,7 @@ import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import NAME_FIELD from '@salesforce/schema/Conversation_Note__c.Name';
 import TEXT_FIELD from '@salesforce/schema/Conversation_Note__c.CRM_Conversation_Note__c';
 import IS_REDACTED_FIELD from '@salesforce/schema/Conversation_Note__c.CRM_Is_Redacted__c';
+import redactConversationNote from '@salesforce/apex/CRM_HenvendelseRedactHelper.redactConversationNote';
 
 export default class CrmConversationNoteRedactText extends LightningElement {
     @api recordId;
@@ -48,8 +49,16 @@ export default class CrmConversationNoteRedactText extends LightningElement {
         this.isRedacting = false;
     }
 
-    handleSubmit() {
+    handleSubmit(event) {
+        event.preventDefault();
         this.showSpinner = true;
+        redactConversationNote({ redactedText: this.redactedText, recordId: this.recordId })
+            .then(() => {
+                this.handleSuccess();
+            })
+            .catch((error) => {
+                this.handleError();
+            });
     }
 
     revertRedacting() {

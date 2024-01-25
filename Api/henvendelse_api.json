@@ -549,10 +549,12 @@
                             "BISYS",
                             "BA",
                             "EF",
+                            "EY",
                             "KONT",
                             "SUPSTONAD",
                             "OMSORGSPENGER",
-                            "HJELPEMIDLER"
+                            "HJELPEMIDLER",
+                            "NEESSI"
                         ],
                         "description": "Fagsystemet som saken behandles i, required hvis saksId er definert",
                         "example": "AO01"
@@ -614,10 +616,12 @@
                             "BISYS",
                             "BA",
                             "EF",
+                            "EY",
                             "KONT",
                             "SUPSTONAD",
                             "OMSORGSPENGER",
-                            "HJELPEMIDLER"
+                            "HJELPEMIDLER",
+                            "NEESSI"
                         ],
                         "description": "Fagsystemet som saken behandles i.",
                         "example": "AO01"

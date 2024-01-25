@@ -1,56 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Post_to_archive</name>
-        <label>Post to archive</label>
+        <name>Convert_Conversation_Note_to_JSON</name>
+        <label>Convert Conversation Note to JSON</label>
         <locationX>308</locationX>
-        <locationY>288</locationY>
-        <actionName>ArchiveHandler</actionName>
+        <locationY>384</locationY>
+        <actionName>ArchiveHelper</actionName>
         <actionType>apex</actionType>
+        <connector>
+            <targetReference>Subflow_Archive_Record</targetReference>
+        </connector>
         <dataTypeMappings>
-            <typeName>T__archiveObject</typeName>
+            <typeName>T__recordsList</typeName>
             <typeValue>Conversation_Note__c</typeValue>
         </dataTypeMappings>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
-            <name>aktoerid</name>
+            <name>recordsList</name>
             <value>
-                <elementReference>$Record.CRM_Account__r.CRM_Person__r.INT_ActorId__c</elementReference>
+                <elementReference>ConversationNote</elementReference>
             </value>
         </inputParameters>
-        <inputParameters>
-            <name>archiveObject</name>
+        <outputParameters>
+            <assignToReference>ArchiveData</assignToReference>
+            <name>output</name>
+        </outputParameters>
+    </actionCalls>
+    <apiVersion>53.0</apiVersion>
+    <assignments>
+        <name>Set_Conversation_Note_as_list</name>
+        <label>Set Conversation Note as list</label>
+        <locationX>308</locationX>
+        <locationY>276</locationY>
+        <assignmentItems>
+            <assignToReference>ConversationNote</assignToReference>
+            <operator>Add</operator>
             <value>
                 <elementReference>$Record</elementReference>
             </value>
-        </inputParameters>
-        <inputParameters>
-            <name>fnr</name>
-            <value>
-                <elementReference>$Record.CRM_Account__r.CRM_Person__r.Name</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>konfidentiellt</name>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>opprettetAv</name>
-            <value>
-                <elementReference>TeamNKS</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>tema</name>
-            <value>
-                <elementReference>$Record.CRM_Theme__c</elementReference>
-            </value>
-        </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
-    <apiVersion>53.0</apiVersion>
+        </assignmentItems>
+        <connector>
+            <targetReference>Convert_Conversation_Note_to_JSON</targetReference>
+        </connector>
+    </assignments>
     <constants>
         <name>TeamNKS</name>
         <dataType>String</dataType>
@@ -95,11 +87,87 @@
         <recordTriggerType>Update</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>Post_to_archive</targetReference>
+                <targetReference>Set_Conversation_Note_as_list</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Subflow_Archive_Record</name>
+        <label>Subflow - Archive Record</label>
+        <locationX>308</locationX>
+        <locationY>492</locationY>
+        <flowName>Subflow_Archive_Record</flowName>
+        <inputAssignments>
+            <name>ActorId</name>
+            <value>
+                <elementReference>$Record.CRM_Account__r.CRM_Person__r.INT_ActorId__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ArchiveData</name>
+            <value>
+                <elementReference>ArchiveData</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Confidential</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Domain</name>
+            <value>
+                <elementReference>TeamNKS</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Fnr</name>
+            <value>
+                <elementReference>$Record.CRM_Account__r.CRM_Person__r.Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ReferenceId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ReferenceObject</name>
+            <value>
+                <stringValue>Conversation_Note__c</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>SourceFlow</name>
+            <value>
+                <stringValue>Conversation Note - After Update - Archive</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Theme</name>
+            <value>
+                <elementReference>$Record.CRM_Theme__c</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>ArchiveData</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ConversationNote</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Conversation_Note__c</objectType>
+    </variables>
 </Flow>
