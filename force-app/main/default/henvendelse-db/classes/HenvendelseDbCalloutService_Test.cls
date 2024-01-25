@@ -4,7 +4,7 @@ public class HenvendelseDbCalloutService_Test {
 
     @isTest
     static void testPostHenvendelse(){
-        ApiMock.setTestMock(HenvendelseDbCalloutService.SERVICES.POST_HENVENDELSE.name(), 200, 'OK');
+        ApiMock.setTestMock(HenvendelseDbCalloutService.SERVICES.POST_HENVENDELSE_DB_API.name(), 200, 'OK');
 
         String body='{test}';
         Test.startTest();
