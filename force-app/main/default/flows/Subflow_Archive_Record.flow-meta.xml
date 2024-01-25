@@ -146,6 +146,13 @@
                 <elementReference>$Flow.CurrentDateTime</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ArchiveEntry.Ready_for_Anonymization__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Create_Archive_Entry</targetReference>
         </connector>
@@ -199,6 +206,13 @@
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ArchiveResponse</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>

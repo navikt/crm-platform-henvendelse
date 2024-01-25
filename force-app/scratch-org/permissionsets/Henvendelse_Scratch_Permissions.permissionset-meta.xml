@@ -20,6 +20,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Archive_Entry__c.Ready_for_Anonymization__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Archive_Entry__c.Archive_Data__c</field>
         <readable>true</readable>
     </fieldPermissions>

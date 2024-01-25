@@ -25,6 +25,10 @@ public inherited sharing class ArchiveHandler {
         }
 
         List<ArchiveService.ArchiveResponseWrapper> response = new ArchiveService().postToArchive(archiveRecordsToPost);
+        if (response == null) {
+            return null;
+        }
+
         List<String> documentationIdResponses = new List<String>(); // The API returns documentationId attribute on success
         for (ArchiveService.ArchiveResponseWrapper archiveResponse : response) {
             documentationIdResponses.add(archiveResponse.dokumentasjonId);
