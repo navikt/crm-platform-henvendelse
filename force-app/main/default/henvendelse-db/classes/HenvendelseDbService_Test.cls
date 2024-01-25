@@ -14,7 +14,7 @@ public  class HenvendelseDbService_Test {
     @isTest
     static void testPostThread(){
         Thread__c thread = [SELECT Id FROM Thread__c LIMIT 1];
-        ApiMock.setTestMock(HenvendelseDbCalloutService.SERVICES.POST_HENVENDELSE.name(), 200, 'OK');
+        ApiMock.setTestMock(HenvendelseDbCalloutService.SERVICES.POST_HENVENDELSE_DB_API.name(), 200, 'OK');
 
         Test.startTest();
         Boolean result=service.postThread(thread.Id);
