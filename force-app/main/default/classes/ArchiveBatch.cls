@@ -60,7 +60,10 @@ public with sharing class ArchiveBatch implements Database.Batchable<SObject>, D
         // Update Archive Entry status based on response
         if (response != null) {
             for (Archive_Entry__c archiveEntry : scope) {
-                archiveEntry.Status__c = (response[0].dokumentasjonId != null) ? 'Completed' : 'Failed';
+                archiveEntry.Status__c = (response[0].dokumentasjonId != null &&
+                    response[0].dokumentasjonId != '')
+                    ? 'Completed'
+                    : 'Failed';
                 archiveEntry.Archived_Date__c = (archiveEntry.Status__c == 'Completed') ? System.now() : null;
                 archiveEntry.Ready_for_Anonymization__c = archiveEntry.Status__c == 'Completed';
             }
