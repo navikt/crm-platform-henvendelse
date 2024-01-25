@@ -26,7 +26,7 @@ public with sharing class ArchiveBatch implements Database.Batchable<SObject>, D
     }
 
     public Database.QueryLocator start(Database.BatchableContext BC) {
-        String query = 'SELECT Id, Reference_Object__c, Actor_Id__c, Confidential__c, Documentation_Id__c, Domain__c, Fnr__c, Orgnr__c, Status__c, Theme__c, Archive_Data__c FROM Archive_Entry__c WHERE Status__c = \'Failed\' AND Domain__c = :domain';
+        String query = 'SELECT Id, Ready_for_Anonymization__c, Reference_Object__c, Actor_Id__c, Confidential__c, Documentation_Id__c, Domain__c, Fnr__c, Orgnr__c, Status__c, Theme__c, Archive_Data__c FROM Archive_Entry__c WHERE Status__c = \'Failed\' AND Domain__c = :domain';
         return Database.getQueryLocator(query);
     }
 
@@ -62,6 +62,7 @@ public with sharing class ArchiveBatch implements Database.Batchable<SObject>, D
             for (Archive_Entry__c archiveEntry : scope) {
                 archiveEntry.Status__c = (response[0].dokumentasjonId != null) ? 'Completed' : 'Failed';
                 archiveEntry.Archived_Date__c = (archiveEntry.Status__c == 'Completed') ? System.now() : null;
+                archiveEntry.Ready_for_Anonymization__c = archiveEntry.Status__c == 'Completed';
             }
         }
 
