@@ -208,6 +208,13 @@
                     <stringValue></stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>ArchiveResponse</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Set_Completed_and_Date</targetReference>
             </connector>
