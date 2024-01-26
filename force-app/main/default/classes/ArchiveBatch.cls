@@ -26,7 +26,7 @@ public with sharing class ArchiveBatch implements Database.Batchable<SObject>, D
     }
 
     public Database.QueryLocator start(Database.BatchableContext BC) {
-        String query = 'SELECT Id, Ready_for_Anonymization__c, Reference_Object__c, Actor_Id__c, Confidential__c, Documentation_Id__c, Domain__c, Fnr__c, Orgnr__c, Status__c, Theme__c, Archive_Data__c FROM Archive_Entry__c WHERE Status__c = \'Failed\' AND Domain__c = :domain';
+        String query = 'SELECT Id, Ready_for_Deletion__c, Reference_Object__c, Reference_Id__c, Actor_Id__c, Confidential__c, Documentation_Id__c, Domain__c, Fnr__c, Orgnr__c, Status__c, Theme__c, Archive_Data__c FROM Archive_Entry__c WHERE Status__c = \'Failed\' AND Domain__c = :domain';
         return Database.getQueryLocator(query);
     }
 
@@ -41,7 +41,7 @@ public with sharing class ArchiveBatch implements Database.Batchable<SObject>, D
                 archiveEntry.Orgnr__c,
                 archiveEntry.Theme__c,
                 archiveEntry.Confidential__c,
-                archiveEntry.Documentation_Id__c,
+                archiveEntry.Reference_Id__c,
                 archiveEntry.Archive_Data__c,
                 archiveEntry.Reference_Object__c
             );
@@ -60,12 +60,12 @@ public with sharing class ArchiveBatch implements Database.Batchable<SObject>, D
         // Update Archive Entry status based on response
         if (response != null) {
             for (Archive_Entry__c archiveEntry : scope) {
-                archiveEntry.Status__c = (response[0].dokumentasjonId != null &&
-                    response[0].dokumentasjonId != '')
+                archiveEntry.Status__c = (response[0].id != null &&
+                    String.valueOf(response[0].id) != '')
                     ? 'Completed'
                     : 'Failed';
                 archiveEntry.Archived_Date__c = (archiveEntry.Status__c == 'Completed') ? System.now() : null;
-                archiveEntry.Ready_for_Anonymization__c = archiveEntry.Status__c == 'Completed';
+                archiveEntry.Ready_for_Deletion__c = archiveEntry.Status__c == 'Completed';
             }
         }
 
