@@ -147,7 +147,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ArchiveEntry.Ready_for_Anonymization__c</assignToReference>
+            <assignToReference>ArchiveEntry.Ready_for_Deletion__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
