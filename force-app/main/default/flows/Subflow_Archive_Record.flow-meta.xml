@@ -27,6 +27,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>dokumentasjonId</name>
+            <value>
+                <elementReference>ReferenceId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>fnr</name>
             <value>
                 <elementReference>Fnr</elementReference>
@@ -345,7 +351,7 @@
         <name>ArchiveResponse</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
-        <isInput>true</isInput>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
