@@ -8,9 +8,11 @@
 public with sharing class ArchiveBatch implements Database.Batchable<SObject>, Database.AllowsCallouts, Schedulable {
     private String domain;
     private LoggerUtility logger;
+    CRM_ApplicationDomain myDomain = new CRM_ApplicationDomain();
+    Map<String, CRM_ApplicationDomain.Domain> domainNameMap = myDomain.domainNameMap;
 
     public ArchiveBatch(String domain) {
-        this.domain = domain;
+        this.domain = domain != null ? domain.toUpperCase() : '';
         this.logger = new LoggerUtility(domain);
     }
 
@@ -26,12 +28,11 @@ public with sharing class ArchiveBatch implements Database.Batchable<SObject>, D
     }
 
     public Database.QueryLocator start(Database.BatchableContext BC) {
-        String query = 'SELECT Id, Ready_for_Deletion__c, Reference_Object__c, Reference_Id__c, Actor_Id__c, Confidential__c, Documentation_Id__c, Domain__c, Fnr__c, Orgnr__c, Status__c, Theme__c, Archive_Data__c FROM Archive_Entry__c WHERE Status__c = \'Failed\' AND Domain__c = :domain';
+        String query = 'SELECT Id, Ready_for_Deletion__c, Reference_Object__c, Reference_Id__c, Actor_Id__c, Confidential__c, Domain__c, Fnr__c, Orgnr__c, Status__c, Theme__c, Archive_Data__c FROM Archive_Entry__c WHERE Status__c = \'Failed\' AND Domain__c = :domain';
         return Database.getQueryLocator(query);
     }
 
     public void execute(Database.BatchableContext BC, List<Archive_Entry__c> scope) {
-        // Collect data for callouts
         List<ArchiveRequestWrapper> archiveRecordsToPost = new List<ArchiveRequestWrapper>();
         for (Archive_Entry__c archiveEntry : scope) {
             ArchiveRequestWrapper reqWrapper = new ArchiveRequestWrapper(
@@ -52,7 +53,7 @@ public with sharing class ArchiveBatch implements Database.Batchable<SObject>, D
         try {
             response = new ArchiveService().postToArchive(archiveRecordsToPost);
         } catch (Exception e) {
-            logger.error(e.getMessage() + '. ' + e.getStackTraceString(), null, CRM_ApplicationDomain.Domain.NKS);
+            logger.error(e.getMessage() + '. ' + e.getStackTraceString(), null, domainNameMap.get(domain));
         } finally {
             logger.publish();
         }
