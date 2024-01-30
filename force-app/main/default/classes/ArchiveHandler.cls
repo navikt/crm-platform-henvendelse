@@ -29,11 +29,11 @@ public inherited sharing class ArchiveHandler {
             return null;
         }
 
-        List<String> documentationIdResponses = new List<String>(); // The API returns documentationId attribute on success
+        List<String> responseIds = new List<String>(); // The API returns id attribute on success
         for (ArchiveService.ArchiveResponseWrapper archiveResponse : response) {
-            documentationIdResponses.add(archiveResponse.dokumentasjonId);
+            responseIds.add(String.valueOf(archiveResponse.id));
         }
-        return documentationIdResponses;
+        return responseIds;
     }
 
     public class ArchivePostWrapper {
@@ -52,7 +52,7 @@ public inherited sharing class ArchiveHandler {
         @invocableVariable(required=true)
         public Boolean konfidentiellt;
         @invocableVariable
-        public String dokumentasjonId;
+        public String dokumentasjonId; // Reference_Id__c
         @invocableVariable
         public String referenceObject;
 
