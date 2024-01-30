@@ -49,7 +49,7 @@
             .then((tabId) => {
                 workspaceAPI
                     .closeTab({ tabId: tabId })
-                    .then((response) => {
+                    .then(() => {
                         //Success
                     })
                     .catch((error) => {

@@ -84,11 +84,17 @@ export default class CrmMessagingMessageComponent extends LightningElement {
         const changeableSlots = Object.keys(this.slotsNeedCheckedOrRendered).filter(
             (slotValue) => this.slotsNeedCheckedOrRendered[slotValue]
         );
-        changeableSlots.forEach((slotName) => {
-            const slot = Array.from(slots).find((a) => a.name === slotName);
-            if (!slot) return;
+        for (const slotName of changeableSlots) {
+            let slot;
+            for (const a of slots) {
+                if (a.name === slotName) {
+                    slot = a;
+                    break;
+                }
+            }
+            if (!slot) continue;
             const hasContent = slot.assignedElements().length !== 0;
             this.slotsNeedCheckedOrRendered[slot.name] = hasContent;
-        });
+        }
     }
 }

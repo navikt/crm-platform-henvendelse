@@ -1,4 +1,5 @@
 import { LightningElement, api } from 'lwc';
+import { getDateTimeFormat } from '@salesforce/i18n-service';
 
 export default class navFormattedDate extends LightningElement {
     @api date;
@@ -10,9 +11,9 @@ export default class navFormattedDate extends LightningElement {
             console.log('navFormattedDate: Bad date format.');
             return '';
         }
-        let formatter = new Intl.DateTimeFormat('no', { day: 'numeric', month: 'long', year: 'numeric' });
+        let formatter = getDateTimeFormat('no', { day: 'numeric', month: 'long', year: 'numeric' });
         let date = formatter.format(rawDate);
-        formatter = new Intl.DateTimeFormat('no', { hour: 'numeric', minute: 'numeric' });
+        formatter = getDateTimeFormat('no', { hour: 'numeric', minute: 'numeric' });
         let timeParts = formatter.formatToParts(rawDate);
         let hour = timeParts.find((e) => e.type === 'hour').value;
         let minute = timeParts.find((e) => e.type === 'minute').value;
