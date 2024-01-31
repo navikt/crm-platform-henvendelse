@@ -30,6 +30,7 @@ export default class CommunityTextarea extends LightningElement {
     }
 
     processMessageStyling() {
+        // eslint-disable-next-line @locker/locker/distorted-node-text-content-setter
         this.mirror.textContent = this.message + '\n s';
         this.tekstboks.style.height = this.mirror.offsetHeight + 'px';
         if (this.limitCharacters) {
