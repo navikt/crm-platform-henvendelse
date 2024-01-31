@@ -6,7 +6,7 @@
 
     getReference: function (component) {
         const state = component.get('v.pageReference').state;
-        const henvId = state['c__henvendelseId'];
+        const henvId = state.c__henvendelseId;
         return henvId;
     },
 
@@ -49,7 +49,7 @@
             .then((tabId) => {
                 workspaceAPI
                     .closeTab({ tabId: tabId })
-                    .then((response) => {
+                    .then(() => {
                         //Success
                     })
                     .catch((error) => {
