@@ -180,3 +180,4 @@ Session.vim
 TAGS
 tags
 *.bat
+force-app/main/default/permissionsets/sfdcInternalInt__sfdc_scrt2.permissionset-meta.xml
