@@ -61,6 +61,10 @@ public with sharing class CRM_ThreadSelector extends CRM_ApiSelector {
     public List<Thread__c> selectByIds(Set<Id> idSet) {
         fflib_QueryFactory query = newQueryFactory();
         query.setCondition('Id in :idSet');
+         //Adds the Journal entry selector query as a relationship query to the Thread query
+         new CRM_JournalEntrySelector().addQueryFactorySubselect(query, 'Journal_Entries__r');
+         //Adds the Journal entry selector query as a relationship query to the Thread query
+         addMessageSubquery(query);
         return (List<Thread__c>) Database.query(query.toSOQL());
     }
 

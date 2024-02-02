@@ -12,12 +12,12 @@ public  class HenvendelseDbService_Test {
 
 
     @isTest
-    static void testPostThread(){
-        Conversation_Note__c convNote = [SELECT Id FROM Conversation_Note__c LIMIT 1];
+    static void testPostThreads(){
+        Thread__c thread = [SELECT Id FROM Thread__c LIMIT 1];
         ApiMock.setTestMock(HenvendelseDbCalloutService.SERVICES.POST_HENVENDELSE_DB_API.name(), 200, 'OK');
 
         Test.startTest();
-        Boolean result=service.postConversationNote(convNote.Id);
+        Boolean result=service.postThreads(new Set<Id>{thread.Id});
         Test.stopTest();
 
         Assert.areEqual(true,result,'Post to db should be successful');
@@ -29,7 +29,7 @@ public  class HenvendelseDbService_Test {
         ApiMock.setTestMock(HenvendelseDbCalloutService.SERVICES.POST_HENVENDELSE_DB_API.name(), 200, 'OK');
 
         Test.startTest();
-        Boolean result=service.postConversationNote(convNote.Id);
+        Boolean result=service.postConversationNotes(new Set<Id>{convNote.Id});
         Test.stopTest();
 
         Assert.areEqual(true,result,'Post to db should be successful');
