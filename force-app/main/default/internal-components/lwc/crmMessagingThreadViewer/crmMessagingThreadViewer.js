@@ -1,6 +1,5 @@
 import { LightningElement, api, wire, track } from 'lwc';
 import getmessages from '@salesforce/apex/CRM_MessageHelper.getMessagesFromThread';
-import getJournalInfo from '@salesforce/apex/CRM_MessageHelper.getJournalEntries';
 import markAsReadByNav from '@salesforce/apex/CRM_MessageHelper.markAsReadByNav';
 import { subscribe, unsubscribe } from 'lightning/empApi';
 import userId from '@salesforce/user/Id';
@@ -152,10 +151,6 @@ export default class messagingThreadViewer extends LightningElement {
             });
     }
 
-    // POSSIBLE DISPLAY OF JOURNAL ENTRIES RELATED TO THE THREAD
-    /*@wire(getJournalInfo, { threadId: '$threadid' })
-    wiredJournalEntries;*/
-
     @wire(getRecord, {
         recordId: '$threadid',
         fields: [ACTIVE_FIELD, CREATED_BY_FIELD, FIRSTNAME_FIELD, LASTNAME_FIELD, REGISTERED_DATE]
@@ -293,10 +288,6 @@ export default class messagingThreadViewer extends LightningElement {
 
     get registereddate() {
         return getFieldValue(this.wiredThread.data, REGISTERED_DATE);
-    }
-
-    get journalEntries() {
-        return this.wiredJournalEntries?.data;
     }
 
     get closedThread() {
