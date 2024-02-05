@@ -152,8 +152,9 @@ export default class messagingThreadViewer extends LightningElement {
             });
     }
 
-    @wire(getJournalInfo, { threadId: '$threadid' })
-    wiredJournalEntries;
+    // POSSIBLE DISPLAY OF JOURNAL ENTRIES RELATED TO THE THREAD
+    /*@wire(getJournalInfo, { threadId: '$threadid' })
+    wiredJournalEntries;*/
 
     @wire(getRecord, {
         recordId: '$threadid',
@@ -295,11 +296,7 @@ export default class messagingThreadViewer extends LightningElement {
     }
 
     get journalEntries() {
-        if (this.wiredJournalEntries) {
-            return this.wiredJournalEntries.data;
-        }
-
-        return null;
+        return this.wiredJournalEntries?.data;
     }
 
     get closedThread() {
