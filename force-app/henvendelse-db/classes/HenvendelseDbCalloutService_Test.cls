@@ -13,4 +13,16 @@ public class HenvendelseDbCalloutService_Test {
 
         Assert.areEqual(200, resp.getStatusCode(), 'Returned status code should be 200');
     }
+
+    @isTest
+    static void testPutHenvendelse(){
+        ApiMock.setTestMock(HenvendelseDbCalloutService.SERVICES.PUT_HENVENDELSER_DB_API.name(), 200, 'OK');
+
+        String body='{test}';
+        Test.startTest();
+        HttpResponse resp = service.putHenvendelser(body);
+        Test.stopTest();
+
+        Assert.areEqual(200, resp.getStatusCode(), 'Returned status code should be 200');
+    }
 }
