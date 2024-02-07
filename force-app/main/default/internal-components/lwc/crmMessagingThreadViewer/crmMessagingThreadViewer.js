@@ -1,6 +1,5 @@
 import { LightningElement, api, wire, track } from 'lwc';
 import getmessages from '@salesforce/apex/CRM_MessageHelper.getMessagesFromThread';
-import getJournalInfo from '@salesforce/apex/CRM_MessageHelper.getJournalEntries';
 import markAsReadByNav from '@salesforce/apex/CRM_MessageHelper.markAsReadByNav';
 import { subscribe, unsubscribe } from 'lightning/empApi';
 import userId from '@salesforce/user/Id';
@@ -152,9 +151,6 @@ export default class messagingThreadViewer extends LightningElement {
             });
     }
 
-    @wire(getJournalInfo, { threadId: '$threadid' })
-    wiredJournalEntries;
-
     @wire(getRecord, {
         recordId: '$threadid',
         fields: [ACTIVE_FIELD, REGISTERED_DATE]
@@ -305,14 +301,6 @@ export default class messagingThreadViewer extends LightningElement {
     //##################################//
     //#########    GETTERS    ##########//
     //##################################//
-
-    get journalEntries() {
-        if (this.wiredJournalEntries) {
-            return this.wiredJournalEntries.data;
-        }
-
-        return null;
-    }
 
     get quickTextCmp() {
         return this.template.querySelector('c-crm-messaging-quick-text');
