@@ -136,8 +136,9 @@ global class CRM_Henvendelse extends CRM_HenvendelseApiUtils implements Comparab
         this.sladding = thread.STO_Sensitive_Information__c;
 
         for (Message__c message : messages) {
-            if (message.CRM_Type__c == 'Event' && message.CRM_Event_Type__c == 'END_OF_CHAT') {
-                this.lukketAv = new CRM_MessageFrom(message);
+            if (message.CRM_Type__c == 'Event') {
+                if (message.CRM_Event_Type__c == 'END_OF_CHAT')
+                    this.lukketAv = new CRM_MessageFrom(message);
             } else {
                 this.meldinger.add(new CRM_Melding(message));
             }
