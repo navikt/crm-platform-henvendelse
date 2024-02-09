@@ -9,7 +9,7 @@ public inherited sharing class CRM_MessageSelector extends CRM_ApiSelector {
      * @return String
      **/
     public String getApiConditions() {
-        return 'CRM_Type__c IN (\'Message\',\'Info\', ,\'Event\')';
+        return 'CRM_Type__c IN (\'Message\', \'Info\', \'Event\')';
     }
 
     public List<Schema.SObjectField> getSObjectFieldList() {
