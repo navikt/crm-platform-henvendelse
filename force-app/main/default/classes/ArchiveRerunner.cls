@@ -88,7 +88,7 @@ public with sharing class ArchiveRerunner {
             logger.error('Feil med arkivering, response == null', null);
         }
         for (ArchiveService.ArchiveResponseWrapper archiveResponse : response) {
-            if (response.id == null) {
+            if (archiveResponse.id == null) {
                 logger.error('Feil med arkivering, response.Id == null', null);
             }
         }
