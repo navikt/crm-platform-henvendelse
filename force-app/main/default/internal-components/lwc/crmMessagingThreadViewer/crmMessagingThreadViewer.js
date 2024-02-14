@@ -1,19 +1,16 @@
 import { LightningElement, api, wire, track } from 'lwc';
 import getmessages from '@salesforce/apex/CRM_MessageHelper.getMessagesFromThread';
-import getJournalInfo from '@salesforce/apex/CRM_MessageHelper.getJournalEntries';
 import markAsReadByNav from '@salesforce/apex/CRM_MessageHelper.markAsReadByNav';
 import { subscribe, unsubscribe } from 'lightning/empApi';
 import userId from '@salesforce/user/Id';
 import { updateRecord, getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import ACTIVE_FIELD from '@salesforce/schema/Thread__c.CRM_isActive__c';
 import THREAD_ID_FIELD from '@salesforce/schema/Thread__c.Id';
-import CREATED_BY_FIELD from '@salesforce/schema/Thread__c.CreatedById';
 import REGISTERED_DATE from '@salesforce/schema/Thread__c.CRM_Date_Time_Registered__c';
-import FIRSTNAME_FIELD from '@salesforce/schema/Thread__c.CreatedBy.FirstName';
-import LASTNAME_FIELD from '@salesforce/schema/Thread__c.CreatedBy.LastName';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
 import { publishToAmplitude } from 'c/amplitude';
+import LoggerUtility from 'c/loggerUtility';
 
 export default class messagingThreadViewer extends LightningElement {
     createdbyid;
@@ -34,6 +31,8 @@ export default class messagingThreadViewer extends LightningElement {
     resizablePanelTop;
     onresize = false; // true when in process of resizing
     mouseListenerCounter = false; // flag for detecting if onmousemove listener is set for element
+    registereddate;
+    closedThread;
 
     @api textTemplate; //Support for conditional text template as input
     //Constructor, called onload
@@ -152,14 +151,27 @@ export default class messagingThreadViewer extends LightningElement {
             });
     }
 
-    @wire(getJournalInfo, { threadId: '$threadid' })
-    wiredJournalEntries;
-
     @wire(getRecord, {
         recordId: '$threadid',
-        fields: [ACTIVE_FIELD, CREATED_BY_FIELD, FIRSTNAME_FIELD, LASTNAME_FIELD, REGISTERED_DATE]
+        fields: [ACTIVE_FIELD, REGISTERED_DATE]
     })
-    wiredThread;
+    wiredThread(resp) {
+        const { data, error } = resp;
+        if (data) {
+            try {
+                this.registereddate = getFieldValue(data, REGISTERED_DATE);
+                const active = getFieldValue(data, ACTIVE_FIELD);
+                this.closedThread = !active;
+            } catch (catchError) {
+                this.doTheLog(catchError, resp);
+            }
+        }
+        if (error) {
+            console.log('Was error');
+            console.log(error);
+            this.doTheLog(null, resp);
+        }
+    }
 
     @wire(getmessages, { threadId: '$threadid' }) //Calls apex and extracts messages related to this record
     wiremessages(result) {
@@ -290,22 +302,6 @@ export default class messagingThreadViewer extends LightningElement {
     //#########    GETTERS    ##########//
     //##################################//
 
-    get registereddate() {
-        return getFieldValue(this.wiredThread.data, REGISTERED_DATE);
-    }
-
-    get journalEntries() {
-        if (this.wiredJournalEntries) {
-            return this.wiredJournalEntries.data;
-        }
-
-        return null;
-    }
-
-    get closedThread() {
-        return !getFieldValue(this.wiredThread.data, ACTIVE_FIELD);
-    }
-
     get quickTextCmp() {
         return this.template.querySelector('c-crm-messaging-quick-text');
     }
@@ -358,5 +354,20 @@ export default class messagingThreadViewer extends LightningElement {
     trapFocusEnd() {
         const lastElement = this.template.querySelector('.cancelButton');
         lastElement.focus();
+    }
+
+    //##################################//
+    //##########   Logging   ###########//
+    //##################################//
+
+    doTheLog(error, response) {
+        const report = `Error: ${error}, response: ${JSON.stringify(response)}`;
+        LoggerUtility.logError(
+            'NKS',
+            'STO',
+            report,
+            'Could not fetch active field from thread internal view',
+            this.threadId
+        );
     }
 }
