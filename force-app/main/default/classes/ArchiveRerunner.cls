@@ -31,8 +31,10 @@ public with sharing class ArchiveRerunner {
     }
 
     // For manual ArchiveRerunBatch
-    public static List<String> postToArchive(List<ArchivePostWrapper> inputs) {
+    public static void postToArchive(List<ArchivePostWrapper> inputs) {
+        LoggerUtility logger = new LoggerUtility('Arkiv');
         List<Id> threadList = new List<Id>();
+
         for (ArchivePostWrapper input : inputs) {
             if (input.archiveObject.getSObjectType().getDescribe().getName() == 'Thread__c') {
                 threadList.add(input.archiveObject.Id);
@@ -60,7 +62,6 @@ public with sharing class ArchiveRerunner {
                 ]
             );
         } catch (Exception e) {
-            LoggerUtility logger = new LoggerUtility('Arkiv');
             logger.error('Feil med henting av tråder for arkivering: ' + e, null);
         }
 
@@ -81,12 +82,17 @@ public with sharing class ArchiveRerunner {
                 )
             );
         }
+
         List<ArchiveService.ArchiveResponseWrapper> response = new ArchiveService().postToArchive(archiveObjects);
-        List<String> returnStrings = new List<String>();
-        for (ArchiveService.ArchiveResponseWrapper archiveResponse : response) {
-            returnStrings.add(archiveResponse.dokumentasjonId);
+        if (response == null) {
+            logger.error('Feil med arkivering, response == null', null);
         }
-        return returnStrings;
+        for (ArchiveService.ArchiveResponseWrapper archiveResponse : response) {
+            if (archiveResponse.id == null) {
+                logger.error('Feil med arkivering, response.Id == null', null);
+            }
+        }
+        logger.publish();
     }
 
     // WRAPPERS //
