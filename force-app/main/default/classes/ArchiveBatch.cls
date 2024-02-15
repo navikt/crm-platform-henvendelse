@@ -5,11 +5,9 @@
  * @last modified on  : 19-06-2023
  * @last modified by  : mamikals
  **/
-public with sharing class ArchiveBatch implements Database.Batchable<SObject>, Database.AllowsCallouts, Schedulable {
+public with sharing class ArchiveBatch extends CRM_ApplicationDomain implements Database.Batchable<SObject>, Database.AllowsCallouts, Schedulable {
     private String domain;
     private LoggerUtility logger;
-    CRM_ApplicationDomain myDomain = new CRM_ApplicationDomain();
-    Map<String, CRM_ApplicationDomain.Domain> domainNameMap = myDomain.domainNameMap;
 
     public ArchiveBatch(String domain) {
         this.domain = domain != null ? domain.toUpperCase() : '';
