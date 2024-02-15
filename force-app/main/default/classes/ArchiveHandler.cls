@@ -8,6 +8,8 @@
 public inherited sharing class ArchiveHandler {
     @InvocableMethod(label='Post data to archive server' description='Sends data to the archive server.')
     public static List<String> postToArchive(List<ArchivePostWrapper> inputs) {
+        LoggerUtility logger = new LoggerUtility(inputs[0].opprettetAv);
+
         List<ArchiveRequestWrapper> archiveRecordsToPost = new List<ArchiveRequestWrapper>();
         for (ArchivePostWrapper input : inputs) {
             ArchiveRequestWrapper reqWrapper = new ArchiveRequestWrapper(
