@@ -52,6 +52,9 @@ public with sharing class ArchiveBatch implements Database.Batchable<SObject>, D
         List<ArchiveService.ArchiveResponseWrapper> response;
         try {
             response = new ArchiveService().postToArchive(archiveRecordsToPost);
+            if (response == null) {
+                throw new ArchiveException('Response was null.');
+            }
         } catch (Exception e) {
             logger.error(e.getMessage() + '. ' + e.getStackTraceString(), null, domainNameMap.get(domain));
         } finally {
@@ -59,15 +62,13 @@ public with sharing class ArchiveBatch implements Database.Batchable<SObject>, D
         }
 
         // Update Archive Entry status based on response
-        if (response != null) {
-            for (Archive_Entry__c archiveEntry : scope) {
-                archiveEntry.Status__c = (response[0].id != null &&
-                    String.valueOf(response[0].id) != '')
-                    ? 'Completed'
-                    : 'Failed';
-                archiveEntry.Archived_Date__c = (archiveEntry.Status__c == 'Completed') ? System.now() : null;
-                archiveEntry.Ready_for_Deletion__c = archiveEntry.Status__c == 'Completed';
-            }
+        for (Archive_Entry__c archiveEntry : scope) {
+            archiveEntry.Status__c = (response[0].id != null &&
+                String.valueOf(response[0].id) != '')
+                ? 'Completed'
+                : 'Failed';
+            archiveEntry.Archived_Date__c = (archiveEntry.Status__c == 'Completed') ? System.now() : null;
+            archiveEntry.Ready_for_Deletion__c = archiveEntry.Status__c == 'Completed';
         }
 
         // Update Archive Entry records
@@ -75,5 +76,8 @@ public with sharing class ArchiveBatch implements Database.Batchable<SObject>, D
     }
 
     public void finish(Database.BatchableContext BC) {
+    }
+
+    public class ArchiveException extends Exception {
     }
 }
