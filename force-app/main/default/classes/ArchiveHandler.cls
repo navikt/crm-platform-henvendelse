@@ -46,8 +46,10 @@ public inherited sharing class ArchiveHandler {
         }
 
         List<String> responseIds = new List<String>(); // The API returns id attribute on success
-        for (ArchiveService.ArchiveResponseWrapper archiveResponse : response) {
-            responseIds.add(String.valueOf(archiveResponse.id));
+        if (response != null) {
+            for (ArchiveService.ArchiveResponseWrapper archiveResponse : response) {
+                responseIds.add(String.valueOf(archiveResponse.id));
+            }
         }
         return responseIds;
     }

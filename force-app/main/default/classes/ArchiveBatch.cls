@@ -62,17 +62,19 @@ public with sharing class ArchiveBatch implements Database.Batchable<SObject>, D
         }
 
         // Update Archive Entry status based on response
-        for (Archive_Entry__c archiveEntry : scope) {
-            archiveEntry.Status__c = (response[0].id != null &&
-                String.valueOf(response[0].id) != '')
-                ? 'Completed'
-                : 'Failed';
-            archiveEntry.Archived_Date__c = (archiveEntry.Status__c == 'Completed') ? System.now() : null;
-            archiveEntry.Ready_for_Deletion__c = archiveEntry.Status__c == 'Completed';
-        }
+        if (response != null) {
+            for (Archive_Entry__c archiveEntry : scope) {
+                archiveEntry.Status__c = (response[0].id != null &&
+                    String.valueOf(response[0].id) != '')
+                    ? 'Completed'
+                    : 'Failed';
+                archiveEntry.Archived_Date__c = (archiveEntry.Status__c == 'Completed') ? System.now() : null;
+                archiveEntry.Ready_for_Deletion__c = archiveEntry.Status__c == 'Completed';
+            }
 
-        // Update Archive Entry records
-        update scope;
+            // Update Archive Entry records
+            update scope;
+        }
     }
 
     public void finish(Database.BatchableContext BC) {
