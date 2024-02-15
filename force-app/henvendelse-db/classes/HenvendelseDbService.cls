@@ -1,6 +1,7 @@
 public with sharing class HenvendelseDbService {
+    private static LoggerUtility logger = new LoggerUtility('Henvendelse DB');
 
-    public Boolean postThreads(Set<Id> threadIds){
+    public Static Boolean postThreads(Set<Id> threadIds){
         List<Thread__c> threads = new CRM_ThreadSelector().selectByIds(threadIds);
         String jsonBody;
         for(Thread__c thread:threads){
@@ -12,14 +13,27 @@ public with sharing class HenvendelseDbService {
             response=new HenvendelseDbCalloutService().postHenvendelse(jsonBody);
         }
 
-        if(threads.size()>1){
+        else if(threads.size()>1){
             response=new HenvendelseDbCalloutService().putHenvendelser(jsonBody);
         }
-        
-        return response.getStatusCode()==200;
+
+        else{
+            logger.error('Unbale to find thread ' + threadIds.tostring() , null, CRM_ApplicationDomain.Domain.NKS);
+            logger.publish();
+            return false;
+        }
+
+        if(response.getStatusCode()!=200){
+            logger.error('Unbale to publish thread to db ' + response.getBody() , null, CRM_ApplicationDomain.Domain.NKS);
+            logger.publish();
+            return false;
+        }
+
+    
+        return true;
     }
 
-    public Boolean postConversationNotes(Set<Id> convIds){
+    public Static Boolean postConversationNotes(Set<Id> convIds){
         List<Conversation_Note__c> convNoteList=new CRM_ConversationNoteSelector().selectByIds(convIds);
         String jsonBody;
         for(Conversation_Note__c convNote:convNoteList){
@@ -30,9 +44,20 @@ public with sharing class HenvendelseDbService {
         if(convNoteList.size()==1){
             response=new HenvendelseDbCalloutService().postHenvendelse(jsonBody);
         }
-        if(convNoteList.size()>1){
+        else if(convNoteList.size()>1){
             response=new HenvendelseDbCalloutService().putHenvendelser(jsonBody);
         }
-        return response.getStatusCode()==200;
+        else{
+            logger.error('Unbale to find conversation note' + convNoteList.tostring() , null, CRM_ApplicationDomain.Domain.NKS);
+            logger.publish();
+            return false;
+        }
+
+        if(response.getStatusCode()!=200){
+            logger.error('Unbale to publish conversation note to db ' + response.getBody() , null, CRM_ApplicationDomain.Domain.NKS);
+            logger.publish();
+            return false;
+        }
+        return true;
     }
 }

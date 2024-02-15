@@ -1,7 +1,6 @@
 @isTest
 public  class HenvendelseDbService_Test {
-    private static HenvendelseDbService service=new HenvendelseDbService();
-
+ 
     @TestSetup
     static void makeData() {
         CRM_HENV_TestDataFactory.createRecord(new Common_Code__c(CRM_Code_Set__c = 'Tema', CRM_Code__c = 'DAG'));
@@ -22,7 +21,7 @@ public  class HenvendelseDbService_Test {
         ApiMock.setTestMock(HenvendelseDbCalloutService.SERVICES.POST_HENVENDELSE_DB_API.name(), 200, 'OK');
 
         Test.startTest();
-        Boolean result=service.postThreads(new Set<Id>{thread.Id});
+        Boolean result=HenvendelseDbService.postThreads(new Set<Id>{thread.Id});
         Test.stopTest();
 
         Assert.areEqual(true,result,'Post to db should be successful');
@@ -34,7 +33,7 @@ public  class HenvendelseDbService_Test {
         ApiMock.setTestMock(HenvendelseDbCalloutService.SERVICES.POST_HENVENDELSE_DB_API.name(), 200, 'OK');
 
         Test.startTest();
-        Boolean result=service.postConversationNotes(new Set<Id>{convNote.Id});
+        Boolean result=HenvendelseDbService.postConversationNotes(new Set<Id>{convNote.Id});
         Test.stopTest();
 
         Assert.areEqual(true,result,'Post to db should be successful');
@@ -46,7 +45,7 @@ public  class HenvendelseDbService_Test {
         ApiMock.setTestMock(HenvendelseDbCalloutService.SERVICES.PUT_HENVENDELSER_DB_API.name(), 200, 'OK');
 
         Test.startTest();
-        Boolean result=service.postThreads(new Set<Id>{threads[0].Id, threads[1].Id});
+        Boolean result=HenvendelseDbService.postThreads(new Set<Id>{threads[0].Id, threads[1].Id});
         Test.stopTest();
 
         Assert.areEqual(true,result,'Post to db should be successful');
@@ -58,7 +57,7 @@ public  class HenvendelseDbService_Test {
         ApiMock.setTestMock(HenvendelseDbCalloutService.SERVICES.PUT_HENVENDELSER_DB_API.name(), 200, 'OK');
 
         Test.startTest();
-        Boolean result=service.postConversationNotes(new Set<Id>{convNotes[0].Id, convNotes[1].Id});
+        Boolean result=HenvendelseDbService.postConversationNotes(new Set<Id>{convNotes[0].Id, convNotes[1].Id});
         Test.stopTest();
 
         Assert.areEqual(true,result,'Post to db should be successful');
@@ -70,10 +69,11 @@ public  class HenvendelseDbService_Test {
         ApiMock.setTestMock(HenvendelseDbCalloutService.SERVICES.POST_HENVENDELSE_DB_API.name(), 200, 'OK');
 
         Test.startTest();
-        Boolean result=service.postThreads(new Set<Id>{convNoted.Id});
+        Boolean result=HenvendelseDbService.postThreads(new Set<Id>{convNote.Id});
         Test.stopTest();
 
-        Assert.areEqual(true,result,'Post to db should be successful');
+        Assert.areEqual(false,result,'Post to db is not successful');
+        Assert.areEqual(1,[SELECT COUNT() FROM Application_Log__c], 'Expect error to be logged');
     }
 
     @isTest
@@ -82,11 +82,36 @@ public  class HenvendelseDbService_Test {
         ApiMock.setTestMock(HenvendelseDbCalloutService.SERVICES.POST_HENVENDELSE_DB_API.name(), 200, 'OK');
 
         Test.startTest();
-        Boolean result=service.postConversationNotes(new Set<Id>{thread.Id});
+        Boolean result=HenvendelseDbService.postConversationNotes(new Set<Id>{thread.Id});
         Test.stopTest();
 
-        Assert.areEqual(true,result,'Post to db should be successful');
+        Assert.areEqual(false,result,'Post to db is not successful');
+        Assert.areEqual(1,[SELECT COUNT() FROM Application_Log__c], 'Expect error to be logged');
     }
 
-    
+    @isTest
+    static void testPostThreads_whenApiReturns500(){
+        Thread__c thread = [SELECT Id FROM Thread__c LIMIT 1];
+        ApiMock.setTestMock(HenvendelseDbCalloutService.SERVICES.POST_HENVENDELSE_DB_API.name(), 500, 'Internal error');
+
+        Test.startTest();
+        Boolean result=HenvendelseDbService.postThreads(new Set<Id>{thread.Id});
+        Test.stopTest();
+
+        Assert.areEqual(false,result,'Post to db has failed');
+        Assert.areEqual(1,[SELECT COUNT() FROM Application_Log__c], 'Expect error to be logged');
+    }
+
+    @isTest
+    static void testPostConversationNote_whenApiReturns500(){
+        Conversation_Note__c convNote = [SELECT Id FROM Conversation_Note__c LIMIT 1];
+        ApiMock.setTestMock(HenvendelseDbCalloutService.SERVICES.POST_HENVENDELSE_DB_API.name(), 500, 'Internal error');
+
+        Test.startTest();
+        Boolean result=HenvendelseDbService.postConversationNotes(new Set<Id>{convNote.Id});
+        Test.stopTest();
+
+        Assert.areEqual(false,result,'Post to db has failed');
+        Assert.areEqual(1,[SELECT COUNT() FROM Application_Log__c], 'Expect error to be logged');
+    }
 }

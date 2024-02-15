@@ -2,15 +2,6 @@ public with sharing class HenvendelseDbCalloutService extends ApiController {
     private final string CONFIG_NAME = 'HENVENDELSE_DB_API';
     private final string SERVICE_AUTH_HEADER = 'HenvendelseDB';
 
-    public HenvendelseDbCalloutService(){
-        LoggerUtility logger = new LoggerUtility('HenvendelseDB');
-        setLogCategory('HenvendelseDB').
-        setLogger(logger).
-        setLogCalloutRequest().
-        publishLogAfterCallout().
-        setLogDomain(CRM_ApplicationDomain.Domain.NKS);
-    }
-
     public enum SERVICES {
         POST_HENVENDELSE_DB_API,
         PUT_HENVENDELSER_DB_API
