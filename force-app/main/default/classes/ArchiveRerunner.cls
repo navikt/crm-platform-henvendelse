@@ -33,61 +33,27 @@ public with sharing class ArchiveRerunner {
     // For manual ArchiveRerunBatch
     public static void postToArchive(List<ArchivePostWrapper> inputs) {
         LoggerUtility logger = new LoggerUtility('Arkiv');
-        List<Id> threadList = new List<Id>();
 
+        List<ArchiveRequestWrapper> archiveRequestWrappers = new List<ArchiveRequestWrapper>();
         for (ArchivePostWrapper input : inputs) {
-            if (input.archiveObject.getSObjectType().getDescribe().getName() == 'Thread__c') {
-                threadList.add(input.archiveObject.Id);
-            }
-        }
-        Map<Id, Thread__c> threadMap = null;
-        try {
-            threadMap = new Map<Id, Thread__c>(
-                [
-                    SELECT
-                        Id,
-                        (
-                            SELECT
-                                Id,
-                                Name,
-                                CRM_Message_Text__c,
-                                CRM_Thread_Type__c,
-                                CRM_Read_Datetime__c,
-                                CRM_Sent_date__c,
-                                CRM_Henvendelse_BehandlingsId__c
-                            FROM Messages__r
-                        )
-                    FROM Thread__c
-                    WHERE Id IN :threadList
-                ]
-            );
-        } catch (Exception e) {
-            logger.error('Feil med henting av tråder for arkivering: ' + e, null);
-        }
-
-        List<ArchiveRequestWrapper> archiveObjects = new List<ArchiveRequestWrapper>();
-        for (ArchivePostWrapper input : inputs) {
-            SObject archiveObject = input.archiveObject;
-            if (input.archiveObject.getSObjectType().getDescribe().getName() == 'Thread__c') {
-                archiveObject = (SObject) threadMap?.get(input.archiveObject.Id);
-            }
-            archiveObjects.add(
+            archiveRequestWrappers.add(
                 new ArchiveRequestWrapper(
                     input.opprettetAv,
                     input.aktoerid,
                     input.fnr,
                     input.tema,
                     input.konfidentiellt,
-                    archiveObject
+                    input.archiveObject
                 )
             );
         }
 
-        List<ArchiveService.ArchiveResponseWrapper> response = new ArchiveService().postToArchive(archiveObjects);
-        if (response == null) {
+        System.debug('archiveRequestWrappers: ' + archiveRequestWrappers);
+        List<ArchiveService.ArchiveResponseWrapper> res = new ArchiveService().postToArchive(archiveRequestWrappers);
+        if (res == null) {
             logger.error('Feil med arkivering, response == null', null);
         }
-        for (ArchiveService.ArchiveResponseWrapper archiveResponse : response) {
+        for (ArchiveService.ArchiveResponseWrapper archiveResponse : res) {
             if (archiveResponse.id == null) {
                 logger.error('Feil med arkivering, response.Id == null', null);
             }
@@ -96,7 +62,6 @@ public with sharing class ArchiveRerunner {
     }
 
     // WRAPPERS //
-
     public class RecordsToArchive {
         public String id;
     }
