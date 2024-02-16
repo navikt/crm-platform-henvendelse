@@ -4,6 +4,7 @@ public  class HenvendelseDbService_Test {
     @TestSetup
     static void makeData() {
         CRM_HENV_TestDataFactory.createRecord(new Common_Code__c(CRM_Code_Set__c = 'Tema', CRM_Code__c = 'DAG'));
+        myTriggers.disable(ConvNoteHenvendelseDbHandler.class);
         CRM_HENV_TestDataFactory.createRecord(new Conversation_Note__c(CRM_Conversation_Note__c = 'DUMMY TEXT'));
         CRM_HENV_TestDataFactory.createRecord(new Conversation_Note__c(CRM_Conversation_Note__c = 'DUMMY TEXT 2'));
         
