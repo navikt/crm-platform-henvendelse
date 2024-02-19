@@ -8,6 +8,8 @@
 public inherited sharing class ArchiveHandler {
     @InvocableMethod(label='Post data to archive server' description='Sends data to the archive server.')
     public static List<String> postToArchive(List<ArchivePostWrapper> inputs) {
+        LoggerUtility logger = new LoggerUtility(inputs[0].opprettetAv);
+
         List<ArchiveRequestWrapper> archiveRecordsToPost = new List<ArchiveRequestWrapper>();
         for (ArchivePostWrapper input : inputs) {
             ArchiveRequestWrapper reqWrapper = new ArchiveRequestWrapper(
@@ -24,16 +26,37 @@ public inherited sharing class ArchiveHandler {
             archiveRecordsToPost.add(reqWrapper);
         }
 
-        List<ArchiveService.ArchiveResponseWrapper> response = new ArchiveService().postToArchive(archiveRecordsToPost);
-        if (response == null) {
-            return null;
+        CRM_ApplicationDomain myDomain = new CRM_ApplicationDomain();
+        Map<String, CRM_ApplicationDomain.Domain> domainNameMap = myDomain.domainNameMap;
+
+        List<ArchiveService.ArchiveResponseWrapper> response;
+        try {
+            response = new ArchiveService().postToArchive(archiveRecordsToPost);
+            if (response == null) {
+                throw new ArchiveException('Response was null.');
+            }
+        } catch (Exception e) {
+            logger.error(
+                e.getMessage() +
+                '. ' +
+                e.getStackTraceString(),
+                null,
+                domainNameMap.get(archiveRecordsToPost[0].opprettetAv)
+            );
+        } finally {
+            logger.publish();
         }
 
         List<String> responseIds = new List<String>(); // The API returns id attribute on success
-        for (ArchiveService.ArchiveResponseWrapper archiveResponse : response) {
-            responseIds.add(String.valueOf(archiveResponse.id));
+        if (response != null) {
+            for (ArchiveService.ArchiveResponseWrapper archiveResponse : response) {
+                responseIds.add(String.valueOf(archiveResponse.id));
+            }
         }
         return responseIds;
+    }
+
+    public class ArchiveException extends Exception {
     }
 
     public class ArchivePostWrapper {
