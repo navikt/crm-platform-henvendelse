@@ -22,7 +22,18 @@ public with sharing class ArchiveRerunBatch implements Database.Batchable<Id>, D
                     CRM_Account__r.CRM_Person__r.Name,
                     CRM_Account__r.CRM_Person__r.INT_ActorId__c,
                     STO_Sensitive_Information__c,
-                    CRM_Theme__c
+                    CRM_Theme__c,
+                    (
+                        SELECT
+                            Id,
+                            Name,
+                            CRM_Message_Text__c,
+                            CRM_Thread_Type__c,
+                            CRM_Read_Datetime__c,
+                            CRM_Sent_date__c,
+                            CRM_Henvendelse_BehandlingsId__c
+                        FROM Messages__r
+                    )
                 FROM Thread__c
                 WHERE
                     CRM_Thread_Type__c IN ('STO', 'STB', 'BTO')
@@ -43,9 +54,10 @@ public with sharing class ArchiveRerunBatch implements Database.Batchable<Id>, D
         }
 
         List<ArchiveRerunner.ArchivePostWrapper> postList = new List<ArchiveRerunner.ArchivePostWrapper>();
-        for (SObject obj : records) {
-            postList.add(new ArchiveRerunner.ArchivePostWrapper(obj, opprettetAv));
+        for (SObject rec : records) {
+            postList.add(new ArchiveRerunner.ArchivePostWrapper(rec, opprettetAv));
         }
+        System.debug('postList: ' + postList);
         ArchiveRerunner.postToArchive(postList);
     }
 

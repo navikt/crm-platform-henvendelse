@@ -5,11 +5,9 @@
  * @last modified on  : 19-06-2023
  * @last modified by  : mamikals
  **/
-public with sharing class ArchiveBatch implements Database.Batchable<SObject>, Database.AllowsCallouts, Schedulable {
+public with sharing class ArchiveBatch extends CRM_ApplicationDomain implements Database.Batchable<SObject>, Database.AllowsCallouts, Schedulable {
     private String domain;
     private LoggerUtility logger;
-    CRM_ApplicationDomain myDomain = new CRM_ApplicationDomain();
-    Map<String, CRM_ApplicationDomain.Domain> domainNameMap = myDomain.domainNameMap;
 
     public ArchiveBatch(String domain) {
         this.domain = domain != null ? domain.toUpperCase() : '';
@@ -52,6 +50,9 @@ public with sharing class ArchiveBatch implements Database.Batchable<SObject>, D
         List<ArchiveService.ArchiveResponseWrapper> response;
         try {
             response = new ArchiveService().postToArchive(archiveRecordsToPost);
+            if (response == null) {
+                throw new ArchiveException('Response was null.');
+            }
         } catch (Exception e) {
             logger.error(e.getMessage() + '. ' + e.getStackTraceString(), null, domainNameMap.get(domain));
         } finally {
@@ -68,12 +69,15 @@ public with sharing class ArchiveBatch implements Database.Batchable<SObject>, D
                 archiveEntry.Archived_Date__c = (archiveEntry.Status__c == 'Completed') ? System.now() : null;
                 archiveEntry.Ready_for_Deletion__c = archiveEntry.Status__c == 'Completed';
             }
-        }
 
-        // Update Archive Entry records
-        update scope;
+            // Update Archive Entry records
+            update scope;
+        }
     }
 
     public void finish(Database.BatchableContext BC) {
+    }
+
+    public class ArchiveException extends Exception {
     }
 }
