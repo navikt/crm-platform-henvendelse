@@ -34,11 +34,8 @@ public with sharing class HenvendelseDbService {
     }
 
     public Static Boolean postConversationNotes(List<Conversation_Note__c> convNoteList){
-        String jsonBody='';
-        for(Conversation_Note__c convNote:convNoteList){
-            jsonBody+=JSON.serializePretty(new CRM_Henvendelse(new List<Conversation_Note__c>{convNote}));
-        }
-
+        String  jsonBody+=JSON.serializePretty(new CRM_Henvendelse(convNoteList));
+       
         HttpResponse response;
         if(convNoteList.size()==1){
             response=new HenvendelseDbCalloutService().postHenvendelse(jsonBody);
