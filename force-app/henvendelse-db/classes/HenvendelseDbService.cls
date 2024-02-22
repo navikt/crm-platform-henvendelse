@@ -34,15 +34,26 @@ public with sharing class HenvendelseDbService {
     }
 
     public Static Boolean postConversationNotes(List<Conversation_Note__c> convNoteList){
-        String  jsonBody+=JSON.serializePretty(new CRM_Henvendelse(convNoteList));
-       
         HttpResponse response;
+
         if(convNoteList.size()==1){
+            String jsonBody=JSON.serializePretty(new CRM_Henvendelse(new List<Conversation_Note__c>{convNoteList[0]}));
             response=new HenvendelseDbCalloutService().postHenvendelse(jsonBody);
         }
+
         else if(convNoteList.size()>1){
+            String jsonBody='[';
+
+            for(Integer i=0; i<convNoteList.size();i++){
+                jsonBody+=JSON.serializePretty(new CRM_Henvendelse(new List<Conversation_Note__c>{convNoteList[i]}));
+                if(i<convNoteList.size()-1){
+                    jsonBody+=',';
+                }
+            }
+            jsonBody+=']';
             response=new HenvendelseDbCalloutService().putHenvendelser(jsonBody);
         }
+
         else{
             logger.error('Unbale to find conversation note' + convNoteList.tostring() , null, CRM_ApplicationDomain.Domain.NKS);
             logger.publish();
