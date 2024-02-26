@@ -10,6 +10,8 @@ private class HenvendelseDbConNoteMigration_Test {
 
     @IsTest
     static void testMigrationBatch(){
+        ApiMock.setTestMock(HenvendelseDbCalloutService.SERVICES.PUT_HENVENDELSER_DB_API.name(), 200, 'OK');
+
         DateTime createdDateStart=DateTime.now().addDays(-1);
         DateTime createdDateEnd=DateTime.now().addDays(11);
 

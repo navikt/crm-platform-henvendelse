@@ -19,6 +19,7 @@ public with sharing class HenvendelseDbConNoteMigration  implements Database.Bat
     }
 
     public void execute(Database.BatchableContext BC, List<Conversation_Note__c> scope) {
+        HenvendelseDbService.postConversationNotes(scope);
     }
 
     public void finish(Database.BatchableContext BC) {
