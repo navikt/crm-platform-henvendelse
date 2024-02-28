@@ -67,6 +67,15 @@ global class ConvNoteHenvendelseDbHandler extends MyTriggers {
                 CRM_NAV_Case_Legacy_System__c
           FROM Journal_Entries__r )
         FROM Conversation_Note__c
-        WHERE Id in:convIds];
+        WHERE CRM_Henvendelse_BehandlingskjedeId__c in:getBehandlingskjedeIds(convIds)
+        ORDER BY CRM_Date_Time_Registered__c DESC];
     }
+
+    private static Set<String> getBehandlingskjedeIds(Set<Id> convIds){
+        Set<String> behandlingskjedeIds=new Set<String>();
+        for(Conversation_Note__c convNote:[SELECT CRM_Henvendelse_BehandlingskjedeId__c FROM Conversation_Note__c WHERE Id in:convIds]){
+            behandlingskjedeIds.add(convNote.CRM_Henvendelse_BehandlingskjedeId__c);
+        }
+        return behandlingskjedeIds;
+    } 
 }
