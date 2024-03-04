@@ -1,4 +1,4 @@
-public with sharing class HenvendelseDbService {
+public without sharing class HenvendelseDbService {
     private static LoggerUtility logger = new LoggerUtility('Henvendelse DB');
 
     public Static Boolean postThreads(Set<Id> threadIds){

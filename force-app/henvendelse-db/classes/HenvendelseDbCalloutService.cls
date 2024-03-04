@@ -1,4 +1,4 @@
-public with sharing class HenvendelseDbCalloutService extends ApiController {
+public without sharing class HenvendelseDbCalloutService extends ApiController {
     private final string CONFIG_NAME = 'HENVENDELSE_DB_API';
     private final string SERVICE_AUTH_HEADER = 'HenvendelseDB';
 

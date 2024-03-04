@@ -1,4 +1,4 @@
-public with sharing class HenvendelseDbConNoteMigration  implements Database.Batchable<SObject>, Database.AllowsCallouts {
+public without sharing class HenvendelseDbConNoteMigration  implements Database.Batchable<SObject>, Database.AllowsCallouts {
     private LoggerUtility logger;
     private DateTime createdDateStart;
     private DateTime createdDateEnd;
