@@ -39,7 +39,7 @@ public without sharing class HenvendelseDbService {
         List<CRM_Henvendelse> henvendelseList=convertToHenvendelseList(convNoteList);
 
         if(henvendelseList.size()==1){
-            String jsonBody=JSON.serializePretty(henvendelseList[0]);
+            String jsonBody=JSON.serializePretty(henvendelseList);
             response=new HenvendelseDbCalloutService().postHenvendelse(jsonBody);
         }
 
@@ -47,7 +47,7 @@ public without sharing class HenvendelseDbService {
             String jsonBody='[';
 
             for(Integer i=0; i<convNoteList.size();i++){
-                jsonBody+=JSON.serializePretty(henvendelseList[0]);
+                jsonBody+=JSON.serializePretty(henvendelseList);
                 if(i<convNoteList.size()-1){
                     jsonBody+=',';
                 }
