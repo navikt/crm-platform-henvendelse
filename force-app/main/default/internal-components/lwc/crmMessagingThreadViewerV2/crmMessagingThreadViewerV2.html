@@ -151,47 +151,6 @@
                 </lightning-layout-item>
 
                 <lightning-layout-item class="slds-size_12-of-12 slds-var-p-top_medium">
-                    <div
-                        role="alertdialog"
-                        tabindex="-1"
-                        class={modalClass}
-                        aria-describedby="text"
-                        style="position: relative"
-                        aria-hidden={hideModal}
-                        aria-modal="true"
-                    >
-                        <div class="container">
-                            <div class="panel-content scrollable" id="text">
-                                <div class="slds-var-m-around_medium">
-                                    <p>Er du sikker på at du vil avslutte denne samtalen permanent?</p>
-                                </div>
-                            </div>
-                            <div class="panel-footer">
-                                <div class="slds-grid slds-grid_align-end">
-                                    <div
-                                        class="right slds-var-m-top_medium slds-var-m-right_large slds-var-m-bottom_large"
-                                    >
-                                        <div tabindex="0" onfocus={trapFocusStart}></div>
-                                        <button
-                                            type="button"
-                                            class="slds-button slds-button_neutral cancelButton"
-                                            onclick={closeModal}
-                                        >
-                                            Avbryt</button
-                                        ><button
-                                            type="button"
-                                            class="slds-button slds-button_destructive closeButton"
-                                            onclick={closeThread}
-                                        >
-                                            Avslutt samtale
-                                        </button>
-                                        <div tabindex="0" onfocus={trapFocusEnd}></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class={backdropClass} onclick={closeModal}></div>
                     <template if:true={showComplete}>
                         <template if:true={showFlow}>
                             <div class="slds-var-m-top_xx-small">
@@ -248,6 +207,49 @@
                             </div>
                         </template>
                     </template>
+
+                    <!--Alert dialogue-->
+                    <div
+                        role="alertdialog"
+                        tabindex="-1"
+                        class={modalClass}
+                        aria-describedby="text"
+                        style="position: relative"
+                        aria-hidden={hideModal}
+                        aria-modal="true"
+                    >
+                        <div class="container">
+                            <div class="panel-content scrollable" id="text">
+                                <div class="slds-var-m-around_medium">
+                                    <p>Er du sikker på at du vil avslutte denne samtalen permanent?</p>
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <div class="slds-grid slds-grid_align-end">
+                                    <div
+                                        class="right slds-var-m-top_medium slds-var-m-right_large slds-var-m-bottom_large"
+                                    >
+                                        <div tabindex="0" onfocus={trapFocusStart}></div>
+                                        <button
+                                            type="button"
+                                            class="slds-button slds-button_neutral cancelButton"
+                                            onclick={closeModal}
+                                        >
+                                            Avbryt</button
+                                        ><button
+                                            type="button"
+                                            class="slds-button slds-button_destructive closeButton"
+                                            onclick={closeThread}
+                                        >
+                                            Avslutt samtale
+                                        </button>
+                                        <div tabindex="0" onfocus={trapFocusEnd}></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class={backdropClass} onclick={closeModal}></div>
                 </lightning-layout-item>
             </lightning-layout>
             <lightning-input-field
