@@ -12,6 +12,9 @@ import CREATE_NAV_TASK_LABEL from '@salesforce/label/c.STO_Create_NAV_Task';
 import JOURNAL_LABEL from '@salesforce/label/c.STO_Journal';
 import END_DIALOGUE_LABEL from '@salesforce/label/c.STO_End_Dialogue';
 import SEND_TO_REDACTION_LABEL from '@salesforce/label/c.Set_To_Redaction';
+import END_DIALOGUE_ALERT_TEXT from '@salesforce/label/c.STO_End_Dialogue_Alert_Text';
+import DIALOGUE_STARTED_TEXT from '@salesforce/label/c.STO_DIALOGUE_STARTED';
+import CANCEL_LABEL from '@salesforce/label/c.STO_Cancel';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
 import { publishToAmplitude } from 'c/amplitude';
@@ -22,7 +25,7 @@ export default class MessagingThreadViewer extends LightningElement {
     @api thread;
     @api showQuick;
     @api englishTextTemplate;
-    @api textTemplate; //Support for conditional text template as input
+    @api textTemplate;
     @api showClose;
 
     @track langBtnLock = false;
@@ -38,12 +41,11 @@ export default class MessagingThreadViewer extends LightningElement {
     hideModal = true;
     langBtnAriaToggle = false;
     resizablePanelTop;
-    onresize = false; // true when in process of resizing
-    mouseListenerCounter = false; // flag for detecting if onmousemove listener is set for element
+    onresize = false;
+    mouseListenerCounter = false;
     registereddate;
     closedThread;
 
-    //Constructor, called onload
     connectedCallback() {
         if (this.thread) {
             this.threadId = this.thread.Id;
@@ -73,16 +75,13 @@ export default class MessagingThreadViewer extends LightningElement {
     //##################################//
 
     mouseMoveEventHandler(e) {
-        // detecting if cursor is in the area of interest
         if (this.resizablePanelTop.getBoundingClientRect().bottom - e.pageY < 10) {
-            // change cursor style, and adding listener for mousedown event
             document.body.style.cursor = 'ns-resize';
             if (this.mouseListenerCounter !== true) {
                 this.resizablePanelTop.addEventListener('mousedown', this.mouseDownEventHandlerBinded, false);
                 this.mouseListenerCounter = true;
             }
         } else {
-            // remove listener and reset cursor when cursor is out of area of interest
             if (this.mouseListenerCounter === true) {
                 this.resizablePanelTop.removeEventListener('mousedown', this.mouseDownEventHandlerBinded, false);
                 this.mouseListenerCounter = false;
@@ -90,7 +89,6 @@ export default class MessagingThreadViewer extends LightningElement {
             document.body.style.cursor = 'auto';
         }
     }
-    //binding, to make 'this' available when running in context of other object
     mouseMoveEventHandlerBinded = this.mouseMoveEventHandler.bind(this);
 
     mouseLeaveEventHandler(e) {
@@ -129,21 +127,15 @@ export default class MessagingThreadViewer extends LightningElement {
     }
     mouseUpEventHandlerBinded = this.mouseUpEventHandler.bind(this);
 
-    //Handles subscription to streaming API for listening to changes to auth status
     handleSubscribe() {
         let _this = this;
-        // Callback invoked whenever a new message event is received
         const messageCallback = function (response) {
             const messageThreadId = response.data.sobject.CRM_Thread__c;
             if (_this.threadId == messageThreadId) {
-                //Refreshes the message in the component if the new message event is for the viewed thread
                 _this.refreshMessages();
             }
         };
-
-        // Invoke subscribe method of empApi. Pass reference to messageCallback
         subscribe('/topic/Thread_New_Message', -1, messageCallback).then((response) => {
-            // Response contains the subscription information on successful subscribe call
             this.subscription = response;
         });
     }
@@ -151,11 +143,8 @@ export default class MessagingThreadViewer extends LightningElement {
     handleUnsubscribe() {
         unsubscribe(this.subscription, (response) => {
             console.log('Unsubscribed: ', JSON.stringify(response));
-            // Response is true for successful unsubscribe
         })
-            .then((success) => {
-                //Successfull unsubscribe
-            })
+            .then((success) => {})
             .catch((error) => {
                 console.log('EMP unsubscribe failed: ' + JSON.stringify(error, null, 2));
             });
@@ -183,7 +172,7 @@ export default class MessagingThreadViewer extends LightningElement {
         }
     }
 
-    @wire(getmessages, { threadId: '$threadId' }) //Calls apex and extracts messages related to this record
+    @wire(getmessages, { threadId: '$threadId' })
     wiremessages(result) {
         this._mySendForSplitting = result;
         if (result.error) {
@@ -193,7 +182,6 @@ export default class MessagingThreadViewer extends LightningElement {
             this.showspinner = false;
         }
     }
-    //If empty, stop submitting.
     handlesubmit(event) {
         publishToAmplitude('STO', { type: 'handlesubmit on thread' });
 
@@ -202,7 +190,6 @@ export default class MessagingThreadViewer extends LightningElement {
         if (!this.quickTextCmp.isOpen()) {
             this.showspinner = true;
             const textInput = event.detail.fields;
-            // If messagefield is empty, stop the submit
             textInput.CRM_Thread__c = this.thread.Id;
             textInput.CRM_From_User__c = userId;
 
@@ -220,8 +207,6 @@ export default class MessagingThreadViewer extends LightningElement {
         }
     }
 
-    //Enriching the toolbar event with reference to the thread id
-    //A custom toolbaraction event can be passed from the component in the toolbar slot that the thread viewer enrich with the thread id
     handleToolbarAction(event) {
         let threadId = this.threadId;
         let eventDetails = event.detail;
@@ -389,6 +374,9 @@ export default class MessagingThreadViewer extends LightningElement {
     journal = JOURNAL_LABEL;
     endDialogue = END_DIALOGUE_LABEL;
     redact = SEND_TO_REDACTION_LABEL;
+    alertText = END_DIALOGUE_ALERT_TEXT;
+    dialogueStartedText = DIALOGUE_STARTED_TEXT;
+    cancel = CANCEL_LABEL;
 
     showFlow = false;
     showComplete = false;

@@ -1,5 +1,5 @@
 <template>
-    <!-- Header start -->
+    <!-- Header-->
     <div class="slds-chat-bookend colorOverwrite">
         <lightning-icon
             icon-name="utility:chat"
@@ -8,11 +8,11 @@
             title="Dialog"
         ></lightning-icon>
         <p>
-            &nbsp;Henvendelse startet&nbsp;<c-crm-nav-formatted-date date={registereddate}></c-crm-nav-formatted-date>
+            &nbsp;{dialogueStartedText}&nbsp;<c-crm-nav-formatted-date date={registereddate}></c-crm-nav-formatted-date>
         </p>
     </div>
-    <!-- Header Stop-->
-    <!-- Messages Start-->
+
+    <!-- Messages-->
     <section
         role="log"
         class="scroller slds-scrollable_y slds-is-relative slds-var-p-vertical_medium slds-var-p-right_medium"
@@ -26,7 +26,8 @@
             </template>
         </slot>
     </section>
-    <!-- Reply Box Start-->
+
+    <!-- Reply box-->
     <div slot="footer">
         <lightning-record-edit-form object-api-name="Message__c" onsuccess={handlesuccess} onsubmit={handlesubmit}>
             <lightning-layout multiple-rows="true">
@@ -86,7 +87,7 @@
 
                 <lightning-layout-item size="12">
                     <lightning-layout class="slds-var-p-top_medium slds-size_12-of-12">
-                        <!-- Avslutt samtale -->
+                        <!-- End dialogue section -->
                         <lightning-layout-item class="slds-size_2-of-12">
                             <template if:true={showClose}>
                                 <lightning-record-edit-form
@@ -99,7 +100,7 @@
                                         variant="destructive"
                                         disabled={closedThread}
                                         onclick={openModal}
-                                        label="Avslutt samtale"
+                                        label={endDialogue}
                                     >
                                     </lightning-button>
                                 </lightning-record-edit-form>
@@ -145,6 +146,7 @@
                     </lightning-layout>
                 </lightning-layout-item>
 
+                <!--Flow section-->
                 <lightning-layout-item class="slds-size_12-of-12 slds-var-p-top_medium">
                     <template if:true={showComplete}>
                         <template if:true={showFlow}>
@@ -215,7 +217,7 @@
                     >
                         <div class="panel-content scrollable" id="text">
                             <div class="slds-var-m-around_medium">
-                                <p>Er du sikker på at du vil avslutte denne samtalen permanent?</p>
+                                <p>{alertText}</p>
                             </div>
                         </div>
                         <div class="panel-footer">
@@ -227,13 +229,13 @@
                                         class="slds-button slds-button_neutral cancelButton"
                                         onclick={closeModal}
                                     >
-                                        Avbryt</button
+                                        {cancel}</button
                                     ><button
                                         type="button"
                                         class="slds-button slds-button_destructive closeButton"
                                         onclick={closeThread}
                                     >
-                                        Avslutt samtale
+                                        {endDialogue}
                                     </button>
                                     <div tabindex="0" onfocus={trapFocusEnd}></div>
                                 </div>
@@ -255,6 +257,4 @@
             ></lightning-input-field>
         </lightning-record-edit-form>
     </div>
-
-    <!-- Reply Box End-->
 </template>

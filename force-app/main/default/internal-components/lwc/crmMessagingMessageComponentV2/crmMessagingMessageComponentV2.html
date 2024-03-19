@@ -14,7 +14,6 @@
         </div>
         <div class="slds-card__body">
             <div class="slds-is-relative" style="min-height: 2em">
-                <!-- Singlethread true - WIll only ever be one thread in the iteration-->
                 <lightning-spinner
                     if:true={showSpinner}
                     alternative-text="Laster samtalekomponent"
@@ -28,9 +27,9 @@
                 >
                     <lightning-layout vertical-align="center">
                         <lightning-icon icon-name="utility:error" size="x-small" variant="inverse"></lightning-icon>
-                        <span class="slds-assistive-text">Feil</span>
+                        <span class="slds-assistive-text">{error}</span>
                         <h2 class="slds-var-p-left_small" style="margin-top: auto; margin-bottom: auto">
-                            Det oppsto en uventet feil
+                            {errorMessage}
                         </h2>
                     </lightning-layout>
                 </div>
@@ -55,7 +54,6 @@
                         show-quick={showQuick}
                         case-id={caseId}
                     >
-                        <!--Ability to pass toolbar buttons thorugh slots to the toolbar-->
                         <div slot="toolbar">
                             <slot name="toolbar"></slot>
                         </div>

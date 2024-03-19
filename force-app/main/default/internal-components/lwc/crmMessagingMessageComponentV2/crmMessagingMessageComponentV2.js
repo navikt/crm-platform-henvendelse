@@ -2,6 +2,8 @@ import { LightningElement, api, track, wire } from 'lwc';
 import getThreads from '@salesforce/apex/CRM_MessageHelper.getThreadsCollection';
 import createThread from '@salesforce/apex/CRM_MessageHelper.createThread';
 import { refreshApex } from '@salesforce/apex';
+import ERROR_LABEL from '@salesforce/label/c.STO_Error';
+import ERROR_MESSAGE from '@salesforce/label/c.STO_Error_Message';
 
 export default class CrmMessagingMessageComponent extends LightningElement {
     @api recordId;
@@ -9,10 +11,10 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     @api showClose;
     @api showQuick;
     @api englishTextTemplate;
-    @api textTemplate; //Support for conditional text template
+    @api textTemplate;
     @api caseId;
 
-    @track slotsNeedCheckedOrRendered = { messages: true }; // To check the slot content the slot has to be rendered initially
+    @track slotsNeedCheckedOrRendered = { messages: true };
 
     showmodal = false;
     showtaskmodal = false;
@@ -22,6 +24,8 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     _threadsforRefresh;
     setCardTitle;
     hasError = false;
+    errorLabel = ERROR_LABEL;
+    errorMessage = ERROR_MESSAGE;
 
     renderedCallback() {
         this.handleSlotChanges();
@@ -71,8 +75,6 @@ export default class CrmMessagingMessageComponent extends LightningElement {
         this.dispatchEvent(englishEvent);
     }
 
-    // Make the component check slot content dynamically.
-    // If the slot is not rendered in the DOM we have no way of checking it's content
     @api
     checkSlotChange(slotName) {
         console.log('Api call');
