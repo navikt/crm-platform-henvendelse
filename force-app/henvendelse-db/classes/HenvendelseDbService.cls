@@ -46,11 +46,12 @@ public without sharing class HenvendelseDbService {
         else if(henvendelseList.size()>1){
             String jsonBody='[';
 
-            for(Integer i=0; i<convNoteList.size();i++){
+            for(Integer i=0; i<henvendelseList.size();i++){
                 jsonBody+=JSON.serializePretty(henvendelseList);
-                if(i<convNoteList.size()-1){
+                if(i<henvendelseList.size()-1){
                     jsonBody+=',';
                 }
+                
             }
             jsonBody+=']';
             response=new HenvendelseDbCalloutService().putHenvendelser(jsonBody);
