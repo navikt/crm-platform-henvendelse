@@ -3,47 +3,47 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <customLabels>
         <label>Avbryt</label>
-        <name>STO_Cancel</name>
+        <name>NKS_Cancel</name>
     </customLabels>
     <customLabels>
         <label>Ferdigstill</label>
-        <name>STO_Complete</name>
+        <name>NKS_Complete</name>
     </customLabels>
     <customLabels>
         <label>Opprett oppgave</label>
-        <name>STO_Create_NAV_Task</name>
+        <name>NKS_Create_NAV_Task</name>
     </customLabels>
     <customLabels>
         <label>Henvendelse startet</label>
-        <name>STO_DIALOGUE_STARTED</name>
+        <name>NKS_DIALOGUE_STARTED</name>
     </customLabels>
     <customLabels>
         <label>Avslutt samtale</label>
-        <name>STO_End_Dialogue</name>
+        <name>NKS_End_Dialogue</name>
     </customLabels>
     <customLabels>
         <label>Er du sikker på at du vil avslutte denne samtalen permanent?</label>
-        <name>STO_End_Dialogue_Alert_Text</name>
+        <name>NKS_End_Dialogue_Alert_Text</name>
     </customLabels>
     <customLabels>
         <label>Feil</label>
-        <name>STO_Error</name>
+        <name>NKS_Error</name>
     </customLabels>
     <customLabels>
         <label>Det oppsto en uventet feil.</label>
-        <name>STO_Error_Message</name>
+        <name>NKS_Error_Message</name>
     </customLabels>
     <customLabels>
         <label>Journalfør</label>
-        <name>STO_Journal</name>
+        <name>NKS_Journal</name>
     </customLabels>
     <customLabels>
         <label>Legg tilbake</label>
-        <name>STO_Put_Back</name>
+        <name>NKS_Put_Back</name>
     </customLabels>
     <customLabels>
         <label>Reserver til meg</label>
-        <name>STO_Reserve_For_Me</name>
+        <name>NKS_Reserve_For_Me</name>
     </customLabels>
     <customLabels>
         <label>Send til sladding</label>

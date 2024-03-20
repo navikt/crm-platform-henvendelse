@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
-        <fullName>STO_Complete</fullName>
-        <categories>STO, Buttons</categories>
+        <fullName>NKS_Complete</fullName>
+        <categories>NKS, Buttons</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>STO Complete</shortDescription>
+        <shortDescription>Complete</shortDescription>
         <value>Complete</value>
     </labels>
     <labels>
-        <fullName>STO_Create_NAV_Task</fullName>
-        <categories>STO, Buttons</categories>
+        <fullName>NKS_Create_NAV_Task</fullName>
+        <categories>NKS, Buttons</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>STO Create NAV Task</shortDescription>
+        <shortDescription>Create NAV Task</shortDescription>
         <value>Create NAV Task</value>
     </labels>
     <labels>
-        <fullName>STO_End_Dialogue</fullName>
-        <categories>STO, Buttons</categories>
+        <fullName>NKS_End_Dialogue</fullName>
+        <categories>NKS, Buttons</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>STO End Dialogue</shortDescription>
+        <shortDescription>End Dialogue</shortDescription>
         <value>End dialogue</value>
     </labels>
     <labels>
-        <fullName>STO_Journal</fullName>
-        <categories>STO, Buttons</categories>
+        <fullName>NKS_Journal</fullName>
+        <categories>NKS, Buttons</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>STO Journal</shortDescription>
+        <shortDescription>Journal</shortDescription>
         <value>Journal</value>
     </labels>
     <labels>
-        <fullName>STO_Put_Back</fullName>
-        <categories>STO, Buttons</categories>
+        <fullName>NKS_Put_Back</fullName>
+        <categories>NKS, Buttons</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>STO Put Back</shortDescription>
+        <shortDescription>Put Back</shortDescription>
         <value>Put back</value>
     </labels>
     <labels>
-        <fullName>STO_Reserve_For_Me</fullName>
-        <categories>STO, Buttons</categories>
+        <fullName>NKS_Reserve_For_Me</fullName>
+        <categories>NKS, Buttons</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>STO Reserve For Me</shortDescription>
+        <shortDescription>Reserve For Me</shortDescription>
         <value>Reserve for me</value>
     </labels>
     <labels>
@@ -170,43 +170,43 @@
         <value>/skriv-til-oss</value>
     </labels>
     <labels>
-        <fullName>STO_End_Dialogue_Alert_Text</fullName>
-        <categories>STO, Buttons</categories>
+        <fullName>NKS_End_Dialogue_Alert_Text</fullName>
+        <categories>NKS, Buttons</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>STO End Dialogue Alert Text</shortDescription>
+        <shortDescription>End Dialogue Alert Text</shortDescription>
         <value>Are you sure you want to end this conversation permanently?</value>
     </labels>
     <labels>
-        <fullName>STO_DIALOGUE_STARTED</fullName>
-        <categories>STO, Header</categories>
+        <fullName>NKS_DIALOGUE_STARTED</fullName>
+        <categories>NKS, Header</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>STO DIALOGUE STARTED</shortDescription>
+        <shortDescription>DIALOGUE STARTED</shortDescription>
         <value>Dialogue started</value>
     </labels>
     <labels>
-        <fullName>STO_Cancel</fullName>
-        <categories>STO, Buttons</categories>
+        <fullName>NKS_Cancel</fullName>
+        <categories>NKS, Buttons</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>STO Cancel</shortDescription>
+        <shortDescription>Cancel</shortDescription>
         <value>Cancel</value>
     </labels>
     <labels>
-        <fullName>STO_Error</fullName>
-        <categories>STO, Errors</categories>
+        <fullName>NKS_Error</fullName>
+        <categories>NKS, Errors</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>STO Error</shortDescription>
+        <shortDescription>Error</shortDescription>
         <value>Error</value>
     </labels>
     <labels>
-        <fullName>STO_Error_Message</fullName>
-        <categories>STO, Errors</categories>
+        <fullName>NKS_Error_Message</fullName>
+        <categories>NKS, Errors</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>STO Error Message</shortDescription>
+        <shortDescription>Error Message</shortDescription>
         <value>An unexpected error occurred.</value>
     </labels>
 </CustomLabels>
