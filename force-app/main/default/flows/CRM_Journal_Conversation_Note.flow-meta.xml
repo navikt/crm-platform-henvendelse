@@ -270,6 +270,13 @@
                 <elementReference>Journal_Subtheme_Code</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Request.eksternReferanseId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>externalReference</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Post_Journal_Request</targetReference>
         </connector>
@@ -463,6 +470,11 @@ LPAD(TEXT(MONTH(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula_
 TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c}))) + 
 &apos; - &apos; + 
 {!JOURNALED_CONV_NOTE.CRM_Theme_Name__c}</expression>
+    </formulas>
+    <formulas>
+        <name>externalReference</name>
+        <dataType>String</dataType>
+        <expression>{!JOURNALED_CONV_NOTE.Id} + {!Journal_Theme_Code} + {!Journal_Sak.fagsakId}</expression>
     </formulas>
     <formulas>
         <description>Better null/blank handling for passing this value to apex</description>
