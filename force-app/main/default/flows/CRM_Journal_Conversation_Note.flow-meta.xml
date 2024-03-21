@@ -474,7 +474,7 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
     <formulas>
         <name>externalReference</name>
         <dataType>String</dataType>
-        <expression>{!JOURNALED_CONV_NOTE.Id} + {!Journal_Theme_Code} + {!Journal_Sak.fagsakId}</expression>
+        <expression>{!JOURNALED_CONV_NOTE.Id} + {!Journal_Theme_Code} + SUBSTITUTE({!Journal_Sak.fagsakId}, &quot;/&quot;, &quot;:&quot;)</expression>
     </formulas>
     <formulas>
         <description>Better null/blank handling for passing this value to apex</description>
