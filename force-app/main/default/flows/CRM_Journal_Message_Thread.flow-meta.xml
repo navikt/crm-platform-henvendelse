@@ -33,7 +33,7 @@
         <name>Post_Journal_Request</name>
         <label>Post Journal Request</label>
         <locationX>182</locationX>
-        <locationY>1706</locationY>
+        <locationY>1490</locationY>
         <actionName>CRM_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -68,57 +68,11 @@
     </actionCalls>
     <apiVersion>52.0</apiVersion>
     <assignments>
-        <name>Add_external_reference</name>
-        <label>Add external reference</label>
-        <locationX>182</locationX>
-        <locationY>758</locationY>
-        <assignmentItems>
-            <assignToReference>externalReference</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>JOURNALED_THREAD.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>externalReference</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Journal_Entry_SF.Theme__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>externalReference</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Journal_Entry_SF.NAV_Case_Reference__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Check_if_Journal_is_NOTAT</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Add_Latest_Message_Id</name>
-        <label>Add Latest Message Id</label>
-        <locationX>50</locationX>
-        <locationY>1082</locationY>
-        <assignmentItems>
-            <assignToReference>externalReference</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Get_last_message.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Document_Variant_Assignment</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <description>Add document variants to document list and assign document title</description>
         <name>Assign_Journal_Documents</name>
         <label>Assign Journal Documents</label>
         <locationX>182</locationX>
-        <locationY>1382</locationY>
+        <locationY>1166</locationY>
         <assignmentItems>
             <assignToReference>Journal_Documents.dokumentvarianter</assignToReference>
             <operator>Add</operator>
@@ -148,7 +102,7 @@
         <name>Assign_Journal_Entry_Default_data</name>
         <label>Assign Journal Entry Default data</label>
         <locationX>182</locationX>
-        <locationY>2114</locationY>
+        <locationY>1898</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.CRM_Journal_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -165,7 +119,7 @@
         <name>Document_Variant_Assignment</name>
         <label>Document Variant Assignment</label>
         <locationX>182</locationX>
-        <locationY>1274</locationY>
+        <locationY>1058</locationY>
         <assignmentItems>
             <assignToReference>Document_Variant_PDF.filtype</assignToReference>
             <operator>Assign</operator>
@@ -196,7 +150,7 @@
         <name>Journal_Request_Assignment</name>
         <label>Journal Request Assignment</label>
         <locationX>182</locationX>
-        <locationY>1598</locationY>
+        <locationY>1382</locationY>
         <assignmentItems>
             <assignToReference>Journal_Request.tittel</assignToReference>
             <operator>Assign</operator>
@@ -285,7 +239,7 @@
             <assignToReference>Journal_Request.eksternReferanseId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>externalReference</elementReference>
+                <elementReference>externalReferenceFormula</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -297,7 +251,7 @@
         <name>Journal_Sak_Assignment</name>
         <label>Journal Sak Assignment</label>
         <locationX>182</locationX>
-        <locationY>1490</locationY>
+        <locationY>1274</locationY>
         <assignmentItems>
             <assignToReference>Journal_Sak.fagsakId</assignToReference>
             <operator>Assign</operator>
@@ -333,14 +287,14 @@
             <operator>Assign</operator>
         </assignmentItems>
         <connector>
-            <targetReference>Add_external_reference</targetReference>
+            <targetReference>Check_if_Journal_is_NOTAT</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_Post_Completed</name>
         <label>Set Post Completed</label>
         <locationX>50</locationX>
-        <locationY>1922</locationY>
+        <locationY>1706</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -370,7 +324,7 @@
         <name>Set_Post_Failed</name>
         <label>Set Post Failed</label>
         <locationX>314</locationX>
-        <locationY>1922</locationY>
+        <locationY>1706</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -393,7 +347,7 @@
         <name>Check_if_Journal_is_NOTAT</name>
         <label>Check if Journal is NOTAT</label>
         <locationX>182</locationX>
-        <locationY>866</locationY>
+        <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Document_Variant_Assignment</targetReference>
         </defaultConnector>
@@ -418,7 +372,7 @@
         <name>Check_Post_State</name>
         <label>Check Post State</label>
         <locationX>182</locationX>
-        <locationY>1814</locationY>
+        <locationY>1598</locationY>
         <defaultConnector>
             <targetReference>Set_Post_Failed</targetReference>
         </defaultConnector>
@@ -444,7 +398,7 @@
         <name>DML_Check</name>
         <label>DML Check</label>
         <locationX>182</locationX>
-        <locationY>2222</locationY>
+        <locationY>2006</locationY>
         <defaultConnectorLabel>No DML</defaultConnectorLabel>
         <rules>
             <name>Do_DML</name>
@@ -483,7 +437,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Add_external_reference</targetReference>
+                <targetReference>Check_if_Journal_is_NOTAT</targetReference>
             </connector>
             <label>Subtheme Was Set</label>
         </rules>
@@ -495,6 +449,12 @@
 &apos;Pågående samtale med NAV - &apos; + {!THREAD_START_DATE} + &apos; - &apos; + {!JOURNALED_THREAD.CRM_Theme_Name__c},
 &apos;Samtale med NAV - &apos; + {!THREAD_CLOSE_DATE} + &apos; - &apos; + {!JOURNALED_THREAD.CRM_Theme_Name__c}
 )</expression>
+    </formulas>
+    <formulas>
+        <description>A formula to calculate the external reference</description>
+        <name>externalReferenceFormula</name>
+        <dataType>String</dataType>
+        <expression>{!JOURNALED_THREAD.Id} + {!Journal_Entry_SF.Theme__c} + SUBSTITUTE({!Journal_Entry_SF.NAV_Case_Reference__c}, &quot;/&quot;, &quot;:&quot;) + {!latestMessageId}</expression>
     </formulas>
     <formulas>
         <description>Formula to define the journal case type (Sakstype). If no Journal Case ID has been input, default is GENERELL_SAK</description>
@@ -560,10 +520,10 @@
         <name>Get_last_message</name>
         <label>Get last message</label>
         <locationX>50</locationX>
-        <locationY>974</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <locationY>866</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Add_Latest_Message_Id</targetReference>
+            <targetReference>Document_Variant_Assignment</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -580,12 +540,13 @@
                 <stringValue>Event</stringValue>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Message__c</object>
-        <queriedFields>Id</queriedFields>
+        <outputAssignments>
+            <assignToReference>latestMessageId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
         <sortField>CreatedDate</sortField>
         <sortOrder>Desc</sortOrder>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
         <description>Query the info needed from record and relations to submit a journal entry</description>
@@ -620,7 +581,7 @@
         <name>Update_Journal_Entry</name>
         <label>Update Journal Entry</label>
         <locationX>50</locationX>
-        <locationY>2330</locationY>
+        <locationY>2114</locationY>
         <connector>
             <targetReference>Update_Thread</targetReference>
         </connector>
@@ -630,7 +591,7 @@
         <name>Update_Thread</name>
         <label>Update Thread</label>
         <locationX>50</locationX>
-        <locationY>2438</locationY>
+        <locationY>2222</locationY>
         <inputReference>JOURNALED_THREAD</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
@@ -647,14 +608,6 @@
         <name>Document_Variant_PDF</name>
         <apexClass>CRM_Dokumentvarianter</apexClass>
         <dataType>Apex</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <description>Defines the unique external reference for storing in Dokarkiv</description>
-        <name>externalReference</name>
-        <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
@@ -702,6 +655,14 @@
         <isInput>false</isInput>
         <isOutput>true</isOutput>
         <objectType>Thread__c</objectType>
+    </variables>
+    <variables>
+        <description>The ID of the latest message</description>
+        <name>latestMessageId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>PDF_DOCUMENT</name>
