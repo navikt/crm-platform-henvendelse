@@ -33,7 +33,7 @@
         <name>Post_Journal_Request</name>
         <label>Post Journal Request</label>
         <locationX>182</locationX>
-        <locationY>1190</locationY>
+        <locationY>1490</locationY>
         <actionName>CRM_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -72,7 +72,7 @@
         <name>Assign_Journal_Documents</name>
         <label>Assign Journal Documents</label>
         <locationX>182</locationX>
-        <locationY>866</locationY>
+        <locationY>1166</locationY>
         <assignmentItems>
             <assignToReference>Journal_Documents.dokumentvarianter</assignToReference>
             <operator>Add</operator>
@@ -102,7 +102,7 @@
         <name>Assign_Journal_Entry_Default_data</name>
         <label>Assign Journal Entry Default data</label>
         <locationX>182</locationX>
-        <locationY>1598</locationY>
+        <locationY>1898</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.CRM_Journal_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -119,7 +119,7 @@
         <name>Document_Variant_Assignment</name>
         <label>Document Variant Assignment</label>
         <locationX>182</locationX>
-        <locationY>758</locationY>
+        <locationY>1058</locationY>
         <assignmentItems>
             <assignToReference>Document_Variant_PDF.filtype</assignToReference>
             <operator>Assign</operator>
@@ -150,7 +150,7 @@
         <name>Journal_Request_Assignment</name>
         <label>Journal Request Assignment</label>
         <locationX>182</locationX>
-        <locationY>1082</locationY>
+        <locationY>1382</locationY>
         <assignmentItems>
             <assignToReference>Journal_Request.tittel</assignToReference>
             <operator>Assign</operator>
@@ -222,13 +222,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Request.avsenderMottaker.navn</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Person_Full_Name</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>Journal_Request.tema</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -242,6 +235,13 @@
                 <elementReference>Journal_Entry_SF.Subtheme__r.CRM_Code__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Request.eksternReferanseId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>externalReferenceFormula</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Post_Journal_Request</targetReference>
         </connector>
@@ -251,7 +251,7 @@
         <name>Journal_Sak_Assignment</name>
         <label>Journal Sak Assignment</label>
         <locationX>182</locationX>
-        <locationY>974</locationY>
+        <locationY>1274</locationY>
         <assignmentItems>
             <assignToReference>Journal_Sak.fagsakId</assignToReference>
             <operator>Assign</operator>
@@ -287,14 +287,14 @@
             <operator>Assign</operator>
         </assignmentItems>
         <connector>
-            <targetReference>Document_Variant_Assignment</targetReference>
+            <targetReference>Check_if_Journal_is_NOTAT</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_Post_Completed</name>
         <label>Set Post Completed</label>
         <locationX>50</locationX>
-        <locationY>1406</locationY>
+        <locationY>1706</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -324,7 +324,7 @@
         <name>Set_Post_Failed</name>
         <label>Set Post Failed</label>
         <locationX>314</locationX>
-        <locationY>1406</locationY>
+        <locationY>1706</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -344,10 +344,35 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Check_if_Journal_is_NOTAT</name>
+        <label>Check if Journal is NOTAT</label>
+        <locationX>182</locationX>
+        <locationY>758</locationY>
+        <defaultConnector>
+            <targetReference>Document_Variant_Assignment</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Other</defaultConnectorLabel>
+        <rules>
+            <name>Journal_type_NOTAT</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Journal_Entry_SF.CRM_Journal_Post_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NOTAT</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_last_message</targetReference>
+            </connector>
+            <label>Journal type NOTAT</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Post_State</name>
         <label>Check Post State</label>
         <locationX>182</locationX>
-        <locationY>1298</locationY>
+        <locationY>1598</locationY>
         <defaultConnector>
             <targetReference>Set_Post_Failed</targetReference>
         </defaultConnector>
@@ -373,7 +398,7 @@
         <name>DML_Check</name>
         <label>DML Check</label>
         <locationX>182</locationX>
-        <locationY>1706</locationY>
+        <locationY>2006</locationY>
         <defaultConnectorLabel>No DML</defaultConnectorLabel>
         <rules>
             <name>Do_DML</name>
@@ -412,7 +437,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Document_Variant_Assignment</targetReference>
+                <targetReference>Check_if_Journal_is_NOTAT</targetReference>
             </connector>
             <label>Subtheme Was Set</label>
         </rules>
@@ -426,16 +451,16 @@
 )</expression>
     </formulas>
     <formulas>
+        <description>A formula to calculate the external reference</description>
+        <name>externalReferenceFormula</name>
+        <dataType>String</dataType>
+        <expression>{!JOURNALED_THREAD.Id} + {!Journal_Entry_SF.Theme__c} + SUBSTITUTE({!Journal_Entry_SF.NAV_Case_Reference__c}, &quot;/&quot;, &quot;:&quot;) + {!latestMessageId}</expression>
+    </formulas>
+    <formulas>
         <description>Formula to define the journal case type (Sakstype). If no Journal Case ID has been input, default is GENERELL_SAK</description>
         <name>Journal_Case_Type</name>
         <dataType>String</dataType>
         <expression>IF(ISBLANK({!Journal_Entry_SF.NAV_Case_Reference__c}), &apos;GENERELL_SAK&apos;, &apos;FAGSAK&apos;)</expression>
-    </formulas>
-    <formulas>
-        <description>Formula to generate name convention on journal required format (For persons)</description>
-        <name>Person_Full_Name</name>
-        <dataType>String</dataType>
-        <expression>{!Get_Account_Info.CRM_Person__r.INT_LastName__c} &amp; &apos;, &apos; &amp; {!Get_Account_Info.CRM_Person__r.INT_FirstName__c} &amp; &apos; &apos; &amp;{!Get_Account_Info.CRM_Person__r.INT_MiddleName__c}</expression>
     </formulas>
     <formulas>
         <description>Formula to generate a text for when the thread was closed.</description>
@@ -492,6 +517,38 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_last_message</name>
+        <label>Get last message</label>
+        <locationX>50</locationX>
+        <locationY>866</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Document_Variant_Assignment</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CRM_Thread__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>JOURNALED_THREAD.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>CRM_Type__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Event</stringValue>
+            </value>
+        </filters>
+        <object>Message__c</object>
+        <outputAssignments>
+            <assignToReference>latestMessageId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
+    </recordLookups>
+    <recordLookups>
         <description>Query the info needed from record and relations to submit a journal entry</description>
         <name>Get_Necessary_Record_Info</name>
         <label>Get Necessary Record Info</label>
@@ -524,7 +581,7 @@
         <name>Update_Journal_Entry</name>
         <label>Update Journal Entry</label>
         <locationX>50</locationX>
-        <locationY>1814</locationY>
+        <locationY>2114</locationY>
         <connector>
             <targetReference>Update_Thread</targetReference>
         </connector>
@@ -534,7 +591,7 @@
         <name>Update_Thread</name>
         <label>Update Thread</label>
         <locationX>50</locationX>
-        <locationY>1922</locationY>
+        <locationY>2222</locationY>
         <inputReference>JOURNALED_THREAD</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
@@ -598,6 +655,14 @@
         <isInput>false</isInput>
         <isOutput>true</isOutput>
         <objectType>Thread__c</objectType>
+    </variables>
+    <variables>
+        <description>The ID of the latest message</description>
+        <name>latestMessageId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>PDF_DOCUMENT</name>
