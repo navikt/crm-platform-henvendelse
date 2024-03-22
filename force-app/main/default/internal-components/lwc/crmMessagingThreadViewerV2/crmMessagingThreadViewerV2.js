@@ -260,7 +260,6 @@ export default class MessagingThreadViewer extends LightningElement {
                 field.reset();
             });
         }
-        //this.showspinner = false;
         this.showspinner = false;
         this.refreshMessages();
     }
@@ -369,15 +368,16 @@ export default class MessagingThreadViewer extends LightningElement {
     //##################################//
     @api caseId;
 
-    complete = COMPLETE_LABEL;
-    createNavTask = CREATE_NAV_TASK_LABEL;
-    journal = JOURNAL_LABEL;
-    endDialogue = END_DIALOGUE_LABEL;
-    redact = SEND_TO_REDACTION_LABEL;
-    alertText = END_DIALOGUE_ALERT_TEXT;
-    dialogueStartedText = DIALOGUE_STARTED_TEXT;
-    cancel = CANCEL_LABEL;
-
+    labels = {
+        COMPLETE_LABEL,
+        CREATE_NAV_TASK_LABEL,
+        JOURNAL_LABEL,
+        END_DIALOGUE_LABEL,
+        SEND_TO_REDACTION_LABEL,
+        END_DIALOGUE_ALERT_TEXT,
+        DIALOGUE_STARTED_TEXT,
+        CANCEL_LABEL
+    };
     showFlow = false;
     showComplete = false;
     showRedact = false;
@@ -403,33 +403,10 @@ export default class MessagingThreadViewer extends LightningElement {
     }
 
     handleShowFlows() {
-        if (this.label === this.complete) {
-            this.showComplete = true;
-            this.showRedact = false;
-            this.showJournal = false;
-            this.showCreateNavTask = false;
-        }
-
-        if (this.label === this.redact) {
-            this.showRedact = true;
-            this.showComplete = false;
-            this.showJournal = false;
-            this.showCreateNavTask = false;
-        }
-
-        if (this.label === this.createNavTask) {
-            this.showCreateNavTask = true;
-            this.showRedact = false;
-            this.showComplete = false;
-            this.showJournal = false;
-        }
-
-        if (this.label === this.journal) {
-            this.showJournal = true;
-            this.showCreateNavTask = false;
-            this.showRedact = false;
-            this.showComplete = false;
-        }
+        this.showComplete = this.label === this.labels.COMPLETE_LABEL;
+        this.showRedact = this.label === this.labels.SEND_TO_REDACTION_LABEL;
+        this.showCreateNavTask = this.label === this.labels.CREATE_NAV_TASK_LABEL;
+        this.showJournal = this.label === this.labels.JOURNAL_LABEL;
     }
 
     handleStatusChange(event) {

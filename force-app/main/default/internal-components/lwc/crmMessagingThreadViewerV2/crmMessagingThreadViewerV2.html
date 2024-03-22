@@ -8,7 +8,9 @@
             title="Dialog"
         ></lightning-icon>
         <p>
-            &nbsp;{dialogueStartedText}&nbsp;<c-crm-nav-formatted-date date={registereddate}></c-crm-nav-formatted-date>
+            &nbsp;{labels.DIALOGUE_STARTED_TEXT}&nbsp;<c-crm-nav-formatted-date
+                date={registereddate}
+            ></c-crm-nav-formatted-date>
         </p>
     </div>
 
@@ -84,7 +86,6 @@
                     >
                     </c-crm-messaging-quick-text-v-2>
                 </lightning-layout-item>
-
                 <lightning-layout-item size="12">
                     <lightning-layout class="slds-var-p-top_medium slds-size_12-of-12">
                         <!-- End dialogue section -->
@@ -100,13 +101,12 @@
                                         variant="destructive"
                                         disabled={closedThread}
                                         onclick={openModal}
-                                        label={endDialogue}
+                                        label={labels.END_DIALOGUE_LABEL}
                                     >
                                     </lightning-button>
                                 </lightning-record-edit-form>
                             </template>
                         </lightning-layout-item>
-
                         <!--Button container-->
                         <lightning-layout-item class="slds-size_10-of-12">
                             <lightning-button
@@ -120,32 +120,31 @@
                             </lightning-button>
                             <lightning-button
                                 class="slds-var-p-right_small slds-float_right"
-                                label={complete}
+                                label={labels.COMPLETE_LABEL}
                                 variant="brand-outline"
                                 onclick={toggleFlow}
                             ></lightning-button>
                             <lightning-button
                                 class="slds-var-p-right_small slds-float_right"
-                                label={redact}
+                                label={labels.SEND_TO_REDACTION_LABEL}
                                 variant="brand-outline"
                                 onclick={toggleFlow}
                             ></lightning-button>
                             <lightning-button
                                 class="slds-var-p-right_small slds-float_right"
-                                label={createNavTask}
+                                label={labels.CREATE_NAV_TASK_LABEL}
                                 variant="brand-outline"
                                 onclick={toggleFlow}
                             ></lightning-button>
                             <lightning-button
                                 class="slds-var-p-right_small slds-float_right"
-                                label={journal}
+                                label={labels.JOURNAL_LABEL}
                                 variant="brand-outline"
                                 onclick={toggleFlow}
                             ></lightning-button>
                         </lightning-layout-item>
                     </lightning-layout>
                 </lightning-layout-item>
-
                 <!--Flow section-->
                 <lightning-layout-item class="slds-size_12-of-12 slds-var-p-top_medium">
                     <template if:true={showComplete}>
@@ -204,7 +203,6 @@
                             </div>
                         </template>
                     </template>
-
                     <!--Alert dialogue-->
                     <div
                         role="alertdialog"
@@ -217,7 +215,7 @@
                     >
                         <div class="panel-content scrollable" id="text">
                             <div class="slds-var-m-around_medium">
-                                <p>{alertText}</p>
+                                <p>{labels.END_DIALOGUE_ALERT_TEXT}</p>
                             </div>
                         </div>
                         <div class="panel-footer">
@@ -229,13 +227,13 @@
                                         class="slds-button slds-button_neutral cancelButton"
                                         onclick={closeModal}
                                     >
-                                        {cancel}</button
+                                        {labels.CANCEL_LABEL}</button
                                     ><button
                                         type="button"
                                         class="slds-button slds-button_destructive closeButton"
                                         onclick={closeThread}
                                     >
-                                        {endDialogue}
+                                        {labels.END_DIALOGUE_LABEL}
                                     </button>
                                     <div tabindex="0" onfocus={trapFocusEnd}></div>
                                 </div>
