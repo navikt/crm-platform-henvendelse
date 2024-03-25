@@ -47,7 +47,9 @@ public without sharing class HenvendelseDbService {
             String jsonBody='[';
 
             for(Integer i=0; i<henvendelseList.size();i++){
-                jsonBody+=JSON.serializePretty(henvendelseList);
+                jsonBody+='[';
+                jsonBody+=JSON.serializePretty(henvendelseList[i]);
+                jsonBody+=']';
                 if(i<henvendelseList.size()-1){
                     jsonBody+=',';
                 }
