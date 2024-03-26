@@ -414,7 +414,7 @@ export default class MessagingThreadViewer extends LightningElement {
     }
 
     get redactFlowName() {
-        return this.isThread ? 'Case_STO_Sladd' : 'Thread_Set_To_Redaction';
+        return this.isThread ? 'Thread_Set_To_Redaction' : 'Case_STO_Sladd';
     }
 
     get completeFlowName() {
