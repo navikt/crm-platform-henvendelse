@@ -38,14 +38,6 @@
         <name>NKS_Journal</name>
     </customLabels>
     <customLabels>
-        <label>Legg tilbake</label>
-        <name>NKS_Put_Back</name>
-    </customLabels>
-    <customLabels>
-        <label>Reserver til meg</label>
-        <name>NKS_Reserve_For_Me</name>
-    </customLabels>
-    <customLabels>
         <label>Send til sladding</label>
         <name>Set_To_Redaction</name>
     </customLabels>

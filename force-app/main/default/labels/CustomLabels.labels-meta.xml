@@ -33,22 +33,6 @@
         <value>Journal</value>
     </labels>
     <labels>
-        <fullName>NKS_Put_Back</fullName>
-        <categories>NKS, Buttons</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Put Back</shortDescription>
-        <value>Put back</value>
-    </labels>
-    <labels>
-        <fullName>NKS_Reserve_For_Me</fullName>
-        <categories>NKS, Buttons</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Reserve For Me</shortDescription>
-        <value>Reserve for me</value>
-    </labels>
-    <labels>
         <fullName>Set_To_Redaction</fullName>
         <categories>Redaction, Buttons</categories>
         <language>en_US</language>
