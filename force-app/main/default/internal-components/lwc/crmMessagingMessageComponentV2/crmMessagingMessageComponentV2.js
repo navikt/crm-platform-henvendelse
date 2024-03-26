@@ -13,6 +13,7 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     @api englishTextTemplate;
     @api textTemplate;
     @api caseId;
+    @api isThread;
 
     @track slotsNeedCheckedOrRendered = { messages: true };
 
@@ -30,7 +31,7 @@ export default class CrmMessagingMessageComponent extends LightningElement {
         this.handleSlotChanges();
     }
 
-    @wire(getThreads, { recordId: '$recordId', singleThread: '$singleThread' }) //Calls apex and extracts messages related to this record
+    @wire(getThreads, { recordId: '$recordId', singleThread: '$singleThread' })
     wiredThreads(result) {
         this._threadsforRefresh = result;
 

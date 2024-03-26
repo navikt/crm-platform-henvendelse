@@ -265,7 +265,7 @@ export default class MessagingThreadViewer extends LightningElement {
     }
 
     scrolltobottom() {
-        var element = this.template.querySelector('.slds-box');
+        let element = this.template.querySelector('.slds-box');
         if (element) {
             element.scrollTop = element.scrollHeight;
         }
@@ -367,6 +367,7 @@ export default class MessagingThreadViewer extends LightningElement {
     //##########   STO Button Container   ###########//
     //##################################//
     @api caseId;
+    @api isThread = false;
 
     labels = {
         COMPLETE_LABEL,
@@ -386,6 +387,15 @@ export default class MessagingThreadViewer extends LightningElement {
     label;
 
     get inputVariables() {
+        if (this.isThread) {
+            return [
+                {
+                    name: 'recordId',
+                    type: 'String',
+                    value: this.threadId
+                }
+            ];
+        }
         return [
             {
                 name: 'recordId',
@@ -393,6 +403,22 @@ export default class MessagingThreadViewer extends LightningElement {
                 value: this.caseId
             }
         ];
+    }
+
+    get journalFlowName() {
+        return this.isThread ? 'STO_Create_Thread_Journal_Entry' : 'CRM_Case_Journal_STO_Thread';
+    }
+
+    get createNavTaskFlowName() {
+        return this.isThread ? 'NKS_Thread_Send_NAV_Task' : 'NKS_Case_Send_NAV_Task';
+    }
+
+    get redactFlowName() {
+        return this.isThread ? 'Case_STO_Sladd' : 'Thread_Set_To_Redaction';
+    }
+
+    get completeFlowName() {
+        return this.isThread ? 'STO_Action_Complete' : 'Case_STO_Complete';
     }
 
     toggleFlow(event) {

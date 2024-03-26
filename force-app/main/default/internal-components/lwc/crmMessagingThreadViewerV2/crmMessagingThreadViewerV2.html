@@ -148,7 +148,7 @@
                             <div class="slds-var-m-top_xx-small">
                                 <lightning-card>
                                     <lightning-flow
-                                        flow-api-name="Case_STO_Complete"
+                                        flow-api-name={completeFlowName}
                                         flow-input-variables={inputVariables}
                                         onstatuschange={handleStatusChange}
                                     >
@@ -162,7 +162,7 @@
                             <div class="slds-var-m-top_xx-small">
                                 <lightning-card>
                                     <lightning-flow
-                                        flow-api-name="Case_STO_Sladd"
+                                        flow-api-name={redactFlowName}
                                         flow-input-variables={inputVariables}
                                         onstatuschange={handleStatusChange}
                                     >
@@ -176,7 +176,7 @@
                             <div class="slds-var-m-top_xx-small">
                                 <lightning-card>
                                     <lightning-flow
-                                        flow-api-name="NKS_Case_Send_NAV_Task"
+                                        flow-api-name={createNavTaskFlowName}
                                         flow-input-variables={inputVariables}
                                         onstatuschange={handleStatusChange}
                                     >
@@ -190,7 +190,7 @@
                             <div class="slds-var-m-top_xx-small">
                                 <lightning-card>
                                     <lightning-flow
-                                        flow-api-name="CRM_Case_Journal_STO_Thread"
+                                        flow-api-name={journalFlowName}
                                         flow-input-variables={inputVariables}
                                         onstatuschange={handleStatusChange}
                                     >
