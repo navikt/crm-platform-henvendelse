@@ -33,12 +33,12 @@
         <value>Journal</value>
     </labels>
     <labels>
-        <fullName>Set_To_Redaction</fullName>
+        <fullName>NKS_Set_To_Redaction</fullName>
         <categories>Redaction, Buttons</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Set To Redaction</shortDescription>
-        <value>Set to redaction</value>
+        <value>Redact</value>
     </labels>
     <labels>
         <fullName>CRMHenvendelse_RedactedMessageAG</fullName>
