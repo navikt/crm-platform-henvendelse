@@ -11,7 +11,7 @@ import COMPLETE_LABEL from '@salesforce/label/c.NKS_Complete';
 import CREATE_NAV_TASK_LABEL from '@salesforce/label/c.NKS_Create_NAV_Task';
 import JOURNAL_LABEL from '@salesforce/label/c.NKS_Journal';
 import END_DIALOGUE_LABEL from '@salesforce/label/c.NKS_End_Dialogue';
-import SEND_TO_REDACTION_LABEL from '@salesforce/label/c.Set_To_Redaction';
+import SEND_TO_REDACTION_LABEL from '@salesforce/label/c.NKS_Set_To_Redaction';
 import END_DIALOGUE_ALERT_TEXT from '@salesforce/label/c.NKS_End_Dialogue_Alert_Text';
 import DIALOGUE_STARTED_TEXT from '@salesforce/label/c.NKS_DIALOGUE_STARTED';
 import CANCEL_LABEL from '@salesforce/label/c.NKS_Cancel';
