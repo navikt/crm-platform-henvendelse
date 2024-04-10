@@ -40,7 +40,7 @@ public without sharing class HenvendelseDbUtil {
           FROM Journal_Entries__r )
         FROM Conversation_Note__c
         WHERE CRM_Henvendelse_BehandlingskjedeId__c in:behandlingskjedeIds
-        
+        AND CRM_Account__c !=null AND CRM_Account__r.CRM_Person__c!=null
         ORDER BY CRM_Date_Time_Registered__c DESC];
     }
 
