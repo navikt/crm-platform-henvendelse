@@ -11,7 +11,7 @@ public without sharing class HenvendelseDbConNoteMigration  implements Database.
 
     public Database.QueryLocator start(Database.BatchableContext BC) {
         String query = 'SELECT Id FROM Conversation_Note__c';
-        query += ' WHERE CreatedDate>=:createdDateStart AND CreatedDate<:createdDateEnd';
+        query += ' WHERE CreatedDate>=:createdDateStart AND CreatedDate<:createdDateEnd AND CRM_Account__c !=null';
         return Database.getQueryLocator(query);
     }
 
