@@ -38,7 +38,7 @@
         <name>NKS_Journal</name>
     </customLabels>
     <customLabels>
-        <label>Sladd</label>
+        <label>Send til sladding</label>
         <name>NKS_Set_To_Redaction</name>
     </customLabels>
 </Translations>
