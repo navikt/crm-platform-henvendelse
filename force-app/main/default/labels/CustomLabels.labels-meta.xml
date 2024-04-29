@@ -38,7 +38,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Set To Redaction</shortDescription>
-        <value>Redact</value>
+        <value>Set To Redaction</value>
     </labels>
     <labels>
         <fullName>CRMHenvendelse_RedactedMessageAG</fullName>
