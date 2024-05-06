@@ -12,8 +12,6 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     @api showQuick;
     @api englishTextTemplate;
     @api textTemplate; //Support for conditional text template
-    @api caseId;
-    @api isThread;
     @api newDesign = false;
 
     @track slotsNeedCheckedOrRendered = { messages: true }; // To check the slot content the slot has to be rendered initially
