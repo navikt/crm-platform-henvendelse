@@ -2,23 +2,34 @@ import { LightningElement, api, track, wire } from 'lwc';
 import getThreads from '@salesforce/apex/CRM_MessageHelper.getThreadsCollection';
 import createThread from '@salesforce/apex/CRM_MessageHelper.createThread';
 import { refreshApex } from '@salesforce/apex';
+import ERROR_LABEL from '@salesforce/label/c.NKS_Error';
+import ERROR_MESSAGE from '@salesforce/label/c.NKS_Error_Message';
 
 export default class CrmMessagingMessageComponent extends LightningElement {
+    @api recordId;
+    @api singleThread;
+    @api showClose;
+    @api showQuick;
+    @api englishTextTemplate;
+    @api textTemplate; //Support for conditional text template
+    @api caseId;
+    @api isThread;
+    @api newDesign = false;
+
+    @track slotsNeedCheckedOrRendered = { messages: true }; // To check the slot content the slot has to be rendered initially
+
     showmodal = false;
     showtaskmodal = false;
     activeSectionMessage = '';
     threads;
     singlethread;
     _threadsforRefresh;
-    @api recordId;
-    @api singleThread;
-    @api showClose;
-    @api showQuick;
     setCardTitle;
     hasError = false;
-    @api englishTextTemplate;
-    @api textTemplate; //Support for conditional text template
-    @track slotsNeedCheckedOrRendered = { messages: true }; // To check the slot content the slot has to be rendered initially
+    labels = {
+        errorLabel: ERROR_LABEL,
+        errorMessage: ERROR_MESSAGE
+    };
 
     renderedCallback() {
         this.handleSlotChanges();

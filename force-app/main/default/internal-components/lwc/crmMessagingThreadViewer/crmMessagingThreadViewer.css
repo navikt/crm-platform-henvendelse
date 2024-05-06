@@ -2,8 +2,7 @@
     height: 35vh;
     overflow-y: scroll;
 }
-.stickyfooter {
-}
+
 .backdrop {
     position: fixed;
     z-index: 999;
@@ -21,4 +20,9 @@
 .colorOverwrite {
     background-color: var(--overwrite-header-color, white);
     color: black;
+}
+
+.toolbar {
+    display: block;
+    border-radius: 0;
 }

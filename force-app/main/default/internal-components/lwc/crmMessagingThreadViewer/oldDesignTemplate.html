@@ -8,7 +8,9 @@
             title="Dialog"
         ></lightning-icon>
         <p style="text-align: center">
-            &nbsp;Henvendelse startet&nbsp;<c-crm-nav-formatted-date date={registereddate}></c-crm-nav-formatted-date>
+            &nbsp;{labels.dialogueStartedText}&nbsp;<c-crm-nav-formatted-date
+                date={registereddate}
+            ></c-crm-nav-formatted-date>
         </p>
     </div>
     <!-- Header Stop-->
@@ -78,7 +80,7 @@
                                                 onclick={openModal}
                                                 class="endDialogBtn slds-button slds-button_destructive"
                                             >
-                                                Avslutt samtale
+                                                {labels.endDialogue}
                                             </button>
                                         </lightning-record-edit-form>
                                     </lightning-layout>
@@ -102,7 +104,7 @@
                                     <div class="container">
                                         <div class="panel-content scrollable" id="text">
                                             <div class="slds-var-m-around_medium">
-                                                <p>Er du sikker på at du vil avslutte denne samtalen permanent?</p>
+                                                <p>{labels.endDialogueAlertText}</p>
                                             </div>
                                         </div>
                                         <div class="panel-footer">
@@ -116,13 +118,13 @@
                                                         class="slds-button slds-button_neutral cancelButton"
                                                         onclick={closeModal}
                                                     >
-                                                        Avbryt</button
+                                                        {labels.cancel}</button
                                                     ><button
                                                         type="button"
                                                         class="slds-button slds-button_destructive closeButton"
                                                         onclick={closeThread}
                                                     >
-                                                        Avslutt samtale
+                                                        {labels.endDialogue}
                                                     </button>
                                                     <div tabindex="0" onfocus={trapFocusEnd}></div>
                                                 </div>

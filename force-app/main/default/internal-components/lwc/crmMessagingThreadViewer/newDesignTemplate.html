@@ -8,7 +8,7 @@
             title="Dialog"
         ></lightning-icon>
         <p>
-            &nbsp;{labels.DIALOGUE_STARTED_TEXT}&nbsp;<c-crm-nav-formatted-date
+            &nbsp;{labels.dialogueStartedText}&nbsp;<c-crm-nav-formatted-date
                 date={registereddate}
             ></c-crm-nav-formatted-date>
         </p>
@@ -97,7 +97,7 @@
                                         variant="destructive"
                                         disabled={closedThread}
                                         onclick={openModal}
-                                        label={labels.END_DIALOGUE_LABEL}
+                                        label={labels.endDialogue}
                                     >
                                     </lightning-button>
                                 </lightning-record-edit-form>
@@ -116,25 +116,19 @@
                             </lightning-button>
                             <lightning-button
                                 class="slds-var-p-right_small slds-float_right"
-                                label={labels.COMPLETE_LABEL}
+                                label={labels.complete}
                                 variant="brand-outline"
                                 onclick={toggleFlow}
                             ></lightning-button>
                             <lightning-button
                                 class="slds-var-p-right_small slds-float_right"
-                                label={labels.SEND_TO_REDACTION_LABEL}
+                                label={labels.createNavTask}
                                 variant="brand-outline"
                                 onclick={toggleFlow}
                             ></lightning-button>
                             <lightning-button
                                 class="slds-var-p-right_small slds-float_right"
-                                label={labels.CREATE_NAV_TASK_LABEL}
-                                variant="brand-outline"
-                                onclick={toggleFlow}
-                            ></lightning-button>
-                            <lightning-button
-                                class="slds-var-p-right_small slds-float_right"
-                                label={labels.JOURNAL_LABEL}
+                                label={labels.journal}
                                 variant="brand-outline"
                                 onclick={toggleFlow}
                             ></lightning-button>
@@ -144,60 +138,40 @@
                 <!--Flow section-->
                 <lightning-layout-item class="slds-size_12-of-12 slds-var-p-top_medium">
                     <template if:true={showComplete}>
-                        <template if:true={showFlow}>
-                            <div class="slds-var-m-top_xx-small">
-                                <lightning-card>
-                                    <lightning-flow
-                                        flow-api-name={completeFlowName}
-                                        flow-input-variables={inputVariables}
-                                        onstatuschange={handleStatusChange}
-                                    >
-                                    </lightning-flow>
-                                </lightning-card>
-                            </div>
-                        </template>
-                    </template>
-                    <template if:true={showRedact}>
-                        <template if:true={showFlow}>
-                            <div class="slds-var-m-top_xx-small">
-                                <lightning-card>
-                                    <lightning-flow
-                                        flow-api-name={redactFlowName}
-                                        flow-input-variables={inputVariables}
-                                        onstatuschange={handleStatusChange}
-                                    >
-                                    </lightning-flow>
-                                </lightning-card>
-                            </div>
-                        </template>
+                        <div class="slds-var-m-top_xx-small">
+                            <lightning-card>
+                                <lightning-flow
+                                    flow-api-name={completeFlowName}
+                                    flow-input-variables={inputVariables}
+                                    onstatuschange={handleStatusChange}
+                                >
+                                </lightning-flow>
+                            </lightning-card>
+                        </div>
                     </template>
                     <template if:true={showCreateNavTask}>
-                        <template if:true={showFlow}>
-                            <div class="slds-var-m-top_xx-small">
-                                <lightning-card>
-                                    <lightning-flow
-                                        flow-api-name={createNavTaskFlowName}
-                                        flow-input-variables={inputVariables}
-                                        onstatuschange={handleStatusChange}
-                                    >
-                                    </lightning-flow>
-                                </lightning-card>
-                            </div>
-                        </template>
+                        <div class="slds-var-m-top_xx-small">
+                            <lightning-card>
+                                <lightning-flow
+                                    flow-api-name={createNavTaskFlowName}
+                                    flow-input-variables={inputVariables}
+                                    onstatuschange={handleStatusChange}
+                                >
+                                </lightning-flow>
+                            </lightning-card>
+                        </div>
                     </template>
                     <template if:true={showJournal}>
-                        <template if:true={showFlow}>
-                            <div class="slds-var-m-top_xx-small">
-                                <lightning-card>
-                                    <lightning-flow
-                                        flow-api-name={journalFlowName}
-                                        flow-input-variables={inputVariables}
-                                        onstatuschange={handleStatusChange}
-                                    >
-                                    </lightning-flow>
-                                </lightning-card>
-                            </div>
-                        </template>
+                        <div class="slds-var-m-top_xx-small">
+                            <lightning-card>
+                                <lightning-flow
+                                    flow-api-name={journalFlowName}
+                                    flow-input-variables={inputVariables}
+                                    onstatuschange={handleStatusChange}
+                                >
+                                </lightning-flow>
+                            </lightning-card>
+                        </div>
                     </template>
                     <!--Alert dialogue-->
                     <div
@@ -211,7 +185,7 @@
                     >
                         <div class="panel-content scrollable" id="text">
                             <div class="slds-var-m-around_medium">
-                                <p>{labels.END_DIALOGUE_ALERT_TEXT}</p>
+                                <p>{labels.endDialogueAlertText}</p>
                             </div>
                         </div>
                         <div class="panel-footer">
@@ -223,13 +197,13 @@
                                         class="slds-button slds-button_neutral cancelButton"
                                         onclick={closeModal}
                                     >
-                                        {labels.CANCEL_LABEL}</button
+                                        {labels.cancel}</button
                                     ><button
                                         type="button"
                                         class="slds-button slds-button_destructive closeButton"
                                         onclick={closeThread}
                                     >
-                                        {labels.END_DIALOGUE_LABEL}
+                                        {labels.endDialogue}
                                     </button>
                                     <div tabindex="0" onfocus={trapFocusEnd}></div>
                                 </div>

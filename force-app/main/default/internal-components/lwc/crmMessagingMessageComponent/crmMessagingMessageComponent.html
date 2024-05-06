@@ -28,9 +28,9 @@
                 >
                     <lightning-layout vertical-align="center">
                         <lightning-icon icon-name="utility:error" size="x-small" variant="inverse"></lightning-icon>
-                        <span class="slds-assistive-text">Feil</span>
+                        <span class="slds-assistive-text">{labels.errorLabel}</span>
                         <h2 class="slds-p-left_small" style="margin-top: auto; margin-bottom: auto">
-                            Det oppsto en uventet feil
+                            {labels.errorMessage}
                         </h2>
                     </lightning-layout>
                 </div>
@@ -53,6 +53,9 @@
                         thread={thread}
                         show-close={showClose}
                         show-quick={showQuick}
+                        case-id={caseId}
+                        is-thread={isThread}
+                        new-design={newDesign}
                     >
                         <!--Ability to pass toolbar buttons thorugh slots to the toolbar-->
                         <div slot="toolbar">

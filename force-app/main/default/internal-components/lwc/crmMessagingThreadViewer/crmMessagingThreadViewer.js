@@ -7,26 +7,53 @@ import { updateRecord, getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import ACTIVE_FIELD from '@salesforce/schema/Thread__c.CRM_isActive__c';
 import THREAD_ID_FIELD from '@salesforce/schema/Thread__c.Id';
 import REGISTERED_DATE from '@salesforce/schema/Thread__c.CRM_Date_Time_Registered__c';
+import COMPLETE_LABEL from '@salesforce/label/c.NKS_Complete';
+import CREATE_NAV_TASK_LABEL from '@salesforce/label/c.NKS_Create_NAV_Task';
+import JOURNAL_LABEL from '@salesforce/label/c.NKS_Journal';
+import END_DIALOGUE_LABEL from '@salesforce/label/c.NKS_End_Dialogue';
+import END_DIALOGUE_ALERT_TEXT from '@salesforce/label/c.NKS_End_Dialogue_Alert_Text';
+import DIALOGUE_STARTED_TEXT from '@salesforce/label/c.NKS_DIALOGUE_STARTED';
+import CANCEL_LABEL from '@salesforce/label/c.NKS_Cancel';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
 import { publishToAmplitude } from 'c/amplitude';
 import LoggerUtility from 'c/loggerUtility';
+import newDesignTemplate from './newDesignTemplate.html';
+import oldDesignTemplate from './oldDesignTemplate.html';
 
-export default class messagingThreadViewer extends LightningElement {
+export default class MessagingThreadViewer extends LightningElement {
+    @api thread;
+    @api showClose;
+    @api showQuick;
+    @api englishTextTemplate;
+    @api textTemplate; //Support for conditional text template as input
+    @api newDesign = false;
+    @api caseId;
+    @api isThread = false;
+
+    @track langBtnLock = false;
+
+    labels = {
+        complete: COMPLETE_LABEL,
+        createNavTask: CREATE_NAV_TASK_LABEL,
+        journal: JOURNAL_LABEL,
+        endDialogue: END_DIALOGUE_LABEL,
+        sendToRdaction: SEND_TO_REDACTION_LABEL,
+        endDialogueAlertText: END_DIALOGUE_ALERT_TEXT,
+        dialogueStartedText: DIALOGUE_STARTED_TEXT,
+        cancel: CANCEL_LABEL
+    };
+    showFlow = false;
+    label;
     createdbyid;
     usertype;
     otheruser;
     _mySendForSplitting;
-    @api thread;
     threadheader;
     threadid;
     messages = [];
     showspinner = false;
     hideModal = true;
-    @api showClose;
-    @api showQuick;
-    @api englishTextTemplate;
-    @track langBtnLock = false;
     langBtnAriaToggle = false;
     resizablePanelTop;
     onresize = false; // true when in process of resizing
@@ -34,7 +61,9 @@ export default class messagingThreadViewer extends LightningElement {
     registereddate;
     closedThread;
 
-    @api textTemplate; //Support for conditional text template as input
+    render() {
+        return this.newDesign ? newDesignTemplate : oldDesignTemplate;
+    }
     //Constructor, called onload
     connectedCallback() {
         if (this.thread) {
@@ -48,6 +77,7 @@ export default class messagingThreadViewer extends LightningElement {
     disconnectedCallback() {
         this.handleUnsubscribe();
     }
+
     renderedCallback() {
         this.scrolltobottom();
         const test = this.template.querySelector('.cancelButton');
@@ -58,6 +88,7 @@ export default class messagingThreadViewer extends LightningElement {
         this.resizablePanelTop.addEventListener('mousemove', this.mouseMoveEventHandlerBinded, false);
         this.resizablePanelTop.addEventListener('mouseleave', this.mouseLeaveEventHandler, false);
     }
+
     //##################################//
     //#####    Event Handlers    #######//
     //##################################//
@@ -369,5 +400,61 @@ export default class messagingThreadViewer extends LightningElement {
             'Could not fetch active field from thread internal view',
             this.threadId
         );
+    }
+
+    get inputVariables() {
+        if (this.isThread) {
+            return [
+                {
+                    name: 'recordId',
+                    type: 'String',
+                    value: this.threadId
+                }
+            ];
+        }
+        return [
+            {
+                name: 'recordId',
+                type: 'String',
+                value: this.caseId
+            }
+        ];
+    }
+
+    get journalFlowName() {
+        return this.isThread ? 'STO_Create_Thread_Journal_Entry' : 'CRM_Case_Journal_STO_Thread';
+    }
+
+    get createNavTaskFlowName() {
+        return this.isThread ? 'NKS_Thread_Send_NAV_Task' : 'NKS_Case_Send_NAV_Task';
+    }
+
+    get completeFlowName() {
+        return this.isThread ? 'STO_Action_Complete' : 'Case_STO_Complete';
+    }
+
+    get showComplete() {
+        return this.showFlow && this.label === this.labels.COMPLETE_LABEL;
+    }
+
+    get showJournal() {
+        return this.showFlow && this.label === this.labels.JOURNAL_LABEL;
+    }
+
+    get showCreateNavTask() {
+        return this.showFlow && this.label === this.labels.CREATE_NAV_TASK_LABEL;
+    }
+
+    toggleFlow(event) {
+        this.showFlow = !this.showFlow;
+        this.label = event.target.label;
+        publishToAmplitude('STO', { type: this.label + ' pressed' });
+    }
+
+    handleStatusChange(event) {
+        let flowStatus = event.detail.status;
+        if (flowStatus === 'FINISHED' || flowStatus === 'FINISHED_SCREEN') {
+            this.showFlow = false;
+        }
     }
 }
