@@ -47,10 +47,12 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     }
     handlenewpressed() {
         createThread({ recordId: this.recordId })
-            .then((result) => {
+            .then(() => {
                 return refreshApex(this._threadsforRefresh);
             })
-            .catch((error) => {});
+            .catch((error) => {
+                console.error(error);
+            });
     }
 
     get showSpinner() {

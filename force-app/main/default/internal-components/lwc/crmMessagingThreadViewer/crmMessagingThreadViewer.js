@@ -103,7 +103,7 @@ export default class MessagingThreadViewer extends LightningElement {
     //binding, to make 'this' available when running in context of other object
     mouseMoveEventHandlerBinded = this.mouseMoveEventHandler.bind(this);
 
-    mouseLeaveEventHandler(e) {
+    mouseLeaveEventHandler() {
         if (this.mouseListenerCounter === true) {
             this.resizablePanelTop.removeEventListener('mousedown', this.mouseDownEventHandlerBinded, false);
             this.mouseListenerCounter = false;
@@ -111,7 +111,7 @@ export default class MessagingThreadViewer extends LightningElement {
         document.body.style.cursor = 'auto';
     }
 
-    mouseDownEventHandler(e) {
+    mouseDownEventHandler() {
         this.onresize = true;
         this.resizablePanelTop.removeEventListener('mousedown', this.mouseDownEventHandlerBinded, false);
         document.addEventListener('mouseup', this.mouseUpEventHandlerBinded, true);
@@ -127,7 +127,7 @@ export default class MessagingThreadViewer extends LightningElement {
     }
     resizeEventHandlerBinded = this.resizeEventHandler.bind(this);
 
-    mouseUpEventHandler(e) {
+    mouseUpEventHandler() {
         this.onresize = false;
         this.resizablePanelTop.removeEventListener('mousedown', this.mouseDownEventHandlerBinded, false);
         document.removeEventListener('mouseup', this.mouseUpEventHandlerBinded, true);
@@ -144,9 +144,9 @@ export default class MessagingThreadViewer extends LightningElement {
         // Callback invoked whenever a new message event is received
         const messageCallback = (response) => {
             const messageThreadId = response.data.sobject.CRM_Thread__c;
-            if (this.threadId == messageThreadId) {
+            if (this.threadId === messageThreadId) {
                 //Refreshes the message in the component if the new message event is for the viewed thread
-                _this.refreshMessages();
+                this.refreshMessages();
             }
         };
 
@@ -162,7 +162,7 @@ export default class MessagingThreadViewer extends LightningElement {
             console.log('Unsubscribed: ', JSON.stringify(response));
             // Response is true for successful unsubscribe
         })
-            .then((success) => {
+            .then(() => {
                 //Successfull unsubscribe
             })
             .catch((error) => {
