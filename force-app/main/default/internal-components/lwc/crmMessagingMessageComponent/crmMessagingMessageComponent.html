@@ -1,5 +1,5 @@
 <template>
-    <article class="slds-card slds-card_narrow marginRemover">
+    <article class="slds-card marginRemover">
         <div class="slds-card__header slds-grid paddingAndCustomColor">
             <header class="slds-media slds-media_center slds-has-flexi-truncate">
                 <div class="slds-media__figure">
@@ -54,6 +54,8 @@
                         show-close={showClose}
                         show-quick={showQuick}
                         new-design={newDesign}
+                        submit-button-label={submitButtonLabel}
+                        onsubmitfromgrandchild={handleSumbit}
                     >
                         <!--Ability to pass toolbar buttons thorugh slots to the toolbar-->
                         <div slot="toolbar">

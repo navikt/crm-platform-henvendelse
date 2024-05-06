@@ -94,7 +94,7 @@
                                         disabled={closedThread}
                                         onclick={openModal}
                                         label={labels.endDialogue}
-                                        class="endDialogBtn"
+                                        class="slds-var-p-vertical_x-small endDialogBtn"
                                     >
                                     </lightning-button>
                                 </lightning-record-edit-form>
@@ -102,11 +102,20 @@
                         </lightning-layout-item>
                         <!--Button container-->
                         <lightning-layout-item class="slds-size_10-of-12">
+                            <lightning-button
+                                class="slds-float_right"
+                                type="submit"
+                                name="submit"
+                                label={submitButtonLabel}
+                                disabled={closedThread}
+                                variant="brand"
+                            >
+                            </lightning-button>
                             <slot name="buttonContainer"></slot>
                         </lightning-layout-item>
                     </lightning-layout>
                 </lightning-layout-item>
-                <lightning-layout-item class="slds-size_12-of-12">
+                <lightning-layout-item class="slds-size_12-of-12 slds-var-p-top_medium">
                     <!--Flow section-->
                     <slot name="flowSection"></slot>
                     <!--Modal-->

@@ -25,6 +25,7 @@ export default class MessagingThreadViewer extends LightningElement {
     @api englishTextTemplate;
     @api textTemplate; //Support for conditional text template as input
     @api newDesign = false;
+    @api submitButtonLabel = 'Send';
 
     @track langBtnLock = false;
 
@@ -204,8 +205,11 @@ export default class MessagingThreadViewer extends LightningElement {
     }
     //If empty, stop submitting.
     handlesubmit(event) {
-        publishToAmplitude('STO', { type: 'handlesubmit on thread' });
+        if (this.newDesign) {
+            this.dispatchEvent(new CustomEvent('submitfromgrandchild'));
+        }
 
+        publishToAmplitude('STO', { type: 'handlesubmit on thread' });
         this.lockLangBtn();
         event.preventDefault();
         if (!this.quickTextCmp.isOpen()) {

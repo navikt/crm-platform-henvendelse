@@ -13,6 +13,7 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     @api englishTextTemplate;
     @api textTemplate; //Support for conditional text template
     @api newDesign = false;
+    @api submitButtonLabel = 'Send';
 
     @track slotsNeedCheckedOrRendered = { messages: true }; // To check the slot content the slot has to be rendered initially
 
@@ -45,15 +46,6 @@ export default class CrmMessagingMessageComponent extends LightningElement {
             this.threads = result.data;
         }
     }
-    handlenewpressed() {
-        createThread({ recordId: this.recordId })
-            .then(() => {
-                return refreshApex(this._threadsforRefresh);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }
 
     get showSpinner() {
         return !this.threads && !this.hasError;
@@ -70,6 +62,16 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     @api
     set cardTitle(cardTitle) {
         this.setCardTitle = cardTitle;
+    }
+
+    handlenewpressed() {
+        createThread({ recordId: this.recordId })
+            .then(() => {
+                return refreshApex(this._threadsforRefresh);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }
 
     handleEnglishEvent(event) {
@@ -107,5 +109,9 @@ export default class CrmMessagingMessageComponent extends LightningElement {
             const hasContent = slot.assignedElements().length !== 0;
             this.slotsNeedCheckedOrRendered[slot.name] = hasContent;
         }
+    }
+
+    handleSumbit() {
+        this.dispatchEvent(new CustomEvent('submitfromchild'));
     }
 }
