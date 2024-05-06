@@ -1,46 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
-        <fullName>NKS_Complete</fullName>
-        <categories>NKS, Buttons</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Complete</shortDescription>
-        <value>Complete</value>
-    </labels>
-    <labels>
-        <fullName>NKS_Create_NAV_Task</fullName>
-        <categories>NKS, Buttons</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Create NAV Task</shortDescription>
-        <value>Create NAV Task</value>
-    </labels>
-    <labels>
-        <fullName>NKS_End_Dialogue</fullName>
-        <categories>NKS, Buttons</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>End Dialogue</shortDescription>
-        <value>End dialogue</value>
-    </labels>
-    <labels>
-        <fullName>NKS_Journal</fullName>
-        <categories>NKS, Buttons</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Journal</shortDescription>
-        <value>Journal</value>
-    </labels>
-    <labels>
-        <fullName>NKS_Set_To_Redaction</fullName>
-        <categories>Redaction, Buttons</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Set To Redaction</shortDescription>
-        <value>Set To Redaction</value>
-    </labels>
-    <labels>
         <fullName>CRMHenvendelse_RedactedMessageAG</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -154,40 +114,48 @@
         <value>/skriv-til-oss</value>
     </labels>
     <labels>
-        <fullName>NKS_End_Dialogue_Alert_Text</fullName>
-        <categories>NKS, Buttons</categories>
+        <fullName>Henvendelse_End_Dialogue</fullName>
+        <categories>Henvendelse, Messaging, Buttons</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>End Dialogue</shortDescription>
+        <value>End dialogue</value>
+    </labels>
+    <labels>
+        <fullName>Henvendelse_End_Dialogue_Alert_Text</fullName>
+        <categories>Henvendelse, Messaging, Buttons</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>End Dialogue Alert Text</shortDescription>
         <value>Are you sure you want to end this conversation permanently?</value>
     </labels>
     <labels>
-        <fullName>NKS_DIALOGUE_STARTED</fullName>
-        <categories>NKS, Header</categories>
+        <fullName>Henvendelse_Dialogue_Started</fullName>
+        <categories>Messaging, Header</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>DIALOGUE STARTED</shortDescription>
+        <shortDescription>Dialogue Started</shortDescription>
         <value>Dialogue started</value>
     </labels>
     <labels>
-        <fullName>NKS_Cancel</fullName>
-        <categories>NKS, Buttons</categories>
+        <fullName>Henvendelse_Cancel</fullName>
+        <categories>Henvendelse, Messaging, Buttons</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Cancel</shortDescription>
         <value>Cancel</value>
     </labels>
     <labels>
-        <fullName>NKS_Error</fullName>
-        <categories>NKS, Errors</categories>
+        <fullName>Henvendelse_Error</fullName>
+        <categories>Henvendelse, Messaging, Errors</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Error</shortDescription>
         <value>Error</value>
     </labels>
     <labels>
-        <fullName>NKS_Error_Message</fullName>
-        <categories>NKS, Errors</categories>
+        <fullName>Henvendelse_Error_Message</fullName>
+        <categories>Henvendelse, Messaging, Errors</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Error Message</shortDescription>

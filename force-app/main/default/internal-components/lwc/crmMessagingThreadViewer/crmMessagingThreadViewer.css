@@ -26,3 +26,7 @@
     display: block;
     border-radius: 0;
 }
+
+.button {
+    min-height: 1rem;
+}

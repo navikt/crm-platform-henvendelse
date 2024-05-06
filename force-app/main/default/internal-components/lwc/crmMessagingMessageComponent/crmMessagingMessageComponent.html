@@ -16,25 +16,25 @@
             <div class="slds-is-relative" style="min-height: 2em">
                 <!-- Singlethread true - WIll only ever be one thread in the iteration-->
                 <lightning-spinner
-                    if:true={showSpinner}
+                    lwc:if={showSpinner}
                     alternative-text="Laster samtalekomponent"
                     size="medium"
                     variant="brand"
                 ></lightning-spinner>
                 <div
-                    if:true={hasError}
+                    lwc:if={hasError}
                     class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error"
                     role="alert"
                 >
                     <lightning-layout vertical-align="center">
                         <lightning-icon icon-name="utility:error" size="x-small" variant="inverse"></lightning-icon>
                         <span class="slds-assistive-text">{labels.errorLabel}</span>
-                        <h2 class="slds-p-left_small" style="margin-top: auto; margin-bottom: auto">
+                        <h2 class="slds-var-p-left_small" style="margin-top: auto; margin-bottom: auto">
                             {labels.errorMessage}
                         </h2>
                     </lightning-layout>
                 </div>
-                <template if:true={shownewbutton}>
+                <template lwc:if={shownewbutton}>
                     <lightning-button
                         label="Klikk for å starte samtale"
                         icon-name="utility:anywhere_chat"
@@ -53,16 +53,20 @@
                         thread={thread}
                         show-close={showClose}
                         show-quick={showQuick}
-                        case-id={caseId}
-                        is-thread={isThread}
                         new-design={newDesign}
                     >
                         <!--Ability to pass toolbar buttons thorugh slots to the toolbar-->
                         <div slot="toolbar">
                             <slot name="toolbar"></slot>
                         </div>
-                        <div if:true={slotsNeedCheckedOrRendered.messages} slot="messages2">
+                        <div lwc:if={slotsNeedCheckedOrRendered.messages} slot="messages2">
                             <slot name="messages"></slot>
+                        </div>
+                        <div slot="buttonContainer">
+                            <slot name="buttonContainer"></slot>
+                        </div>
+                        <div slot="flowSection">
+                            <slot name="flowSection"></slot>
                         </div>
                     </c-crm-messaging-thread-Viewer>
                 </template>

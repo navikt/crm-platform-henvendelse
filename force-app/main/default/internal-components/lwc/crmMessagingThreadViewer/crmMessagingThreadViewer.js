@@ -7,13 +7,10 @@ import { updateRecord, getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import ACTIVE_FIELD from '@salesforce/schema/Thread__c.CRM_isActive__c';
 import THREAD_ID_FIELD from '@salesforce/schema/Thread__c.Id';
 import REGISTERED_DATE from '@salesforce/schema/Thread__c.CRM_Date_Time_Registered__c';
-import COMPLETE_LABEL from '@salesforce/label/c.NKS_Complete';
-import CREATE_NAV_TASK_LABEL from '@salesforce/label/c.NKS_Create_NAV_Task';
-import JOURNAL_LABEL from '@salesforce/label/c.NKS_Journal';
-import END_DIALOGUE_LABEL from '@salesforce/label/c.NKS_End_Dialogue';
-import END_DIALOGUE_ALERT_TEXT from '@salesforce/label/c.NKS_End_Dialogue_Alert_Text';
-import DIALOGUE_STARTED_TEXT from '@salesforce/label/c.NKS_DIALOGUE_STARTED';
-import CANCEL_LABEL from '@salesforce/label/c.NKS_Cancel';
+import END_DIALOGUE_LABEL from '@salesforce/label/c.Henvendelse_End_Dialogue';
+import END_DIALOGUE_ALERT_TEXT from '@salesforce/label/c.Henvendelse_End_Dialogue_Alert_Text';
+import DIALOGUE_STARTED_TEXT from '@salesforce/label/c.Henvendelse_Dialogue_Started';
+import CANCEL_LABEL from '@salesforce/label/c.Henvendelse_Cancel';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
 import { publishToAmplitude } from 'c/amplitude';
@@ -28,29 +25,21 @@ export default class MessagingThreadViewer extends LightningElement {
     @api englishTextTemplate;
     @api textTemplate; //Support for conditional text template as input
     @api newDesign = false;
-    @api caseId;
-    @api isThread = false;
 
     @track langBtnLock = false;
 
     labels = {
-        complete: COMPLETE_LABEL,
-        createNavTask: CREATE_NAV_TASK_LABEL,
-        journal: JOURNAL_LABEL,
         endDialogue: END_DIALOGUE_LABEL,
-        sendToRdaction: SEND_TO_REDACTION_LABEL,
         endDialogueAlertText: END_DIALOGUE_ALERT_TEXT,
         dialogueStartedText: DIALOGUE_STARTED_TEXT,
         cancel: CANCEL_LABEL
     };
-    showFlow = false;
-    label;
     createdbyid;
     usertype;
     otheruser;
     _mySendForSplitting;
     threadheader;
-    threadid;
+    threadId;
     messages = [];
     showspinner = false;
     hideModal = true;
@@ -64,14 +53,14 @@ export default class MessagingThreadViewer extends LightningElement {
     render() {
         return this.newDesign ? newDesignTemplate : oldDesignTemplate;
     }
-    //Constructor, called onload
+
     connectedCallback() {
         if (this.thread) {
-            this.threadid = this.thread.Id;
+            this.threadId = this.thread.Id;
         }
         this.handleSubscribe();
         this.scrolltobottom();
-        markAsReadByNav({ threadId: this.threadid });
+        markAsReadByNav({ threadId: this.threadId });
     }
 
     disconnectedCallback() {
@@ -152,11 +141,10 @@ export default class MessagingThreadViewer extends LightningElement {
 
     //Handles subscription to streaming API for listening to changes to auth status
     handleSubscribe() {
-        let _this = this;
         // Callback invoked whenever a new message event is received
-        const messageCallback = function (response) {
+        const messageCallback = (response) => {
             const messageThreadId = response.data.sobject.CRM_Thread__c;
-            if (_this.threadid == messageThreadId) {
+            if (this.threadId == messageThreadId) {
                 //Refreshes the message in the component if the new message event is for the viewed thread
                 _this.refreshMessages();
             }
@@ -183,7 +171,7 @@ export default class MessagingThreadViewer extends LightningElement {
     }
 
     @wire(getRecord, {
-        recordId: '$threadid',
+        recordId: '$threadId',
         fields: [ACTIVE_FIELD, REGISTERED_DATE]
     })
     wiredThread(resp) {
@@ -204,7 +192,7 @@ export default class MessagingThreadViewer extends LightningElement {
         }
     }
 
-    @wire(getmessages, { threadId: '$threadid' }) //Calls apex and extracts messages related to this record
+    @wire(getmessages, { threadId: '$threadId' }) //Calls apex and extracts messages related to this record
     wiremessages(result) {
         this._mySendForSplitting = result;
         if (result.error) {
@@ -244,18 +232,19 @@ export default class MessagingThreadViewer extends LightningElement {
     //Enriching the toolbar event with reference to the thread id
     //A custom toolbaraction event can be passed from the component in the toolbar slot that the thread viewer enrich with the thread id
     handleToolbarAction(event) {
-        let threadId = this.threadid;
+        let threadId = this.threadId;
         let eventDetails = event.detail;
         eventDetails.threadId = threadId;
         event.threadId = threadId;
     }
 
+    @api
     closeThread() {
         publishToAmplitude('STO', { type: 'closeThread' });
 
         this.closeModal();
         const fields = {};
-        fields[THREAD_ID_FIELD.fieldApiName] = this.threadid;
+        fields[THREAD_ID_FIELD.fieldApiName] = this.threadId;
         fields[ACTIVE_FIELD.fieldApiName] = false;
 
         const threadInput = { fields };
@@ -296,13 +285,12 @@ export default class MessagingThreadViewer extends LightningElement {
                 field.reset();
             });
         }
-        //this.showspinner = false;
         this.showspinner = false;
         this.refreshMessages();
     }
 
     scrolltobottom() {
-        var element = this.template.querySelector('.slds-box');
+        let element = this.template.querySelector('.slds-box');
         if (element) {
             element.scrollTop = element.scrollHeight;
         }
@@ -400,61 +388,5 @@ export default class MessagingThreadViewer extends LightningElement {
             'Could not fetch active field from thread internal view',
             this.threadId
         );
-    }
-
-    get inputVariables() {
-        if (this.isThread) {
-            return [
-                {
-                    name: 'recordId',
-                    type: 'String',
-                    value: this.threadId
-                }
-            ];
-        }
-        return [
-            {
-                name: 'recordId',
-                type: 'String',
-                value: this.caseId
-            }
-        ];
-    }
-
-    get journalFlowName() {
-        return this.isThread ? 'STO_Create_Thread_Journal_Entry' : 'CRM_Case_Journal_STO_Thread';
-    }
-
-    get createNavTaskFlowName() {
-        return this.isThread ? 'NKS_Thread_Send_NAV_Task' : 'NKS_Case_Send_NAV_Task';
-    }
-
-    get completeFlowName() {
-        return this.isThread ? 'STO_Action_Complete' : 'Case_STO_Complete';
-    }
-
-    get showComplete() {
-        return this.showFlow && this.label === this.labels.COMPLETE_LABEL;
-    }
-
-    get showJournal() {
-        return this.showFlow && this.label === this.labels.JOURNAL_LABEL;
-    }
-
-    get showCreateNavTask() {
-        return this.showFlow && this.label === this.labels.CREATE_NAV_TASK_LABEL;
-    }
-
-    toggleFlow(event) {
-        this.showFlow = !this.showFlow;
-        this.label = event.target.label;
-        publishToAmplitude('STO', { type: this.label + ' pressed' });
-    }
-
-    handleStatusChange(event) {
-        let flowStatus = event.detail.status;
-        if (flowStatus === 'FINISHED' || flowStatus === 'FINISHED_SCREEN') {
-            this.showFlow = false;
-        }
     }
 }
