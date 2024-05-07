@@ -64,6 +64,12 @@ export default class CrmMessagingMessageComponent extends LightningElement {
         this.setCardTitle = cardTitle;
     }
 
+    get cardClass() {
+        return this.newDesign
+            ? 'slds-card__header slds-grid paddingAndCustomColor slds-p-left_none slds-p-bottom_none'
+            : 'slds-card__header slds-grid paddingAndCustomColor';
+    }
+
     handlenewpressed() {
         createThread({ recordId: this.recordId })
             .then(() => {
