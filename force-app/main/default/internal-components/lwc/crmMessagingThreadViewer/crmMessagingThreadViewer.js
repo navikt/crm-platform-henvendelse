@@ -241,10 +241,12 @@ export default class MessagingThreadViewer extends LightningElement {
         event.threadId = threadId;
     }
 
-    @api
     closeThread() {
-        publishToAmplitude('STO', { type: 'closeThread' });
+        if (this.newDesign) {
+            this.dispatchEvent(new CustomEvent('closefromgrandchild'));
+        }
 
+        publishToAmplitude('STO', { type: 'closeThread' });
         this.closeModal();
         const fields = {};
         fields[THREAD_ID_FIELD.fieldApiName] = this.threadId;
@@ -279,7 +281,6 @@ export default class MessagingThreadViewer extends LightningElement {
 
     handlesuccess(event) {
         this.recordId = event.detail;
-
         this.quickTextCmp.clear();
         const inputFields = this.template.querySelectorAll('.msgText');
 

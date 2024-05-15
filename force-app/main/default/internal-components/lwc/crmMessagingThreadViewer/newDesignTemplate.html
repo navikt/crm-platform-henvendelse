@@ -122,21 +122,31 @@
                     <!--Modal-->
                     <template lwc:if={hideModal}></template>
                     <template lwc:else>
-                        <lightning-modal-body>{labels.END_DIALOGUE_ALERT_TEXT}</lightning-modal-body>
-                        <lightning-modal-footer>
-                            <lightning-button
-                                variant="neutral"
-                                class="slds-var-p-right_small cancelButton"
-                                label={labels.CANCEL_LABEL}
-                                onclick={closeModal}
-                            ></lightning-button>
-                            <lightning-button
-                                variant="destructive"
-                                class="closeButton"
-                                label={labels.END_DIALOGUE_LABEL}
-                                onclick={closeThread}
-                            ></lightning-button>
-                        </lightning-modal-footer>
+                        <div class="container slds-border_right slds-border_top slds-border_bottom slds-border_left">
+                            <div class="panel-content scrollable">
+                                <div class="slds-var-m-around_medium">
+                                    <p>{labels.END_DIALOGUE_ALERT_TEXT}</p>
+                                </div>
+                                <div class="slds-grid slds-grid_align-end">
+                                    <div class="slds-var-p-right_medium slds-var-p-bottom_medium slds-float_right">
+                                        <lightning-button
+                                            label={labels.CANCEL_LABEL}
+                                            variant="brand-outline"
+                                            class="slds-var-p-right_small cancelButton"
+                                            onclick={closeModal}
+                                        >
+                                        </lightning-button
+                                        ><lightning-button
+                                            label={labels.END_DIALOGUE_LABEL}
+                                            variant="destructive"
+                                            class="closeButton"
+                                            onclick={closeThread}
+                                        >
+                                        </lightning-button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </template>
                 </lightning-layout-item>
             </lightning-layout>
