@@ -122,13 +122,13 @@
                     <!--Modal-->
                     <template lwc:if={hideModal}></template>
                     <template lwc:else>
-                        <div class="container slds-border_right slds-border_top slds-border_bottom slds-border_left">
+                        <div class="slds-box slds-border_right slds-border_top slds-border_bottom slds-border_left">
                             <div class="panel-content scrollable">
-                                <div class="slds-var-m-around_medium">
+                                <div class="slds-var-p-bottom_medium">
                                     <p>{labels.END_DIALOGUE_ALERT_TEXT}</p>
                                 </div>
                                 <div class="slds-grid slds-grid_align-end">
-                                    <div class="slds-var-p-right_medium slds-var-p-bottom_medium slds-float_right">
+                                    <div class="slds-float_right">
                                         <lightning-button
                                             label={labels.CANCEL_LABEL}
                                             variant="brand-outline"

@@ -120,8 +120,4 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     handleSumbit() {
         this.dispatchEvent(new CustomEvent('submitfromchild'));
     }
-
-    handleClose() {
-        this.dispatchEvent(new CustomEvent('closefromchild'));
-    }
 }

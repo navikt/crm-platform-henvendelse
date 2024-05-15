@@ -242,10 +242,6 @@ export default class MessagingThreadViewer extends LightningElement {
     }
 
     closeThread() {
-        if (this.newDesign) {
-            this.dispatchEvent(new CustomEvent('closefromgrandchild'));
-        }
-
         publishToAmplitude('STO', { type: 'closeThread' });
         this.closeModal();
         const fields = {};
