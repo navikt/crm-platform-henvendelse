@@ -8,7 +8,7 @@
             title="Dialog"
         ></lightning-icon>
         <p style="text-align: center">
-            &nbsp;{labels.dialogueStartedText}&nbsp;<c-crm-nav-formatted-date
+            &nbsp;{labels.DIALOGUE_STARTED_TEXT}&nbsp;<c-crm-nav-formatted-date
                 date={registereddate}
             ></c-crm-nav-formatted-date>
         </p>
@@ -78,9 +78,9 @@
                                                 type="submit"
                                                 disabled={closedThread}
                                                 onclick={openModal}
-                                                class="endDialogBtn slds-button slds-button_destructive"
+                                                class="endDialogBtn slds-button slds-button_destructive slds-var-p-vertical_x-small"
                                             >
-                                                {labels.endDialogue}
+                                                {labels.END_DIALOGUE_LABEL}
                                             </button>
                                         </lightning-record-edit-form>
                                     </lightning-layout>
@@ -104,7 +104,7 @@
                                     <div class="container">
                                         <div class="panel-content scrollable" id="text">
                                             <div class="slds-var-m-around_medium">
-                                                <p>{labels.endDialogueAlertText}</p>
+                                                <p>{labels.END_DIALOGUE_ALERT_TEXT}</p>
                                             </div>
                                         </div>
                                         <div class="panel-footer">
@@ -118,13 +118,13 @@
                                                         class="slds-button slds-button_neutral cancelButton"
                                                         onclick={closeModal}
                                                     >
-                                                        {labels.cancel}</button
+                                                        {labels.CANCEL_LABEL}</button
                                                     ><button
                                                         type="button"
                                                         class="slds-button slds-button_destructive closeButton"
                                                         onclick={closeThread}
                                                     >
-                                                        {labels.endDialogue}
+                                                        {labels.END_DIALOGUE_LABEL}
                                                     </button>
                                                     <div tabindex="0" onfocus={trapFocusEnd}></div>
                                                 </div>

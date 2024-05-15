@@ -8,7 +8,7 @@
             title="Dialog"
         ></lightning-icon>
         <p>
-            &nbsp;{labels.dialogueStartedText}&nbsp;<c-crm-nav-formatted-date
+            &nbsp;{labels.DIALOGUE_STARTED_TEXT}&nbsp;<c-crm-nav-formatted-date
                 date={registereddate}
             ></c-crm-nav-formatted-date>
         </p>
@@ -92,9 +92,10 @@
                                         type="submit"
                                         variant="destructive"
                                         disabled={closedThread}
-                                        onclick={openModal}
-                                        label={labels.endDialogue}
+                                        onclick={toggleEndDialogueButton}
+                                        label={labels.END_DIALOGUE_LABEL}
                                         class="slds-var-p-vertical_x-small endDialogBtn"
+                                        aria-expanded={buttonExpanded}
                                     >
                                     </lightning-button>
                                 </lightning-record-edit-form>
@@ -121,47 +122,22 @@
                     <!--Modal-->
                     <template lwc:if={hideModal}></template>
                     <template lwc:else>
-                        <div
-                            role="alertdialog"
-                            tabindex="-1"
-                            class={modalClass}
-                            aria-describedby="text"
-                            style="position: relative"
-                            aria-hidden={hideModal}
-                            aria-modal="true"
-                        >
-                            <div class="panel-content scrollable" id="text">
-                                <div class="slds-var-m-around_medium">
-                                    <p>{labels.endDialogueAlertText}</p>
-                                </div>
-                            </div>
-                            <div class="panel-footer">
-                                <div class="slds-grid slds-grid_align-end">
-                                    <div
-                                        class="right slds-var-m-top_medium slds-var-m-right_large slds-var-m-bottom_large"
-                                    >
-                                        <div tabindex="0" onfocus={trapFocusStart}></div>
-                                        <lightning-button
-                                            label={labels.cancel}
-                                            variant="neutral"
-                                            class="slds-var-p-right_small cancelButton"
-                                            onclick={closeModal}
-                                        >
-                                        </lightning-button
-                                        ><lightning-button
-                                            label={labels.endDialogue}
-                                            variant="destructive"
-                                            class="closeButton"
-                                            onclick={closeThread}
-                                        >
-                                        </lightning-button>
-                                        <div tabindex="0" onfocus={trapFocusEnd}></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <lightning-modal-body>{labels.END_DIALOGUE_ALERT_TEXT}</lightning-modal-body>
+                        <lightning-modal-footer>
+                            <lightning-button
+                                variant="neutral"
+                                class="slds-var-p-right_small cancelButton"
+                                label={labels.CANCEL_LABEL}
+                                onclick={closeModal}
+                            ></lightning-button>
+                            <lightning-button
+                                variant="destructive"
+                                class="closeButton"
+                                label={labels.END_DIALOGUE_LABEL}
+                                onclick={closeThread}
+                            ></lightning-button>
+                        </lightning-modal-footer>
                     </template>
-                    <div class={backdropClass} onclick={closeModal}></div>
                 </lightning-layout-item>
             </lightning-layout>
             <lightning-input-field

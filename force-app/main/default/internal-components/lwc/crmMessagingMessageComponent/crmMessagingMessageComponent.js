@@ -26,8 +26,8 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     setCardTitle;
     hasError = false;
     labels = {
-        errorLabel: ERROR_LABEL,
-        errorMessage: ERROR_MESSAGE
+        ERROR_LABEL,
+        ERROR_MESSAGE
     };
 
     renderedCallback() {

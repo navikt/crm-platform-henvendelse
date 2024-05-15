@@ -1,4 +1,4 @@
-import { LightningElement, api, wire, track } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import getmessages from '@salesforce/apex/CRM_MessageHelper.getMessagesFromThread';
 import markAsReadByNav from '@salesforce/apex/CRM_MessageHelper.markAsReadByNav';
 import { subscribe, unsubscribe } from 'lightning/empApi';
@@ -27,13 +27,11 @@ export default class MessagingThreadViewer extends LightningElement {
     @api newDesign = false;
     @api submitButtonLabel = 'Send';
 
-    @track langBtnLock = false;
-
     labels = {
-        endDialogue: END_DIALOGUE_LABEL,
-        endDialogueAlertText: END_DIALOGUE_ALERT_TEXT,
-        dialogueStartedText: DIALOGUE_STARTED_TEXT,
-        cancel: CANCEL_LABEL
+        END_DIALOGUE_LABEL,
+        END_DIALOGUE_ALERT_TEXT,
+        DIALOGUE_STARTED_TEXT,
+        CANCEL_LABEL
     };
     createdbyid;
     usertype;
@@ -50,6 +48,7 @@ export default class MessagingThreadViewer extends LightningElement {
     mouseListenerCounter = false; // flag for detecting if onmousemove listener is set for element
     registereddate;
     closedThread;
+    langBtnLock = false;
 
     render() {
         return this.newDesign ? newDesignTemplate : oldDesignTemplate;
@@ -294,7 +293,7 @@ export default class MessagingThreadViewer extends LightningElement {
     }
 
     scrolltobottom() {
-        let element = this.template.querySelector('.slds-box');
+        const element = this.template.querySelector('.slds-box');
         if (element) {
             element.scrollTop = element.scrollHeight;
         }
@@ -319,6 +318,10 @@ export default class MessagingThreadViewer extends LightningElement {
 
     lockLangBtn() {
         this.langBtnLock = true;
+    }
+
+    toggleEndDialogueButton() {
+        this.hideModal = !this.hideModal;
     }
 
     //##################################//
@@ -351,6 +354,10 @@ export default class MessagingThreadViewer extends LightningElement {
 
     get hasEnglishTemplate() {
         return this.englishTextTemplate !== undefined;
+    }
+
+    get buttonExpanded() {
+        return this.hideModal.toString();
     }
 
     //##################################//
