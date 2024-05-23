@@ -8,7 +8,9 @@
             title="Dialog"
         ></lightning-icon>
         <p style="text-align: center">
-            &nbsp;Henvendelse startet&nbsp;<c-crm-nav-formatted-date date={registereddate}></c-crm-nav-formatted-date>
+            &nbsp;{labels.DIALOGUE_STARTED_TEXT}&nbsp;<c-crm-nav-formatted-date
+                date={registereddate}
+            ></c-crm-nav-formatted-date>
         </p>
     </div>
     <!-- Header Stop-->
@@ -76,9 +78,9 @@
                                                 type="submit"
                                                 disabled={closedThread}
                                                 onclick={openModal}
-                                                class="endDialogBtn slds-button slds-button_destructive"
+                                                class="endDialogBtn slds-button slds-button_destructive slds-var-p-vertical_x-small"
                                             >
-                                                Avslutt samtale
+                                                {labels.END_DIALOGUE_LABEL}
                                             </button>
                                         </lightning-record-edit-form>
                                     </lightning-layout>
@@ -102,7 +104,7 @@
                                     <div class="container">
                                         <div class="panel-content scrollable" id="text">
                                             <div class="slds-var-m-around_medium">
-                                                <p>Er du sikker på at du vil avslutte denne samtalen permanent?</p>
+                                                <p>{labels.END_DIALOGUE_ALERT_TEXT}</p>
                                             </div>
                                         </div>
                                         <div class="panel-footer">
@@ -116,13 +118,13 @@
                                                         class="slds-button slds-button_neutral cancelButton"
                                                         onclick={closeModal}
                                                     >
-                                                        Avbryt</button
+                                                        {labels.CANCEL_LABEL}</button
                                                     ><button
                                                         type="button"
                                                         class="slds-button slds-button_destructive closeButton"
                                                         onclick={closeThread}
                                                     >
-                                                        Avslutt samtale
+                                                        {labels.END_DIALOGUE_LABEL}
                                                     </button>
                                                     <div tabindex="0" onfocus={trapFocusEnd}></div>
                                                 </div>
@@ -159,7 +161,7 @@
                                 <lightning-button
                                     type="submit"
                                     name="submit"
-                                    label="Send"
+                                    label={submitButtonLabel}
                                     disabled={closedThread}
                                     variant="brand"
                                     style="min-height: 1rem"

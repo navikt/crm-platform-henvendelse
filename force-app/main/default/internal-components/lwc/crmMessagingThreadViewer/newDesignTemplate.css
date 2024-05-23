@@ -1,0 +1,22 @@
+.scroller {
+    height: 35vh;
+    overflow-y: scroll;
+}
+
+.colorOverwrite {
+    background-color: var(--overwrite-header-color, white);
+    color: black;
+}
+
+.endDialogBtn {
+    line-height: unset;
+}
+
+.toolbar {
+    display: block;
+    border-radius: 0;
+}
+
+.button {
+    min-height: 1rem;
+}
