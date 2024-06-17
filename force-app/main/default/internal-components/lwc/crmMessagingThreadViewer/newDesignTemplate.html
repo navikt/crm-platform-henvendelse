@@ -103,15 +103,14 @@
                         </lightning-layout-item>
                         <!--Button container-->
                         <lightning-layout-item class="slds-size_9-of-12">
-                            <lightning-button
-                                class="slds-float_right"
+                            <button
+                                class="slds-button slds-button_brand slds-float_right"
                                 type="submit"
                                 name="submit"
-                                label={submitButtonLabel}
                                 disabled={closedThread}
-                                variant="brand"
                             >
-                            </lightning-button>
+                                {submitButtonLabel}
+                            </button>
                             <slot name="buttonContainer"></slot>
                         </lightning-layout-item>
                     </lightning-layout>
