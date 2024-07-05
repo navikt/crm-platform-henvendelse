@@ -284,9 +284,6 @@
                 <stringValue>Info</stringValue>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <field>HOT_User_Role__c</field>
-        </inputAssignments>
         <object>Message__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
