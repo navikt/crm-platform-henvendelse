@@ -17,7 +17,7 @@
     <!-- Messages -->
     <section
         role="log"
-        class="scroller slds-scrollable_y slds-is-relative slds-var-p-vertical_medium slds-var-p-right_medium messageBox"
+        class="scroller slds-scrollable_y slds-is-relative slds-var-p-vertical_medium slds-var-p-right_medium slds-border_bottom"
     >
         <slot name="messages2">
             <template for:each={messages} for:item="message">
@@ -86,11 +86,9 @@
                     </lightning-layout-item>
                 </template>
                 <lightning-layout-item size="12">
-                    <lightning-layout
-                        class="slds-var-p-top_medium slds-size_12-of-12 slds-border_top slds-grid slds-wrap"
-                    >
+                    <lightning-layout class="slds-var-p-top_medium slds-size_12-of-12 slds-grid slds-grid_align-end">
                         <!-- End dialogue section -->
-                        <lightning-layout-item class="slds-medium-size_3-of-12">
+                        <lightning-layout-item class="slds-var-p-right_small">
                             <template lwc:if={showClose}>
                                 <lightning-record-edit-form record-id={threadId} object-api-name="Thread__c">
                                     <lightning-button
@@ -106,17 +104,17 @@
                                 </lightning-record-edit-form>
                             </template>
                         </lightning-layout-item>
-                        <!-- Button container -->
-                        <lightning-layout-item class="slds-medium-size_9-of-12 slds-grid slds-wrap slds-grid_align-end">
+                        <!-- Button Container -->
+                        <lightning-layout-item class="slds-grid slds-grid_align-end slds-col_bump-left">
+                            <slot name="buttonContainer"></slot>
                             <button
-                                class="slds-button slds-button_brand slds-float_right"
+                                class="slds-button slds-button_brand"
                                 type="submit"
                                 name="submit"
                                 disabled={closedThread}
                             >
                                 {submitButtonLabel}
                             </button>
-                            <slot name="buttonContainer"></slot>
                         </lightning-layout-item>
                     </lightning-layout>
                 </lightning-layout-item>

@@ -14,13 +14,9 @@
 
 .toolbar {
     display: block;
-    border-radius: 0;
+    border: 0;
 }
 
 .button {
     min-height: 1rem;
-}
-
-.messageBox {
-    border: 0;
 }
