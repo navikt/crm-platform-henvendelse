@@ -20,3 +20,7 @@
 .button {
     min-height: 1rem;
 }
+
+.messageBox {
+    border: 0;
+}

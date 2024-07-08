@@ -252,22 +252,25 @@ export default class MessagingThreadViewer extends LightningElement {
         this.showspinner = true;
         updateRecord(threadInput)
             .then(() => {
-                const event1 = new ShowToastEvent({
-                    title: 'Avsluttet',
-                    message: 'Samtalen ble avsluttet',
-                    variant: 'success'
-                });
-                this.dispatchEvent(event1);
+                if (!this.newDesign) {
+                    const event1 = new ShowToastEvent({
+                        title: 'Avsluttet',
+                        message: 'Samtalen ble avsluttet',
+                        variant: 'success'
+                    });
+                    this.dispatchEvent(event1);
+                }
             })
-
             .catch((error) => {
                 console.log(JSON.stringify(error, null, 2));
-                const event1 = new ShowToastEvent({
-                    title: 'Det oppstod en feil',
-                    message: 'Samtalen kunne ikke bli avsluttet',
-                    variant: 'error'
-                });
-                this.dispatchEvent(event1);
+                if (!this.newDesign) {
+                    const event1 = new ShowToastEvent({
+                        title: 'Det oppstod en feil',
+                        message: 'Samtalen kunne ikke bli avsluttet',
+                        variant: 'error'
+                    });
+                    this.dispatchEvent(event1);
+                }
             })
             .finally(() => {
                 this.refreshMessages();

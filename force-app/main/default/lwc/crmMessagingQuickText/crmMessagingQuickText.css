@@ -6,6 +6,7 @@
 .modalHide {
     display: none;
 }
+
 .conversationNoteTextArea {
     border: 0;
 }
@@ -18,4 +19,8 @@
     width: 1px;
     height: 1px;
     overflow: hidden;
+}
+
+.inputBox {
+    border: 0;
 }
