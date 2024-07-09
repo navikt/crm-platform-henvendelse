@@ -1,5 +1,5 @@
 <template>
-    <!-- Header-->
+    <!-- Header -->
     <div class="slds-chat-bookend colorOverwrite">
         <lightning-icon
             icon-name="utility:chat"
@@ -14,78 +14,81 @@
         </p>
     </div>
 
-    <!-- Messages-->
+    <!-- Messages -->
     <section
         role="log"
-        class="scroller slds-scrollable_y slds-is-relative slds-var-p-vertical_medium slds-var-p-right_medium"
+        class="scroller slds-scrollable_y slds-is-relative slds-var-p-vertical_medium slds-var-p-right_medium slds-border_bottom"
     >
         <slot name="messages2">
             <template for:each={messages} for:item="message">
-                <c-crm-messaging-Message-Container
+                <c-crm-messaging-message-container
                     message={message}
                     key={message.Id}
-                ></c-crm-messaging-Message-Container>
+                ></c-crm-messaging-message-container>
             </template>
         </slot>
     </section>
 
-    <!-- Reply box-->
+    <!-- Reply box -->
     <div slot="footer">
         <lightning-record-edit-form object-api-name="Message__c" onsuccess={handlesuccess} onsubmit={handlesubmit}>
             <lightning-layout multiple-rows="true">
-                <lightning-layout-item size="12">
-                    <div class="slds-var-p-bottom_x-small slds-rich-text-editor__toolbar slds-shrink-none toolbar">
-                        <lightning-layout>
-                            <!-- Toolbar -->
-                            <lightning-layout-item size="8">
-                                <lightning-layout horizontal-align="start">
-                                    <template lwc:if={showQuick}>
-                                        <lightning-button-icon
-                                            icon-name="utility:quick_text"
-                                            alternative-text="Hurtigtekst"
-                                            onclick={showQuickText}
-                                        >
-                                        </lightning-button-icon>
-                                    </template>
-                                    <lightning-button-group ontoolbaraction={handleToolbarAction}>
-                                        <slot name="toolbar"></slot>
-                                    </lightning-button-group>
-                                    <template lwc:if={hasEnglishTemplate}>
-                                        <lightning-button
-                                            role="switch"
-                                            type="lang"
-                                            name="lang"
-                                            label="Engelsk"
-                                            variant={langBtnVariant}
-                                            class="slds-float_left slds-var-m-left_small button"
-                                            onclick={handleLangClick}
-                                            title="Endre Språk"
-                                            disabled={langBtnLock}
-                                            aria-disabled={langBtnLock}
-                                            aria-label={langAria}
-                                        >
-                                        </lightning-button>
-                                    </template>
-                                </lightning-layout>
-                            </lightning-layout-item>
-                        </lightning-layout>
-                    </div>
-                    <template lwc:if={showspinner}>
-                        <div class="spinnerholder">
-                            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                <template lwc:if={closedThread}> </template>
+                <template lwc:else>
+                    <lightning-layout-item size="12">
+                        <div class="slds-var-p-bottom_x-small slds-rich-text-editor__toolbar slds-shrink-none toolbar">
+                            <lightning-layout>
+                                <!-- Toolbar -->
+                                <lightning-layout-item size="8">
+                                    <lightning-layout horizontal-align="start">
+                                        <template lwc:if={showQuick}>
+                                            <lightning-button-icon
+                                                icon-name="utility:quick_text"
+                                                alternative-text="Hurtigtekst"
+                                                onclick={showQuickText}
+                                            >
+                                            </lightning-button-icon>
+                                        </template>
+                                        <lightning-button-group ontoolbaraction={handleToolbarAction}>
+                                            <slot name="toolbar"></slot>
+                                        </lightning-button-group>
+                                        <template lwc:if={hasEnglishTemplate}>
+                                            <lightning-button
+                                                role="switch"
+                                                type="lang"
+                                                name="lang"
+                                                label="Engelsk"
+                                                variant={langBtnVariant}
+                                                class="slds-float_left slds-var-m-left_small button"
+                                                onclick={handleLangClick}
+                                                title="Endre Språk"
+                                                disabled={langBtnLock}
+                                                aria-disabled={langBtnLock}
+                                                aria-label={langAria}
+                                            >
+                                            </lightning-button>
+                                        </template>
+                                    </lightning-layout>
+                                </lightning-layout-item>
+                            </lightning-layout>
                         </div>
-                    </template>
-                    <c-crm-messaging-quick-text
-                        conversation-note={textTemplate}
-                        reset-text-template={textTemplate}
-                        onlocklang={lockLangBtn}
-                    >
-                    </c-crm-messaging-quick-text>
-                </lightning-layout-item>
+                        <template lwc:if={showspinner}>
+                            <div class="spinnerholder">
+                                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                            </div>
+                        </template>
+                        <c-crm-messaging-quick-text
+                            conversation-note={textTemplate}
+                            reset-text-template={textTemplate}
+                            onlocklang={lockLangBtn}
+                        >
+                        </c-crm-messaging-quick-text>
+                    </lightning-layout-item>
+                </template>
                 <lightning-layout-item size="12">
-                    <lightning-layout class="slds-var-p-top_medium slds-size_12-of-12">
+                    <lightning-layout class="slds-var-p-top_medium slds-size_12-of-12 slds-grid slds-grid_align-end">
                         <!-- End dialogue section -->
-                        <lightning-layout-item class="slds-size_3-of-12">
+                        <lightning-layout-item class="slds-var-p-right_small">
                             <template lwc:if={showClose}>
                                 <lightning-record-edit-form record-id={threadId} object-api-name="Thread__c">
                                     <lightning-button
@@ -101,24 +104,24 @@
                                 </lightning-record-edit-form>
                             </template>
                         </lightning-layout-item>
-                        <!--Button container-->
-                        <lightning-layout-item class="slds-size_9-of-12">
+                        <!-- Button Container -->
+                        <lightning-layout-item class="slds-grid slds-grid_align-end slds-col_bump-left">
+                            <slot name="buttonContainer"></slot>
                             <button
-                                class="slds-button slds-button_brand slds-float_right"
+                                class="slds-button slds-button_brand"
                                 type="submit"
                                 name="submit"
                                 disabled={closedThread}
                             >
                                 {submitButtonLabel}
                             </button>
-                            <slot name="buttonContainer"></slot>
                         </lightning-layout-item>
                     </lightning-layout>
                 </lightning-layout-item>
                 <lightning-layout-item class="slds-size_12-of-12 slds-var-p-top_medium">
-                    <!--Flow section-->
+                    <!-- Flow section -->
                     <slot name="flowSection"></slot>
-                    <!--Modal-->
+                    <!-- Modal -->
                     <template lwc:if={hideModal}></template>
                     <template lwc:else>
                         <div class="slds-box slds-border_right slds-border_top slds-border_bottom slds-border_left">
@@ -134,8 +137,8 @@
                                             class="slds-var-p-right_small cancelButton"
                                             onclick={closeModal}
                                         >
-                                        </lightning-button
-                                        ><lightning-button
+                                        </lightning-button>
+                                        <lightning-button
                                             label={labels.END_DIALOGUE_LABEL}
                                             variant="destructive"
                                             class="closeButton"
