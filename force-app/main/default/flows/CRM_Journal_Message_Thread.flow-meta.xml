@@ -454,7 +454,7 @@
         <description>A formula to calculate the external reference</description>
         <name>externalReferenceFormula</name>
         <dataType>String</dataType>
-        <expression>{!JOURNALED_THREAD.Id} + {!Journal_Entry_SF.Theme__c} + URLENCODE({!Journal_Entry_SF.NAV_Case_Reference__c}) + {!latestMessageId}</expression>
+        <expression>{!JOURNALED_THREAD.Id} + {!Journal_Entry_SF.Theme__c} + SUBSTITUTE(URLENCODE({!Journal_Entry_SF.NAV_Case_Reference__c}), &apos;%&apos;, &apos;_&apos;) + {!latestMessageId}</expression>
     </formulas>
     <formulas>
         <description>Formula to define the journal case type (Sakstype). If no Journal Case ID has been input, default is GENERELL_SAK</description>
