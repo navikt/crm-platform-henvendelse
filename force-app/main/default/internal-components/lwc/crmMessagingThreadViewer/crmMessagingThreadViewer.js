@@ -48,6 +48,7 @@ export default class MessagingThreadViewer extends LightningElement {
     mouseListenerCounter = false; // flag for detecting if onmousemove listener is set for element
     registereddate;
     closedThread;
+    langBtnLock = false;
 
     render() {
         return this.newDesign ? newDesignTemplate : oldDesignTemplate;
@@ -307,7 +308,7 @@ export default class MessagingThreadViewer extends LightningElement {
 
     handleLangClick() {
         publishToAmplitude('STO', { type: 'handleLangClick' });
-        const langObj = { englishTextTemplate: !this.englishTextTemplate, userInput: this.text };
+        const langObj = {englishTextTemplate: !this.englishTextTemplate, userInput: this.text};
         const englishEvent = new CustomEvent('englishevent', {
             detail: langObj
         });
@@ -315,12 +316,16 @@ export default class MessagingThreadViewer extends LightningElement {
         this.dispatchEvent(englishEvent);
     }
 
+    lockLangBtn() {
+        this.langBtnLock = true;
+    }
+
     toggleEndDialogueButton() {
         this.hideModal = !this.hideModal;
     }
 
     handleEnglishStoClearEvent(event) {
-        const langObj = { englishTextTemplate: this.englishTextTemplate, userInput: event.detail };
+        const langObj = {englishTextTemplate: this.englishTextTemplate, userInput: event.detail};
         const englishEvent = new CustomEvent('englishevent', {
             detail: langObj
         });
