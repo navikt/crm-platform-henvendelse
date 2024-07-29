@@ -25,13 +25,14 @@ export default class crmQuickText extends LightningElement {
 
     @track data = [];
 
-    recentlyInserted = '';
+    recentlyInserted = "";
 
     get textArea() {
         return this.template.querySelector('.conversationNoteTextArea');
     }
 
     renderedCallback() {
+        this.textArea.value = this._conversationNote;
         if (this.initialRender === true) {
             let inputField = this.textArea;
             inputField.focus();
@@ -165,7 +166,7 @@ export default class crmQuickText extends LightningElement {
         inputField.focus();
     }
 
-    /**
+   /**
      * Functions for conversation note/quick text
      */
     @wire(getQuicktexts, {})
@@ -296,7 +297,7 @@ export default class crmQuickText extends LightningElement {
             const lockLang = new CustomEvent('locklang');
             this.dispatchEvent(lockLang);
         }
-
+        
         if (QUICK_TEXT_TRIGGER_KEYS.includes(event.key)) {
             const editor = this.textArea;
             const carretPositionEnd = editor.selectionEnd;
@@ -311,7 +312,7 @@ export default class crmQuickText extends LightningElement {
 
             let obj = this._getQmappedItem(lastWord);
 
-            if (obj !== undefined) {
+            if(obj !== undefined) {
                 const quickText = obj.content.message;
                 const isCaseSensitive = obj.content.isCaseSensitive;
                 const startindex = carretPositionEnd - lastWord.length - 1;
@@ -323,20 +324,10 @@ export default class crmQuickText extends LightningElement {
                     if (lastItem.charAt(0) === lastItem.charAt(0).toLowerCase()) {
                         words[0] = words[0].toLowerCase();
                         const lowerCaseQuickText = words.join(' ');
-                        this._replaceWithQuickText(
-                            editor,
-                            lowerCaseQuickText + lastChar,
-                            startindex,
-                            carretPositionEnd
-                        );
+                        this._replaceWithQuickText(editor, lowerCaseQuickText + lastChar, startindex, carretPositionEnd);
                     } else if (lastItem.charAt(0) === lastItem.charAt(0).toUpperCase()) {
                         const upperCaseQuickText = quickText.charAt(0).toUpperCase() + quickText.slice(1);
-                        this._replaceWithQuickText(
-                            editor,
-                            upperCaseQuickText + lastChar,
-                            startindex,
-                            carretPositionEnd
-                        );
+                        this._replaceWithQuickText(editor, upperCaseQuickText + lastChar, startindex, carretPositionEnd);
                     }
                 } else {
                     this._replaceWithQuickText(editor, quickText + lastChar, startindex, carretPositionEnd);
@@ -347,6 +338,7 @@ export default class crmQuickText extends LightningElement {
             }
         }
     }
+
 
     toPlainText(value) {
         let plainText = value ? value : '';
@@ -371,5 +363,7 @@ export default class crmQuickText extends LightningElement {
         //sets text content to the current
         this._conversationNote = this.resetTextTemplate ? this.resetTextTemplate : '';
         this.textArea.value = this._conversationNote;
+        const englishstoclearevent = new CustomEvent('englishstoclearevent');
+        this.dispatchEvent(englishstoclearevent);
     }
 }
