@@ -308,7 +308,7 @@ export default class MessagingThreadViewer extends LightningElement {
 
     handleLangClick() {
         publishToAmplitude('STO', { type: 'handleLangClick' });
-        const langObj = {englishTextTemplate: !this.englishTextTemplate, userInput: this.text};
+        const langObj = { englishTextTemplate: !this.englishTextTemplate, userInput: this.text };
         const englishEvent = new CustomEvent('englishevent', {
             detail: langObj
         });
@@ -325,7 +325,7 @@ export default class MessagingThreadViewer extends LightningElement {
     }
 
     handleEnglishStoClearEvent(event) {
-        const langObj = {englishTextTemplate: this.englishTextTemplate, userInput: event.detail};
+        const langObj = { englishTextTemplate: this.englishTextTemplate, userInput: event.detail };
         const englishEvent = new CustomEvent('englishevent', {
             detail: langObj
         });
