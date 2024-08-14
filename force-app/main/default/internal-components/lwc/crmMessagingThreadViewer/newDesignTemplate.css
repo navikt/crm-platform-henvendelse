@@ -8,15 +8,27 @@
     color: black;
 }
 
-.endDialogBtn {
-    line-height: unset;
-}
-
 .toolbar {
     display: block;
     border: 0;
 }
 
-.button {
+.englishBtn {
     min-height: 1rem;
+}
+
+@media only screen and (max-width: 2200px) {
+    .caseResponsiveBtn {
+        height: 2.5rem; /* Set a fixed height for buttons on smaller screens */
+        line-height: 1.2; /* Reduce space between lines on smaller screens */
+        padding: 4px;
+    }
+}
+
+@media only screen and (max-width: 1920px) {
+    .threadResponsiveBtn {
+        height: 2rem;
+        line-height: 1.2;
+        padding: 4px;
+    }
 }
