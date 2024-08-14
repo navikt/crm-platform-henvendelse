@@ -366,12 +366,12 @@ export default class MessagingThreadViewer extends LightningElement {
     }
 
     get sendButtonStyle() {
-        return this.getButtonStyle('slds-button_brand sendBtn');
+        return this.getButtonStyle('slds-button_brand');
     }
 
     getButtonStyle(baseClass) {
         return `${baseClass} slds-button slds-grid slds-grid_align-center ${
-            this.isThread ? 'threadResponsiveBtn' : 'caseResponsiveBtn'
+            this.isThread ? 'thread-responsive-button' : 'case-responsive-button'
         }`;
     }
 
