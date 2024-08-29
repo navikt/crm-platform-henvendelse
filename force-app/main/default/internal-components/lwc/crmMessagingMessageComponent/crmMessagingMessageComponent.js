@@ -14,6 +14,7 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     @api textTemplate; //Support for conditional text template
     @api newDesign = false;
     @api submitButtonLabel = 'Send';
+    @api isThread;
 
     @track slotsNeedCheckedOrRendered = { messages: true }; // To check the slot content the slot has to be rendered initially
 
