@@ -26,6 +26,7 @@ export default class MessagingThreadViewer extends LightningElement {
     @api textTemplate; //Support for conditional text template as input
     @api newDesign = false;
     @api submitButtonLabel = 'Send';
+    @api isThread;
 
     labels = {
         END_DIALOGUE_LABEL,
@@ -368,6 +369,20 @@ export default class MessagingThreadViewer extends LightningElement {
         return this.hideModal.toString();
     }
 
+    get endDialogueButtonStyle() {
+        return this.getButtonStyle('slds-button_destructive endDialogueBtn');
+    }
+
+    get sendButtonStyle() {
+        return this.getButtonStyle('slds-button_brand');
+    }
+
+    getButtonStyle(baseClass) {
+        return `${baseClass} slds-button slds-grid slds-grid_align-center ${
+            this.isThread ? 'thread-responsive-button' : 'case-responsive-button'
+        }`;
+    }
+
     //##################################//
     //########    MODAL    #############//
     //##################################//
@@ -380,7 +395,7 @@ export default class MessagingThreadViewer extends LightningElement {
     closeModal() {
         publishToAmplitude('STO', { type: 'closeModal close thread' });
         this.hideModal = true;
-        const btn = this.template.querySelector('.endDialogBtn');
+        const btn = this.template.querySelector('.endDialogueBtn');
         btn.focus();
     }
 

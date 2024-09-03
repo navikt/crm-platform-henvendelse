@@ -59,7 +59,7 @@
                                                 name="lang"
                                                 label="Engelsk"
                                                 variant={langBtnVariant}
-                                                class="slds-float_left slds-var-m-left_small button"
+                                                class="slds-float_left slds-var-m-left_small englishBtn"
                                                 onclick={handleLangClick}
                                                 title="Endre Språk"
                                                 disabled={langBtnLock}
@@ -91,28 +91,22 @@
                         <lightning-layout-item class="slds-var-p-right_small">
                             <template lwc:if={showClose}>
                                 <lightning-record-edit-form record-id={threadId} object-api-name="Thread__c">
-                                    <lightning-button
+                                    <button
                                         type="submit"
-                                        variant="destructive"
                                         disabled={closedThread}
                                         onclick={toggleEndDialogueButton}
-                                        label={labels.END_DIALOGUE_LABEL}
-                                        class="slds-var-p-vertical_x-small endDialogBtn"
+                                        class={endDialogueButtonStyle}
                                         aria-expanded={buttonExpanded}
                                     >
-                                    </lightning-button>
+                                        {labels.END_DIALOGUE_LABEL}
+                                    </button>
                                 </lightning-record-edit-form>
                             </template>
                         </lightning-layout-item>
                         <!-- Button Container -->
                         <lightning-layout-item class="slds-grid slds-grid_align-end slds-col_bump-left">
                             <slot name="buttonContainer"></slot>
-                            <button
-                                class="slds-button slds-button_brand"
-                                type="submit"
-                                name="submit"
-                                disabled={closedThread}
-                            >
+                            <button class={sendButtonStyle} type="submit" name="submit" disabled={closedThread}>
                                 {submitButtonLabel}
                             </button>
                         </lightning-layout-item>
