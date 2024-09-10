@@ -85,8 +85,10 @@
                         </c-crm-messaging-quick-text>
                     </lightning-layout-item>
                 </template>
-                <lightning-layout-item size="12">
-                    <lightning-layout class="slds-var-p-top_medium slds-size_12-of-12 slds-grid slds-grid_align-end">
+                <lightning-layout-item size="12" class="button-container">
+                    <lightning-layout
+                        class="slds-var-p-top_medium slds-size_12-of-12 slds-grid slds-grid_align-end button-container"
+                    >
                         <!-- End dialogue section -->
                         <lightning-layout-item class="slds-var-p-right_small">
                             <template lwc:if={showClose}>
@@ -104,7 +106,7 @@
                             </template>
                         </lightning-layout-item>
                         <!-- Button Container -->
-                        <lightning-layout-item class="slds-grid slds-grid_align-end slds-col_bump-left">
+                        <lightning-layout-item class="slds-grid slds-grid_align-end slds-col_bump-left button-class">
                             <slot name="buttonContainer"></slot>
                             <button class={sendButtonStyle} type="submit" name="submit" disabled={closedThread}>
                                 {submitButtonLabel}

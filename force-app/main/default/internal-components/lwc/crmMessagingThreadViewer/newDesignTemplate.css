@@ -17,18 +17,36 @@
     min-height: 1rem;
 }
 
-@media only screen and (max-width: 2200px) {
-    .case-responsive-button {
-        height: 3rem; /* Set a fixed height for buttons on smaller screens */
-        line-height: 1; /* Reduce space between lines on smaller screens */
-        padding: 4px;
-    }
+.custom-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0.5rem 1rem;
+    line-height: 1.2;
+    height: auto;
+    white-space: normal;
+    word-wrap: break-word;
 }
 
-@media only screen and (max-width: 1920px) {
-    .thread-responsive-button {
-        height: 3rem;
-        line-height: 1;
-        padding: 4px;
+.button-container {
+    display: flex !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow: hidden;
+    gap: 0.5rem;
+}
+
+.button-class {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    gap: 0.5rem;
+}
+
+@media only screen and (max-width: 2265px) {
+    .button-class {
+        margin-left: 0;
+        justify-content: center;
     }
 }
