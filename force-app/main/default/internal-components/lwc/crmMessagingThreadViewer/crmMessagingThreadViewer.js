@@ -259,6 +259,8 @@ export default class MessagingThreadViewer extends LightningElement {
                         variant: 'success'
                     });
                     this.dispatchEvent(event1);
+                } else {
+                    this.dispatchEvent(new CustomEvent('closedevent'));
                 }
             })
             .catch((error) => {
