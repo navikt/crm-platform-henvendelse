@@ -93,26 +93,26 @@
                         <lightning-layout-item class="slds-var-p-right_small">
                             <template lwc:if={showClose}>
                                 <lightning-record-edit-form record-id={threadId} object-api-name="Thread__c">
-                                    <c-nks-button
+                                    <c-custom-button
                                         type="submit"
                                         disabled={closedThread}
                                         onclick={toggleEndDialogueButton}
                                         button-styling="danger"
                                         aria-expanded={buttonExpanded}
                                         button-label={labels.END_DIALOGUE_LABEL}
-                                    ></c-nks-button>
+                                    ></c-custom-button>
                                 </lightning-record-edit-form>
                             </template>
                         </lightning-layout-item>
                         <!-- Button Container -->
                         <lightning-layout-item class="slds-grid slds-grid_align-end slds-col_bump-left button-class">
                             <slot name="buttonContainer"></slot>
-                            <c-nks-button
+                            <c-custom-button
                                 type="submit"
                                 name="submit"
                                 disabled={closedThread}
                                 button-label={submitButtonLabel}
-                            ></c-nks-button>
+                            ></c-custom-button>
                         </lightning-layout-item>
                     </lightning-layout>
                 </lightning-layout-item>
