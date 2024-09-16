@@ -94,6 +94,7 @@
                             <template lwc:if={showClose}>
                                 <lightning-record-edit-form record-id={threadId} object-api-name="Thread__c">
                                     <c-custom-button
+                                        class="endDialogueBtn"
                                         type="submit"
                                         disabled={closedThread}
                                         onclick={toggleEndDialogueButton}
