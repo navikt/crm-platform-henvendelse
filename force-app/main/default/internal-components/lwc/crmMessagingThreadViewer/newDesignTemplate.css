@@ -33,14 +33,12 @@
     display: flex !important;
     flex-wrap: wrap;
     justify-content: center;
-    overflow: hidden;
     gap: 0.5rem;
 }
 
 .button-class {
     display: flex;
     flex-wrap: wrap;
-    overflow: hidden;
     gap: 0.5rem;
 }
 
