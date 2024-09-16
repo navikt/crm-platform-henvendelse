@@ -351,6 +351,7 @@ export default class MessagingThreadViewer extends LightningElement {
     closeLanguageChangeModal() {
         this._showLanguageChangeModal = false;
         this.handleLangClick();
+        this.lockLangBtn();
     }
 
     changeTemplate() {
