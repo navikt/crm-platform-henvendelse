@@ -288,6 +288,7 @@ export default class crmQuickText extends LightningElement {
      */
     _replaceWithQuickText(editor, replacement, start, end) {
         editor.setRangeText(replacement, start, end, 'end');
+        this._conversationNote = editor.value;
         this.recentlyInserted = replacement;
     }
 
@@ -344,6 +345,7 @@ export default class crmQuickText extends LightningElement {
                 }
             } else {
                 // Clear screen reader buffer for reading the next one.
+                this._conversationNote = editor.value;
                 this.recentlyInserted = '';
             }
         }

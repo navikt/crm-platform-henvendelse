@@ -10,6 +10,9 @@ import REGISTERED_DATE from '@salesforce/schema/Thread__c.CRM_Date_Time_Register
 import END_DIALOGUE_LABEL from '@salesforce/label/c.Henvendelse_End_Dialogue';
 import END_DIALOGUE_ALERT_TEXT from '@salesforce/label/c.Henvendelse_End_Dialogue_Alert_Text';
 import DIALOGUE_STARTED_TEXT from '@salesforce/label/c.Henvendelse_Dialogue_Started';
+import LANGUAGE_CHANGE_ALERT_TEXT from '@salesforce/label/c.Henvendelse_Language_Change_Alert_Text';
+import LANGUAGE_CHANGE_YES from '@salesforce/label/c.Henvendelse_Language_Change_Yes';
+import LANGUAGE_CHANGE_NO from '@salesforce/label/c.Henvendelse_Language_Change_No';
 import CANCEL_LABEL from '@salesforce/label/c.Henvendelse_Cancel';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
@@ -32,7 +35,10 @@ export default class MessagingThreadViewer extends LightningElement {
         END_DIALOGUE_LABEL,
         END_DIALOGUE_ALERT_TEXT,
         DIALOGUE_STARTED_TEXT,
-        CANCEL_LABEL
+        CANCEL_LABEL,
+        LANGUAGE_CHANGE_ALERT_TEXT,
+        LANGUAGE_CHANGE_YES,
+        LANGUAGE_CHANGE_NO
     };
     createdbyid;
     usertype;
@@ -50,6 +56,7 @@ export default class MessagingThreadViewer extends LightningElement {
     registereddate;
     closedThread;
     langBtnLock = false;
+    _showLanguageChangeModal = false;
 
     render() {
         return this.newDesign ? newDesignTemplate : oldDesignTemplate;
@@ -311,11 +318,17 @@ export default class MessagingThreadViewer extends LightningElement {
 
     handleLangClick() {
         publishToAmplitude('STO', { type: 'handleLangClick' });
-        const langObj = { englishTextTemplate: !this.englishTextTemplate, userInput: this.text };
+        const langObj = {
+            englishTextTemplate: this.resetTemplate ? this.englishTextTemplate : !this.englishTextTemplate,
+            userInput: this.text,
+            resetTemplate: this.resetTemplate,
+            _showLanguageChangeModal: this._showLanguageChangeModal
+        };
         const englishEvent = new CustomEvent('englishevent', {
             detail: langObj
         });
         this.langBtnAriaToggle = !this.langBtnAriaToggle;
+        this.resetTemplate = false;
         this.dispatchEvent(englishEvent);
     }
 
@@ -335,9 +348,28 @@ export default class MessagingThreadViewer extends LightningElement {
         this.dispatchEvent(englishEvent);
     }
 
+    closeLanguageChangeModal() {
+        this._showLanguageChangeModal = false;
+        this.handleLangClick();
+    }
+
+    changeTemplate() {
+        this.resetTemplate = true;
+        this.handleLangClick();
+    }
+
     //##################################//
     //#########    GETTERS    ##########//
     //##################################//
+
+    @api
+    get showLanguageChangeModal() {
+        return this._showLanguageChangeModal;
+    }
+
+    set showLanguageChangeModal(value) {
+        this._showLanguageChangeModal = value;
+    }
 
     get quickTextCmp() {
         return this.template.querySelector('c-crm-messaging-quick-text');
