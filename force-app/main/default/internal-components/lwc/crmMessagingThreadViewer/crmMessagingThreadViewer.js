@@ -296,7 +296,9 @@ export default class MessagingThreadViewer extends LightningElement {
     }
 
     scrolltobottom() {
-        const element = this.template.querySelector('.slds-box');
+        const element = this.newDesign
+            ? this.template.querySelector('[data-id="messagesContainer"]')
+            : this.template.querySelector('.slds-box');
         if (element) {
             element.scrollTop = element.scrollHeight;
         }
