@@ -1,6 +1,5 @@
 :host {
-    --modal-top: calc(100% - 9rem);
-    --pointer-left: 10%;
+    --modal-width: 400px;
 }
 
 .scroller {
@@ -56,19 +55,12 @@
     bottom: 0;
 }
 
-@media only screen and (max-width: 2265px) {
+@media only screen and (max-width: 2300px) {
     .button-class {
         margin-left: 0;
         justify-content: center;
     }
     :host {
-        --modal-top: calc(100% - 12.5rem);
-        --pointer-left: 50%;
-    }
-}
-
-@media only screen and (max-width: 1605px) {
-    :host {
-        --modal-top: calc(100% - 15rem);
+        --modal-width: 225px;
     }
 }
