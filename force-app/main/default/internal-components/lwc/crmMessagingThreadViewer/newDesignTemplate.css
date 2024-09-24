@@ -55,6 +55,15 @@
     bottom: 0;
 }
 
+.modalStyling {
+    position: absolute;
+    top: auto;
+    right: var(--lwc-spacingXSmall, 0.5rem);
+    bottom: calc(100% + 3.5rem - var(--lwc-spacingXSmall, 0.5rem));
+    left: var(--lwc-spacingXSmall, 0.5rem);
+    min-width: var(--modal-width);
+}
+
 @media only screen and (max-width: 2300px) {
     .button-class {
         margin-left: 0;

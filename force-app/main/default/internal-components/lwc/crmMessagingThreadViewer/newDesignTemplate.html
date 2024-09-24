@@ -104,20 +104,12 @@
                                         button-label={labels.END_DIALOGUE_LABEL}
                                     ></c-custom-button>
                                 </lightning-record-edit-form>
-                                <div style="position: relative">
+                                <div class="slds-is-relative">
                                     <div
                                         role="alertdialog"
                                         tabindex="-1"
                                         class={modalClass}
                                         aria-describedby="text"
-                                        style="
-                                            position: absolute;
-                                            top: auto;
-                                            right: var(--lwc-spacingXSmall, 0.5rem);
-                                            bottom: calc(100% + 3.5rem - var(--lwc-spacingXSmall, 0.5rem));
-                                            left: var(--lwc-spacingXSmall, 0.5rem);
-                                            min-width: var(--modal-width);
-                                        "
                                         aria-hidden={hideModal}
                                         aria-modal="true"
                                     >

@@ -342,7 +342,10 @@ export default class MessagingThreadViewer extends LightningElement {
     }
 
     get modalClass() {
-        return 'slds-modal slds-show uiPanel north' + (this.hideModal === true ? ' geir' : ' slds-fade-in-open');
+        return this.newDesign
+            ? 'slds-modal slds-show uiPanel north modalStyling' +
+                  (this.hideModal === true ? ' geir' : ' slds-fade-in-open')
+            : 'slds-modal slds-show uiPanel north' + (this.hideModal === true ? ' geir' : ' slds-fade-in-open');
     }
 
     get backdropClass() {
