@@ -324,13 +324,14 @@ export default class MessagingThreadViewer extends LightningElement {
             englishTextTemplate: this.resetTemplate ? this.englishTextTemplate : !this.englishTextTemplate,
             userInput: this.text,
             resetTemplate: this.resetTemplate,
-            _showLanguageChangeModal: this._showLanguageChangeModal
+            closeLanguageModal: this.closeLanguageModal
         };
         const englishEvent = new CustomEvent('englishevent', {
             detail: langObj
         });
         this.langBtnAriaToggle = !this.langBtnAriaToggle;
         this.resetTemplate = false;
+        this.closeLanguageModal = false;
         this.dispatchEvent(englishEvent);
     }
 
@@ -351,9 +352,8 @@ export default class MessagingThreadViewer extends LightningElement {
     }
 
     closeLanguageChangeModal() {
-        this._showLanguageChangeModal = false;
+        this.closeLanguageModal = true;
         this.handleLangClick();
-        this.lockLangBtn();
     }
 
     changeTemplate() {
