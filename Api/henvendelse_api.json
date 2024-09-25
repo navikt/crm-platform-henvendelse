@@ -799,6 +799,9 @@
                         "items": {
                             "$ref": "#/components/schemas/Markering"
                         }
+                    },
+                    "lukketAv": {
+                        "$ref": "#/components/schemas/MeldingFra"
                     }
                 },
                 "required": [
