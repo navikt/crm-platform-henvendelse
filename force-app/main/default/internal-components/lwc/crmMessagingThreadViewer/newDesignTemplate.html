@@ -18,6 +18,7 @@
     <section
         role="log"
         class="scroller slds-scrollable_y slds-is-relative slds-var-p-vertical_medium slds-var-p-right_medium slds-border_bottom"
+        data-id="messagesContainer"
     >
         <slot name="messages2">
             <template for:each={messages} for:item="message">
@@ -103,6 +104,49 @@
                                         button-label={labels.END_DIALOGUE_LABEL}
                                     ></c-custom-button>
                                 </lightning-record-edit-form>
+                                <div class="slds-is-relative">
+                                    <div
+                                        role="alertdialog"
+                                        tabindex="-1"
+                                        class={modalClass}
+                                        aria-describedby="text"
+                                        aria-hidden={hideModal}
+                                        aria-modal="true"
+                                    >
+                                        <div class="container">
+                                            <div class="panel-content scrollable" id="text">
+                                                <div class="slds-var-m-around_medium">
+                                                    <p>{labels.END_DIALOGUE_ALERT_TEXT}</p>
+                                                </div>
+                                            </div>
+                                            <div class="panel-footer">
+                                                <div class="slds-grid slds-grid_align-end">
+                                                    <div
+                                                        class="right slds-var-m-top_medium slds-var-m-right_large slds-var-m-bottom_large"
+                                                    >
+                                                        <div tabindex="0" onfocus={trapFocusStart}></div>
+                                                        <button
+                                                            type="button"
+                                                            class="slds-button slds-button_neutral slds-var-m-left_x-small cancelButton"
+                                                            onclick={closeModal}
+                                                        >
+                                                            {labels.CANCEL_LABEL}</button
+                                                        ><button
+                                                            type="button"
+                                                            class="slds-button slds-button_destructive closeButton"
+                                                            onclick={closeThread}
+                                                        >
+                                                            {labels.END_DIALOGUE_LABEL}
+                                                        </button>
+                                                        <div tabindex="0" onfocus={trapFocusEnd}></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="pointer" style="position: absolute; left: 10%; top: 92%"></div>
+                                    </div>
+                                </div>
+                                <div class={backdropClass} onclick={closeModal}></div>
                             </template>
                         </lightning-layout-item>
                         <!-- Button Container -->
@@ -120,35 +164,6 @@
                 <lightning-layout-item class="slds-size_12-of-12 slds-var-p-top_medium">
                     <!-- Flow section -->
                     <slot name="flowSection"></slot>
-                    <!-- Modal -->
-                    <template lwc:if={hideModal}></template>
-                    <template lwc:else>
-                        <div class="slds-box slds-border_right slds-border_top slds-border_bottom slds-border_left">
-                            <div class="panel-content scrollable">
-                                <div class="slds-var-p-bottom_medium">
-                                    <p>{labels.END_DIALOGUE_ALERT_TEXT}</p>
-                                </div>
-                                <div class="slds-grid slds-grid_align-end">
-                                    <div class="slds-float_right">
-                                        <lightning-button
-                                            label={labels.CANCEL_LABEL}
-                                            variant="brand-outline"
-                                            class="slds-var-p-right_small cancelButton"
-                                            onclick={closeModal}
-                                        >
-                                        </lightning-button>
-                                        <lightning-button
-                                            label={labels.END_DIALOGUE_LABEL}
-                                            variant="destructive"
-                                            class="closeButton"
-                                            onclick={closeThread}
-                                        >
-                                        </lightning-button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </template>
                 </lightning-layout-item>
             </lightning-layout>
             <lightning-input-field

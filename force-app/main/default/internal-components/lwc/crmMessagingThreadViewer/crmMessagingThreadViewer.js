@@ -302,7 +302,9 @@ export default class MessagingThreadViewer extends LightningElement {
     }
 
     scrolltobottom() {
-        const element = this.template.querySelector('.slds-box');
+        const element = this.newDesign
+            ? this.template.querySelector('[data-id="messagesContainer"]')
+            : this.template.querySelector('.slds-box');
         if (element) {
             element.scrollTop = element.scrollHeight;
         }
@@ -381,7 +383,10 @@ export default class MessagingThreadViewer extends LightningElement {
     }
 
     get modalClass() {
-        return 'slds-modal slds-show uiPanel north' + (this.hideModal === true ? ' geir' : ' slds-fade-in-open');
+        return this.newDesign
+            ? 'slds-modal slds-show uiPanel north modalStyling' +
+                  (this.hideModal === true ? ' geir' : ' slds-fade-in-open')
+            : 'slds-modal slds-show uiPanel north' + (this.hideModal === true ? ' geir' : ' slds-fade-in-open');
     }
 
     get backdropClass() {
