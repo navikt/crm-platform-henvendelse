@@ -1,5 +1,7 @@
 import { LightningElement, api } from 'lwc';
 
+// This is a duplicate component of nksButton in crm-nks-base-components
+// Changes in this component should be reflected there
 export default class CustomButton extends LightningElement {
     @api elementId = 'buttonId';
     @api elementDataId = 'buttonDataId';
@@ -17,10 +19,11 @@ export default class CustomButton extends LightningElement {
     // @ts-ignore
     @api ariaExpanded = false;
     @api isLink = false;
+    @api fullHeight = false;
 
     get buttonClass() {
         let buttonStyle = this.buttonStyling?.toLowerCase();
-        const baseClass = 'slds-button slds-button_stretch ';
+        const baseClass = 'slds-button slds-button_stretch button-spacing ' + (this.fullHeight ? 'button-full-height ' : '');
         const styleMap = {
             primary: 'slds-button_brand',
             secondary: 'slds-button_outline-brand',
