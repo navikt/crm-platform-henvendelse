@@ -102,6 +102,7 @@
                                         button-styling="danger"
                                         aria-expanded={buttonExpanded}
                                         button-label={labels.END_DIALOGUE_LABEL}
+                                        full-height
                                     ></c-custom-button>
                                 </lightning-record-edit-form>
                                 <div class="slds-is-relative">
@@ -152,14 +153,13 @@
                         <!-- Button Container -->
                         <lightning-layout-item class="slds-grid slds-grid_align-end slds-col_bump-left button-class">
                             <slot name="buttonContainer"></slot>
-                            <div class="justifiedEndButton">
                                 <c-custom-button
                                     type="submit"
                                     name="submit"
                                     disabled={closedThread}
                                     button-label={submitButtonLabel}
+                                    full-height
                                 ></c-custom-button>
-                            </div>
                         </lightning-layout-item>
                     </lightning-layout>
                 </lightning-layout-item>
