@@ -65,7 +65,9 @@
 }
 
 .justifiedEndButton {
-    flex-grow:1; display: flex; justify-content: end
+    flex-grow: 1;
+    display: flex;
+    justify-content: end;
 }
 
 @media only screen and (max-width: 2300px) {
