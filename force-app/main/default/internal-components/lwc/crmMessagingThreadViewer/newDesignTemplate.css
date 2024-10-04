@@ -35,14 +35,20 @@
 
 .button-container {
     display: flex !important;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: center;
     gap: 0.5rem;
+    --slds-c-button-outline-brand-spacing-inline-end: 0.5rem;
+    --slds-c-button-outline-brand-spacing-inline-start: 0.5rem;
+    --slds-c-button-brand-spacing-inline-end: 0.5rem;
+    --slds-c-button-brand-spacing-inline-start: 0.5rem;
+    --slds-c-button-destructive-spacing-inline-end: 0.5rem;
+    --slds-c-button-destructive-spacing-inline-start: 0.5rem;
 }
 
 .button-class {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 0.5rem;
 }
 
