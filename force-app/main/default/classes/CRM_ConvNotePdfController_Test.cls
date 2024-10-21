@@ -17,8 +17,7 @@ public class CRM_ConvNotePdfController_Test {
         );
 
         CRM_ConvNotePdfController pdfController = new CRM_ConvNotePdfController(stdThread);
-        //System.assert(String.isNotBlank(pdfController.messageText));
-        System.assert(String.isBlank(pdfController.messageText)); // Will be blank as of 11.10.2024 since CRM_Message_Content__c flows are deactivated
+        System.assert(String.isNotBlank(pdfController.messageText));
     }
 
     @isTest
