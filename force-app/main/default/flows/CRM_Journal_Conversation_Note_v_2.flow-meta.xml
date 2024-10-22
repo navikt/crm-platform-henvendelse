@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Generate_Document</name>
         <label>Generate Document</label>
-        <locationX>446</locationX>
+        <locationX>776</locationX>
         <locationY>566</locationY>
         <actionName>CRM_JournalUtilities</actionName>
         <actionType>apex</actionType>
@@ -33,7 +33,7 @@
         <name>Post_Journal_Request</name>
         <label>Post Journal Request</label>
         <locationX>446</locationX>
-        <locationY>1106</locationY>
+        <locationY>1214</locationY>
         <actionName>CRM_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -71,7 +71,7 @@
         <description>Add document variants to document list and assign document title</description>
         <name>Assign_Journal_Documents</name>
         <label>Assign Journal Documents</label>
-        <locationX>446</locationX>
+        <locationX>776</locationX>
         <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>Journal_Documents.dokumentvarianter</assignToReference>
@@ -109,7 +109,7 @@
         <name>Assign_Journal_Entry_Default_data</name>
         <label>Assign Journal Entry Default data</label>
         <locationX>446</locationX>
-        <locationY>1622</locationY>
+        <locationY>1730</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.CRM_Created_By_Ident__c</assignToReference>
             <operator>Assign</operator>
@@ -174,7 +174,7 @@
         <description>Assigns needed values to document variant wrapper</description>
         <name>Document_Variant_Assignment</name>
         <label>Document Variant Assignment</label>
-        <locationX>446</locationX>
+        <locationX>776</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>Document_Variant_PDF.filtype</assignToReference>
@@ -205,7 +205,7 @@
         <description>Assigns needed values to the journal requests and adds the document list.</description>
         <name>Journal_Request_Assignment</name>
         <label>Journal Request Assignment</label>
-        <locationX>446</locationX>
+        <locationX>776</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>Journal_Request.tittel</assignToReference>
@@ -278,14 +278,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Post_Journal_Request</targetReference>
+            <targetReference>Do_callout_or_return_record</targetReference>
         </connector>
     </assignments>
     <assignments>
         <description>Assigns necessary values to the Sak wrapper for journal entry.</description>
         <name>Journal_Sak_Assignment</name>
         <label>Journal Sak Assignment</label>
-        <locationX>446</locationX>
+        <locationX>776</locationX>
         <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>Journal_Sak.fagsakId</assignToReference>
@@ -316,7 +316,7 @@
         <name>Set_Post_Completed</name>
         <label>Set Post Completed</label>
         <locationX>314</locationX>
-        <locationY>1322</locationY>
+        <locationY>1430</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -346,7 +346,7 @@
         <name>Set_Post_Failed</name>
         <label>Set Post Failed</label>
         <locationX>578</locationX>
-        <locationY>1322</locationY>
+        <locationY>1430</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -368,7 +368,7 @@
     <assignments>
         <name>Set_Publish_Notification_And_Existing_Journal_To_True</name>
         <label>Set Publish Notification And Existing Journal To True</label>
-        <locationX>1106</locationX>
+        <locationX>1370</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>Publish_Notification</assignToReference>
@@ -389,7 +389,7 @@
         <name>Set_Publish_Notification_To_True</name>
         <label>Set Publish Notification To True</label>
         <locationX>446</locationX>
-        <locationY>1838</locationY>
+        <locationY>1946</locationY>
         <assignmentItems>
             <assignToReference>Publish_Notification</assignToReference>
             <operator>Assign</operator>
@@ -406,7 +406,7 @@
         <name>Update_Conversation_Note_Categorization</name>
         <label>Update Conversation Note Categorization</label>
         <locationX>446</locationX>
-        <locationY>1730</locationY>
+        <locationY>1838</locationY>
         <assignmentItems>
             <assignToReference>JOURNALED_CONV_NOTE.CRM_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
@@ -429,7 +429,7 @@
         <description>Verify if a journal entry already exists for the inputs</description>
         <name>Check_Journal_Entries</name>
         <label>Check Journal Entries</label>
-        <locationX>776</locationX>
+        <locationX>1073</locationX>
         <locationY>242</locationY>
         <defaultConnector>
             <targetReference>Set_Publish_Notification_And_Existing_Journal_To_True</targetReference>
@@ -437,10 +437,17 @@
         <defaultConnectorLabel>Entry Exists</defaultConnectorLabel>
         <rules>
             <name>Entry_Exists</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Existing_Journal_Entry</leftValueReference>
                 <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>doReturnRecord</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
@@ -455,7 +462,7 @@
         <name>Check_Post_State</name>
         <label>Check Post State</label>
         <locationX>446</locationX>
-        <locationY>1214</locationY>
+        <locationY>1322</locationY>
         <defaultConnector>
             <targetReference>Set_Post_Failed</targetReference>
         </defaultConnector>
@@ -481,7 +488,7 @@
         <name>DML_Check</name>
         <label>DML Check</label>
         <locationX>446</locationX>
-        <locationY>1946</locationY>
+        <locationY>2054</locationY>
         <defaultConnectorLabel>No DML</defaultConnectorLabel>
         <rules>
             <name>Do_DML</name>
@@ -497,6 +504,28 @@
                 <targetReference>Create_Journal_Entry</targetReference>
             </connector>
             <label>Do DML</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Do_callout_or_return_record</name>
+        <label>Do callout or return record?</label>
+        <locationX>776</locationX>
+        <locationY>1106</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Do_callout</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>doReturnRecord</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Post_Journal_Request</targetReference>
+            </connector>
+            <label>Do callout</label>
         </rules>
     </decisions>
     <formulas>
@@ -558,7 +587,7 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
         <name>Create_Journal_Entry</name>
         <label>Create Journal Entry</label>
         <locationX>50</locationX>
-        <locationY>2054</locationY>
+        <locationY>2162</locationY>
         <connector>
             <targetReference>Update_Conversation_Note</targetReference>
         </connector>
@@ -572,7 +601,7 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
         <description>Get necessary account information to post a journal entry</description>
         <name>Get_Account_Info</name>
         <label>Get Account Info</label>
-        <locationX>446</locationX>
+        <locationX>776</locationX>
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -593,7 +622,7 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
     <recordLookups>
         <name>Get_Existing_Journal_Entries</name>
         <label>Get Existing Journal Entries</label>
-        <locationX>776</locationX>
+        <locationX>1073</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -629,7 +658,7 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
         <description>Query the info needed from record and relations to submit a journal entry</description>
         <name>Get_Necessary_Record_Info</name>
         <label>Get Necessary Record Info</label>
-        <locationX>446</locationX>
+        <locationX>776</locationX>
         <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -654,7 +683,7 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
         <name>Get_SF_Theme_Common_Code</name>
         <label>Get SF Theme Common Code</label>
         <locationX>446</locationX>
-        <locationY>1514</locationY>
+        <locationY>1622</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_Journal_Entry_Default_data</targetReference>
@@ -685,7 +714,7 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
         <name>Update_Conversation_Note</name>
         <label>Update Conversation Note</label>
         <locationX>50</locationX>
-        <locationY>2162</locationY>
+        <locationY>2270</locationY>
         <faultConnector>
             <targetReference>Log_Error</targetReference>
         </faultConnector>
@@ -693,7 +722,7 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
-        <locationX>650</locationX>
+        <locationX>947</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Existing_Journal_Entries</targetReference>
@@ -704,7 +733,7 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
         <name>Log_Error</name>
         <label>Log Error</label>
         <locationX>314</locationX>
-        <locationY>2270</locationY>
+        <locationY>2378</locationY>
         <flowName>Flow_Create_Application_Log</flowName>
         <inputAssignments>
             <name>Application_Domain</name>
@@ -763,6 +792,16 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>doReturnRecord</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>Existing_Journal</name>
@@ -840,7 +879,7 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>false</isOutput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <description>Wrapper object for the &quot;fagsystem sak&quot; the journal relates to</description>
