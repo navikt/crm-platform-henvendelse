@@ -65,15 +65,12 @@
         </inputAssignments>
     </subflows>
     <variables>
-        <description>Boolean to decide if the flow makes a callout or returns the record</description>
-        <name>doReturnRecord</name>
-        <dataType>Boolean</dataType>
+        <description>String to append to the end of externalReference in the case of a rerun</description>
+        <name>externalReferenceSuffix</name>
+        <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
-        <value>
-            <booleanValue>false</booleanValue>
-        </value>
     </variables>
     <variables>
         <description>SF journal entry record to be created for a journal request</description>
@@ -102,7 +99,8 @@
         <objectType>Thread__c</objectType>
     </variables>
     <variables>
-        <description>Input to determine if this flow should perform the DML to update relevant records after callout or if this should be handled outside the flow.</description>
+        <description>Input to determine if this flow should perform the DML to update relevant
+            records after callout or if this should be handled outside the flow.</description>
         <name>PERFORM_DML</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
