@@ -109,7 +109,7 @@
         <name>Assign_Journal_Entry_Default_data</name>
         <label>Assign Journal Entry Default data</label>
         <locationX>446</locationX>
-        <locationY>2114</locationY>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.CRM_Created_By_Ident__c</assignToReference>
             <operator>Assign</operator>
@@ -313,26 +313,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Journal_Entry_Id</name>
-        <label>Set Journal Entry Id</label>
-        <locationX>116</locationX>
-        <locationY>1730</locationY>
-        <assignmentItems>
-            <assignToReference>Journal_Entry_SF.Journal_Entry_ID__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Post_Journal_Request.journalpostId</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Get_SF_Theme_Common_Code</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Set_Journal_Status_to_Completed</name>
         <label>Set Journal Status to Completed</label>
-        <locationX>380</locationX>
-        <locationY>1430</locationY>
+        <locationX>314</locationX>
+        <locationY>1322</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -347,37 +331,21 @@
                 <stringValue>Journal Completed</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Check_if_Journal_Post_Id_is_Null</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Journal_Status_to_Duplicate</name>
-        <label>Set Journal Status to Duplicate</label>
-        <locationX>116</locationX>
-        <locationY>1430</locationY>
         <assignmentItems>
-            <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
+            <assignToReference>Journal_Entry_SF.Journal_Entry_ID__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Duplicate</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>JOURNALED_CONV_NOTE.CRM_Journal_Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Journal Completed</stringValue>
+                <elementReference>Post_Journal_Request.journalpostId</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Check_if_Journal_Post_Id_is_Null</targetReference>
+            <targetReference>Get_SF_Theme_Common_Code</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_Post_Failed</name>
         <label>Set Post Failed</label>
-        <locationX>644</locationX>
+        <locationX>578</locationX>
         <locationY>1322</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
@@ -421,7 +389,7 @@
         <name>Set_Publish_Notification_To_True</name>
         <label>Set Publish Notification To True</label>
         <locationX>446</locationX>
-        <locationY>2330</locationY>
+        <locationY>1838</locationY>
         <assignmentItems>
             <assignToReference>Publish_Notification</assignToReference>
             <operator>Assign</operator>
@@ -439,7 +407,7 @@
         <name>Update_Conversation_Note_Categorization</name>
         <label>Update Conversation Note Categorization</label>
         <locationX>446</locationX>
-        <locationY>2222</locationY>
+        <locationY>1730</locationY>
         <assignmentItems>
             <assignToReference>JOURNALED_CONV_NOTE.CRM_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
@@ -458,63 +426,6 @@
             <targetReference>Set_Publish_Notification_To_True</targetReference>
         </connector>
     </assignments>
-    <decisions>
-        <name>Check_if_Duplicate</name>
-        <label>Check if Duplicate</label>
-        <locationX>248</locationX>
-        <locationY>1322</locationY>
-        <defaultConnector>
-            <targetReference>Set_Journal_Status_to_Completed</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>New</defaultConnectorLabel>
-        <rules>
-            <name>Duplicate</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Post_Journal_Request.duplicate</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Set_Journal_Status_to_Duplicate</targetReference>
-            </connector>
-            <label>Duplicate</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_if_Journal_Post_Id_is_Null</name>
-        <label>Check if Journal Post Id is Null</label>
-        <locationX>248</locationX>
-        <locationY>1622</locationY>
-        <defaultConnector>
-            <targetReference>Get_SF_Theme_Common_Code</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Null</defaultConnectorLabel>
-        <rules>
-            <name>Not_null</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Post_Journal_Request.journalpostId</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Post_Journal_Request.journalpostId</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Set_Journal_Entry_Id</targetReference>
-            </connector>
-            <label>Not null</label>
-        </rules>
-    </decisions>
     <decisions>
         <description>Verify if a journal entry already exists for the inputs</description>
         <name>Check_Journal_Entries</name>
@@ -561,7 +472,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Check_if_Duplicate</targetReference>
+                <targetReference>Set_Journal_Status_to_Completed</targetReference>
             </connector>
             <label>Success</label>
         </rules>
@@ -572,7 +483,7 @@
         <name>DML_Check</name>
         <label>DML Check</label>
         <locationX>446</locationX>
-        <locationY>2438</locationY>
+        <locationY>1946</locationY>
         <defaultConnectorLabel>No DML</defaultConnectorLabel>
         <rules>
             <name>Do_DML</name>
@@ -656,7 +567,7 @@
         <name>Create_Journal_Entry</name>
         <label>Create Journal Entry</label>
         <locationX>50</locationX>
-        <locationY>2546</locationY>
+        <locationY>2054</locationY>
         <connector>
             <targetReference>Update_Conversation_Note</targetReference>
         </connector>
@@ -752,7 +663,7 @@
         <name>Get_SF_Theme_Common_Code</name>
         <label>Get SF Theme Common Code</label>
         <locationX>446</locationX>
-        <locationY>2006</locationY>
+        <locationY>1514</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_Journal_Entry_Default_data</targetReference>
@@ -783,7 +694,7 @@
         <name>Update_Conversation_Note</name>
         <label>Update Conversation Note</label>
         <locationX>50</locationX>
-        <locationY>2654</locationY>
+        <locationY>2162</locationY>
         <faultConnector>
             <targetReference>Log_Error</targetReference>
         </faultConnector>
@@ -802,7 +713,7 @@
         <name>Log_Error</name>
         <label>Log Error</label>
         <locationX>314</locationX>
-        <locationY>2762</locationY>
+        <locationY>2270</locationY>
         <flowName>Flow_Create_Application_Log</flowName>
         <inputAssignments>
             <name>Application_Domain</name>
