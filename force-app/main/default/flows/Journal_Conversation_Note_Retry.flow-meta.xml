@@ -483,7 +483,7 @@
         <locationX>710</locationX>
         <locationY>1406</locationY>
         <defaultConnector>
-            <targetReference>Check_if_rerun_failed</targetReference>
+            <targetReference>Set_Post_Failed</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
