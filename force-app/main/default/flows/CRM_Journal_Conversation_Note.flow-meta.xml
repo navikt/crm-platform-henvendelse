@@ -313,8 +313,8 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Post_Completed</name>
-        <label>Set Post Completed</label>
+        <name>Set_Journal_Status_to_Completed</name>
+        <label>Set Journal Status to Completed</label>
         <locationX>314</locationX>
         <locationY>1322</locationY>
         <assignmentItems>
@@ -325,17 +325,17 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Entry_SF.Journal_Entry_ID__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Post_Journal_Request.journalpostId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>JOURNALED_CONV_NOTE.CRM_Journal_Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Journal Completed</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Entry_SF.Journal_Entry_ID__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Post_Journal_Request.journalpostId</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -432,7 +432,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_Post_Completed</targetReference>
+                <targetReference>Set_Journal_Status_to_Completed</targetReference>
             </connector>
             <label>Success</label>
         </rules>
