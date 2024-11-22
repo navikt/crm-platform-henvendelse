@@ -55,7 +55,7 @@
                                         </lightning-button-group>
                                         <template lwc:if={hasEnglishTemplate}>
                                             <lightning-button
-                                                if:false={hideChangeLngBtn}
+                                                lwc:if={showChangeLngBtn}
                                                 role="switch"
                                                 type="lang"
                                                 name="lang"

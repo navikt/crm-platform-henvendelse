@@ -342,6 +342,10 @@ export default class MessagingThreadViewer extends LightningElement {
         return this.quickTextCmp ? this.quickTextCmp.conversationNote : '';
     }
 
+    get showChangeLngBtn() {
+        return !this.hideChangeLngBtn;
+    }
+
     get modalClass() {
         return this.newDesign
             ? 'slds-modal slds-show uiPanel north modalStyling' +
