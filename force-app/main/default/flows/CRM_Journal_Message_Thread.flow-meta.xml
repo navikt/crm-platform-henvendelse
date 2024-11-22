@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Generate_Document</name>
         <label>Generate Document</label>
-        <locationX>512</locationX>
+        <locationX>644</locationX>
         <locationY>350</locationY>
         <actionName>CRM_JournalUtilities</actionName>
         <actionType>apex</actionType>
@@ -32,7 +32,7 @@
         <description>Calls journal utils to perform the API post action</description>
         <name>Post_Journal_Request</name>
         <label>Post Journal Request</label>
-        <locationX>512</locationX>
+        <locationX>644</locationX>
         <locationY>1790</locationY>
         <actionName>CRM_JournalUtilities</actionName>
         <actionType>apex</actionType>
@@ -70,7 +70,7 @@
     <assignments>
         <name>Add_externalReferenceSuffix</name>
         <label>Add externalReferenceSuffix</label>
-        <locationX>380</locationX>
+        <locationX>512</locationX>
         <locationY>1598</locationY>
         <assignmentItems>
             <assignToReference>Journal_Request.eksternReferanseId</assignToReference>
@@ -87,7 +87,7 @@
         <description>Add document variants to document list and assign document title</description>
         <name>Assign_Journal_Documents</name>
         <label>Assign Journal Documents</label>
-        <locationX>512</locationX>
+        <locationX>644</locationX>
         <locationY>1166</locationY>
         <assignmentItems>
             <assignToReference>Journal_Documents.dokumentvarianter</assignToReference>
@@ -118,7 +118,7 @@
         <description>Assigns needed values to document variant wrapper</description>
         <name>Document_Variant_Assignment</name>
         <label>Document Variant Assignment</label>
-        <locationX>512</locationX>
+        <locationX>644</locationX>
         <locationY>1058</locationY>
         <assignmentItems>
             <assignToReference>Document_Variant_PDF.filtype</assignToReference>
@@ -149,7 +149,7 @@
         <description>Assigns needed values to the journal requests and adds the document list.</description>
         <name>Journal_Request_Assignment</name>
         <label>Journal Request Assignment</label>
-        <locationX>512</locationX>
+        <locationX>644</locationX>
         <locationY>1382</locationY>
         <assignmentItems>
             <assignToReference>Journal_Request.tittel</assignToReference>
@@ -250,7 +250,7 @@
         <description>Assigns necessary values to the Sak wrapper for journal entry.</description>
         <name>Journal_Sak_Assignment</name>
         <label>Journal Sak Assignment</label>
-        <locationX>512</locationX>
+        <locationX>644</locationX>
         <locationY>1274</locationY>
         <assignmentItems>
             <assignToReference>Journal_Sak.fagsakId</assignToReference>
@@ -280,8 +280,8 @@
     <assignments>
         <name>Set_Journal_Date</name>
         <label>Set Journal Date</label>
-        <locationX>512</locationX>
-        <locationY>2582</locationY>
+        <locationX>644</locationX>
+        <locationY>2882</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.CRM_Journal_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -294,9 +294,25 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_Journal_Entry_Id</name>
+        <label>Set Journal Entry Id</label>
+        <locationX>50</locationX>
+        <locationY>2522</locationY>
+        <assignmentItems>
+            <assignToReference>Journal_Entry_SF.Journal_Entry_ID__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Post_Journal_Request.journalpostId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Journal_Date</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Journal_Status_to_Completed_and_Journal_Entry_Id</name>
         <label>Set Journal Status to Completed and Journal Entry Id</label>
-        <locationX>402</locationX>
+        <locationX>534</locationX>
         <locationY>2114</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
@@ -326,7 +342,7 @@
     <assignments>
         <name>Set_Journal_Status_to_Duplicate</name>
         <label>Set Journal Status to Duplicate</label>
-        <locationX>138</locationX>
+        <locationX>270</locationX>
         <locationY>2222</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
@@ -342,21 +358,14 @@
                 <stringValue>Journal Completed</stringValue>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Journal_Entry_SF.Duplicate_Journal_Entry_Id__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Post_Journal_Request.journalpostId</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
-            <targetReference>Set_Journal_Date</targetReference>
+            <targetReference>Journal_Entry_Id_null</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_Journal_Subtheme_Null</name>
         <label>Set Journal Subtheme Null</label>
-        <locationX>600</locationX>
+        <locationX>732</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.Subtheme__c</assignToReference>
@@ -369,7 +378,7 @@
     <assignments>
         <name>Set_Post_Failed</name>
         <label>Set Post Failed</label>
-        <locationX>930</locationX>
+        <locationX>1062</locationX>
         <locationY>2114</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
@@ -392,7 +401,7 @@
     <assignments>
         <name>Set_Rerun_failed</name>
         <label>Set Rerun failed</label>
-        <locationX>666</locationX>
+        <locationX>798</locationX>
         <locationY>2114</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_SF.Journal_Entry_Status__c</assignToReference>
@@ -408,7 +417,7 @@
     <decisions>
         <name>Check_if_already_Completed</name>
         <label>Check if already Completed</label>
-        <locationX>50</locationX>
+        <locationX>182</locationX>
         <locationY>2114</locationY>
         <defaultConnector>
             <targetReference>Set_Journal_Status_to_Duplicate</targetReference>
@@ -439,7 +448,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_Journal_Date</targetReference>
+                <targetReference>Journal_Entry_Id_null</targetReference>
             </connector>
             <label>Already completed</label>
         </rules>
@@ -447,7 +456,7 @@
     <decisions>
         <name>Check_if_Duplicate</name>
         <label>Check if Duplicate</label>
-        <locationX>226</locationX>
+        <locationX>358</locationX>
         <locationY>2006</locationY>
         <defaultConnector>
             <targetReference>Set_Journal_Status_to_Completed_and_Journal_Entry_Id</targetReference>
@@ -472,7 +481,7 @@
     <decisions>
         <name>Check_if_externalReferenceSuffix_is_blank</name>
         <label>Check if externalReferenceSuffix is blank</label>
-        <locationX>512</locationX>
+        <locationX>644</locationX>
         <locationY>1490</locationY>
         <defaultConnector>
             <targetReference>Post_Journal_Request</targetReference>
@@ -497,7 +506,7 @@
     <decisions>
         <name>Check_if_Journal_is_NOTAT</name>
         <label>Check if Journal is NOTAT</label>
-        <locationX>512</locationX>
+        <locationX>644</locationX>
         <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Document_Variant_Assignment</targetReference>
@@ -522,7 +531,7 @@
     <decisions>
         <name>Check_if_rerun_failed</name>
         <label>Check if rerun failed</label>
-        <locationX>798</locationX>
+        <locationX>930</locationX>
         <locationY>2006</locationY>
         <defaultConnector>
             <targetReference>Set_Post_Failed</targetReference>
@@ -547,7 +556,7 @@
     <decisions>
         <name>Check_Post_State</name>
         <label>Check Post State</label>
-        <locationX>512</locationX>
+        <locationX>644</locationX>
         <locationY>1898</locationY>
         <defaultConnector>
             <targetReference>Check_if_rerun_failed</targetReference>
@@ -573,8 +582,8 @@
         <description>Decision to determine if the dml should be performed directly in the flow or handled by a parent calling this.</description>
         <name>DML_Check</name>
         <label>DML Check</label>
-        <locationX>512</locationX>
-        <locationY>2690</locationY>
+        <locationX>644</locationX>
+        <locationY>2990</locationY>
         <defaultConnectorLabel>No DML</defaultConnectorLabel>
         <rules>
             <name>Do_DML</name>
@@ -593,10 +602,42 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Journal_Entry_Id_null</name>
+        <label>Journal Entry Id null?</label>
+        <locationX>182</locationX>
+        <locationY>2414</locationY>
+        <defaultConnector>
+            <targetReference>Set_Journal_Date</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not null</defaultConnectorLabel>
+        <rules>
+            <name>Null</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Journal_Entry_SF.Journal_Entry_ID__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Journal_Entry_SF.Journal_Entry_ID__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Journal_Entry_Id</targetReference>
+            </connector>
+            <label>Null</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Check if the subtheme has been set for the journal entry from the parent calling the flow. If not this is strictly set to null</description>
         <name>Validate_Subtheme</name>
         <label>Validate Subtheme</label>
-        <locationX>512</locationX>
+        <locationX>644</locationX>
         <locationY>458</locationY>
         <defaultConnector>
             <targetReference>Set_Journal_Subtheme_Null</targetReference>
@@ -674,7 +715,7 @@
         <description>Get necessary account information to post a journal entry</description>
         <name>Get_Account_Info</name>
         <label>Get Account Info</label>
-        <locationX>512</locationX>
+        <locationX>644</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -695,7 +736,7 @@
     <recordLookups>
         <name>Get_last_message</name>
         <label>Get last message</label>
-        <locationX>380</locationX>
+        <locationX>512</locationX>
         <locationY>866</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -728,7 +769,7 @@
         <description>Query the info needed from record and relations to submit a journal entry</description>
         <name>Get_Necessary_Record_Info</name>
         <label>Get Necessary Record Info</label>
-        <locationX>512</locationX>
+        <locationX>644</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -756,8 +797,8 @@
     <recordUpdates>
         <name>Update_Journal_Entry</name>
         <label>Update Journal Entry</label>
-        <locationX>380</locationX>
-        <locationY>2798</locationY>
+        <locationX>512</locationX>
+        <locationY>3098</locationY>
         <connector>
             <targetReference>Update_Thread</targetReference>
         </connector>
@@ -766,13 +807,13 @@
     <recordUpdates>
         <name>Update_Thread</name>
         <label>Update Thread</label>
-        <locationX>380</locationX>
-        <locationY>2906</locationY>
+        <locationX>512</locationX>
+        <locationY>3206</locationY>
         <inputReference>JOURNALED_THREAD</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
-        <locationX>386</locationX>
+        <locationX>518</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Necessary_Record_Info</targetReference>
