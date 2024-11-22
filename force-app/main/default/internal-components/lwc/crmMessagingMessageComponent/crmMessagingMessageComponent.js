@@ -13,6 +13,7 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     @api recordId;
     @api singleThread;
     @api showClose;
+    @api hideChangeLngBtn = false;
     setCardTitle;
     hasError = false;
     @api englishTextTemplate;

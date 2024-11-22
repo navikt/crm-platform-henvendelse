@@ -48,6 +48,7 @@
                                     </lightning-button-group>
                                     <template if:true={hasEnglishTemplate}>
                                         <lightning-button
+                                            if:false={hideChangeLngBtn}
                                             role="switch"
                                             type="lang"
                                             name="lang"
@@ -75,7 +76,8 @@
                                                 disabled={closedThread}
                                                 onclick={openModal}
                                                 class="endDialogBtn slds-button slds-button_destructive"
-                                                >Avslutt samtale
+                                            >
+                                                Avslutt samtale
                                             </button>
                                         </lightning-record-edit-form>
                                     </lightning-layout>

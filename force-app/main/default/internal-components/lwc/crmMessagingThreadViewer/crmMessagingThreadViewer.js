@@ -29,6 +29,7 @@ export default class messagingThreadViewer extends LightningElement {
     @api showClose;
     @api englishTextTemplate;
     @track langBtnLock = false;
+    @api hideChangeLngBtn = false;
     langBtnAriaToggle = false;
     resizablePanelTop;
     onresize = false; // true when in process of resizing
