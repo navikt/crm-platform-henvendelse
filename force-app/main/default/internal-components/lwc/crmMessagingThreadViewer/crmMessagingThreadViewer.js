@@ -27,6 +27,7 @@ export default class MessagingThreadViewer extends LightningElement {
     @api newDesign = false;
     @api submitButtonLabel = 'Send';
     @api isThread;
+    @api hideChangeLngBtn = false;
 
     labels = {
         END_DIALOGUE_LABEL,
@@ -339,6 +340,10 @@ export default class MessagingThreadViewer extends LightningElement {
 
     get text() {
         return this.quickTextCmp ? this.quickTextCmp.conversationNote : '';
+    }
+
+    get showChangeLngBtn() {
+        return !this.hideChangeLngBtn;
     }
 
     get modalClass() {
