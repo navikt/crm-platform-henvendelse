@@ -81,11 +81,8 @@ export default class CrmMessagingMessageComponent extends LightningElement {
         this._iconName = newIconName;
     }
 
-    get _iconClass() {
-        return this.isThread &&
-            this.newDesign &&
-            this.iconName === 'standard:messaging_user' &&
-            this.cardTitle !== 'Samtale'
+    get iconClass() {
+        return this.newDesign && this.iconName === 'standard:messaging_user' && this.cardTitle !== 'Samtale'
             ? 'custom-icon'
             : '';
     }
