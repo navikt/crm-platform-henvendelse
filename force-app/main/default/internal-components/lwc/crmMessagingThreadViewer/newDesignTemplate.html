@@ -55,6 +55,7 @@
                                         </lightning-button-group>
                                         <template lwc:if={hasEnglishTemplate}>
                                             <lightning-button
+                                                lwc:if={showChangeLngBtn}
                                                 role="switch"
                                                 type="lang"
                                                 name="lang"
@@ -102,6 +103,7 @@
                                         button-styling="danger"
                                         aria-expanded={buttonExpanded}
                                         button-label={labels.END_DIALOGUE_LABEL}
+                                        full-height
                                     ></c-custom-button>
                                 </lightning-record-edit-form>
                                 <div class="slds-is-relative">
@@ -157,6 +159,7 @@
                                 name="submit"
                                 disabled={closedThread}
                                 button-label={submitButtonLabel}
+                                full-height
                             ></c-custom-button>
                         </lightning-layout-item>
                     </lightning-layout>

@@ -1,5 +1,5 @@
 import { LightningElement, api, wire } from 'lwc';
-import getmessages from '@salesforce/apex/CRM_MessageHelper.getMessagesFromThread';
+import getmessages from '@salesforce/apex/CRM_MessageHelperExperience.getMessagesFromThread';
 import markAsReadByNav from '@salesforce/apex/CRM_MessageHelper.markAsReadByNav';
 import { subscribe, unsubscribe } from 'lightning/empApi';
 import userId from '@salesforce/user/Id';
@@ -30,6 +30,7 @@ export default class MessagingThreadViewer extends LightningElement {
     @api newDesign = false;
     @api submitButtonLabel = 'Send';
     @api isThread;
+    @api hideChangeLngBtn = false;
 
     labels = {
         END_DIALOGUE_LABEL,
@@ -380,6 +381,10 @@ export default class MessagingThreadViewer extends LightningElement {
 
     get text() {
         return this.quickTextCmp ? this.quickTextCmp.conversationNote : '';
+    }
+
+    get showChangeLngBtn() {
+        return !this.hideChangeLngBtn;
     }
 
     get modalClass() {

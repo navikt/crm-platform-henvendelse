@@ -16,6 +16,7 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     @api submitButtonLabel = 'Send';
     @api isThread;
     @api showLanguageChangeModal = false;
+    @api hideChangeLngBtn = false;
 
     @track slotsNeedCheckedOrRendered = { messages: true }; // To check the slot content the slot has to be rendered initially
 
@@ -25,7 +26,7 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     threads;
     singlethread;
     _threadsforRefresh;
-    setCardTitle;
+    actualCardTitle;
     hasError = false;
     labels = {
         ERROR_LABEL,
@@ -43,7 +44,6 @@ export default class CrmMessagingMessageComponent extends LightningElement {
         if (result.error) {
             this.error = result.error;
             this.hasError = true;
-            console.log(JSON.stringify(result.error, null, 2));
         } else if (result.data) {
             this.threads = result.data;
         }
@@ -58,12 +58,12 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     }
 
     get cardTitle() {
-        return this.setCardTitle ?? (this.singleThread === true ? 'Samtale' : 'Samtaler');
+        return this.actualCardTitle ?? (this.singleThread ? 'Samtale' : 'Samtaler');
     }
 
     @api
     set cardTitle(cardTitle) {
-        this.setCardTitle = cardTitle;
+        this.actualCardTitle = cardTitle;
     }
 
     get cardClass() {
@@ -93,9 +93,6 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     // If the slot is not rendered in the DOM we have no way of checking it's content
     @api
     checkSlotChange(slotName) {
-        console.log('Api call');
-        console.log(slotName);
-        console.log(this.slotsNeedCheckedOrRendered[slotName]);
         this.slotsNeedCheckedOrRendered[slotName] = true;
     }
 

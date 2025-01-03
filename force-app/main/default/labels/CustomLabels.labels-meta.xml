@@ -68,7 +68,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CRM Henvendelse - New Message Notification</shortDescription>
-        <value>Du har mottatt en ny melding fra NAV som ligger i din innboks.</value>
+        <value>Du har mottatt en ny melding fra Nav som ligger i din innboks.</value>
     </labels>
     <labels>
         <fullName>CRMHenvendelse_RedactedMessageNotificationText</fullName>
@@ -83,7 +83,7 @@
             i meldinger.
 
             Andre opplysninger som sladdes er informasjon i saker som behandles, forvaltes og lagres
-            av ditt lokale NAV-kontor.
+            av ditt lokale Nav-kontor.
 
             For henvendelser som gjelder kommunale tjenester som økonomisk sosialhjelp, bostøtte,
             midlertidig botilbud, kvalifiseringsprogrammet, eller økonomisk rådgivning må du

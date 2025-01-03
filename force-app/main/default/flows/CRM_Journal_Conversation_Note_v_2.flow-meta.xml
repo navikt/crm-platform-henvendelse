@@ -270,6 +270,13 @@
                 <elementReference>Journal_Subtheme_Code</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Request.eksternReferanseId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>externalReference</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Post_Journal_Request</targetReference>
         </connector>
@@ -306,8 +313,8 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Post_Completed</name>
-        <label>Set Post Completed</label>
+        <name>Set_Journal_Status_to_Completed</name>
+        <label>Set Journal Status to Completed</label>
         <locationX>314</locationX>
         <locationY>1322</locationY>
         <assignmentItems>
@@ -318,17 +325,17 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Entry_SF.Journal_Entry_ID__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Post_Journal_Request.journalpostId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>JOURNALED_CONV_NOTE.CRM_Journal_Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Journal Completed</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Entry_SF.Journal_Entry_ID__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Post_Journal_Request.journalpostId</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -395,7 +402,8 @@
         </connector>
     </assignments>
     <assignments>
-        <description>Updates theme group and theme for conversation note to match the newest journal entry.</description>
+        <description>Updates theme group and theme for conversation note to match the newest journal
+            entry.</description>
         <name>Update_Conversation_Note_Categorization</name>
         <label>Update Conversation Note Categorization</label>
         <locationX>446</locationX>
@@ -430,7 +438,7 @@
         <defaultConnectorLabel>Entry Exists</defaultConnectorLabel>
         <rules>
             <name>Entry_Exists</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Existing_Journal_Entry</leftValueReference>
                 <operator>IsNull</operator>
@@ -464,13 +472,14 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_Post_Completed</targetReference>
+                <targetReference>Set_Journal_Status_to_Completed</targetReference>
             </connector>
             <label>Success</label>
         </rules>
     </decisions>
     <decisions>
-        <description>Decision to determine if the dml should be performed directly in the flow or handled by a parent calling this.</description>
+        <description>Decision to determine if the dml should be performed directly in the flow or
+            handled by a parent calling this.</description>
         <name>DML_Check</name>
         <label>DML Check</label>
         <locationX>446</locationX>
@@ -495,12 +504,20 @@
     <formulas>
         <name>Document_Title</name>
         <dataType>String</dataType>
-        <expression>&apos;Samtale med NAV - &apos; + 
-LPAD(TEXT(DAY(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c}))),2,&apos;0&apos;) + &apos;.&apos; + 
-LPAD(TEXT(MONTH(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c}))),2,&apos;0&apos;) + &apos;.&apos; + 
-TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c}))) + 
-&apos; - &apos; + 
-{!JOURNALED_CONV_NOTE.CRM_Theme_Name__c}</expression>
+        <expression>&apos;Samtale med NAV - &apos; +
+            LPAD(TEXT(DAY(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c}))),2,&apos;0&apos;)
+            + &apos;.&apos; +
+            LPAD(TEXT(MONTH(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c}))),2,&apos;0&apos;)
+            + &apos;.&apos; +
+            TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c}))) +
+            &apos; - &apos; +
+            {!JOURNALED_CONV_NOTE.CRM_Theme_Name__c}</expression>
+    </formulas>
+    <formulas>
+        <name>externalReference</name>
+        <dataType>String</dataType>
+        <expression>{!JOURNALED_CONV_NOTE.Id} + {!Journal_Theme_Code} +
+            SUBSTITUTE(URLENCODE({!Journal_Sak.fagsakId}), &apos;%&apos;, &apos;_&apos;)</expression>
     </formulas>
     <formulas>
         <description>Better null/blank handling for passing this value to apex</description>
@@ -509,7 +526,8 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
         <expression>IF(ISBLANK({!Journal_Case_Legacy_System}), null, {!Journal_Case_Legacy_System})</expression>
     </formulas>
     <formulas>
-        <description>Formula to define the journal case type (Sakstype). If no Journal Case ID has been input, default is GENERELL_SAK</description>
+        <description>Formula to define the journal case type (Sakstype). If no Journal Case ID has
+            been input, default is GENERELL_SAK</description>
         <name>Journal_Case_Type</name>
         <dataType>String</dataType>
         <expression>IF(ISBLANK({!Journal_Case_ID}), &apos;GENERELL_SAK&apos;, &apos;FAGSAK&apos;)</expression>
@@ -518,7 +536,9 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
         <description>Formula to generate name convention on journal required format (For persons)</description>
         <name>Person_Full_Name</name>
         <dataType>String</dataType>
-        <expression>{!Get_Account_Info.CRM_Person__r.INT_LastName__c} &amp; &apos;, &apos; &amp; {!Get_Account_Info.CRM_Person__r.INT_FirstName__c} &amp; &apos; &apos; &amp;{!Get_Account_Info.CRM_Person__r.INT_MiddleName__c}</expression>
+        <expression>{!Get_Account_Info.CRM_Person__r.INT_LastName__c} &amp; &apos;, &apos; &amp;
+            {!Get_Account_Info.CRM_Person__r.INT_FirstName__c} &amp; &apos; &apos;
+            &amp;{!Get_Account_Info.CRM_Person__r.INT_MiddleName__c}</expression>
     </formulas>
     <interviewLabel>CRM Journal Conversation Note {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Journal Conversation Note v. 2</label>
@@ -542,7 +562,8 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordCreates>
-        <description>Inserts a journal entry record. If post failed the entry status is set to failed and should be handled in asynchronous retry</description>
+        <description>Inserts a journal entry record. If post failed the entry status is set to
+            failed and should be handled in asynchronous retry</description>
         <name>Create_Journal_Entry</name>
         <label>Create Journal Entry</label>
         <locationX>50</locationX>
@@ -763,7 +784,8 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
         </value>
     </variables>
     <variables>
-        <description>Logical record variable to check if a journal entry already exists for this combination.</description>
+        <description>Logical record variable to check if a journal entry already exists for this
+            combination.</description>
         <name>Existing_Journal_Entry</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
@@ -772,7 +794,8 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
         <objectType>Journal_Entry__c</objectType>
     </variables>
     <variables>
-        <description>Unique reference to the case in NAVs fagsystem that the journal post should relate to.</description>
+        <description>Unique reference to the case in NAVs fagsystem that the journal post should
+            relate to.</description>
         <name>Journal_Case_ID</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -828,7 +851,7 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>false</isOutput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <description>Wrapper object for the &quot;fagsystem sak&quot; the journal relates to</description>
@@ -871,7 +894,8 @@ TEXT(YEAR(DATEVALUE({!JOURNALED_CONV_NOTE.CRM_Registered_Datetime_Formula__c})))
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <description>By default the flow performs the DML to update the records. To handle callout exceptions when handling multiple posts, this can be set to false and handled in parent.</description>
+        <description>By default the flow performs the DML to update the records. To handle callout
+            exceptions when handling multiple posts, this can be set to false and handled in parent.</description>
         <name>PERFORM_DML</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
