@@ -53,8 +53,7 @@
 **/workflows/CustomOpportunity__c*
 **/workflows/Contract__c*
 **/layouts/CustomOpportunity__c-Custom Opportunity Layout.layout-meta.xml
-**/sfdcInternalInt__sfdc_scrt2.permissionset-meta.xml
 
-# Scripts
-# ----------------------------------------------------------------------------------------
-**/.bat
+**/tsconfig.json
+
+**/*.ts

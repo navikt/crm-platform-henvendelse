@@ -1,10 +1,10 @@
 import { LightningElement, wire, api, track } from 'lwc';
-import getmessages from '@salesforce/apex/CRM_MessageHelper.getMessagesFromThread';
-import markAsRead from '@salesforce/apex/CRM_MessageHelper.markAsRead';
+import getmessages from '@salesforce/apex/CRM_MessageHelperExperience.getMessagesFromThread';
+import markAsRead from '@salesforce/apex/CRM_MessageHelperExperience.markAsRead';
 import { refreshApex } from '@salesforce/apex';
-import getContactId from '@salesforce/apex/CRM_MessageHelper.getUserContactId';
+import getContactId from '@salesforce/apex/CRM_MessageHelperExperience.getUserContactId';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
-import createmsg from '@salesforce/apex/CRM_MessageHelper.createMessage';
+import createmsg from '@salesforce/apex/CRM_MessageHelperExperience.createMessage';
 import THREADNAME_FIELD from '@salesforce/schema/Thread__c.STO_ExternalName__c';
 import THREADCLOSED_FIELD from '@salesforce/schema/Thread__c.CRM_Is_Closed__c';
 import THREAD_TYPE_FIELD from '@salesforce/schema/Thread__c.CRM_Type__c';
@@ -112,8 +112,7 @@ export default class crmMessagingCommunityThreadViewer extends LightningElement 
                 {
                     Id: 1,
                     EventItem: '',
-                    Text:
-                        'Vil du <a href="https://www.nav.no/person/kontakt-oss/nb/skriv-til-oss">sende en ny melding</a>, kan du gjøre det her. Husk å kopiere det du har skrevet.'
+                    Text: 'Vil du <a href="https://www.nav.no/person/kontakt-oss/nb/skriv-til-oss">sende en ny melding</a>, kan du gjøre det her. Husk å kopiere det du har skrevet.'
                 }
             ]
         };
