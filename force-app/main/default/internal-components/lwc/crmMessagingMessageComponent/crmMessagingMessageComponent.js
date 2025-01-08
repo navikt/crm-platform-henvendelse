@@ -31,6 +31,7 @@ export default class CrmMessagingMessageComponent extends LightningElement {
         ERROR_LABEL,
         ERROR_MESSAGE
     };
+    _iconName = 'standard:messaging_user';
 
     renderedCallback() {
         this.handleSlotChanges();
