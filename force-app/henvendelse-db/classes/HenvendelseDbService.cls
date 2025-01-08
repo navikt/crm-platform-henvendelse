@@ -33,11 +33,15 @@ public without sharing class HenvendelseDbService {
         return true;
     }
 
-    public Static Boolean postConversationNotes(List<Conversation_Note__c> convNoteList){
+    public static Boolean postConversationNotes(List<Conversation_Note__c> convNoteList){
         HttpResponse response;
 
         List<CRM_Henvendelse> henvendelseList=convertToHenvendelseList(convNoteList);
 
+       
+    }
+
+    private static postHenvendelser(List<CRM_Henvendelse> henvendelseList, String henvendelseType)
         if(henvendelseList.size()==1){
             String jsonBody=JSON.serializePretty(henvendelseList);
             response=new HenvendelseDbCalloutService().postHenvendelse(jsonBody);
@@ -66,7 +70,7 @@ public without sharing class HenvendelseDbService {
         }
 
         if(response.getStatusCode()!=200){
-            logger.error('Unbale to publish conversation note to db ' + response.getBody() , null, CRM_ApplicationDomain.Domain.NKS);
+            logger.error('Unbale to publish ' + henvendelseType + 'to db ' + response.getBody() , null, CRM_ApplicationDomain.Domain.NKS);
             logger.publish();
             return false;
         }

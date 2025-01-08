@@ -51,4 +51,67 @@ public without sharing class HenvendelseDbUtil {
         }
         return behandlingskjedeIds;
     } 
+
+
+    public static List<Thread__c> getThreads(Set<Id> threadIds){
+        return [
+            SELECT 
+            CRM_isActive__c,
+            CRM_Date_Time_Registered__c,
+            CRM_Office_Restriction__c,
+            CRM_Last_edited_by__c,
+            Id,
+            CRM_HenvendelseId__c,
+            Name,
+            CRM_Related_Object__c,
+            OwnerId,
+            CRM_Office_Restriction_Activated_By__c,
+            CRM_Office_Restriction_Date__c,
+            CRM_Incorrectly_Sent_Activated_By__c,
+            CRM_Incorrectly_Sent_Date__c,
+            CRM_Incorrectly_Sent__c,
+            CRM_Disposal_Datetime__c,
+            CRM_Created_By_Ident__c,
+            CRM_Closed_Date__c,
+            CRM_Type__c,
+            CRM_Theme_Group_Code__c,
+            CRM_Theme_Code__c,
+            CRM_External_ActorId_Formula__c,
+            CRM_External_Person_Ident_Formula__c,
+            CRM_Original_Person_GT__c,
+            CRM_Original_Person_NAV_Unit__c,
+            CRM_API_Reference__c,
+            STO_Sensitive_Information__c,
+            (SELECT 
+                Id,
+                CRM_Created_By_Ident__c,
+                CRM_Created_By_NAV_Unit__c,
+                CRM_Journal_Date__c,
+                Journal_Entry_ID__c,
+                Journal_Entry_Status__c,
+                NAV_Case_Reference__c,
+                CRM_Theme_Code__c,
+                CRM_Subtheme_Code__c,
+                CRM_NAV_Case_Legacy_System__c
+                FROM Journal_Entries__r ),
+            (SELECT  
+                CRM_Type__c,
+                CRM_HenvendelseId__c,
+                CRM_Read__c,
+                CRM_Thread__c,
+                CRM_Message_Text__c,
+                Id,
+                CRM_Sent_Date__c,
+                CRM_Read_Datetime__c,
+                CRM_External_Message__c,
+                CRM_From_Ident_Formula__c,
+                CRM_From_NAV_Unit__c,
+                CRM_API_Reference__c,
+                CRM_Sensitive_Information__c
+                FROM Messages__r
+                ORDER BY CRM_Sent_Date__c)
+            FROM Thread__c
+            WHERE Id in:threadIds
+        ];
+    }
 }
