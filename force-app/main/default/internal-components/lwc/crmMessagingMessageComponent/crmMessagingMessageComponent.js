@@ -31,7 +31,6 @@ export default class CrmMessagingMessageComponent extends LightningElement {
         ERROR_LABEL,
         ERROR_MESSAGE
     };
-    _iconName = 'standard:messaging_user';
 
     renderedCallback() {
         this.handleSlotChanges();
@@ -79,12 +78,6 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     @api
     set iconName(newIconName) {
         this._iconName = newIconName;
-    }
-
-    get iconClass() {
-        return this.newDesign && this.iconName === 'standard:messaging_user' && this.cardTitle !== 'Samtale'
-            ? 'custom-icon'
-            : '';
     }
 
     handlenewpressed() {
