@@ -15,6 +15,7 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     @api newDesign = false;
     @api submitButtonLabel = 'Send';
     @api isThread;
+    @api hideChangeLngBtn = false;
 
     @track slotsNeedCheckedOrRendered = { messages: true }; // To check the slot content the slot has to be rendered initially
 
@@ -24,12 +25,13 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     threads;
     singlethread;
     _threadsforRefresh;
-    setCardTitle;
+    actualCardTitle;
     hasError = false;
     labels = {
         ERROR_LABEL,
         ERROR_MESSAGE
     };
+    _iconName = 'standard:messaging_user';
 
     renderedCallback() {
         this.handleSlotChanges();
@@ -42,7 +44,6 @@ export default class CrmMessagingMessageComponent extends LightningElement {
         if (result.error) {
             this.error = result.error;
             this.hasError = true;
-            console.log(JSON.stringify(result.error, null, 2));
         } else if (result.data) {
             this.threads = result.data;
         }
@@ -57,18 +58,27 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     }
 
     get cardTitle() {
-        return this.setCardTitle ?? (this.singleThread === true ? 'Samtale' : 'Samtaler');
+        return this.actualCardTitle ?? (this.singleThread ? 'Samtale' : 'Samtaler');
     }
 
     @api
     set cardTitle(cardTitle) {
-        this.setCardTitle = cardTitle;
+        this.actualCardTitle = cardTitle;
     }
 
     get cardClass() {
         return this.newDesign
             ? 'slds-card__header slds-grid paddingAndCustomColor slds-p-left_none slds-p-bottom_none'
             : 'slds-card__header slds-grid paddingAndCustomColor';
+    }
+
+    get iconName() {
+        return this._iconName;
+    }
+
+    @api
+    set iconName(newIconName) {
+        this._iconName = newIconName;
     }
 
     handlenewpressed() {
@@ -92,9 +102,6 @@ export default class CrmMessagingMessageComponent extends LightningElement {
     // If the slot is not rendered in the DOM we have no way of checking it's content
     @api
     checkSlotChange(slotName) {
-        console.log('Api call');
-        console.log(slotName);
-        console.log(this.slotsNeedCheckedOrRendered[slotName]);
         this.slotsNeedCheckedOrRendered[slotName] = true;
     }
 

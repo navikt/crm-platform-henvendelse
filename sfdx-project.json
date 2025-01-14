@@ -4,11 +4,11 @@
             "path": "force-app",
             "default": true,
             "package": "crm-henvendelse",
-            "versionNumber": "0.144.0.NEXT",
+            "versionNumber": "0.156.0.NEXT",
             "dependencies": [
                 {
                     "package": "crm-platform-base",
-                    "versionNumber": "0.218.0.LATEST"
+                    "versionNumber": "0.224.0.LATEST"
                 },
                 {
                     "package": "crm-shared-flowComponents",
@@ -20,7 +20,7 @@
                 },
                 {
                     "package": "crm-journal-utilities",
-                    "versionNumber": "0.27.0.LATEST"
+                    "versionNumber": "0.40.0.LATEST"
                 },
                 {
                     "package": "crm-shared-user-notification",
