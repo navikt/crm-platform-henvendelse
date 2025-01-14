@@ -73,7 +73,7 @@ public class ConvNoteCacheFilterHelperTest {
     }
 
     @IsTest
-    static void shouldReturnOnePlatformEventWhenConvNoteCreatedByInternalSalesforceUser() {
+    static void shouldReturnOneEventWhenConvNoteCreatedByInternalSalesforceUser() {
         Account personAccount = CRM_HENV_TestDataFactory.createPersonAccount();
         CRM_HENV_TestDataFactory.createRecord(
             new Conversation_Note__c(
@@ -108,7 +108,7 @@ public class ConvNoteCacheFilterHelperTest {
     }
 
     @IsTest
-    static void shouldNotRetrunPlatformEventsWhenConvNoteIsCreatedByModiaIntegrationUser() {
+    static void shouldNotRetrunEventsWhenConvNoteIsCreatedByModiaIntegrationUser() {
         Id profileId = [
             SELECT Id
             FROM Profile
@@ -156,7 +156,7 @@ public class ConvNoteCacheFilterHelperTest {
     }
 
     @IsTest
-    static void shouldNotRetrunPlatformEventsWhenAccountIsNotAPersonAccount() {
+    static void shouldNotRetrunEventsWhenAccountIsNotAPersonAccount() {
         Account employer = (Account) CRM_HENV_TestDataFactory.createRecord(
             new Account()
         );
