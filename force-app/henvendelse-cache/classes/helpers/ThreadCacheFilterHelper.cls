@@ -39,7 +39,24 @@ public without sharing class ThreadCacheFilterHelper {
                 threadIds.add(msg.CRM_Thread__c);
             }
         }
+        return threadIds;
+    }
 
+    public static Set<Id> getThreadIdsByThreads(List<Thread__c> threadList){
+        ModiaIntegrationUser modiaIntegrationUser = new ModiaIntegrationUser();
+        Set<Id> threadIds = new Set<Id>();
+
+        for (Thread__c thread:threadList) {
+            
+            if (
+                //Only cache records created by Salesforce internal users
+                thread.LastModifiedById != modiaIntegrationUser.UserId
+                //Only changes to thread types of chat are relevant for caching. Other thread types are handled through changes to messages"
+                && thread.CRM_Thread_Type__c == 'CHAT'
+                ) {
+            threadIds.add(thread.Id);
+            }
+        }
         return threadIds;
     }
 }

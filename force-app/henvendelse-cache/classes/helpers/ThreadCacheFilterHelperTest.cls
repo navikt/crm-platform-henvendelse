@@ -3,13 +3,13 @@ public class ThreadCacheFilterHelperTest {
     @TestSetup
     static void makeData() {
         myTriggers.disable(MessageCacheHandler.class);
+        myTriggers.disable(ThreadCacheHandler.class);
         Account account=CRM_HENV_TestDataFactory.createPersonAccount();
 
         CRM_HENV_TestDataFactory.createRecord(
             new Thread__c(
                 CRM_Account__c = account.Id,
-                CRM_Thread_Type__c = 'STO',
-                CRM_API_Reference__c='Abc134'
+                CRM_Thread_Type__c = 'CHAT'
             )
         );
     }
@@ -77,9 +77,9 @@ public class ThreadCacheFilterHelperTest {
     }
 
     @IsTest
-    static void shouldReturnOneEventWhenThreadTypeIsSto(){
+    static void shouldReturnOneEventWhenThreadTypeIsChat(){
         Thread__c t=[SELECT CRM_Thread_Type__c FROM Thread__c LIMIT 1];
-        Id threadId = [SELECT Id FROM Thread__c WHERE CRM_Thread_Type__c = 'STO' LIMIT 1].Id;
+        Id threadId = [SELECT Id FROM Thread__c WHERE CRM_Thread_Type__c = 'CHAT' LIMIT 1].Id;
 
         Test.startTest();
         List<CacheHenvendelseEvent> result=ThreadCacheFilterHelper.getCacheEvents(new Set<Id>{threadId});
@@ -97,8 +97,7 @@ public class ThreadCacheFilterHelperTest {
         Thread__c thread=(Thread__c) CRM_HENV_TestDataFactory.createRecord(
             new Thread__c(
                 CRM_Account__c = accountId,
-                CRM_Thread_Type__c = 'AG_MLØNN',
-                CRM_API_Reference__c='Abc134'
+                CRM_Thread_Type__c = 'AG_MLØNN'
             )
         );
 
@@ -110,5 +109,71 @@ public class ThreadCacheFilterHelperTest {
 
         Assert.areEqual(0, result.size());
        
+    }
+
+    @IsTest
+    static void shouldReturnOneThreadIdFromOneThread() {
+        Thread__c thread = [SELECT Id, LastModifiedById, CRM_Thread_Type__c FROM Thread__c LIMIT 1];
+
+        Test.startTest();
+        Set<Id> result = ThreadCacheFilterHelper.getThreadIdsByThreads(new List<Thread__c>{thread});
+        Test.stopTest();
+
+        Assert.areEqual(1, result.size());
+        Id actualThreadIdId = new List<Id>(result)[0];
+        Assert.areEqual(thread.Id, actualThreadIdId);
+    }
+
+    @IsTest
+    static void shouldNotReturnThreadIdForThreadsCreatedByModiaIntegrationUser() {
+        Id accountId =[SELECT Id FROM Account LIMIT 1].Id;
+        
+        //Create record as Modia Integration User
+        Id profileId = [
+            SELECT Id
+            FROM Profile
+            WHERE Name = 'System Administrator'
+            LIMIT 1
+        ]
+        .Id;
+        User modiaIntegrationUser = (User) CRM_HENV_TestDataFactory.createRecord(
+            new User(
+                username = 'modia.integrasjon@nav.no.test',
+                ProfileId = profileId
+            )
+        );
+        Thread__c thread;
+        System.runAs(modiaIntegrationUser) {
+           thread=(Thread__c) CRM_HENV_TestDataFactory.createRecord(
+                new Thread__c(
+                    CRM_Account__c = accountId,
+                    CRM_Thread_Type__c = 'CHAT'
+                )
+            );
+        }
+        List<Thread__c> threads=[SELECT Id, CRM_Thread_Type__c, LastModifiedById FROM Thread__c WHERE Id =:thread.Id];
+        Test.startTest();
+        Set<Id> result = ThreadCacheFilterHelper.getThreadIdsByThreads(threads);
+        Test.stopTest();
+
+        Assert.areEqual(0, result.size());
+    }
+
+    @IsTest
+    static void shouldNotReturnThreadIdsForThreadsOtherThanChat() {
+        Id accountId =[SELECT Id FROM Account LIMIT 1].Id;
+        
+        CRM_HENV_TestDataFactory.createRecord(
+            new Thread__c(
+                CRM_Account__c = accountId,
+                CRM_Thread_Type__c = 'STO'
+            )
+        );
+        List<Thread__c> threads=[SELECT Id, CRM_Thread_Type__c, LastModifiedById FROM Thread__c WHERE CRM_Thread_Type__c='STO'];
+        Test.startTest();
+        Set<Id> result = ThreadCacheFilterHelper.getThreadIdsByThreads(threads);
+        Test.stopTest();
+
+        Assert.areEqual(0, result.size());
     }
 }

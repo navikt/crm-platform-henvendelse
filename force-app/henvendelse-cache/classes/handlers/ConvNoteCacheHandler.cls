@@ -13,5 +13,4 @@ global class ConvNoteCacheHandler extends MyTriggers {
         );
         CacheEventHelper.publish(events, 'ConversationNote');
     }
-   
 }
