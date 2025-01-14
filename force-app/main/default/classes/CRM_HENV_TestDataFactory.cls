@@ -579,4 +579,66 @@ public class CRM_HENV_TestDataFactory {
             //No dml fields
         }
     }
+
+    public static Account createPersonAccount() {
+        Id recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
+            .get('PersonAccount')
+            .getRecordTypeId();
+
+        Id roleId = [
+            SELECT Id
+            FROM UserRole
+            WHERE Name = 'Default' OR Name = 'SVP Customer Experience'
+            LIMIT 1
+        ]
+        .Id;
+        Id profileId = [
+            SELECT Id
+            FROM Profile
+            WHERE Name = 'System Administrator'
+        ]
+        .Id;
+        User accountOwner;
+
+        //create account onwer in an another context to avoid mixed dml operations
+        System.runAs(new User(Id = UserInfo.getUserId())) {
+            accountOwner = (User) createRecord(
+                new User(UserRoleId = roleId, ProfileId = profileId)
+            );
+        }
+
+        Account personAccount;
+        System.runAs(accountOwner) {
+            personAccount = new Account(
+                RecordTypeId = recordTypeId,
+                FirstName = 'Person',
+                LastName = 'Account'
+            );
+            insert personAccount;
+
+            Person__c person = (Person__c) createRecord(
+                new Person__c(INT_ActorId__c = '12345')
+            );
+            personAccount.CRM_Person__c = person.Id;
+            update personAccount;
+        }
+        return personAccount;
+    }
+
+    public static User createExperienceCloudUser() {
+        Id accountId = createPersonAccount().Id;
+        Id contactId = [SELECT Id FROM Contact WHERE AccountId = :accountId].Id;
+        Id profileId = [
+            SELECT Id
+            FROM Profile
+            WHERE Name = 'Customer Community Login User' OR Name = 'NAV Bruker'
+            ORDER BY Name DESC
+            LIMIT 1
+        ]
+        .Id;
+
+        return (User) createRecord(
+            new User(ProfileId = profileId, ContactId = contactId)
+        );
+    }
 }
