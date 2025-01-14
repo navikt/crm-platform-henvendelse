@@ -1,10 +1,10 @@
 public without sharing class ConvNoteCacheFilterHelper {
    
-    public static List<CacheHenvendelse> getConvNotesToBeCached(
+    public static List<CacheHenvendelseEvent> getConvNotesToBeCached(
                 List<Conversation_Note__c> convNoteList){
                     Set<Id> recordIds = getRecordIds(convNoteList);
 
-                    List<CacheHenvendelse> convNotesToBeCached = new List<CacheHenvendelse>();
+                    List<CacheHenvendelseEvent> convNotesToBeCached = new List<CacheHenvendelseEvent>();
                     for (Conversation_Note__c convNote : [
                         SELECT
                             CRM_Account__r.CRM_Person__r.INT_ActorId__c,
@@ -17,7 +17,7 @@ public without sharing class ConvNoteCacheFilterHelper {
                             convNote.CRM_Henvendelse_BehandlingskjedeId__c != null
                         ) {
                             convNotesToBeCached.add(
-                                new CacheHenvendelse(
+                                new CacheHenvendelseEvent(
                                     convNote.CRM_Account__r.CRM_Person__r.INT_ActorId__c,
                                     convNote.CRM_Henvendelse_BehandlingskjedeId__c
                                 )

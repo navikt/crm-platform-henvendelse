@@ -8,7 +8,7 @@ global class ConvNoteCacheHandler extends MyTriggers {
     }
 
     private void publishCacheEvents(List<Conversation_Note__c> convNoteList){
-        List<CacheHenvendelse> events = ConvNoteCacheFilterHelper.getConvNotesToBeCached(
+        List<CacheHenvendelseEvent> events = ConvNoteCacheFilterHelper.getConvNotesToBeCached(
             convNoteList
         );
         CacheEventHelper.publish(events, 'ConversationNote');

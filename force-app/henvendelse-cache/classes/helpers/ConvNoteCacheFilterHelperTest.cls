@@ -97,7 +97,7 @@ public class ConvNoteCacheFilterHelperTest {
         Assert.isNotNull(expectedActorId);
 
         Test.startTest();
-        List<CacheHenvendelse> result = ConvNoteCacheFilterHelper.getConvNotesToBeCached(
+        List<CacheHenvendelseEvent> result = ConvNoteCacheFilterHelper.getConvNotesToBeCached(
             convNotes
         );
         Test.stopTest();
@@ -147,7 +147,7 @@ public class ConvNoteCacheFilterHelperTest {
         Assert.areEqual(1, convNotes.size());
 
         Test.startTest();
-        List<CacheHenvendelse> result = ConvNoteCacheFilterHelper.getConvNotesToBeCached(
+        List<CacheHenvendelseEvent> result = ConvNoteCacheFilterHelper.getConvNotesToBeCached(
             convNotes
         );
         Test.stopTest();
@@ -180,7 +180,7 @@ public class ConvNoteCacheFilterHelperTest {
         Assert.areEqual(1, convNotes.size());
 
         Test.startTest();
-        List<CacheHenvendelse> result = ConvNoteCacheFilterHelper.getConvNotesToBeCached(
+        List<CacheHenvendelseEvent> result = ConvNoteCacheFilterHelper.getConvNotesToBeCached(
             convNotes
         );
         Test.stopTest();

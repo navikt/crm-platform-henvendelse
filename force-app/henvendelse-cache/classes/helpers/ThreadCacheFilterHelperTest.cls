@@ -82,7 +82,7 @@ public class ThreadCacheFilterHelperTest {
         Id threadId = [SELECT Id FROM Thread__c WHERE CRM_Thread_Type__c = 'STO' LIMIT 1].Id;
 
         Test.startTest();
-        List<CacheHenvendelse> result=ThreadCacheFilterHelper.getCacheEvents(new Set<Id>{threadId});
+        List<CacheHenvendelseEvent> result=ThreadCacheFilterHelper.getCacheEvents(new Set<Id>{threadId});
         Test.stopTest();
 
         Assert.areEqual(1, result.size());
@@ -105,7 +105,7 @@ public class ThreadCacheFilterHelperTest {
         Thread__c t=[SELECT CRM_Thread_Type__c FROM Thread__c WHERE id=:thread.Id LIMIT 1];
 
         Test.startTest();
-        List<CacheHenvendelse> result=ThreadCacheFilterHelper.getCacheEvents(new Set<Id>{thread.Id});
+        List<CacheHenvendelseEvent> result=ThreadCacheFilterHelper.getCacheEvents(new Set<Id>{thread.Id});
         Test.stopTest();
 
         Assert.areEqual(0, result.size());

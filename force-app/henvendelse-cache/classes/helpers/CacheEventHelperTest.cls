@@ -3,10 +3,10 @@ public class CacheEventHelperTest {
     
     @IsTest
     static void shouldStoreOneInfoLogRecordWhenOneCacheHenvendelseItem(){
-        CacheHenvendelse henvendelse= new CacheHenvendelse('12345', '43434');
+        CacheHenvendelseEvent henvendelse= new CacheHenvendelseEvent('12345', '43434');
 
         Test.startTest();
-        CacheEventHelper.publish(new List<CacheHenvendelse>{henvendelse}, 'ConversationNote');
+        CacheEventHelper.publish(new List<CacheHenvendelseEvent>{henvendelse}, 'ConversationNote');
         Test.stopTest();
 
         Assert.areEqual(

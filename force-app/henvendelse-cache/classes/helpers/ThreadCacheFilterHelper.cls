@@ -1,10 +1,10 @@
 public without sharing class ThreadCacheFilterHelper {
     private static LoggerUtility logger = new LoggerUtility('HenvendelseCaching');
 
-    public static List<CacheHenvendelse> getCacheEvents(
+    public static List<CacheHenvendelseEvent> getCacheEvents(
         Set<Id> threadIds
     ) {
-        List<CacheHenvendelse> threadsToBeCached = new List<CacheHenvendelse>();
+        List<CacheHenvendelseEvent> threadsToBeCached = new List<CacheHenvendelseEvent>();
         List<String> threadTypes = new List<String>{ 'STO', 'STB', 'CHAT', 'BTO' };
                     for (Thread__c thread : [
                         SELECT
@@ -19,7 +19,7 @@ public without sharing class ThreadCacheFilterHelper {
                             thread.CRM_API_Reference__c!= null
                         ) {
                             threadsToBeCached.add(
-                                new CacheHenvendelse(
+                                new CacheHenvendelseEvent(
                                     thread.CRM_Account__r.CRM_Person__r.INT_ActorId__c,
                                     thread.CRM_API_Reference__c
                                 )

@@ -10,7 +10,7 @@ global class MessageCacheHandler extends MyTriggers {
     }
     private void publishEvents(List<Message__c> messageList) {
        Set<Id> threadIds=ThreadCacheFilterHelper.getThreadIdsByMessages(messageList); 
-       List<CacheHenvendelse> events=ThreadCacheFilterHelper.getCacheEvents(threadIds);
+       List<CacheHenvendelseEvent> events=ThreadCacheFilterHelper.getCacheEvents(threadIds);
        CacheEventHelper.publish(events, ' Message');
     }
 }
