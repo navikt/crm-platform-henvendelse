@@ -390,7 +390,7 @@
             <assignToReference>JOURNALED_CONV_NOTE.CRM_Subtheme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_SF_Subtheme_Common_Code.CreatedById</elementReference>
+                <elementReference>Get_SF_Subtheme_Common_Code.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
