@@ -386,6 +386,13 @@
                 <elementReference>Get_SF_Theme_Common_Code.Id</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>JOURNALED_CONV_NOTE.CRM_Subtheme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_SF_Subtheme_Common_Code.CreatedById</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>DML_Check</targetReference>
         </connector>
